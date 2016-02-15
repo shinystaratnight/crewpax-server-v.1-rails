@@ -1,0 +1,12 @@
+.navbar-brand {
+  text-transform: uppercase;
+  color: $brand-warning !important;
+
+  span {
+    color: $brand-info;
+  }
+}
+
+.logo {
+  width: 290px;
+}

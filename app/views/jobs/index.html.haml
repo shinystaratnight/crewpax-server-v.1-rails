@@ -1,0 +1,23 @@
+= link_to new_job_path, class: 'btn btn-block btn-primary btn-lg' do
+  .glyphicon.glyphicon-edit
+  Post Job
+
+.page-header
+  %h1 Jobs
+
+= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id]), prompt: 'All', class: 'form-control', id: 'job_category'
+
+%table.table
+  %tr
+    %th Name
+    %th Starts on
+  - for job in @jobs
+    %tr
+      %td= link_to job.name, job_path(job)
+      %td= job.starts_on.to_s :long
+
+= paginate @jobs
+
+%p
+  %small.disclaimer
+    Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.

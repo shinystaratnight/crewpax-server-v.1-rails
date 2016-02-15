@@ -1,0 +1,18 @@
+%h2
+  Availability
+
+%table.calendar
+  %thead
+    %tr
+      - Date::DAYNAMES.each do |name|
+        %th
+          .day
+            = name.chars.first
+  %tbody
+    - @calendar.weeks.each do |week|
+      %tr
+        - week.each do |day|
+          %td
+            .day{ class: [('inactive' unless day.active), ('unavailable' if day.unavailable)] }
+              - owned = @user == current_user
+              = link_to_if owned && day.active, day.date.day, toggle_appointment_path(day.date), method: :patch, remote: true

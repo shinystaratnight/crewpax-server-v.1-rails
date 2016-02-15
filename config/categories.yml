@@ -1,0 +1,73 @@
+---
+-
+  name: "Production Manager (PM)"
+-
+  name: "Unit Production Manager (UPM)"
+-
+  name: "Production Assistant (PA)"
+-
+  name: "Key PA"
+-
+  name: "Office Production Assistant (OPA)"
+-
+  name: "Location Manager (LM)"
+-
+  name: "Assistant Location Manager (ALM)"
+-
+  name: "Trainee Assistant Location Manager (TAL)"
+-
+  name: "1st Assistant Director (1st AD)"
+-
+  name: "2nd Assistant Director (2nd AD)"
+-
+  name: "3rd Assistant Director (3rd AD)"
+-
+  name: "Trainee Assistant Director (TAD)"
+-
+  name: "Background Coordinator (AADBKC)"
+-
+  name: "Director"
+-
+  name: "Producer"
+-
+  name: "Director’s Assistant"
+-
+  name: "Producer’s Assistant"
+-
+  name: "Art / Production Design"
+-
+  name: "Construction"
+-
+  name: "Costumes"
+-
+  name: "Editors"
+-
+  name: "First Aid / Craft Services (FACS)"
+-
+  name: "Greens"
+-
+  name: "Grips"
+-
+  name: "Lighting / Electrics (LX)"
+-
+  name: "Hair"
+-
+  name: "Make Up"
+-
+  name: "Paint"
+-
+  name: "Production Coordinators"
+-
+  name: "Properties (Props)"
+-
+  name: "Script Supervisors "
+-
+  name: "Set Dec"
+-
+  name: "Sound"
+-
+  name: "Special Effects (SPFX)"
+-
+  name: "Transport"
+-
+  name: "Visual Effects"

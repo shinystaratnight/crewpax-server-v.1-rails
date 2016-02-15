@@ -1,0 +1,26 @@
+%nav.navbar.navbar-inverse(role="navigation")
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#navbar-collapse")
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to root_path, class: 'navbar-brand' do
+        :erb
+          <span>bc</span>pax
+    .collapse.navbar-collapse#navbar-collapse
+      %ul.nav.navbar-nav.navbar-left
+        %li
+          = link_to 'Jobs', jobs_path
+        %li
+          = link_to 'People', users_path
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          %li
+            = link_to 'Profile', user_path(current_user)
+          %li
+            = link_to 'Log out', destroy_user_session_path, method: :delete
+        - else
+          %li
+            = link_to 'Log in', new_session_path(:user)
