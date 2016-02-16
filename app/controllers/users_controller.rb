@@ -17,6 +17,6 @@ class UsersController < ApplicationController
   protected
 
   def set_category
-    @category = Category.find params[:category_id]
+    # @category = Category.find params[:category_id]
   end
 end
