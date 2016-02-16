@@ -11,57 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140321193424) do
+ActiveRecord::Schema.define(version: 20160216183352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
-  create_table "appointments", force: true do |t|
-    t.date     "date"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
   end
-
-  create_table "jobs", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.date     "starts_on"
-    t.date     "ends_on"
-    t.string   "category_id"
-    t.string   "location"
-    t.string   "contact_name"
-    t.string   "contact_phone"
-    t.string   "contact_email"
-    t.string   "company_name"
-    t.string   "secret"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "published",     default: false
-  end
-
-  add_index "jobs", ["category_id"], name: "index_jobs_on_category_id", using: :btree
-
-  create_table "users", force: true do |t|
-    t.string   "email",                      default: "",    null: false
-    t.string   "encrypted_password",         default: "",    null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image"
-    t.string   "name"
-    t.string   "photo"
-    t.string   "phone"
-    t.string   "category_ids",               default: [],                 array: true
-    t.boolean  "is_dgc_member",              default: false
-    t.boolean  "has_traffic_control_ticket", default: false
-    t.boolean  "has_vehicle",                default: false
-  end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
