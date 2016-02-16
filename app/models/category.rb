@@ -16,6 +16,5 @@
 # end
 
 class Category < ActiveRecord::Base
-
-
+  belongs_to :categorized, polymorphic: true
 end
