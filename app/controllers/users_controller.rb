@@ -19,4 +19,8 @@ class UsersController < ApplicationController
   def set_category
     # @category = Category.find params[:category_id]
   end
+
+  # def category_params
+  #   params.require(:category).permit :name, :id, :categorized_id, :categorized_type
+  # end
 end

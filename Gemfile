@@ -15,6 +15,7 @@ gem 'fog'
 gem 'kaminari'
 gem 'simple_form'
 
+
 group :assets do
   gem 'asset_sync'
 end
