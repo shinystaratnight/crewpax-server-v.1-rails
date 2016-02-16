@@ -83,8 +83,8 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :span, class: "help-block text-danger" }
   end
 
-  config.label_text = lambda { |label, required| "#{label}" }
-
+  config.label_text = lambda { |label, required, explicit_label| "#{label}" }
+  # Manually add explicit_label| 
   # Wrappers for forms and inputs using the Twitter Bootstrap toolkit.
   # Check the Bootstrap docs (http://getbootstrap.com/)
   # to learn about the different styles for forms and inputs,
