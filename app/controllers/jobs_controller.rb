@@ -1,14 +1,16 @@
 class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:edit, :update, :destroy]
+  before_filter :authorize, only: [:show, :edit, :update, :destroy]
   before_filter :set_category, only: :index
 
   def index
-    scope = Job.published
+    #scope will return false b/c in jobs table, :published filed is set default 
+    #to be false
+    @jobs = Job.published 
     if @category.present?
-      scope.where! category_id: @category.id
+      @jobs = @jobs.by_category @category
     end
-    @jobs = scope.page(params[:page] || 1).per(20)
+    @jobs = @jobs.page(params[:page] || 1).per(20)
   end
 
   def new
@@ -16,7 +18,7 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new job_params
+    @job = Job.new(job_params)
     if @job.save
       JobMailer.confirmation(@job).deliver
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
@@ -25,14 +27,10 @@ class JobsController < ApplicationController
     end
   end
 
-  def show
+  def show # GET method, can be triggered by anything, gmail, bots, etc...
     unless @job.published
-      if @authenticated
-        @job.update_attribute :published, true
-        flash.now[:success] = 'Job has been published.'
-      else
-        raise ActionController::RoutingError.new 'Not Found'
-      end
+      @job.update_attribute :published, true
+      flash.now[:success] = 'Job has been published.'
     end
   end
 
@@ -55,15 +53,15 @@ class JobsController < ApplicationController
   protected
 
   def set_category
-    # @category = Category.find params[:category_id]
+    @category = Category.find params[:category_id] if params[:category_id]
   end
 
   def set_job
-    @job = Job.find params[:id]
+    @job = Job.find(params[:id])
   end
 
   def authenticate
-    @authenticated = @job.secret == params[:secret]
+    @authenticated = user_signed_in? || @job.secret == params[:secret] # https://www.owasp.org/index.php/Covert_timing_channel
   end
 
   def authorize
