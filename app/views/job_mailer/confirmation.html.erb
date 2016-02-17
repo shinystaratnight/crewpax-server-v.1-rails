@@ -12,8 +12,9 @@ FOLLOW THE WEB ADDRESS BELOW TO:
 If not clickable, please copy and paste the address to your browser:
 <br>
 <br>
-<%= link_to secret_job_url(@job, @job.secret), secret_job_url(@job, @job.secret) %>
-<br>
+
+<%= link_to secret_job_url(@job, @job.secret,default_url_options = { :host => 'localhost:3000' }), secret_job_url(@job, @job.secret,default_url_options = { :host => 'localhost:3000' }) %>
+<br
 <br>
 <font color="red">PLEASE KEEP THIS EMAIL</font> - you may need it to manage your posting!
 <br>

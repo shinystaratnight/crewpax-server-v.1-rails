@@ -2,11 +2,11 @@ class UsersController < ApplicationController
   before_filter :set_category, only: :index
 
   def index
-    scope = User.all
-    if @category.present?
-      scope.where! '? = ANY(category_ids)', @category.id
-    end
-    @users = scope.page(params[:page] || 1).per(20)
+    @users= User.all
+      if @category.present?
+        @users.by_category @category
+      end
+    @users = @users.page(params[:page] || 1).per(20)
   end
 
   def show
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   protected
 
   def set_category
-    @category = Category.find params[:category_id]
+    @category = Category.find params[:category_id] if params[:category_id]
   end
 
   # def category_params

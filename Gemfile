@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'kaminari'
 gem 'simple_form'
+gem 'pry'
 
 
 group :assets do

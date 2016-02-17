@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
   default_scope { order :name }
 
   validates :name, presence: true
-
+  
+  scope :by_category, ->(category) { where category_id: category.id }
+  
   def calendar
     Calendar.new appointments
   end
