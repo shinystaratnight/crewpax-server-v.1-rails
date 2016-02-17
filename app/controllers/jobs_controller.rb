@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:show, :edit, :update, :destroy]
+  before_filter :authorize, only: [ :edit, :update, :destroy]
   before_filter :set_category, only: :index
 
   def index
@@ -20,7 +20,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     if @job.save
-      JobMailer.confirmation(@job).deliver
+      JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
       render :new
@@ -29,8 +29,12 @@ class JobsController < ApplicationController
 
   def show # GET method, can be triggered by anything, gmail, bots, etc...
     unless @job.published
-      @job.update_attribute :published, true
-      flash.now[:success] = 'Job has been published.'
+      if @authenticated
+        @job.update_attribute :published, true
+        flash.now[:success] = 'Job has been published.'
+      else
+        raise ActionController::RoutingError.new 'Not Found'
+      end
     end
   end
 
