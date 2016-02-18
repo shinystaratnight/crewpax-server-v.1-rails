@@ -16,5 +16,7 @@
 # end
 
 class Category < ActiveRecord::Base
-  belongs_to :categorized, polymorphic: true
+  has_many :labels
+  has_many :users, through: :labels
+  has_many :categories, through: :labels
 end

@@ -3,8 +3,10 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   has_many :appointments, dependent: :destroy
-  has_many :categories, as: :categorized
-  
+  has_many :labels
+  has_many :jobs
+  has_many :categories, through: :labels
+
   default_scope { order :name }
 
   validates :name, presence: true

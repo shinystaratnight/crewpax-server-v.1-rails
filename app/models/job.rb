@@ -8,7 +8,9 @@ class Job < ActiveRecord::Base
   
   before_create { self.secret = SecureRandom.urlsafe_base64 }
 
-  has_many :categories, as: :categorized
+  has_many :categories, through: :labels
+  has_many :labels
+  belongs_to :user
 
   def category
     Category.find category_id
