@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218200742) do
+ActiveRecord::Schema.define(version: 20160218210654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,8 @@ ActiveRecord::Schema.define(version: 20160218200742) do
   add_index "appointments", ["user_id"], name: "index_appointments_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
-    t.string  "name"
-    t.integer "categorized_id"
-    t.string  "categorized_type"
+    t.string "name"
   end
-
-  add_index "categories", ["categorized_type", "categorized_id"], name: "index_categories_on_categorized_type_and_categorized_id", using: :btree
 
   create_table "jobs", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
