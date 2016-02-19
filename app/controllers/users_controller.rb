@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :set_category, only: :index
+  # before_filter :set_category, only: :index
 
   def index
     @users= User.all
@@ -17,11 +17,11 @@ class UsersController < ApplicationController
     @calendar = @user.calendar
   end
 
-  protected
+  # protected
 
-  def set_category
-    @category = Category.find params[:category_id] if params[:category_id]
-  end
+  # def set_category
+  #   @category = Category.find params[:category_id] if params[:category_id]
+  # end
 
   # def user_params
   #   params.require(:user).permit :name, :id, :categorized_id, :categorized_type
