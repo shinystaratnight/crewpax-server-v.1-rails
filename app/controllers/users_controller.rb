@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   def index
     @users= User.all
       # binding.pry
-      if @category.present?
-        @labels= Label.search_by_category(params[:category_id])
-       binding.pry
-      end
+      # if @category.present?
+      #   @labels= Label.search_by_category(params[:category_id])
+      #  binding.pry
+      # end
     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
      @users = @users.page(params[:page] || 1).per(20)
   end
