@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    # permitted_parameters = [:name, :image, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, :phone, { category_ids: [] }]
-      permitted_parameters = [:name, :image, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, :phone, :category_id]
+    permitted_parameters = [:name, :image, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, :phone, { category_ids: [] }]
 
     [:sign_up, :account_update].each do |action|
       permitted_parameters.each do |parameter|

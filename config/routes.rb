@@ -3,9 +3,12 @@ Bcpax::Application.routes.draw do
 
   patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
-  resources :categories do
-    resources :jobs
-    resources :users
+  resources :jobs do
+    resources :categories 
+  end
+  
+  resources :users do
+    resources :categories 
   end
 
   resources :jobs

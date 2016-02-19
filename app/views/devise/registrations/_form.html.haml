@@ -19,8 +19,7 @@
     %h3.panel-title
       Listed in
   .panel-body
-    = f.input :category_id, as: :check_boxes, collection: Category.all, label: false
--# change f.input from :category_ids t :category_id as per new schema
+    =f.input :category_ids, collection: Category.all, as: :check_boxes, include_hidden:false, include_blank:false, input_html: {multiple:true}
 = f.input :phone
 = f.input :email
 = f.input :password,  input_html: { autocomplete: 'off' }

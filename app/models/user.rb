@@ -11,8 +11,25 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   
-  scope :by_category, ->(category) { where category_id: category.id }
-  
+  scope :search_by_category, ->(params){ Label.where category_ids: params}
+  # , ->(category) { where {category_ids: include category.id} }
+
+  # def self.search_by_category(params)
+  #   #selected_category_ids = params.split().map(&:to_i)
+  #     User.all.map do |user| 
+  #       user.labels.all.map do |l|
+            
+  #         if l.category_id==params
+            
+  #           @user = User.find(l.user_id) 
+  #           @users =[]
+  #           @users << @user
+  #         end
+  #       end
+  #     end 
+  # end
+
+
   def calendar
     Calendar.new appointments
   end
