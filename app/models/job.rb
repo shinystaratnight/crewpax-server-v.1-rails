@@ -7,6 +7,8 @@ class Job < ActiveRecord::Base
   validates :contact_email, format: { with: /@/ }
   
   before_create { self.secret = SecureRandom.urlsafe_base64 }
+  after_create :add_job_label, only:[:create]
+  after_destroy :delete_job_label, only:[:destroy]
 
   has_many :categories, through: :labels
   has_many :labels
@@ -15,4 +17,16 @@ class Job < ActiveRecord::Base
   def category
     Category.find category_id
   end
+
+
+  def add_job_label
+    @job = self
+    @label = @job.labels.create!(category_id:@job.category_id)  
+  end
+  
+  def delete_job_label
+    @job=self
+    Label.find_by(job_id: @job.id).destroy!
+  end
+
 end

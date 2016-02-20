@@ -2,7 +2,8 @@ class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
   before_filter :set_category, only: :index
-
+  
+  
   def index
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
@@ -73,6 +74,8 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit :name, :category_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
+    params.require(:job).permit :id, :name, :category_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
   end
+
+ 
 end
