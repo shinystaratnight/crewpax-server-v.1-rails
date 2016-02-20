@@ -7,7 +7,9 @@ class Job < ActiveRecord::Base
   validates :contact_email, format: { with: /@/ }
   
   before_create { self.secret = SecureRandom.urlsafe_base64 }
+# After a job posting is created, job_id is added to labels table.
   after_create :add_job_label, only:[:create]
+# After a job posting is removed, job_id is removed from labels table.
   after_destroy :delete_job_label, only:[:destroy]
 
   has_many :categories, through: :labels
@@ -17,7 +19,6 @@ class Job < ActiveRecord::Base
   def category
     Category.find category_id
   end
-
 
   def add_job_label
     @job = self
