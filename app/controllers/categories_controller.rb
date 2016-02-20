@@ -6,8 +6,10 @@ class CategoriesController < ApplicationController
 
 
   def show
-    @labels = Label.search_by_category(params[:id])
-    # binding.pry
+    @c= Category.find(params[:id])
+    @users = @c.users
+    # @labels = Label.search_by_category(params[:id])
+    
     # if @category.present?
     #  @labels= Label.search_by_category(params[:category_id])
   

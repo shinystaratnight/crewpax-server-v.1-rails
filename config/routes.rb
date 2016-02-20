@@ -11,9 +11,9 @@ Bcpax::Application.routes.draw do
     resources :categories 
   end
   
-  resources :jobs do
-    resources :labels
-  end
+  # resources :jobs do
+  #   resources :labels
+  # end
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
 
