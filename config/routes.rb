@@ -7,9 +7,23 @@ Bcpax::Application.routes.draw do
     resources :categories 
   end
   
+  # resources :jobs do
+  #   resources :categories 
+  # end
+
+  # resources :categories, shallow: true do 
+  #   resources :jobs
+  # end
+
+
   resources :users, shallow: true do
     resources :categories 
   end
+
+  # resources :users do
+  #   resources :categories 
+  # end
+
   
   # resources :jobs do
   #   resources :labels

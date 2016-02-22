@@ -1,5 +1,5 @@
 .page-header
-  %h1 People
+  %h1 Result
 
 = select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:id]), prompt: 'All', class: 'form-control', id: 'select_user_category'
 
@@ -12,5 +12,16 @@
       %tr
         %td= link_to image_tag(user.image.url(:thumb)), user_path(user)
         %td= link_to user.name, user_path(user)
-       
+
+
+
   
+/ %table.table
+/   %tr
+/     %th Job Position
+/     - for job in @jobs 
+/       %tr
+/         %td= link_to job.name, job_path(job)
+     
+
+       
