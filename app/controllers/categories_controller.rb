@@ -12,6 +12,7 @@ class CategoriesController < ApplicationController
     @users = @c.users
 
     #Show selected jobs in specific category
-    @jobs= Job.find_by(name: @c.name)
+    @jobs= Job.find_by(category_id: params[:id])
+    
   end 
 end

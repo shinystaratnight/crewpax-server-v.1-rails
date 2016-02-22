@@ -8,9 +8,9 @@ class JobsController < ApplicationController
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
     @jobs = Job.published 
-    # if @category.present?
-    #   @jobs = @jobs.by_category @category
-    # end
+      # if @category.present?
+      #   @jobs = @jobs.by_category @category
+      # end
     @jobs = @jobs.page(params[:page] || 1).per(20)
   end
 
