@@ -9,6 +9,7 @@ class RolesController < ApplicationController
     #Show selected users in specific role
 
     @c= Role.find(params[:id])
+    binding.pry
     @users = @c.users
 
     #Show selected jobs in specific role
