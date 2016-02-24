@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   has_many :labels
   has_many :jobs
   has_many :roles, through: :labels
-
+  has_many :eligibilities
+  has_many :unions, through: :eligibilities
 
   default_scope { order :name }
 
