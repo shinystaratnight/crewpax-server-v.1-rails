@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224173044) do
+ActiveRecord::Schema.define(version: 20160224214143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20160224173044) do
   end
 
   add_index "appointments", ["user_id"], name: "index_appointments_on_user_id", using: :btree
+
+  create_table "eligibilities", force: :cascade do |t|
+    t.boolean "member"
+    t.integer "permit_days"
+    t.integer "user_id"
+    t.integer "union_id"
+    t.integer "role_id"
+  end
+
+  add_index "eligibilities", ["role_id"], name: "index_eligibilities_on_role_id", using: :btree
+  add_index "eligibilities", ["union_id"], name: "index_eligibilities_on_union_id", using: :btree
+  add_index "eligibilities", ["user_id"], name: "index_eligibilities_on_user_id", using: :btree
 
   create_table "jobs", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
@@ -85,5 +97,8 @@ ActiveRecord::Schema.define(version: 20160224173044) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "eligibilities", "roles"
+  add_foreign_key "eligibilities", "unions"
+  add_foreign_key "eligibilities", "users"
   add_foreign_key "labels", "users"
 end
