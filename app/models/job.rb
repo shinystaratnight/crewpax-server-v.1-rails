@@ -11,7 +11,8 @@ class Job < ActiveRecord::Base
   after_create :add_job_label, only:[:create]
 # After a job posting is removed, job_id is removed from labels table.
   after_destroy :delete_job_label, only:[:destroy]
-
+  
+  
   has_many :categories, through: :labels
   has_many :labels
   belongs_to :user
