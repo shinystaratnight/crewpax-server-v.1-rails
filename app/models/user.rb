@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   
-  scope :search_by_role, ->(params){ Label.where role_ids: params}
+  scope :search_by_role, ->(params){ Label.where roles_ids: params}
   # , ->(role) { where {role_ids: include role.id} }
 
   # def self.search_by_role(params)
