@@ -1,7 +1,7 @@
 .page-header
   %h1 Result
 
-= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:id]), prompt: 'All', class: 'form-control', id: 'select_user_category'
+= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:id]), prompt: 'All', class: 'form-control', id: 'select_user_role'
 
 
 %table.table
@@ -19,7 +19,7 @@
 / %table.table
 /   %tr
 /     %th Job Position
-/     - for job in @jobs 
+/     - for job in @jobs ƒ
 /       %tr
 /         %td= link_to job.name, job_path(job)
      

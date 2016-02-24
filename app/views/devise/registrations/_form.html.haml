@@ -19,7 +19,7 @@
     %h3.panel-title
       Listed in
   .panel-body
-    =f.input :category_ids, collection: Category.all, as: :check_boxes, include_hidden:false, include_blank:false, input_html: {multiple:true}
+    =f.input :role_ids, collection: Role.all, as: :check_boxes, include_hidden:false, include_blank:false, input_html: {multiple:true}
 = f.input :phone
 = f.input :email
 = f.input :password,  input_html: { autocomplete: 'off' }

@@ -5,7 +5,7 @@
 .page-header
   %h1 Jobs
 
-= select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name, params[:category_id]), prompt: 'All', class: 'form-control', id: 'job_category'
+= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_role'
 
 %table.table
   %tr
