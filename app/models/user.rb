@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   has_many :appointments, dependent: :destroy
   has_many :labels
   has_many :jobs
-  has_many :categories, through: :labels
-  
+  has_many :roles, through: :labels
+
 
   default_scope { order :name }
 

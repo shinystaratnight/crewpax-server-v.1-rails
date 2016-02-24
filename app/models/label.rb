@@ -1,6 +1,6 @@
 class Label < ActiveRecord::Base
   belongs_to :user
-  belongs_to :category
+  belongs_to :role
   belongs_to :job
   belongs_to :department 
 

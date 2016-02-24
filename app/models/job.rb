@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
   after_destroy :delete_job_label, only:[:destroy]
   
   
-  has_many :categories, through: :labels
+  has_many :roles, through: :labels
   has_many :labels
   belongs_to :user
 
