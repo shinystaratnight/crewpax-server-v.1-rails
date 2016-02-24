@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  before_filter :set_category, only: :index
+  before_filter :set_role, only: :index
 
   def index
     @users= User.all
       # binding.pry
-      # if @category.present?
-      #   @labels= Label.search_by_category(params[:category_id])
+      # if @role.present?
+      #   @labels= Label.search_by_role(params[:role_id])
       #  binding.pry
       # end
     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
@@ -19,8 +19,8 @@ class UsersController < ApplicationController
 
   protected
 
-  def set_category
-    @category = Category.find params[:category_id] if params[:category_id]
+  def set_role
+    @role = Role.find params[:role_id] if params[:role_id]
   end
 
   # def user_params

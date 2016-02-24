@@ -1,15 +1,15 @@
 class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
-  before_filter :set_category, only: :index
+  before_filter :set_role, only: :index
   
   
   def index
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
     @jobs = Job.published 
-      # if @category.present?
-      #   @jobs = @jobs.by_category @category
+      # if @role.present?
+      #   @jobs = @jobs.by_role @role
       # end
     @jobs = @jobs.page(params[:page] || 1).per(20)
   end
@@ -57,8 +57,8 @@ class JobsController < ApplicationController
 
   protected
 
-  def set_category
-    @category = Category.find params[:category_id] if params[:category_id]
+  def set_role
+    @role = Category.find params[:role_id] if params[:role_id]
   end
 
   def set_job
@@ -74,7 +74,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit :id, :name, :category_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
+    params.require(:job).permit :id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
   end
 
  
