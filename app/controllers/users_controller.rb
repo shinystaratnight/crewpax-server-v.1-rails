@@ -6,7 +6,6 @@ class UsersController < ApplicationController
       # binding.pry
       # if @role.present?
       #   @labels= Label.search_by_role(params[:role_id])
-      #  binding.pry
       # end
     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
      @users = @users.page(params[:page] || 1).per(20)
