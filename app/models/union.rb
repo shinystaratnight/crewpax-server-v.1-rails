@@ -1,2 +1,3 @@
-class Union < ActiveRecord::Base
+class Union< ActiveRecord::Base
+
 end
