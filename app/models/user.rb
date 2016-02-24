@@ -12,15 +12,15 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
   
-  scope :search_by_category, ->(params){ Label.where category_ids: params}
-  # , ->(category) { where {category_ids: include category.id} }
+  scope :search_by_role, ->(params){ Label.where role_ids: params}
+  # , ->(role) { where {role_ids: include role.id} }
 
-  # def self.search_by_category(params)
-  #   #selected_category_ids = params.split().map(&:to_i)
+  # def self.search_by_role(params)
+  #   #selected_role_ids = params.split().map(&:to_i)
   #     User.all.map do |user| 
   #       user.labels.all.map do |l|
             
-  #         if l.category_id==params
+  #         if l.role_id==params
             
   #           @user = User.find(l.user_id) 
   #           @users =[]

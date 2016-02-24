@@ -1,9 +1,9 @@
 class Job < ActiveRecord::Base
   default_scope { order updated_at: :desc }
   scope :published, -> { where published: true }
-  scope :by_category, ->(category) { where category_id: category.id }
+  scope :by_role, ->(role) { where role_id: role.id }
 
-  validates :name, :category_id, :description, :company_name, :starts_on, :ends_on, :location, :contact_name, :contact_phone, :contact_email, presence: true
+  validates :name, :role_id, :description, :company_name, :starts_on, :ends_on, :location, :contact_name, :contact_phone, :contact_email, presence: true
   validates :contact_email, format: { with: /@/ }
   
   before_create { self.secret = SecureRandom.urlsafe_base64 }
@@ -17,13 +17,13 @@ class Job < ActiveRecord::Base
   has_many :labels
   belongs_to :user
 
-  def category
-    Category.find category_id
+  def role
+    Role.find role_id
   end
 
   def add_job_label
     @job = self
-    @label = @job.labels.create!(category_id:@job.category_id)  
+    @label = @job.labels.create!(role_id:@job.role_id)  
   end
   
   def delete_job_label
