@@ -16,7 +16,12 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def create_label_with_user_role
+  def update_label_with_user_role(user)
+    array = @user.roles_ids
+      i = 0, i+=1, i < array.length
+        binding.pry
+        r_id = array[i]
+      
 
   end
   
