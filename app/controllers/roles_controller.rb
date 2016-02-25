@@ -9,8 +9,8 @@ class RolesController < ApplicationController
     #Show selected users in specific role
     
     @c= Role.find(params[:id])
-    binding.pry
-    @users = @c.users
+    @users= @c.labels.map{|x| User.find(x.user_id)}
+
 
     #Show selected jobs in specific role
     @jobs= Job.find_by(role_id: params[:id])
