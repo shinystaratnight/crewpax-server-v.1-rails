@@ -1,10 +1,9 @@
 # This is the customized registrations controller for devise
 class RegistrationsController < Devise::RegistrationsController
 
-# When a user is created, it needs to call another method to create the labels
+# When a user is created, it needs to call create_label_of_user_role to create the associated label
   def create
-    @user = User.new(user_params)
-    
+    @user = User.new(user_params)  
     if @user.save
       create_label_of_user_role(@user)
       set_flash_message :notice, :signed_up
