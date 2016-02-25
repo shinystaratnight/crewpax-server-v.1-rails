@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   default_scope { order :name }
 
   validates :name, presence: true
+
+  def create_label_with_user_role
+
+  end
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}
   # , ->(role) { where {role_ids: include role.id} }
