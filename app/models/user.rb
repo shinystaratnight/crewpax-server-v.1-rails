@@ -16,14 +16,6 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def update_label_with_user_role(user)
-    array = @user.roles_ids
-      i = 0, i+=1, i < array.length
-        binding.pry
-        r_id = array[i]
-      
-
-  end
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}
   # , ->(role) { where {role_ids: include role.id} }
