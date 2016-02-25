@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225062636) do
+ActiveRecord::Schema.define(version: 20160225221837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string  "type"
+    t.string  "address_input"
+    t.integer "user_id"
+  end
+
+  add_index "addresses", ["user_id"], name: "index_addresses_on_user_id", using: :btree
 
   create_table "appointments", force: :cascade do |t|
     t.date     "date"
@@ -103,6 +111,7 @@ ActiveRecord::Schema.define(version: 20160225062636) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "addresses", "users"
   add_foreign_key "eligibilities", "roles"
   add_foreign_key "eligibilities", "unions"
   add_foreign_key "eligibilities", "users"
