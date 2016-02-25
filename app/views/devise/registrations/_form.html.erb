@@ -1,0 +1,63 @@
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <div class="field">
+      <%= f.label :phone %><br />
+      <%= f.number_field :phone %>
+  </div>
+  
+  <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email %>
+  </div>
+
+
+  <div class="field">
+    <p> Do you have a traffic control? </p>
+      <%= radio_button_tag(:has_traffic_control_ticket, "true") %>
+      <%=label_tag :user_yes, "Yes" %>
+      <%= radio_button_tag(:has_traffic_control_ticket, "false") %>
+      <%=label_tag :user_no,  "No" %>
+  </div>
+  
+  <div class= "field">
+    <p>Do you have a vehicle? </p>
+      <%= radio_button_tag(:has_traffic_control_ticket, "true") %>
+      <%=label_tag :user_yes, "Yes" %>
+      <%= radio_button_tag(:has_traffic_control_ticket, "false") %>
+      <%=label_tag :user_no,  "No" %>    
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Image
+      </h3>
+        <div class="panel-body">
+        
+        </div>
+    </div>
+
+  </div>
+  
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+<p>
+  <div class="btn-block btn-lg btn-success">
+  <%= f.submit 'Submit' %>
+  </div>
+</p>
+<% end %>

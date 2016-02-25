@@ -1,29 +1,29 @@
-= f.input :name
+/ = f.input :name
 
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title
-      Image
-  .panel-body
-    = f.input :image, as: :file, label: false
-    = f.input :image_cache, as: :hidden
-    - if f.object.image.present?
-      = image_tag f.object.image.url, class: 'image'
+/ .panel.panel-default
+/   .panel-heading
+/     %h3.panel-title
+/       Image
+/   .panel-body
+/     = f.input :image, as: :file, label: false
+/     = f.input :image_cache, as: :hidden
+/     - if f.object.image.present?
+/       = image_tag f.object.image.url, class: 'image'
 
-= f.input :is_dgc_member, as: :radio_buttons, label: 'Are you a DGC member?'
-= f.input :has_traffic_control_ticket, as: :radio_buttons, label: 'Do you have a Traffic Control Ticket?'
-= f.input :has_vehicle, as: :radio_buttons, label: 'Do you have a vehicle?'
+/ = f.input :is_dgc_member, as: :radio_buttons, label: 'Are you a DGC member?'
+/ = f.input :has_traffic_control_ticket, as: :radio_buttons, label: 'Do you have a Traffic Control Ticket?'
+/ = f.input :has_vehicle, as: :radio_buttons, label: 'Do you have a vehicle?'
 
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title
-      Listed in
-  .panel-body
-    =f.input :roles_ids, collection: Role.all, as: :check_boxes, include_hidden:false, include_blank:false, input_html: {multiple:true}
-= f.input :phone
-= f.input :email
-= f.input :password,  input_html: { autocomplete: 'off' }
-= f.input :password_confirmation, input_html: { autocomplete: 'off' }
+/ .panel.panel-default
+/   .panel-heading
+/     %h3.panel-title
+/       Listed in
+/   .panel-body
+/     =f.input :roles_ids, collection: Role.all, as: :check_boxes, include_hidden:false, include_blank:false, input_html: {multiple:true}
+/ = f.input :phone
+/ = f.input :email
+/ = f.input :password,  input_html: { autocomplete: 'off' }
+/ = f.input :password_confirmation, input_html: { autocomplete: 'off' }
 
-%p
-  = f.submit 'Submit', class: 'btn-block btn-lg btn-success'
+/ %p
+/   = f.submit 'Submit', class: 'btn-block btn-lg btn-success'
