@@ -1,0 +1,40 @@
+<nav class="navbar navbar-inverse">(role="navigation")
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="navbar-toggle">(type="button" data-toggle="collapse" data-target="#navbar-collapse")
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to root_path, class: 'navbar-brand' do %>
+                  <span>bc</span>pax
+
+      <% end %>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <%= link_to 'Jobs', jobs_path %>
+        </li>
+        <li>
+          <%= link_to 'People', users_path %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to 'Profile', user_path(current_user) %>
+          </li>
+          <li>
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to 'Log in', new_session_path(:user) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
