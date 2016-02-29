@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :eligibilities
   has_many :unions, through: :eligibilities
   has_many :addresses, dependent: :destroy
+  accepts_nested_attributes_for :addresses
 
   default_scope { order :name }
 

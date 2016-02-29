@@ -1,10 +1,12 @@
 # This is the customized registrations controller for devise
 class RegistrationsController < Devise::RegistrationsController
 
+
 # When a user is created, it needs to call create_label_of_user_role to create the associated label
   def create
-    @user = User.new(user_params)  
-    if @user.save
+    @user = User.new(user_params)
+binding.pry
+    if @user.save!   
       create_label_of_user_role(@user)
       set_flash_message :notice, :signed_up
       redirect_to after_sign_up_path_for(@user) 
@@ -43,9 +45,9 @@ class RegistrationsController < Devise::RegistrationsController
     user_path(resource)
   end
    
-#if an existing label is not found, create a new label with the new role_id 
-#Question: how to check and delete old labels.
-#Answer: No need to consider this question now, because we will be using ajax to update
+  #if an existing label is not found, create a new label with the new role_id 
+  #Question: how to check and delete old labels.
+  #Answer: No need to consider this question now, because we will be using ajax to update
   def update_label_with_user_role(user)
     array = @user.roles_ids
       i = 0 
@@ -70,6 +72,11 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def user_params
-    params.require(:user).permit :name, :image, :password, :password_confirmation,:email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, :admin, :phone, { roles_ids: [] }
+    params.permit :name, :image, :password, :password_confirmation,
+    :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
+    :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input]
   end
+
+  
+
 end
