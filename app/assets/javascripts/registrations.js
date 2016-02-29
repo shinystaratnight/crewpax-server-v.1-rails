@@ -4,19 +4,26 @@ $(function(){
   // Retrieve the info from user's entries and turn
   // data into a nicely structured object (nesting included!)
     var name = $("#name").text();
-
       $.ajax({
         url: "/users",
         method:"post",
         dataType: "json",
         data:{name: name},
-        success: console.log("data is successfully saved")
-
+        success: 
+        console.log("data is successfully saved")
+        
       });
   });
 
   $("#phone").blur(function(){
+   
     var phone=$("#phone").text();
+      $.ajax({
+        url:"/users" ,
+        method:"post",
+        dataType:"json",
+        data:{phone :phone}
+      })
   });
 
   $("#email").blur(function(){

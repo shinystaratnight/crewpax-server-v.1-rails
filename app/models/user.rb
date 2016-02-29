@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   #Include default devise modules. Others are available are:
   #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-         :validatable, :trackable
+         :trackable
   mount_uploader :image, ImageUploader
-
+  #comment out devise :validatable
   has_many :appointments, dependent: :destroy
   has_many :labels
   has_many :jobs
@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   default_scope { order :name }
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}
