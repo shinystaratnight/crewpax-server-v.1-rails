@@ -6,7 +6,9 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(user_params)
     if @user.save!   
+    
       create_label_of_user_role(@user)
+
       set_flash_message :notice, :signed_up
       redirect_to after_sign_up_path_for(@user) 
     else 

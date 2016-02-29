@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 
   default_scope { order :name }
 
-  validates :name, presence: true, uniqueness: true
+  # validates :name, presence: true, uniqueness: true
 
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}
