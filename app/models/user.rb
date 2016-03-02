@@ -16,7 +16,12 @@ class User < ActiveRecord::Base
 
   default_scope { order :name }
 
-  # validates :name, presence: true, uniqueness: true
+  validates :name, uniqueness: true
+  validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, on: :update
+
+
+    
+  
 
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}

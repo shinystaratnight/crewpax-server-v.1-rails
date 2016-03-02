@@ -1,40 +1,32 @@
 # This is the customized registrations controller for devise
 class RegistrationsController < Devise::RegistrationsController
-
-
 # When a user is created, it needs to call create_label_of_user_role to create the associated label
   def create
     @user = User.new(user_params)
-    if @user.save!   
-    
-      create_label_of_user_role(@user)
-
-      set_flash_message :notice, :signed_up
-      redirect_to after_sign_up_path_for(@user) 
-    else 
-      render :new
+    respond_to do |format|
+      if @user.save!
+        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @user }
+      end
     end
+    # response = {result: false}
+    # if @user.save!  
+    #   response[:result]=true
+    #   response[:id]= @user.id
+    # else
+    #   response[:message]=@user.errors
+    #   # create_label_of_user_role(@user)
+    #   # set_flash_message :notice, :signed_up
+    #   # redirect_to after_sign_up_path_for(@user) 
+    # # else 
+    # #   render :new
+    # end
+    #   response.to_json
   end
 
-  def update
-    @user = User.find(current_user.id)
-
-    account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
-  
-    if account_update_params[:password].blank?
-      account_update_params.delete 'password'
-      account_update_params.delete 'password_confirmation'
-    end
-
-    if @user.update_attributes(account_update_params)
-      update_label_with_user_role(@user)
-      sign_in @user, bypass: true
-      set_flash_message :notice, :updated
-      redirect_to after_update_path_for(@user)
-    else
-      render :edit
-    end
-  end
 
   protected
 
@@ -72,10 +64,11 @@ class RegistrationsController < Devise::RegistrationsController
       end
   end
 
-  def user_params
-    params.permit :name, :image, :password, :password_confirmation,
+# To prevent Mass assignments.Require that :user be a key in the params Hash to accept various attributes
+  def user_params 
+    params.require(:user).permit(:name, :id, :image, :password, :password_confirmation,
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input]
+    :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input])
   end
 
   

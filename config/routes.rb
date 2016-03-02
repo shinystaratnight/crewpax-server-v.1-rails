@@ -23,7 +23,8 @@ Bcpax::Application.routes.draw do
   # resources :users do
   #   resources :roles 
   # end
-
+  
+  resources :addresses
   
   # resources :jobs do
   #   resources :labels
