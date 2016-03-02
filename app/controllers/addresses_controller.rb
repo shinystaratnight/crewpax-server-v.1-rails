@@ -15,6 +15,16 @@ class AddressesController < ActionController::Base
 
 
   def update
+    @address= Address.find(params[:id])
+    respond_to do |format|
+      if @address.update_attributes(address_params)
+        format.html{redirect_to @user}
+        format.json{render json: @address}
+      else
+        format.html{render action: "edit"}
+        format.json{render json: @address.errors, status: :unprocessable_entity}
+      end
+    end
   end
 
 

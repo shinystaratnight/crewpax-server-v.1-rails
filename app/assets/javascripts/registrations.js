@@ -137,13 +137,110 @@ $(function(){
   });
 //============================================================================================
 
-  $("#billing_address").blur(function(){
+  $("#billing_address").on("blur", function(){
+    
+    // Need to check if the address.id exists, if yes -> post, no-> put
+    var address_id = $("#billing_address_info").attr("data-billing-id");
+    if (address_id==""){
+      var url ="/addresses";
+      var method = "post";
+    } else{
+      var url ="/addresses/" + address_id;
+      var method = "put";
+    }
+    debugger
     var billing_address= $("#billing_address").text();
+    var type = "Billing";
+    var user_id = $("#info").attr("data-user-id");
+
+    if (billing_address ==""){
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } 
+      else {
+        $("#billing-address-error").hide();
+        $(this).addClass("valid");  
+        $.ajax({
+          url:url, 
+          method:method,
+          dataType:"json",
+          data:{address:{type:type, address_input:billing_address, user_id:user_id}},
+          success: function(response){
+            if(response.id){
+              $("#billing_address_info").attr("data-billing-id", response.id)
+            }
+          console.log("Billing address is successfully saved")
+          }
+        });
+      }
+
   });
 //============================================================================================
 
-  $("#shipping_address").blur(function(){
+  $("#shipping_address").on("blur", function(){
+    // Need to check if the address.id exists, if yes -> post, no-> put
+    var address_id = $("#shipping_address_info").attr("data-shipping-id");
+    
+    if (address_id==""){
+      var url ="/addresses";
+      var method = "post";
+    } else{
+      var url ="/addresses/" + address_id;
+      var method = "put";
+    }
+    
     var shipping_address= $("#shipping_address").text();
+    var type = "Shipping";
+    var user_id = $("#info").attr("data-user-id");
+
+    if (shipping_address ==""){
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } 
+      else {
+        $("#shipping-address-error").hide();
+        $(this).addClass("valid");  
+        $.ajax({
+          url:url, 
+          method:method,
+          dataType:"json",
+          data:{address:{type:type, address_input:shipping_address, user_id:user_id}},
+          success: function(response){
+            if(response.id){
+              $("#shipping_address_info").attr("data-shipping-id", response.id)
+            }
+          console.log("Shipping address is successfully saved")
+          }
+        });
+      }   
   });
+//===================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
