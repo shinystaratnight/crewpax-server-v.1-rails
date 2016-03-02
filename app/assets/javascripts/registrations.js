@@ -98,7 +98,21 @@ $(function(){
 
 //============================================================================================
   $("#mailing_address").on("blur", function(){
+    // Need to check if the address.id exists, if yes -> post, no-> put
+    var address_id = $("#mailing_address_info").attr("data-address-id");
+    
+    if (address_id==""){
+      var url ="/addresses";
+      var method = "post";
+    } else{
+      var url ="/addresses/" + address_id;
+      var method = "put";
+    }
+    
     var mailing_address=$("#mailing_address").text();
+    var type = "Mailing";
+    var user_id = $("#info").attr("data-user-id");
+
     if (mailing_address ==""){
         $(this).addClass("invalid");
         $(this).next().show();
@@ -108,12 +122,14 @@ $(function(){
         $("#mailing-address-error").hide();
         $(this).addClass("valid");  
         $.ajax({
-          url:"/users/" + user_id, 
-          method:"put",
+          url:url, 
+          method:method,
           dataType:"json",
-          data:{user:{address_input: mailing_address}},
+          data:{address:{type:type, address_input:mailing_address, user_id:user_id}},
           success: function(response){
-
+            if(response.id){
+              $("#mailing_address_info").attr("data-address-id", response.id)
+            }
           console.log("mailing address is successfully saved")
           }
         });
