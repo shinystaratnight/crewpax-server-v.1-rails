@@ -148,7 +148,7 @@ $(function(){
       var url ="/addresses/" + address_id;
       var method = "put";
     }
-    debugger
+ 
     var billing_address= $("#billing_address").text();
     var type = "Billing";
     var user_id = $("#info").attr("data-user-id");
@@ -257,60 +257,48 @@ $(function(){
     });
 
 //===================================================================================
-  $("#password").add("#password_confirmation").on("blur", function(){
-    var user_id = $("#info").attr("data-user-id");
+  $("#password").on("blur", function(){
     var password= $(this).text();
     if(password ==""){
       $(this).addClass("invalid");
       $(this).next().show();
       return false;
-    };
-    
-  });  
+    }
+    else{
+      $(this).addClass("valid");
+      $(this).next().hide();
+    }
+  });
 
 
+//===================================================================================
+  $("#pw_confirmation").on("blur", function(){
+    var password_confirmation=$(this).text();
+    var password = $("#password").text();
+    var user_id = $("#info").attr("data-user-id");
 
+    if(password_confirmation ==""){
+      $(this).addClass("invalid");
+      $(this).next().show();
+      return false;
+    }
+    else if(password==password_confirmation){
+      $("#password-error").hide();
+        $("#pw_confirmation").addClass("valid");  
+        $.ajax({
+          url:"/users/" + user_id, 
+          method:"put",
+          dataType:"json",
+          data:{user:{password: password_confirmation}},
+          success: function(response){
 
-
-
-  
-
-
-      // else {
-      //   $("#password-error").hide();
-      //   $(this).addClass("valid");  
-      //   $.ajax({
-      //     url:"/users/" + user_id, 
-      //     method:"put",
-      //     dataType:"json",
-      //     data:{user:{email: email}},
-      //     success: function(response){
-
-      //     console.log("email is successfully saved")
-      //     }
-      //   });
-      // }
-  // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          console.log("password is successfully saved")
+            }
+        });
+    }
+    else{
+      return false;
+    }  
+  }); 
 
 });
