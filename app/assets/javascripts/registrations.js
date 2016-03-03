@@ -217,10 +217,80 @@ $(function(){
       }   
   });
 //===================================================================================
+  // To trigger Bootstrap Switch 
+  $("[name='my-checkbox']").bootstrapSwitch();
+
+//===================================================================================
+
+  $('#traffic_control').on('switchChange.bootstrapSwitch', 
+    function(event, state) {
+      
+      var condition = state;
+      var user_id = $("#info").attr("data-user-id");
+      console.log("condition, user_id", condition, user_id);
+      $.ajax({
+        url:"/users/"+ user_id,
+        method: "put",
+        dataType: "json",
+        data: {user: {has_traffic_control_ticket: condition}},
+        success: function(response) {
+          console.log("traffic control info is updated")
+        }
+      });
+    });
+//===================================================================================
+  $('#vehicle').on('switchChange.bootstrapSwitch', 
+    function(event, state) {
+      
+      var condition = state;
+      var user_id = $("#info").attr("data-user-id");
+      console.log("condition, user_id", condition, user_id);
+      $.ajax({
+        url:"/users/"+ user_id,
+        method: "put",
+        dataType: "json",
+        data: {user: {has_vehicle: condition}},
+        success: function(response) {
+          console.log("Vehicle info is updated")
+        }
+      });
+    });
+
+//===================================================================================
+  $("#password").add("#password_confirmation").on("blur", function(){
+    var user_id = $("#info").attr("data-user-id");
+    var password= $(this).text();
+    if(password ==""){
+      $(this).addClass("invalid");
+      $(this).next().show();
+      return false;
+    };
+    
+  });  
 
 
 
 
+
+
+  
+
+
+      // else {
+      //   $("#password-error").hide();
+      //   $(this).addClass("valid");  
+      //   $.ajax({
+      //     url:"/users/" + user_id, 
+      //     method:"put",
+      //     dataType:"json",
+      //     data:{user:{email: email}},
+      //     success: function(response){
+
+      //     console.log("email is successfully saved")
+      //     }
+      //   });
+      // }
+  // });
 
 
 

@@ -22,3 +22,12 @@
 .error{
   color:red;
 }
+
+//These are for password bullets styles in div. 
+#password {
+  -webkit-text-security: disc;
+}
+
+#pw_confirmation {
+  -webkit-text-security: disc;
+}

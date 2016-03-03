@@ -43,29 +43,34 @@
       </div>
 
         <div class="field">
-          <p> Do you have a traffic control? </p>
-            <input type="radio"> Yes 
-            <input type="radio">  No 
+          <h5> Do you have a traffic control? </h5>
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+            data-off-text= "No" data-on-color="success" data-off-color="danger" 
+            id="traffic_control">   
         </div>
         
         <div class= "field">
-          <p>Do you have a vehicle? </p>  
-            <input type="radio"> Yes 
-            <input type="radio">  No     
-        </div>        
-        <h4 class="panel-title">
-          Upload Your Profile Picture
-        </h4>
-        <div class="panel-body">
-             
+          <h5>Do you have a vehicle? </h5>  
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+            data-off-text= "No" data-on-color="success" data-off-color="danger" 
+            id="vehicle"> 
+        </div> 
+        
+        <div class="field">
+          <h5>
+            Upload Your Profile Picture
+          </h5>
         </div>
 
         <div class="field">
-          <input type ="text", name="password">
+          <h5> Password </h5>
+          <div type="password" class="profile_input" id="password" contenteditable="true"></div> 
         </div>
 
         <div class="field">
-          
+          <h5> Password Confirmation </h5>
+            <div class="profile_input" id="pw_confirmation" contenteditable="true"></div>
+           <span class="error" hidden="true" id="password-error"> *Password is not valid</span>
         </div>
     </div>
   </div>     
