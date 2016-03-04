@@ -223,8 +223,7 @@ $(function(){
 //===================================================================================
 
   $('#traffic_control').on('switchChange.bootstrapSwitch', 
-    function(event, state) {
-      
+    function(event, state) {  
       var condition = state;
       var user_id = $("#info").attr("data-user-id");
       console.log("condition, user_id", condition, user_id);
@@ -255,6 +254,46 @@ $(function(){
         }
       });
     });
+//===================================================================================
+  $("#upload_picture").on("change", function(){
+    var formData = new FormData();
+    var user_id = $("#info").attr("data-user-id");
+    $input=$("#upload_picture");
+    
+    formData.append("user[image]",$input[0].files[0]);
+    
+    $.ajax({
+      url: "/users/"+ user_id,
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      method: 'put',
+      success: function(){
+        alert("success");
+      }
+    });    
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //===================================================================================
   $("#password").on("blur", function(){

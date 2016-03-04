@@ -1,6 +1,11 @@
 <div class="page-header">
   <h1>Edit profile</h1>
 </div>
-<%= simple_form_for current_user, url: registration_path(:user) do |f| %>
-  <%= render 'form' %>
-<% end %>
+<div class = "row">
+    <div class="col-md-4">
+      <%= render 'personalinfo' %>
+    </div>
+    <div class= "col-md-8">
+      <%= render 'union' %>
+    </div>
+  </div>

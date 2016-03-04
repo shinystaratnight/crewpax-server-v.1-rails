@@ -18,7 +18,14 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    respond_to do |format|  
+      if user_params[:image].present?
+        @file = user_params[:image]
+        @user.image= @file
+       
+        @user.save!
+
+      end 
+    respond_to do |format|
       if @user.update_attributes(user_params)  
         format.html{ redirect_to new_user_registration_path}
         format.json{ render json: @user}

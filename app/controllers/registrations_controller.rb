@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
-        format.json { render json: @user }
+        format.json { render json: @user.errors }
       end
     end
     # response = {result: false}
