@@ -292,7 +292,22 @@ $(function(){
       $(this).addClass("valid");
       $(this).next().hide();
     }
-  });
+  });    
+      
+    $("#password").pStrength({
+      bind: 'keyup change',
+      changeBackground: false,
+      onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
+        if($(this).text()){
+          $.fn.pStrength('changeBackground',$(this), passwordStrength);
+        } 
+        else {
+          $.fn.pStrength('resetStyle', $(this));
+        }
+      }
+    });
+    
+ 
 
 
 //===================================================================================
@@ -325,4 +340,48 @@ $(function(){
     }  
   }); 
 
+  $("#pw_confirmation").pStrength({
+    bind: 'keyup change',
+    changeBackground: false,
+    onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
+      if($(this).text()){
+        $.fn.pStrength('changeBackground',$(this), passwordStrength);
+      } 
+      else {
+        $.fn.pStrength('resetStyle', $(this));
+      }
+        $('#pw_confirmation_strength_precentage').html('Your password strength is ' + strengthPercentage + '%.')    
+      },
+    onValidatePassword: function(strengthPercentage){
+      $('#pw_confirmation_strength_precentage').html(
+      $('#pw_confirmation_strength_precentage').html() + ' Great, now you can continue to register!'
+
+      );
+    }
+  });
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
