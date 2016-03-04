@@ -258,6 +258,7 @@ $(function(){
   $("#upload_picture").on("change", function(){
     var formData = new FormData();
     var user_id = $("#info").attr("data-user-id");
+
     $input=$("#upload_picture");
     
     formData.append("user[image]",$input[0].files[0]);
