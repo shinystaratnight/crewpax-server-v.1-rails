@@ -31,14 +31,15 @@ $(function(){
           if(response.id){
             $("#info").attr("data-user-id", response.id)
           }
-          else{
-            
+          else{              
+            var errors= response.toString();
+            $("#name-error").html("*"+ errors);
             $("#name-error").show();
           }
         }
       });
     };
-      return false;
+      // return false;
   });
 
 //=====================================================================================
@@ -275,7 +276,6 @@ $(function(){
       }
     });    
   });
-
 
 
 
