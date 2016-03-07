@@ -21,7 +21,6 @@ $(function(){
     }
     else{
       $("#name-error").hide();
-      $(this).addClass("valid");
       $.ajax({
         url: url,
         method:method,
@@ -30,11 +29,14 @@ $(function(){
         success: function(response){
           if(response.id){
             $("#info").attr("data-user-id", response.id)
+            $("#name").addClass("valid");
           }
           else{              
             var errors= response.toString();
             $("#name-error").html("*"+ errors);
+            $("#name").addClass("invalid");
             $("#name-error").show();
+           
           }
         }
       });
@@ -53,20 +55,34 @@ $(function(){
       } 
       else {
         $("#phone-error").hide();
-        $(this).addClass("valid");  
+         
         $.ajax({
           url:"/users/" + user_id, 
           method:"put",
           dataType:"json",
           data:{user:{phone: phone}},
-          // success: function(response){
-          // console.log("phone is successfully saved")
-          // }
-          error: function(response){
-            alert(response.error);
+          success: function(response){
+            $(this).addClass("valid"); 
+            // if (response.error){
+            //   debugger
+            //   var errors= response.toString();
+            //   $("#phone-error").html("*"+ errors);
+            // }
+            
+          console.log("phone is successfully saved")
+          },
+
+          error: function(xhr){  
+            console.log("It's not valid, xhr:", xhr);
+            var errors = $.parseJSON(xhr.responseText).toString();
+            console.log("errors:", errors);
+            $("#phone").addClass("invalid");
+            $("#phone-error").html("*"+ errors);
+            $("#phone-error").show();
           }
+  
         });
-      }
+      };
   });
 
 

@@ -18,8 +18,9 @@ class User < ActiveRecord::Base
 
 
 
-  validates :name, uniqueness: true
-  validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, on: :update
+  validates :name, uniqueness: true, presence: true, length: {maximum: 64}
+  validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 
+  presence:true, length: {maximum: 10}, on: :update
   # validates :password, confirmation: true, on: :update
   # validates :password_confirmation, presence: true,  on: :update 
     

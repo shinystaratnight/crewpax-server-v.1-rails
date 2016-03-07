@@ -24,14 +24,14 @@ class UsersController < ApplicationController
       if user_params[:image].present?
         @file = user_params[:image]
         @user.image= @file
-        @user.save!
+        @user.save
         format.json{render json: @user}
       elsif @user.update_attributes(user_params)  
         format.html{ redirect_to @user}
         format.json{ render json: @user}
       else
         format.html{ render action: "edit"}
-        format.json{ render json:  {:error =>@user.errors}, status: :unprocessable_entity}
+        format.json{ render json: @user.errors.full_messages, status: :unprocessable_entity}
       end
     end
 
