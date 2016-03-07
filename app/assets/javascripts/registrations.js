@@ -12,7 +12,7 @@ $(function(){
       var url = "/users/" + user_id;
       var method ="put";
     }
-    var name = $("#name").text();
+    var name = $("#name").text().trim();
     // There are two rounds of validations, front-end and back-end. Here's the front-end validation
     if(name == ""){
       $(this).addClass("invalid");
@@ -47,7 +47,7 @@ $(function(){
 //=====================================================================================
   $("#phone").on("blur", function(){
     var user_id = $("#info").attr("data-user-id");
-    var phone=$("#phone").text();
+    var phone=$("#phone").text().trim();
       if (phone ==""){
         $(this).addClass("invalid");
         $(this).next().show();
@@ -62,25 +62,15 @@ $(function(){
           dataType:"json",
           data:{user:{phone: phone}},
           success: function(response){
-            $(this).addClass("valid"); 
-            // if (response.error){
-            //   debugger
-            //   var errors= response.toString();
-            //   $("#phone-error").html("*"+ errors);
-            // }
-            
-          console.log("phone is successfully saved")
+            $("#phone").addClass("valid"); 
           },
-
           error: function(xhr){  
-            console.log("It's not valid, xhr:", xhr);
             var errors = $.parseJSON(xhr.responseText).toString();
-            console.log("errors:", errors);
             $("#phone").addClass("invalid");
             $("#phone-error").html("*"+ errors);
             $("#phone-error").show();
+            console.log("phone errors:", errors)
           }
-  
         });
       };
   });
@@ -89,7 +79,7 @@ $(function(){
 //============================================================================================
   $("#email").on("blur", function(){
     var user_id = $("#info").attr("data-user-id");
-    var email=$("#email").text();
+    var email=$("#email").text().trim();
     if (email ==""){
         $(this).addClass("invalid");
         $(this).next().show();
@@ -97,16 +87,25 @@ $(function(){
       } 
       else {
         $("#email-error").hide();
-        $(this).addClass("valid");  
+        
         $.ajax({
           url:"/users/" + user_id, 
           method:"put",
           dataType:"json",
           data:{user:{email: email}},
           success: function(response){
-
+            $("#email").addClass("valid");  
           console.log("email is successfully saved")
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            console.log("email errors:", errors);            
+            $("#email").addClass("invalid");
+            $("#email-error").html("*"+ errors);
+            $("#email-error").show();
+    
           }
+
         });
       }
   });
@@ -126,18 +125,17 @@ $(function(){
       var method = "put";
     }
     
-    var mailing_address=$("#mailing_address").text();
+    var mailing_address=$("#mailing_address").text().trim();
     var type = "Mailing";
     var user_id = $("#info").attr("data-user-id");
-
-    if (mailing_address ==""){
+    
+    if (mailing_address==""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
       } 
       else {
         $("#mailing-address-error").hide();
-        $(this).addClass("valid");  
         $.ajax({
           url:url, 
           method:method,
@@ -145,9 +143,10 @@ $(function(){
           data:{address:{type:type, address_input:mailing_address, user_id:user_id}},
           success: function(response){
             if(response.id){
-              $("#mailing_address_info").attr("data-address-id", response.id)
+              $("#mailing_address_info").attr("data-address-id", response.id);
+              $("#mailing_address").addClass("valid");
+              console.log("mailing address is successfully saved");
             }
-          console.log("mailing address is successfully saved")
           }
         });
       }
@@ -166,7 +165,7 @@ $(function(){
       var method = "put";
     }
  
-    var billing_address= $("#billing_address").text();
+    var billing_address= $("#billing_address").text().trim();
     var type = "Billing";
     var user_id = $("#info").attr("data-user-id");
 
@@ -176,8 +175,7 @@ $(function(){
         return false;
       } 
       else {
-        $("#billing-address-error").hide();
-        $(this).addClass("valid");  
+        $("#billing-address-error").hide();         
         $.ajax({
           url:url, 
           method:method,
@@ -186,8 +184,9 @@ $(function(){
           success: function(response){
             if(response.id){
               $("#billing_address_info").attr("data-billing-id", response.id)
-            }
-          console.log("Billing address is successfully saved")
+              $("#billing_address").addClass("valid"); 
+              console.log("Billing address is successfully saved")
+            }         
           }
         });
       }
@@ -207,7 +206,7 @@ $(function(){
       var method = "put";
     }
     
-    var shipping_address= $("#shipping_address").text();
+    var shipping_address= $("#shipping_address").text().trim();
     var type = "Shipping";
     var user_id = $("#info").attr("data-user-id");
 
@@ -218,17 +217,18 @@ $(function(){
       } 
       else {
         $("#shipping-address-error").hide();
-        $(this).addClass("valid");  
         $.ajax({
           url:url, 
           method:method,
           dataType:"json",
           data:{address:{type:type, address_input:shipping_address, user_id:user_id}},
           success: function(response){
-            if(response.id){
-              $("#shipping_address_info").attr("data-shipping-id", response.id)
+            if(response.id){  
+              $("#shipping_address_info").attr("data-shipping-id", response.id);
+              $("#shipping_address").addClass("valid"); 
+              $("#shipping_address").removeClass("invalid");
+              console.log("Shipping address is successfully saved")
             }
-          console.log("Shipping address is successfully saved")
           }
         });
       }   
