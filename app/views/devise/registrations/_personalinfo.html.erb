@@ -57,7 +57,8 @@
           <h5>
             Upload Your Profile Picture
             <input type="file" id="upload_picture" >
-            <input type="hidden" name="image_cache"> 
+            <input type="hidden" name="image_cache">
+            <div id="profile_pic" hidden="true" contenteditable="true"></div>
           </h5>
         </div>
 
@@ -72,7 +73,7 @@
             <h5> Password Confirmation </h5>
             <div class="profile_input" id="pw_confirmation" contenteditable="true"></div>
             <div id="pw_confirmation_strength_precentage"></div>
-            <span class="error" hidden="true" id="password-error"> *Password is not valid</span>
+            <span class="error" hidden="true" id="pw-confirmation-error"> *Password is not valid</span>
         </div>
     </div>
   </div>     

@@ -288,7 +288,10 @@ $(function(){
       processData: false,
       method: 'put',
       success: function(){
-        alert("success");
+        $("#profile_pic").html("Profile picture saved");
+        $("#profile_pic").show();
+        console.log("profile picture has been successfully saved")
+       
       }
     });    
   });
@@ -298,15 +301,15 @@ $(function(){
 
 //===================================================================================
   $("#password").on("blur", function(){
-    var password= $(this).text();
+    var password= $(this).text().trim();
     if(password ==""){
       $(this).addClass("invalid");
-      $(this).next().show();
+      $("#password-error").show();
       return false;
     }
     else{
-      $(this).addClass("valid");
-      $(this).next().hide();
+      $("#password").addClass("valid");
+      $("#password-error").hide();
     }
   });    
       
@@ -328,31 +331,33 @@ $(function(){
 
 //===================================================================================
   $("#pw_confirmation").on("blur", function(){
-    var password_confirmation=$(this).text();
-    var password = $("#password").text();
+    var password_confirmation=$(this).text().trim();
+    var password = $("#password").text().trim();
     var user_id = $("#info").attr("data-user-id");
 
     if(password_confirmation ==""){
       $(this).addClass("invalid");
-      $(this).next().show();
+      $("#pw-confirmation-error").show();
       return false;
     }
     else if(password==password_confirmation){
-      $("#password-error").hide();
-        $("#pw_confirmation").addClass("valid");  
+      $("#pw-confirmation-error").hide();
+         
         $.ajax({
           url:"/users/" + user_id, 
           method:"put",
           dataType:"json",
           data:{user:{password: password_confirmation}},
           success: function(response){
-
+          $("#pw_confirmation").addClass("valid"); 
           console.log("password is successfully saved")
             }
         });
     }
     else{
+      $("#pw-confirmation-error").show();
       return false;
+      
     }  
   }); 
 
