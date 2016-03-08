@@ -21,11 +21,8 @@ class User < ActiveRecord::Base
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
   validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 
   length: {maximum: 10}, if: "phone.present?"
-  # validates :password, confirmation: true, on: :update
-  # validates :password_confirmation, presence: true,  on: :update 
   validates :email,length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
   if: "email.present?"
-  # validates :image, presence:true
 
   
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}

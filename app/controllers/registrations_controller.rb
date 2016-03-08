@@ -41,28 +41,28 @@ class RegistrationsController < Devise::RegistrationsController
   #if an existing label is not found, create a new label with the new role_id 
   #Question: how to check and delete old labels.
   #Answer: No need to consider this question now, because we will be using ajax to update
-  def update_label_with_user_role(user)
-    array = @user.roles_ids
-      i = 0 
-      while i < array.length
-        r_id = array[i]
-          unless @user.labels.find_by(role_id: r_id)
-            @user.labels.create(role_id: r_id)
-          end
-        i+=1
-      end
-  end
+  # def update_label_with_user_role(user)
+  #   array = @user.roles_ids
+  #     i = 0 
+  #     while i < array.length
+  #       r_id = array[i]
+  #         unless @user.labels.find_by(role_id: r_id)
+  #           @user.labels.create(role_id: r_id)
+  #         end
+  #       i+=1
+  #     end
+  # end
 
-  def create_label_of_user_role(user)
-    array = @user.roles_ids 
-      i=0
-      while i < array.length 
-        r_id = array[i]
+  # def create_label_of_user_role(user)
+  #   array = @user.roles_ids 
+  #     i=0
+  #     while i < array.length 
+  #       r_id = array[i]
        
-        @user.labels.create(role_id: r_id)
-        i+=1
-      end
-  end
+  #       @user.labels.create(role_id: r_id)
+  #       i+=1
+  #     end
+  # end
 
 # To prevent Mass assignments.Require that :user be a key in the params Hash to accept various attributes
   def user_params 

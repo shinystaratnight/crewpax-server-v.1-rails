@@ -69,7 +69,6 @@ $(function(){
             $("#phone").addClass("invalid");
             $("#phone-error").html("*"+ errors);
             $("#phone-error").show();
-            console.log("phone errors:", errors)
           }
         });
       };
@@ -95,11 +94,9 @@ $(function(){
           data:{user:{email: email}},
           success: function(response){
             $("#email").addClass("valid");  
-          console.log("email is successfully saved")
           },
           error: function(xhr){
             var errors = $.parseJSON(xhr.responseText).toString();
-            console.log("email errors:", errors);            
             $("#email").addClass("invalid");
             $("#email-error").html("*"+ errors);
             $("#email-error").show();
@@ -145,7 +142,6 @@ $(function(){
             if(response.id){
               $("#mailing_address_info").attr("data-address-id", response.id);
               $("#mailing_address").addClass("valid");
-              console.log("mailing address is successfully saved");
             }
           }
         });
@@ -185,7 +181,6 @@ $(function(){
             if(response.id){
               $("#billing_address_info").attr("data-billing-id", response.id)
               $("#billing_address").addClass("valid"); 
-              console.log("Billing address is successfully saved")
             }         
           }
         });
@@ -227,7 +222,6 @@ $(function(){
               $("#shipping_address_info").attr("data-shipping-id", response.id);
               $("#shipping_address").addClass("valid"); 
               $("#shipping_address").removeClass("invalid");
-              console.log("Shipping address is successfully saved")
             }
           }
         });
@@ -243,14 +237,12 @@ $(function(){
     function(event, state) {  
       var condition = state;
       var user_id = $("#info").attr("data-user-id");
-      console.log("condition, user_id", condition, user_id);
       $.ajax({
         url:"/users/"+ user_id,
         method: "put",
         dataType: "json",
         data: {user: {has_traffic_control_ticket: condition}},
         success: function(response) {
-          console.log("traffic control info is updated")
         }
       });
     });
@@ -260,14 +252,12 @@ $(function(){
       
       var condition = state;
       var user_id = $("#info").attr("data-user-id");
-      console.log("condition, user_id", condition, user_id);
       $.ajax({
         url:"/users/"+ user_id,
         method: "put",
         dataType: "json",
         data: {user: {has_vehicle: condition}},
         success: function(response) {
-          console.log("Vehicle info is updated")
         }
       });
     });
@@ -290,7 +280,6 @@ $(function(){
       success: function(){
         $("#profile_pic").html("Profile picture saved");
         $("#profile_pic").show();
-        console.log("profile picture has been successfully saved")
        
       }
     });    
@@ -350,7 +339,6 @@ $(function(){
           data:{user:{password: password_confirmation}},
           success: function(response){
           $("#pw_confirmation").addClass("valid"); 
-          console.log("password is successfully saved")
             }
         });
     }
