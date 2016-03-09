@@ -26,6 +26,7 @@ Bcpax::Application.routes.draw do
   
   resources :addresses
   
+  resources :eligibilities
   # resources :jobs do
   #   resources :labels
   # end
