@@ -3,7 +3,7 @@ $(function(){
   $("#name").on("blur", function(){
     //Retrieve the info from user's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a user is already created and decide which url the ajax should send to(create/update) 
-    var user_id= $(this).parent().attr("data-user-id");
+    var user_id= $("#info").data("user-id");
     if(user_id== ""){
       var url = "/users";
       var method = "post";
@@ -28,15 +28,13 @@ $(function(){
         data:{user: {name: name}},
         success: function(response){
           if(response.id){
-            $("#info").attr("data-user-id", response.id)
+            $("#info").data("user-id", response.id);
             $("#name").addClass("valid");
           }
           else{              
             var errors= response.toString();
-            $("#name-error").html("*"+ errors);
-            $("#name").addClass("invalid");
-            $("#name-error").show();
-           
+            $("#name-error").text("*"+ errors).show();
+            $("#name").addClass("invalid");   
           }
         }
       });
@@ -46,7 +44,7 @@ $(function(){
 
 //=====================================================================================
   $("#phone").on("blur", function(){
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
     var phone=$("#phone").text().trim();
       if (phone ==""){
         $(this).addClass("invalid");
@@ -62,13 +60,12 @@ $(function(){
           dataType:"json",
           data:{user:{phone: phone}},
           success: function(response){
-            $("#phone").addClass("valid"); 
+            $("#phone").addClass("valid");
           },
           error: function(xhr){  
             var errors = $.parseJSON(xhr.responseText).toString();
             $("#phone").addClass("invalid");
-            $("#phone-error").html("*"+ errors);
-            $("#phone-error").show();
+            $("#phone-error").text("*"+ errors).show();
           }
         });
       };
@@ -77,7 +74,7 @@ $(function(){
 
 //============================================================================================
   $("#email").on("blur", function(){
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
     var email=$("#email").text().trim();
     if (email ==""){
         $(this).addClass("invalid");
@@ -98,8 +95,7 @@ $(function(){
           error: function(xhr){
             var errors = $.parseJSON(xhr.responseText).toString();
             $("#email").addClass("invalid");
-            $("#email-error").html("*"+ errors);
-            $("#email-error").show();
+            $("#email-error").html("*"+ errors).show();
     
           }
 
@@ -112,7 +108,7 @@ $(function(){
 //============================================================================================
   $("#mailing_address").on("blur", function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
-    var address_id = $("#mailing_address_info").attr("data-address-id");
+    var address_id = $("#mailing_address_info").data("address-id");
     
     if (address_id==""){
       var url ="/addresses";
@@ -124,7 +120,7 @@ $(function(){
     
     var mailing_address=$("#mailing_address").text().trim();
     var type = "Mailing";
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
     
     if (mailing_address==""){
         $(this).addClass("invalid");
@@ -140,7 +136,7 @@ $(function(){
           data:{address:{type:type, address_input:mailing_address, user_id:user_id}},
           success: function(response){
             if(response.id){
-              $("#mailing_address_info").attr("data-address-id", response.id);
+              $("#mailing_address_info").data("address-id", response.id);
               $("#mailing_address").addClass("valid");
             }
           }
@@ -152,7 +148,7 @@ $(function(){
   $("#billing_address").on("blur", function(){
     
     // Need to check if the address.id exists, if yes -> post, no-> put
-    var address_id = $("#billing_address_info").attr("data-billing-id");
+    var address_id = $("#billing_address_info").data("billing-id");
     if (address_id==""){
       var url ="/addresses";
       var method = "post";
@@ -163,7 +159,7 @@ $(function(){
  
     var billing_address= $("#billing_address").text().trim();
     var type = "Billing";
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
 
     if (billing_address ==""){
         $(this).addClass("invalid");
@@ -179,7 +175,7 @@ $(function(){
           data:{address:{type:type, address_input:billing_address, user_id:user_id}},
           success: function(response){
             if(response.id){
-              $("#billing_address_info").attr("data-billing-id", response.id)
+              $("#billing_address_info").data("billing-id", response.id)
               $("#billing_address").addClass("valid"); 
             }         
           }
@@ -191,7 +187,7 @@ $(function(){
 
   $("#shipping_address").on("blur", function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
-    var address_id = $("#shipping_address_info").attr("data-shipping-id");
+    var address_id = $("#shipping_address_info").data("shipping-id");
     
     if (address_id==""){
       var url ="/addresses";
@@ -203,7 +199,7 @@ $(function(){
     
     var shipping_address= $("#shipping_address").text().trim();
     var type = "Shipping";
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
 
     if (shipping_address ==""){
         $(this).addClass("invalid");
@@ -219,9 +215,8 @@ $(function(){
           data:{address:{type:type, address_input:shipping_address, user_id:user_id}},
           success: function(response){
             if(response.id){  
-              $("#shipping_address_info").attr("data-shipping-id", response.id);
+              $("#shipping_address_info").data("shipping-id", response.id);
               $("#shipping_address").addClass("valid"); 
-              $("#shipping_address").removeClass("invalid");
             }
           }
         });
@@ -235,13 +230,12 @@ $(function(){
 
   $('#traffic_control').on('switchChange.bootstrapSwitch', 
     function(event, state) {  
-      var condition = state;
-      var user_id = $("#info").attr("data-user-id");
+      var user_id = $("#info").data("user-id");
       $.ajax({
         url:"/users/"+ user_id,
         method: "put",
         dataType: "json",
-        data: {user: {has_traffic_control_ticket: condition}},
+        data: {user: {has_traffic_control_ticket: state}},
         success: function(response) {
         }
       });
@@ -249,14 +243,12 @@ $(function(){
 //===================================================================================
   $('#vehicle').on('switchChange.bootstrapSwitch', 
     function(event, state) {
-      
-      var condition = state;
-      var user_id = $("#info").attr("data-user-id");
+      var user_id = $("#info").data("user-id");
       $.ajax({
         url:"/users/"+ user_id,
         method: "put",
         dataType: "json",
-        data: {user: {has_vehicle: condition}},
+        data: {user: {has_vehicle: state}},
         success: function(response) {
         }
       });
@@ -264,7 +256,7 @@ $(function(){
 //===================================================================================
   $("#upload_picture").on("change", function(){
     var formData = new FormData();
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
 
     $input=$("#upload_picture");
     
@@ -278,8 +270,7 @@ $(function(){
       processData: false,
       method: 'put',
       success: function(){
-        $("#profile_pic").html("Profile picture saved");
-        $("#profile_pic").show();
+        $("#profile_pic").html("Profile picture saved").show();
        
       }
     });    
@@ -322,7 +313,7 @@ $(function(){
   $("#pw_confirmation").on("blur", function(){
     var password_confirmation=$(this).text().trim();
     var password = $("#password").text().trim();
-    var user_id = $("#info").attr("data-user-id");
+    var user_id = $("#info").data("user-id");
 
     if(password_confirmation ==""){
       $(this).addClass("invalid");
