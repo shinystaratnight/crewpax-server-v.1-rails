@@ -1,24 +1,8 @@
 $(function(){
-  $("#user_role").change(function(){
-    var role_id;
-      role_id = $(this).val();
-        if (role_id) {
-          return window.location.href = "/roles/" + role_id;
-        } else {
-          return window.location.href = "/users";
-        };
+  $("#user_role, #select_user_role").on("change",function(){
+    var role_id= $(this).val();
+      return window.location.href= (role_id) ? "/roles/" + role_id : "/users";
   });
-
-   $("#select_user_role").change(function(){
-    var role_id;
-      role_id = $(this).val();
-        if (role_id) {
-          return window.location.href = "/roles/" + role_id;
-        } else {
-          return window.location.href = "/users";
-        };
-  });
-
 
 });
   
