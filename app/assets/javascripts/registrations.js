@@ -95,7 +95,7 @@ $(function(){
           error: function(xhr){
             var errors = $.parseJSON(xhr.responseText).toString();
             $("#email").addClass("invalid");
-            $("#email-error").html("*"+ errors).show();
+            $("#email-error").text("*"+ errors).show();
     
           }
 
@@ -270,7 +270,7 @@ $(function(){
       processData: false,
       method: 'put',
       success: function(){
-        $("#profile_pic").html("Profile picture saved").show();
+        $("#profile_pic").text("Profile picture saved").show();
        
       }
     });    
@@ -350,11 +350,11 @@ $(function(){
       else {
         $.fn.pStrength('resetStyle', $(this));
       }
-        $('#pw_confirmation_strength_precentage').html('Your password strength is ' + strengthPercentage + '%.')    
+        $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')    
       },
     onValidatePassword: function(strengthPercentage){
-      $('#pw_confirmation_strength_precentage').html(
-      $('#pw_confirmation_strength_precentage').html() + ' Great, now you can continue to register!'
+      $('#pw_confirmation_strength_precentage').text(
+      $('#pw_confirmation_strength_precentage').text() + ' Great, now you can continue to register!'
 
       );
     }
