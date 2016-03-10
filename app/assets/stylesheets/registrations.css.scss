@@ -2,6 +2,8 @@
   width: 100%;
 }
 
+//=================These are for registration information form validation========================
+
 .profile_input {
   background-color: white;
 
@@ -23,7 +25,8 @@
   color:red;
 }
 
-//These are for password bullets styles in div. 
+//================These are for password bullets styles in div. ==================================
+
 #password {
   -webkit-text-security: disc;
 }
@@ -33,9 +36,14 @@
 }
 
 
+//=======For deparments title ===============================================================
+
 .panel-title {
   font-size: 24px;
 }
+
+
+//=== They are for departments roles checkboxes/radio buttons===============================
 
 label{
   cursor:pointer;
@@ -44,8 +52,6 @@ label{
 
 input[type="checkbox"] {    
   
-
- 
   margin-left: 5px;
   cursor:pointer;
   -webkit-appearance: none;
@@ -66,8 +72,6 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked{
   background-color: #2ECC71;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-  filter: alpha(opacity=100);
 }
 
 
@@ -78,5 +82,31 @@ input[type="checkbox"]:focus{
   box-shadow: none;
 }
 
+
+input[type="radio"]{
+  margin-left: 5px;
+  cursor:pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e9ecee;
+  box-sizing: border-box;
+  position: relative;
+  box-sizing: content-box ;
+  width: 25px;
+  height: 25px;
+  border-width: 0;
+  border-radius: 25px;
+  transition: all .1s linear;
+  
+}
+
+input[type="radio"]:checked{
+  background-color: #2ECC71;  
+}
+
+input[type="radio"]:focus{
+  outline: 0 none;
+  box-shadow: none;
+}
 
 
