@@ -1,4 +1,8 @@
 $(function(){
+
+//*********************************************************************************************************
+// Registration Form Personal Information Section 
+//********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $("#name").on("blur", function(){
     //Retrieve the info from user's entries and turn data into a nicely structured object (nesting included!)
@@ -360,8 +364,32 @@ $(function(){
     }
   });
 
-//===================================================================================
-  
+//==========================================================================================================
+//*********************************************************************************************************
+// Registration Form Department Section
+//********************************************************************************************************  
+  $("#unionStatus").on("click",function(){
+    var status = $(this).children("input:checked").data("name");
+    if (status == "member"){
+      var data = $(this).children("input:checked").val();
+    } else {
+
+      $("#permit_days").show();
+      $("#dgc_number_days").show();
+      
+    }
+    var user_id= $("#info").data("user-id");
+
+    
+  });
+
+
+
+
+
+
+
+
 
 });
 

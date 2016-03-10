@@ -2,7 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h3 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" data-eligibility-id="" id="deparments_header">
           Departments
         </a>
       </h3>
@@ -10,14 +10,21 @@
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
       <div class="list-group">
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" href="#roleOne" aria-expanded="false">
+          <a role="button" id="DGC" data-union-id="" data-toggle="collapse" href="#roleOne" aria-expanded="false">
             DGC
           </a>
         </div>
-        <div id="roleOne" class="collapse" >
-          <div>
-            <input type="radio" name="member" value="true" /> Member
-            <input type="radio" name= value= /> Permit
+        <div id="roleOne" class="collapse">
+          <div id="unionStatus">
+            <input type="checkbox" id="dgc_permit" data-name="permit" value= /> 
+            <label for="dgc_permit"> Permit </label>
+              <span hidden="true" id="dgc_number_days"> * Number of Days:
+                <div contenteditable="true" hidden="true" id="permit_days"></div>
+              </span>
+            <input type="checkbox" id="dgc_member" data-name="member" value="true" /> 
+            <label for="dgc_member"> Member </label>
+            
+   
           </div>
           
             <label>
