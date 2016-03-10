@@ -368,17 +368,63 @@ $(function(){
 //*********************************************************************************************************
 // Registration Form Department Section
 //********************************************************************************************************  
-  $("#unionStatus").on("click",function(){
+//==================Group One DGC================================================================================ 
+  $("#DGC").on("click",function(){
+    var union_name =$(this).data("union-name");
+   
+    $.ajax({
+      url:"/unions",
+      method: "get",
+      dataType: "json",
+      data:{union:{name: union_name}},
+      success: function(response){
+       $("#DGC").data("union-id", response.id);
+        console.log("current data-union-id:", $("#DGC").data("union-id"))
+      }
+    });
+   
+  });
+
+
+  $("#unionStatus").on("change",function(){
+
+    var union_name= $(this);
     var status = $(this).children("input:checked").data("name");
+    var user_id= $("#info").data("user-id");
+    var union_id=$("#DGC").data("union-id");
+
+    console.log("in unionstatus section, current data-union-id:", $("#DGC").data("union-id"))
+    //Store different data of member and permit days in a data variable for later ajax
     if (status == "member"){
       var data = $(this).children("input:checked").val();
-    } else {
+      $.ajax({
+          url:"/eligibilities", 
+          method:"post",
+          dataType:"json",
+          data:{eligibility:{member:data,union_id:union_id, user_id: user_id}},
+          success: function(response){
 
-      $("#permit_days").show();
-      $("#dgc_number_days").show();
+          }          
+        });
+    } 
+    else {
+      $("#permit_days,#dgc_number_days").show();
+      $("#permit_days").on("blur", function(){
+        var data = $(this).text().trim();
+        $.ajax({
+          url:"/eligibilities",
+          method: "post",
+          dataType:"json",
+          data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id}},
+          success: function(response){
+
+          }
+
+        });
+      });
       
     }
-    var user_id= $("#info").data("user-id");
+   
 
     
   });
