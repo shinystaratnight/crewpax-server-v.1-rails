@@ -10,7 +10,7 @@
     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
       <div class="list-group">
         <div class="list-group-item">
-          <a role="button" id="DGC" data-union-name="DGC" data-union-id="" data-toggle="collapse" href="#roleOne" aria-expanded="false">
+          <a role="button" id="DGC" data-union-name="DGC" data-union-id="" data-toggle="collapse" href="#roleOne" data-role-ids="[]" data-eligibility-id=""aria-expanded="false">
             DGC
           </a>
         </div>
@@ -22,13 +22,12 @@
                 <div contenteditable="true" hidden="true" id="permit_days"></div>
               </span>
             <input type="checkbox" id="dgc_member" data-name="member" value="true" /> 
-            <label for="dgc_member"> Member </label>
-            
-   
+            <label for="dgc_member"> Member </label>   
           </div>
           
-            <label>
-              <input type="checkbox" id="DGC_PA" name="DGC_PA" value="Producer’s Assistant"/>
+          <div id="dgc_roles" >
+            <label for "DGC_PA">
+              <input type="checkbox" id="DGC_PA" name="DGC_PA"  value="Producer’s Assistant"/>
               <span class="label-text">
               PA
               </span>
@@ -36,57 +35,57 @@
              
           
             <label>
-              <input type="checkbox" name="DGC_Key_PA" value="Key PA" /> Key PA
+              <input type="checkbox" name="DGC_Key_PA" data-role-id="" value="Key PA" /> Key PA
             </label>
             
           
             <label>
-              <input type="checkbox" name="DGC_On_Set_Key" value=/> On Set Key
+              <input type="checkbox" name="DGC_On_Set_Key" data-role-id="" value="On Set Key"/> On Set Key
             </label>
             
 
             <label>
-            <input type="checkbox" name="DGC_OPA" value="Office Production Assistant (OPA)" /> Office PA
+            <input type="checkbox" name="DGC_OPA" value="Office Production Assistant (OPA)" data-role-id="" /> Office PA
             </label>
             
 
             <label>
-            <input type="checkbox" name="DGC_Transport" value="Transport"/> Van Driver
+            <input type="checkbox" name="DGC_Transport" value="Transport" data-role-id=""/> Van Driver
             </label>
             
 
             <label>
-            <input type="checkbox" name="DGC_TAL" value="Trainee Assistant Location Manager (TAL)" /> TAL
+            <input type="checkbox" name="DGC_TAL" data-role-id="" value="Trainee Assistant Location Manager (TAL)" /> TAL
             </label>
            
             
             <label>
-              <input type="checkbox" name="DGC_ALM" value="Assistant Location Manager (ALM)"/> ALM
+              <input type="checkbox" name="DGC_ALM" value="Assistant Location Manager (ALM)" data-role-id=""/> ALM
             </label>
             
             
             <label>
-              <input type="checkbox" name="DGC_LM" value="Location Manager (LM)"/> LM
+              <input type="checkbox" name="DGC_LM" value="Location Manager (LM)" data-role-id=""/> LM
             </label>
             
 
             <label>
-              <input type="checkbox" name="DGC_TAD" value="Trainee Assistant Director (TAD)"/> TAD
+              <input type="checkbox" name="DGC_TAD" value="Trainee Assistant Director (TAD)" data-role-id=""/> TAD
             </label>
            
 
             <label>
-              <input type="checkbox" name="DGC_3RD_AD" value="3rd Assistant Director (3rd AD)"/> 3RD AD
+              <input type="checkbox" name="DGC_3RD_AD" value="3rd Assistant Director (3rd AD)" data-role-id=""/> 3RD AD
             </label>
             
             <label>
-            <input type="checkbox" name="DGC_2ND_AD" value="2nd Assistant Director (2nd AD)"/> 2ND AD
+            <input type="checkbox" name="DGC_2ND_AD" value="2nd Assistant Director (2nd AD)" data-role-id=""/> 2ND AD
             </label>
             
             <label>
-            <input type="checkbox" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)"/> 1ST AD
+            <input type="checkbox" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id=""/> 1ST AD
             </label>
-   
+          </div>
         </div>
         
         <div class="list-group-item">

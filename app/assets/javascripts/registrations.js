@@ -393,12 +393,19 @@ $(function(){
   $("#dgcStatus").on("change",function(){
     var status = $(this).children("input:checked").data("name");
     var union_id = $("#DGC").data("union-id");
+    var union_section= $("#DGC");
     if (status=="member"){
       var data = $(this).children("input:checked").val();
-      ajaxMember(data,union_id);
+      ajaxMember(data,union_id, union_section);
+    
      }else{
-      var data = $(this).text().trim();
-      ajaxPermit(data,union_id);
+      $("#dgc_number_days, #permit_days").show();
+      $("#permit_days").on("blur", function(){
+        var data = $("#permit_days").text().trim();
+        ajaxPermit(data,union_id,union_section);
+
+      });
+     
      }
   });
 
@@ -406,17 +413,22 @@ $(function(){
   $("#iatseStatus").on("change", function(){
     var status=$(this).children("input:checked").data("name");
     var union_id =$("#IATSE").data("union-id");
+    var union_section =$("#IATSE");
     if (status=="member"){
       var data = $(this).children("input:checked").val();
-      ajaxMember(data,union_id);
+      ajaxMember(data,union_id,union_section);
     }else{
-      var data = $(this).text().trim();
-      ajaxPermit(data,union_id);
+      $("#iatse_number_days, #iatse_permit_days").show();
+      $("#iatse_permit_days").on("blur", function(){
+        var data = $("#iatse_permit_days").text().trim();
+        ajaxPermit(data,union_id,union_section);
+
+      });      
     }
   });
 
-//============================common ajax call================================================
-  function ajaxMember(data, union_id){
+//============================Common ajax call for sending data(member/permit)================================================
+  function ajaxMember(data, union_id,union_section){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/eligibilities", 
@@ -424,12 +436,14 @@ $(function(){
       dataType:"json",
       data:{eligibility:{member:data, union_id: union_id, user_id: user_id}},
       success: function(response){
-
+        
+        union_section.data("eligibility-id", response.id);
+        console.log("eligibility-id:", union_section.data("eligibility-id"))
       }          
     });
   }
 
-  function ajaxPermit(data, union_id, user_id){
+  function ajaxPermit(data, union_id, user_id, union_section){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/eligibilities",
@@ -437,6 +451,9 @@ $(function(){
       dataType:"json",
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id}},
       success: function(response){
+        union_section.data("eligibility-id", response.id);
+        
+          console.log("eligibility-id:", union_section.data("eligibility-id"))
 
       }
     });
@@ -445,7 +462,49 @@ $(function(){
 
 
 //=================================================================================================
+//========================GROUP ONE DGC ROLES SELECTION AJAX GET ROLES ID===========================================
+  $("#dgc_roles").on("change",function(){
+    var arr =[];
+    var checkedbox= $("#dgc_roles input[type=checkbox]:checked");
+ 
+    checkedbox.map(function(){ arr.push($(this).val())});
+    console.log("checked checkboxes", arr);
 
+      if (arr.length == 0 ){
+        return false;
+      }
+      else{
+        $.ajax({
+          url:"/roles",
+          method: "get",
+          dataType: "json",
+          data: {role:{name:arr}},
+          success: function(response){
+            var roles_ids=[];
+            $.each(response, function(index,value){ 
+              roles_ids.push(value.id)
+            });
+            console.log("roles_ids:", roles_ids)
+            $("#DGC").data("role-ids", roles_ids);
+            console.log("data-role-ids:", $("#DGC").data("role-ids"))
+               
+          }
+         
+        });        
+      }
+
+      if(arr.length ==0 ){
+        return false;
+      }
+      else {
+        $.ajax({
+          url:"/eligibilities/" + ":id"
+
+        });
+      }
+  });
+//=================================================================================================
+    
 
 
 

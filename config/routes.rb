@@ -14,7 +14,7 @@ Bcpax::Application.routes.draw do
   # resources :roles, shallow: true do 
   #   resources :jobs
   # end
-
+  resources :roles, only:[:index]
 
   resources :users, shallow: true do
     resources :roles 
