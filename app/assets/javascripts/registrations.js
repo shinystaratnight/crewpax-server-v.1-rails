@@ -368,71 +368,83 @@ $(function(){
 //*********************************************************************************************************
 // Registration Form Department Section
 //********************************************************************************************************  
-//==================Group One DGC================================================================================ 
-  $("#DGC").on("click",function(){
-    var union_name =$(this).data("union-name");
-   
+//==================Group One DGC and Group Two IATSE (member/ permit)================================================================================ 
+  $("#DGC, #IATSE").on("click",function(){
+    var union_name =$(this).data("union-name"); 
     $.ajax({
       url:"/unions",
       method: "get",
       dataType: "json",
       data:{union:{name: union_name}},
       success: function(response){
-       $("#DGC").data("union-id", response.id);
-        console.log("current data-union-id:", $("#DGC").data("union-id"))
+        if (response.name== "DGC"){
+          $("#DGC").data("union-id", response.id);
+          console.log("selected union's id ", $("#DGC").data("union-id"))
+        } else{
+          $("#IATSE").data("union-id", response.id);
+          console.log("selected union's id ", $("#IATSE").data("union-id"))
+        }        
       }
     });
    
   });
 
 
-  $("#unionStatus").on("change",function(){
-
-    var union_name= $(this);
+  $("#dgcStatus").on("change",function(){
     var status = $(this).children("input:checked").data("name");
-    var user_id= $("#info").data("user-id");
-    var union_id=$("#DGC").data("union-id");
-
-    console.log("in unionstatus section, current data-union-id:", $("#DGC").data("union-id"))
-    //Store different data of member and permit days in a data variable for later ajax
-    if (status == "member"){
+    var union_id = $("#DGC").data("union-id");
+    if (status=="member"){
       var data = $(this).children("input:checked").val();
-      $.ajax({
-          url:"/eligibilities", 
-          method:"post",
-          dataType:"json",
-          data:{eligibility:{member:data,union_id:union_id, user_id: user_id}},
-          success: function(response){
-
-          }          
-        });
-    } 
-    else {
-      $("#permit_days,#dgc_number_days").show();
-      $("#permit_days").on("blur", function(){
-        var data = $(this).text().trim();
-        $.ajax({
-          url:"/eligibilities",
-          method: "post",
-          dataType:"json",
-          data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id}},
-          success: function(response){
-
-          }
-
-        });
-      });
-      
-    }
-   
-
-    
+      ajaxMember(data,union_id);
+     }else{
+      var data = $(this).text().trim();
+      ajaxPermit(data,union_id);
+     }
   });
 
 
+  $("#iatseStatus").on("change", function(){
+    var status=$(this).children("input:checked").data("name");
+    var union_id =$("#IATSE").data("union-id");
+    if (status=="member"){
+      var data = $(this).children("input:checked").val();
+      ajaxMember(data,union_id);
+    }else{
+      var data = $(this).text().trim();
+      ajaxPermit(data,union_id);
+    }
+  });
+
+//============================common ajax call================================================
+  function ajaxMember(data, union_id){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/eligibilities", 
+      method:"post",
+      dataType:"json",
+      data:{eligibility:{member:data, union_id: union_id, user_id: user_id}},
+      success: function(response){
+
+      }          
+    });
+  }
+
+  function ajaxPermit(data, union_id, user_id){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/eligibilities",
+      method: "post",
+      dataType:"json",
+      data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id}},
+      success: function(response){
+
+      }
+    });
+
+  }
 
 
-
+//=================================================================================================
 
 
 

@@ -15,7 +15,7 @@
           </a>
         </div>
         <div id="roleOne" class="collapse">
-          <div id="unionStatus">
+          <div id="dgcStatus" data-union-name="DGC">
             <input type="checkbox" id="dgc_permit" data-name="permit" value= /> 
             <label for="dgc_permit"> Permit </label>
               <span hidden="true" id="dgc_number_days"> * Number of Days:
@@ -43,8 +43,8 @@
             <label>
               <input type="checkbox" name="DGC_On_Set_Key" value=/> On Set Key
             </label>
-            <br>
-           
+            
+
             <label>
             <input type="checkbox" name="DGC_OPA" value="Office Production Assistant (OPA)" /> Office PA
             </label>
@@ -58,7 +58,7 @@
             <label>
             <input type="checkbox" name="DGC_TAL" value="Trainee Assistant Location Manager (TAL)" /> TAL
             </label>
-            <br>
+           
             
             <label>
               <input type="checkbox" name="DGC_ALM" value="Assistant Location Manager (ALM)"/> ALM
@@ -73,7 +73,7 @@
             <label>
               <input type="checkbox" name="DGC_TAD" value="Trainee Assistant Director (TAD)"/> TAD
             </label>
-            <br>
+           
 
             <label>
               <input type="checkbox" name="DGC_3RD_AD" value="3rd Assistant Director (3rd AD)"/> 3RD AD
@@ -90,46 +90,52 @@
         </div>
         
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" href="#roleTwo" aria-expanded="false">
+          <a role="button" id="IATSE" data-union-name="IATSE" data-union-id="" data-toggle="collapse" href="#roleTwo" aria-expanded="false">
           IATSE
           </a>
         </div>
         <div id="roleTwo" class="collapse">
-          <div>            
-            <input type="radio" name="member" value="true" /> Member
-            <input type="radio" name= value= /> Permit
+          <div id="iatseStatus" data-union-name="IATSE">            
+            <input type="checkbox" id="iatse_permit" data-name="permit" value= /> 
+            <label for="iatse_permit">Permit </label>
+              <span hidden="true" id="iatse_number_days"> * Number of Days:
+                <div contenteditable="true" hidden="true" id="iatse_permit_days"></div>
+              </span>
+            <input type="checkbox" id="iatse_member"data-name="member" value="true"/> 
+            <label for="iatse_member"> Member </label>
+            
           </div>
             <input type="checkbox" name="" value="Accountant"/> Accounting 
             <input type="checkbox" name="" value="Art / Production Design"/> Art
             <input type="checkbox" name="" value="Construction" /> Construction
-            <br>
+            
             <input type="checkbox" name="" value="Costumes" /> Costume
             <input type="checkbox" name="" value="Editors"/> Editing
             <input type="checkbox" name="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
-            <br>
+            
             <input type="checkbox" name="" value="Greens"/> Greens
             <input type="checkbox" name="" value="Grips"/> Grips
             <input type="checkbox" name="" value="Hair" /> Hair
-            <br>
+          
             <input type="checkbox" name="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
             <input type="checkbox" name="" value="Make Up"/> Make-up
             <input type="checkbox" name="" value="Paint" /> Painting
-            <br>
+           
             <input type="checkbox" name="" value="" /> Production
             <input type="checkbox" name="" value="" /> Office 
             <input type="checkbox" name="" value="Properties (Props)" /> Props
-            <br>
+           
             <input type="checkbox" name="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
             <input type="checkbox" name="" value="Set Dec" /> Set Decorating 
             <input type="checkbox" name="" value="Sound" /> Sound
-            <br>
+        
             <input type="checkbox" name="" value="Special Effects (SPFX)" /> Special Effects
             <input type="checkbox" name="" value="Visual Effects" /> Visual Effects 
         </div>
           
         
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" href="#roleThree" aria-expanded="false">
+          <a role="button" id="ACFC" data-union-name="ACFC" data-union-id="" data-toggle="collapse" href="#roleThree" aria-expanded="false">
             ACFC
           </a> 
         </div>
@@ -163,7 +169,7 @@
         </div>
       
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" href="#rolefour" aria-expanded="false">
+          <a role="button" id="TEAMSTERS" data-union-name="TEAMSTERS" data-union-id="" data-toggle="collapse" href="#rolefour" aria-expanded="false">
             TEAMSTERS
           </a>
         </div>
