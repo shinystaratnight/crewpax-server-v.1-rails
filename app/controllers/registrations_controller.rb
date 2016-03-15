@@ -1,6 +1,13 @@
 # This is the customized registrations controller for devise
 class RegistrationsController < Devise::RegistrationsController
 # When a user is created, it needs to call create_label_of_user_role to create the associated label
+  
+  def new
+    @roles= Role.all
+    @eligibilities = Eligibility.all 
+    @unions= Union.all
+  end
+
   def create
     @user = User.new(user_params)
     respond_to do |format|

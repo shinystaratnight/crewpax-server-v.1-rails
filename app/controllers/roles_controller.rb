@@ -1,17 +1,18 @@
 class RolesController < ApplicationController
-  
+
   def index
-   #role_params["name"] => ["director", "key PA"]
-    array = params["role"]["name"]
-    @roles=[]
-    array.each do |role_param|
-      @role=Role.find_by(name:role_param)    
-      @roles.push(@role)
-    end
-    respond_to do |format|
-      format.html{redirect_to @user}
-      format.json{render json: @roles}
-    end
+   # #role_params["name"] => ["director", "key PA"]
+   #  array = params["role"]["name"]
+   #  @roles=[]
+   #  array.each do |role_param|
+   #    @role=Role.find_by(name:role_param)    
+   #    @roles.push(@role)
+   #  end
+    # respond_to do |format|
+    #   format.html{redirect_to @user}
+    #   format.json{render json: @roles}
+    # end
+
         
   end
 

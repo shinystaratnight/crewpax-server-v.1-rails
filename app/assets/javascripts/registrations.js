@@ -369,76 +369,110 @@ $(function(){
 // Registration Form Department Section
 //********************************************************************************************************  
 //==================Group One DGC and Group Two IATSE (member/ permit)================================================================================ 
-  $("#DGC, #IATSE").on("click",function(){
-    var union_name =$(this).data("union-name"); 
-    $.ajax({
-      url:"/unions",
-      method: "get",
-      dataType: "json",
-      data:{union:{name: union_name}},
-      success: function(response){
-        if (response.name== "DGC"){
-          $("#DGC").data("union-id", response.id);
-          console.log("selected union's id ", $("#DGC").data("union-id"))
-        } else{
-          $("#IATSE").data("union-id", response.id);
-          console.log("selected union's id ", $("#IATSE").data("union-id"))
-        }        
-      }
-    });
+  // $("#DGC, #IATSE").on("click",function(){
+  //   var union_name =$(this).data("union-name"); 
+  //   $.ajax({
+  //     url:"/unions",
+  //     method: "get",
+  //     dataType: "json",
+  //     data:{union:{name: union_name}},
+  //     success: function(response){
+  //       if (response.name== "DGC"){
+  //         $("#DGC").data("union-id", response.id);
+  //         console.log("selected union's id ", $("#DGC").data("union-id"))
+  //       } else{
+  //         $("#IATSE").data("union-id", response.id);
+  //         console.log("selected union's id ", $("#IATSE").data("union-id"))
+  //       }        
+  //     }
+  //   });
    
-  });
+  // });
 
+// Data attributes for union-id 
+  $("#DGC").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+   
+  }); 
 
-  $("#dgcStatus").on("change",function(){
-    var status = $(this).children("input:checked").data("name");
+// Data for membership or permit 
+  $("#dgc_permit, #dgc_member").on("click", function(){
+    var status = $(this).data("name");
     var union_id = $("#DGC").data("union-id");
     var union_section= $("#DGC");
     if (status=="member"){
-      var data = $(this).children("input:checked").val();
-      ajaxMember(data,union_id, union_section);
-    
+      var data=$("#dgc_member").val();
+      console.log("membershipe T/F:", data)
+      dgc_checkbox_checked(status, union_id, data);
      }else{
       $("#dgc_number_days, #permit_days").show();
       $("#permit_days").on("blur", function(){
         var data = $("#permit_days").text().trim();
-        ajaxPermit(data,union_id,union_section);
-
+        console.log("dgc status:", data) 
       });
-     
+        dgc_checkbox_checked(status, union_id, data)
+
      }
   });
 
+ 
+  //     console.log("dgc pa role id:", $("#DGC_PA").data("role-id"),
+  //      "dgc key pa:", $("#DGC_Key_PA").data("role-id"),
+  //      "dgc on set key:",$("#DGC_On_Set_Key").data("role-id"),
+  //      "dgc opa :",$("#DGC_OPA").data("role-id"),
+  //      "dgc transport:", $("#DGC_Transport").data("role-id"),
+  //      "dgc tal:", $("#DGC_TAL").data("role-id"),
+  //      "dgc alm:", $("#DGC_ALM").data("role-id"),
+  //      "dgc lm:", $("#DGC_LM").data("role-id"),
+  //      "dgc TAD:", $("#DGC_TAD").data("role-id"),
+  //      "dgc 3rd AD:",  $("#DGC_3RD_AD").data("role-id"),
+  //      "dgc 2nd AD:", $("#DGC_2ND_AD").data("role-id"),
+  //      "dgc 1st AD:", $("#DGC_1ST_AD").data("role-id"))
+      
 
-  $("#iatseStatus").on("change", function(){
-    var status=$(this).children("input:checked").data("name");
-    var union_id =$("#IATSE").data("union-id");
-    var union_section =$("#IATSE");
-    if (status=="member"){
-      var data = $(this).children("input:checked").val();
-      ajaxMember(data,union_id,union_section);
-    }else{
-      $("#iatse_number_days, #iatse_permit_days").show();
-      $("#iatse_permit_days").on("blur", function(){
-        var data = $("#iatse_permit_days").text().trim();
-        ajaxPermit(data,union_id,union_section);
-
-      });      
-    }
+      
+   
+   
   });
 
-//============================Common ajax call for sending data(member/permit)================================================
-  function ajaxMember(data, union_id,union_section){
+  // $("#iatseStatus").on("change", function(){
+  //   var status=$(this).children("input:checked").data("name");
+  //   var union_id =$("#IATSE").data("union-id");
+  //   var union_section =$("#IATSE");
+  //   if (status=="member"){
+  //     var data = $(this).children("input:checked").val();
+  //     ajaxMember(data,union_id,union_section);
+  //   }else{
+  //     $("#iatse_number_days, #iatse_permit_days").show();
+  //     $("#iatse_permit_days").on("blur", function(){
+  //       var data = $("#iatse_permit_days").text().trim();
+  //       ajaxPermit(data,union_id,union_section);
+
+  //     });      
+  //   }
+  // });
+
+//============================Common ajax call for sending data ================================================
+  function dgc_checkbox_checked(status, union_id,data){
+    console.log("status, union_id,data:", status, union_id,data)
+      $(".roles").on("click", function(){  
+        var role_id= $(this).prev().text();
+        $(this).data("role-id", role_id);
+        ajaxMember(data, union_id, role_id);        
+      });    
+  }
+
+
+  function ajaxMember(data, union_id, role_id){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/eligibilities", 
       method:"post",
       dataType:"json",
-      data:{eligibility:{member:data, union_id: union_id, user_id: user_id}},
+      data:{eligibility:{member:data, union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
-        
-        union_section.data("eligibility-id", response.id);
-        console.log("eligibility-id:", union_section.data("eligibility-id"))
+                
       }          
     });
   }
@@ -451,64 +485,15 @@ $(function(){
       dataType:"json",
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id}},
       success: function(response){
-        union_section.data("eligibility-id", response.id);
-        
-          console.log("eligibility-id:", union_section.data("eligibility-id"))
 
       }
     });
-
   }
-
-
-//=================================================================================================
-//========================GROUP ONE DGC ROLES SELECTION AJAX GET ROLES ID===========================================
-  $("#dgc_roles").on("change",function(){
-    var arr =[];
-    var checkedbox= $("#dgc_roles input[type=checkbox]:checked");
  
-    checkedbox.map(function(){ arr.push($(this).val())});
-    console.log("checked checkboxes", arr);
-
-      if (arr.length == 0 ){
-        return false;
-      }
-      else{
-        $.ajax({
-          url:"/roles",
-          method: "get",
-          dataType: "json",
-          data: {role:{name:arr}},
-          success: function(response){
-            var roles_ids=[];
-            $.each(response, function(index,value){ 
-              roles_ids.push(value.id)
-            });
-            console.log("roles_ids:", roles_ids)
-            $("#DGC").data("role-ids", roles_ids);
-            console.log("data-role-ids:", $("#DGC").data("role-ids"))
-               
-          }
-         
-        });        
-      }
-
-      if(arr.length ==0 ){
-        return false;
-      }
-      else {
-        $.ajax({
-          url:"/eligibilities/" + ":id"
-
-        });
-      }
-  });
-//=================================================================================================
-    
 
 
 
-});
+
 
 
 
