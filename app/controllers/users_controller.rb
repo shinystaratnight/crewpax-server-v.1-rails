@@ -26,6 +26,11 @@ class UsersController < ApplicationController
         @user.image= @file
         @user.save
         format.json{render json: @user}
+      elsif user_params[:roles_ids].present?
+        @label= Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
+        if @label.save!
+          format.json{render json: @label}
+        end
       elsif @user.update_attributes(user_params)  
         format.html{ redirect_to @user}
         format.json{ render json: @user}
@@ -63,5 +68,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :id, :image, :password, :password_confirmation,
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
     :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input])      
+  end
+
+  def label_params
+    params.require(:label).permit(:user_id,:job_id,:role_id)
   end
 end

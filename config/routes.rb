@@ -25,7 +25,6 @@ Bcpax::Application.routes.draw do
   # end
   
   resources :addresses
-  resources :unions, only:[:index]
   resources :eligibilities
   # resources :jobs do
   #   resources :labels

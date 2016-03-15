@@ -459,10 +459,24 @@ $(function(){
       $(".roles").on("click", function(){  
         var role_id= $(this).prev().text();
         $(this).data("role-id", role_id);
-        ajaxMember(data, union_id, role_id);        
+        ajaxMember(data, union_id, role_id); 
+        ajaxCreateLabel(role_id)       
       });    
   }
 
+  function ajaxCreateLabel(role_id){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/users/"+ user_id,
+      method: "put",
+      dataType:"json",
+      data:{user:{roles_ids:[role_id]}},
+      success: function(response){
+
+      }
+    });
+  }
+  
 
   function ajaxMember(data, union_id, role_id){
     var user_id= $("#info").data("user-id");
