@@ -374,7 +374,7 @@
         <div class="list-group-item">
           <%@unions.each do |union| %>
             <% if union.name == "ACFC" %>
-              <div><%=union.id %></div>
+              <div hidden="true"><%=union.id %></div>
             <%end%>
           <%end %>
           <a role="button" id="ACFC" data-union-name="ACFC" data-union-id="" data-toggle="collapse" href="#roleThree" aria-expanded="false">
@@ -618,16 +618,31 @@
         </div>
       
         <div class="list-group-item">
+          <%@unions.each do |union| %>
+            <% if union.name == "TEAMSTERS" %>
+              <div><%=union.id %></div>
+            <%end%>
+          <%end %>
           <a role="button" id="TEAMSTERS" data-union-name="TEAMSTERS" data-union-id="" data-toggle="collapse" href="#rolefour" aria-expanded="false">
             TEAMSTERS
           </a>
         </div>
         <div id="rolefour" class="collapse">
           <label>
-            <input type="checkbox" name="TEAMSTERS_Security" data-role-id="" class="roles" value= /> Security
+            <%@roles.each do |role|%>
+              <% if role.name=="Security" %>
+              <div><%=role.id %></div>
+              <%end%>  
+            <%end %>
+            <input type="checkbox" data-role-id="" class="TEAMSTERS_roles" value= /> Security
           </label>
           <label>
-            <input type="checkbox" name="TEAMSTERS_Transport" data-role-id="" class="roles" value="Transport" /> Transport
+            <%@roles.each do |role|%>
+              <% if role.name =="Transport" %>
+              <div><%=role.id %></div>
+              <%end%>  
+            <%end %>
+            <input type="checkbox" data-role-id="" class="TEAMSTERS_roles" value="Transport" /> Transport
           </label>
         </div>
         
@@ -663,7 +678,14 @@
           <input type="checkbox" name="NU_Key_PA" data-role-id="" class="roles" value="Key PA"/> Key PA
           <input type="checkbox" name="NU_On_Set_Key" data-role-id="" class="roles" value=/> On Set Key
           <input type="checkbox" name="NU_OPA" data-role-id="" class="roles" value="Office Production Assistant (OPA)" /> Office PA
-          <input type="checkbox" name="NU_Transport" data-role-id="" class="roles" value= "Transport"/> Van Driver
+          <label>
+            <%@roles.each do |role|%>
+              <% if role.name =="Transport" %>
+              <div><%=role.id %></div>
+              <%end%>  
+            <%end %>
+            <input type="checkbox" name="NU_Transport" data-role-id="" class="roles" value= "Transport"/> Van Driver
+          </label>
           <input type="checkbox" name="NU_TAL" data-role-id="" class="roles" value="Trainee Assistant Location Manager (TAL)" /> TAL
           <input type="checkbox" name="NU_ALM" data-role-id="" class="roles" value="Assistant Location Manager (ALM)" /> ALM
           <input type="checkbox" name="NU_LM" data-role-id="" class="roles" value="Location Manager (LM)"/> LM

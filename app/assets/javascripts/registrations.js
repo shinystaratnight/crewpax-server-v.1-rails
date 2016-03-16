@@ -453,9 +453,23 @@ $(function(){
     $(this).data("role-id", role_id);
     ajaxRoles(union_id, role_id);
     ajaxCreateLabel(role_id);
-  })
+  });
   
 
+//=================================For TEAMSTERS===============================================================
+  $("#TEAMSTERS").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+  });
+
+  $(".TEAMSTERS_roles").on("click", function(){
+    var union_id = $("#TEAMSTERS").data("union-id");
+    var role_id= $(this).prev().text();
+    $(this).data("role-id", role_id);
+    console.log("union id:", union_id, "role id:", role_id)
+    ajaxRoles(union_id, role_id);
+    ajaxCreateLabel(role_id);
+  });
 
 
 
