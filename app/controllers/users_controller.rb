@@ -42,6 +42,23 @@ class UsersController < ApplicationController
     end
 
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    respond_to do |format|
+      
+      if user_params[:roles_ids].present?
+        @label= Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
+        @label.destroy
+       
+        format.json{render json: "label is deleted"}
+      else
+        format.html{redirect_to @user}
+      end
+    end
+  end
+
+
   # account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
   
     # if account_update_params[:password].blank?

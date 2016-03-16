@@ -7,7 +7,7 @@ class EligibilitiesController < ActionController::Base
           format.json{render json: @eligibility}
         else 
           format.html { render action: "new" }
-          format.json { render json: @user.errors}
+          format.json { render json: @user.errors.full_messages}
         end
       end  
   end
@@ -17,6 +17,17 @@ class EligibilitiesController < ActionController::Base
     @eligibility = Eligibility.find (params[:id])
   end
 
+  def destroy
+    @eligibility= Eligibility.find(params[:id])
+    respond_to do |format|
+      if @eligibility.destroy
+        format.html{render @user}
+        format.json{render json: "successful deleted eligibility"}
+      else
+        format.json{render json: @eligibility.errors.full_messages}
+      end
+    end
+  end
 
   private
   def eligibility_params
