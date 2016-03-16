@@ -369,26 +369,6 @@ $(function(){
 // Registration Form Department Section
 //********************************************************************************************************  
 //==================Group One DGC and Group Two IATSE (member/ permit)================================================================================ 
-  // $("#DGC, #IATSE").on("click",function(){
-  //   var union_name =$(this).data("union-name"); 
-  //   $.ajax({
-  //     url:"/unions",
-  //     method: "get",
-  //     dataType: "json",
-  //     data:{union:{name: union_name}},
-  //     success: function(response){
-  //       if (response.name== "DGC"){
-  //         $("#DGC").data("union-id", response.id);
-  //         console.log("selected union's id ", $("#DGC").data("union-id"))
-  //       } else{
-  //         $("#IATSE").data("union-id", response.id);
-  //         console.log("selected union's id ", $("#IATSE").data("union-id"))
-  //       }        
-  //     }
-  //   });
-   
-  // });
-
 // Data attributes for union-id 
   $("#DGC").on("click", function(){
     var union_id = $(this).prev().text();
@@ -472,18 +452,55 @@ $(function(){
   });
 
 
+//=================================For UBCP ======================================================================
+  $("#UBCP").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+  });
+
+
+  $(".UBCP_roles").on("click", function(){
+    var union_id = $("#UBCP").data("union-id");
+    var role_id= $(this).prev().text();
+    $(this).data("role-id", role_id);
+    console.log("union id:", union_id, "role id:", role_id)
+    ajaxRoles(union_id, role_id);
+    ajaxCreateLabel(role_id);
+  });
+
+
+//=================================For ACTRA =======================================================================
+ $("#ACTRA").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+  });
+
+  $(".ACTRA_roles").on("click", function(){
+    var union_id = $("#ACTRA").data("union-id");
+    var role_id= $(this).prev().text();
+    $(this).data("role-id", role_id);
+    console.log("union id:", union_id, "role id:", role_id)
+    ajaxRoles(union_id, role_id);
+    ajaxCreateLabel(role_id);
+  });
 
 
 
+//==================================For Non Union =====================================================================
+  $("#NON_UNION").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+    console.log("non union union id:", $(this).data("union-id"))
+  });
 
-
-
-
-
-
-
-
-
+  $(".NON_UNION_roles").on("click", function(){
+    var union_id = $("#NON_UNION").data("union-id");
+    var role_id= $(this).prev().text();
+    $(this).data("role-id", role_id);
+    console.log("union id:", union_id, "role id:", role_id)
+    ajaxRoles(union_id, role_id);
+    ajaxCreateLabel(role_id);
+  });
 
 
 
@@ -515,22 +532,6 @@ $(function(){
    
   });
 
-  // $("#iatseStatus").on("change", function(){
-  //   var status=$(this).children("input:checked").data("name");
-  //   var union_id =$("#IATSE").data("union-id");
-  //   var union_section =$("#IATSE");
-  //   if (status=="member"){
-  //     var data = $(this).children("input:checked").val();
-  //     ajaxMember(data,union_id,union_section);
-  //   }else{
-  //     $("#iatse_number_days, #iatse_permit_days").show();
-  //     $("#iatse_permit_days").on("blur", function(){
-  //       var data = $("#iatse_permit_days").text().trim();
-  //       ajaxPermit(data,union_id,union_section);
-
-  //     });      
-  //   }
-  // });
 
 //============================Common ajax call for sending data ================================================
   function union_checkbox_checked(status, union_id,data){
@@ -541,16 +542,6 @@ $(function(){
         ajaxMember(data, union_id, role_id); 
         ajaxCreateLabel(role_id);      
       });    
-  }
-
-  function union_checkbox_roles(union_id){
-    $(".roles").on("click", function(){
-      var role_id= $(this).prev().text();
-      $(this).data("role-id", role_id);
-      console.log("union_id:", union_id, "role_id", role_id)
-      ajaxRoles(union_id, role_id);
-      ajaxCreateLabel(role_id);
-    })
   }
 
   function ajaxCreateLabel(role_id){
