@@ -441,6 +441,47 @@ $(function(){
   });
 
 //=================================For ACFC ============================================================== 
+  $("#ACFC").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+    
+  });
+  
+  $(".ACFC_roles").on("click", function(){
+    var union_id = $("#ACFC").data("union-id");
+    var role_id= $(this).prev().text();
+    $(this).data("role-id", role_id);
+    ajaxRoles(union_id, role_id);
+    ajaxCreateLabel(role_id);
+  })
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //     console.log("dgc pa role id:", $("#DGC_PA").data("role-id"),
   //      "dgc key pa:", $("#DGC_Key_PA").data("role-id"),
   //      "dgc on set key:",$("#DGC_On_Set_Key").data("role-id"),
@@ -488,6 +529,16 @@ $(function(){
       });    
   }
 
+  function union_checkbox_roles(union_id){
+    $(".roles").on("click", function(){
+      var role_id= $(this).prev().text();
+      $(this).data("role-id", role_id);
+      console.log("union_id:", union_id, "role_id", role_id)
+      ajaxRoles(union_id, role_id);
+      ajaxCreateLabel(role_id);
+    })
+  }
+
   function ajaxCreateLabel(role_id){
     var user_id= $("#info").data("user-id");
     $.ajax({
@@ -501,6 +552,19 @@ $(function(){
     });
   }
   
+  function ajaxRoles(union_id, role_id){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/eligibilities",
+      method: "post",
+      dataType: "json",
+      data:{eligibility:{union_id: union_id, user_id: user_id, role_id: role_id}},
+      success: function(response){
+
+      }
+    });
+  }
+
 
   function ajaxMember(data, union_id, role_id){
     var user_id= $("#info").data("user-id");
