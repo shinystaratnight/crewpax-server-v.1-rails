@@ -26,6 +26,7 @@ class UsersController < ApplicationController
         @user.image= @file
         @user.save
         format.json{render json: @user}
+      # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
       elsif user_params[:roles_ids].present?
         @label= Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
         if @label.save!

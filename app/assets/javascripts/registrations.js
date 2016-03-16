@@ -400,23 +400,47 @@ $(function(){
   $("#dgc_permit, #dgc_member").on("click", function(){
     var status = $(this).data("name");
     var union_id = $("#DGC").data("union-id");
-    var union_section= $("#DGC");
     if (status=="member"){
       var data=$("#dgc_member").val();
       console.log("membershipe T/F:", data)
-      dgc_checkbox_checked(status, union_id, data);
+      union_checkbox_checked(status, union_id, data);
      }else{
       $("#dgc_number_days, #permit_days").show();
       $("#permit_days").on("blur", function(){
         var data = $("#permit_days").text().trim();
-        console.log("dgc status:", data) 
+        console.log("dgc permit status:", data) 
       });
-        dgc_checkbox_checked(status, union_id, data)
+        union_checkbox_checked(status, union_id, data)
 
      }
   });
+//===========================For IATSE========================================================
+  $("#IATSE").on("click", function(){
+    var union_id = $(this).prev().text();
+    $(this).data("union-id", union_id);
+   
+  }); 
 
- 
+  $("#iatse_permit, #iatse_member").on("click", function(){
+    var status = $(this).data("name");
+    var union_id = $("#IATSE").data("union-id");
+    if(status=="member"){
+      var data=$("#iatse_member").val();
+      console.log("membershipe T/F:", data)
+      union_checkbox_checked(status, union_id, data);
+    }else{
+      $("#iatse_number_days, #iatse_permit_days").show();
+      $("#iatse_permit_days").on("blur", function(){
+        var data=$("#iatse_permit_days").text().trim();
+        console.log("iatse permit status", data )
+      });
+      union_checkbox_checked(status, union_id, data);
+    }
+
+
+  });
+
+//=================================For ACFC ============================================================== 
   //     console.log("dgc pa role id:", $("#DGC_PA").data("role-id"),
   //      "dgc key pa:", $("#DGC_Key_PA").data("role-id"),
   //      "dgc on set key:",$("#DGC_On_Set_Key").data("role-id"),
@@ -454,13 +478,13 @@ $(function(){
   // });
 
 //============================Common ajax call for sending data ================================================
-  function dgc_checkbox_checked(status, union_id,data){
+  function union_checkbox_checked(status, union_id,data){
     console.log("status, union_id,data:", status, union_id,data)
       $(".roles").on("click", function(){  
         var role_id= $(this).prev().text();
         $(this).data("role-id", role_id);
         ajaxMember(data, union_id, role_id); 
-        ajaxCreateLabel(role_id)       
+        ajaxCreateLabel(role_id);      
       });    
   }
 
@@ -491,7 +515,7 @@ $(function(){
     });
   }
 
-  function ajaxPermit(data, union_id, user_id, union_section){
+  function ajaxPermit(data, union_id, user_id){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/eligibilities",

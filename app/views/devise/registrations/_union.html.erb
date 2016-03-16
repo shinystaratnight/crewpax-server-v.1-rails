@@ -142,7 +142,7 @@
             <label>
               <%@roles.each do |role|%>
                 <% if role.name == "3rd Assistant Director (3rd AD)" %>
-                  <div><%=role.id %></div>
+                  <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
               <input type="checkbox" class="roles" id="DGC_3RD_AD" name="DGC_3RD_AD"  value="3rd Assistant Director (3rd AD)" data-role-id=""/> 3RD AD
@@ -151,16 +151,16 @@
             <label>
               <%@roles.each do |role|%>
                 <% if role.name == "2nd Assistant Director (2nd AD)" %>
-                  <div><%=role.id %></div>
+                  <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" class="roles" id="DGC_2ND_AD"name="DGC_2ND_AD"  value="2nd Assistant Director (2nd AD)" data-role-id=""/> 2ND AD
+              <input type="checkbox" class="roles" id="DGC_2ND_AD" name="DGC_2ND_AD"  value="2nd Assistant Director (2nd AD)" data-role-id=""/> 2ND AD
             </label>
             
             <label>
               <%@roles.each do |role|%>
                 <% if role.name == "1st Assistant Director (1st AD)" %>
-                  <div><%=role.id %></div>
+                  <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
               <input type="checkbox" class="roles" id="DGC_1ST_AD" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id=""/> 1ST AD
@@ -169,9 +169,12 @@
             </div>         
         </div>
     
-
-
         <div class="list-group-item">
+          <%@unions.each do |union| %>
+            <% if union.name == "IATSE" %>
+              <div hidden="true"><%=union.id %></div>
+            <%end%>
+          <%end %>
           <a role="button" id="IATSE" data-union-name="IATSE" data-union-id="" data-toggle="collapse" href="#roleTwo" data-eligibility-id="" aria-expanded="false">
           IATSE
           </a>
@@ -184,35 +187,187 @@
                 <div contenteditable="true" hidden="true" id="iatse_permit_days"></div>
               </span>
             <input type="checkbox" id="iatse_member"data-name="member" value="true"/> 
-            <label for="iatse_member"> Member </label>
-            
+            <label for="iatse_member"> Member </label>    
           </div>
-            <input type="checkbox" name="" value="Accountant"/> Accounting 
-            <input type="checkbox" name="" value="Art / Production Design"/> Art
-            <input type="checkbox" name="" value="Construction" /> Construction
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Accountant" %>
+                <div hidden="true" ><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" class="roles" data-role-id="" value="Accountant"/> Accounting
+            </label> 
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Art / Production Design" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Art / Production Design"/> Art
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Construction" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Construction" /> Construction
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Costumes" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Costumes" /> Costume
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Editors" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id=""class="roles" value="Editors"/> Editing
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="First Aid / Craft Services (FACS)" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
+            </label>
             
-            <input type="checkbox" name="" value="Costumes" /> Costume
-            <input type="checkbox" name="" value="Editors"/> Editing
-            <input type="checkbox" name="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Greens" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Greens"/> Greens
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Grips"%>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Grips"/> Grips
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Hair" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Hair" /> Hair
+            </label>
             
-            <input type="checkbox" name="" value="Greens"/> Greens
-            <input type="checkbox" name="" value="Grips"/> Grips
-            <input type="checkbox" name="" value="Hair" /> Hair
-          
-            <input type="checkbox" name="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
-            <input type="checkbox" name="" value="Make Up"/> Make-up
-            <input type="checkbox" name="" value="Paint" /> Painting
-           
-            <input type="checkbox" name="" value="" /> Production
-            <input type="checkbox" name="" value="" /> Office 
-            <input type="checkbox" name="" value="Properties (Props)" /> Props
-           
-            <input type="checkbox" name="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
-            <input type="checkbox" name="" value="Set Dec" /> Set Decorating 
-            <input type="checkbox" name="" value="Sound" /> Sound
-        
-            <input type="checkbox" name="" value="Special Effects (SPFX)" /> Special Effects
-            <input type="checkbox" name="" value="Visual Effects" /> Visual Effects 
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Lighting / Electrics (LX)" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Lighting / Electrics (LX)"/> Lighting/Electrics
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Make Up" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Make Up"/> Make-up
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Paint" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Paint" /> Painting
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Production" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Production" /> Production
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Office"%>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Office" /> Office 
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Properties (Props)" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Properties (Props)" /> Props
+            </label>
+
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Script Supervisors/Continuity Coordinator" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Set Dec" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Set Dec" /> Set Decorating 
+            </label>
+            
+            <label>
+            <%@roles.each do |role|%>
+                <% if role.name=="Sound" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox"data-role-id="" class="roles" value="Sound" /> Sound
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Special Effects (SPFX)" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Special Effects (SPFX)" /> Special Effects
+            </label>
+
+            <label>
+              <%@roles.each do |role|%>
+                <% if role.name=="Visual Effects" %>
+                <div hidden="true"><%=role.id %></div>
+                <%end%>  
+              <%end %>
+              <input type="checkbox" data-role-id="" class="roles" value="Visual Effects" /> Visual Effects 
+            </label>
         </div>
           
         
@@ -222,6 +377,7 @@
           </a> 
         </div>
         <div id="roleThree" class="collapse">
+          <label for=""
           <input type="checkbox" name="" value="Accountant" />Accountant
           <input type="checkbox" name="" value="Art / Production Design" /> Art
           <input type="checkbox" name="" value= /> Catering
