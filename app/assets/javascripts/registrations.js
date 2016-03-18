@@ -595,8 +595,23 @@ $(function(){
     }
   });
 
+//*********************************************************************************************************
+// Registration Form Calender Section
+//********************************************************************************************************  
+  $(".m-btn").on("click", function(){
+    if($("#available").is(":checked")){
+      var day=$(this).data("day");
+      console.log("day:", day)
+    }
+    else if ($("#unavailable").is(":checked")){
+      var day=$(this).data("day");
+      console.log("day:", day)
 
-
+    }
+    else{
+      alert("Please click either available or unavailable")
+    }
+  });
 
 
 

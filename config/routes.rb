@@ -1,7 +1,7 @@
 Bcpax::Application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
  
-  patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
+  # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
   resources :jobs, shallow: true do
     resources :roles
@@ -18,6 +18,7 @@ Bcpax::Application.routes.draw do
 
   resources :users, shallow: true do
     resources :roles 
+    resources :appointments
   end
 
   # resources :users do

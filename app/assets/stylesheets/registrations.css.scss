@@ -116,5 +116,71 @@ input[type="radio_checkbox"]:focus{
   display: inline-block;
 }
 
+//=======For Calender ===============================================================
+#available{
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+}
+
+#unavailable{
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+}
+
+#unavailable:checked{
+  background-color: #d14836;
+}
+#sunday {
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+#monday {
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+
+#tuesday {
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+#wednesday {
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+#thursday {
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+#friday{
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+}
+
+#saturday{
+  line-height: 38px;
+  height: 38px;
+  font-size: 16px;
+  padding: 0px 26px;
+  
+}
 
 
