@@ -1,6 +1,13 @@
 # This is the customized registrations controller for devise
 class RegistrationsController < Devise::RegistrationsController
 # When a user is created, it needs to call create_label_of_user_role to create the associated label
+  
+  def new
+    @roles= Role.all
+    @eligibilities = Eligibility.all 
+    @unions= Union.all
+  end
+
   def create
     @user = User.new(user_params)
     respond_to do |format|
@@ -26,8 +33,23 @@ class RegistrationsController < Devise::RegistrationsController
     # end
     #   response.to_json
   end
+   
+  # def update
+  #   binding.pry 
+  #   @label= Label.new(label_params)
+  #   respond_to do |format| 
+  #     if @label.save
+  #       format.html{redirect_to @user}
+  #       format.json{render json: @label}       
+  #     else 
+  #       format.html{render action: "new"}
+  #       format.json{render json: @user_errors.full_messages}
+  #     end
+  #   end
+  # end
 
 
+  
   protected
 
   def after_sign_up_path_for(resource)
@@ -70,6 +92,7 @@ class RegistrationsController < Devise::RegistrationsController
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
     :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input])
   end
+
 
   
 

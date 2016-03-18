@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'pry'
 
 
+
 group :assets do
   gem 'asset_sync'
 end

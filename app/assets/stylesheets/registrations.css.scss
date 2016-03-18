@@ -2,6 +2,8 @@
   width: 100%;
 }
 
+//=================These are for registration information form validation========================
+
 .profile_input {
   background-color: white;
 
@@ -23,7 +25,8 @@
   color:red;
 }
 
-//These are for password bullets styles in div. 
+//================These are for password bullets styles in div. ==================================
+
 #password {
   -webkit-text-security: disc;
 }
@@ -33,6 +36,85 @@
 }
 
 
+//=======For deparments title ===============================================================
+
 .panel-title {
   font-size: 24px;
 }
+
+
+//=== They are for departments roles checkboxes/radio buttons===============================
+
+label{
+  cursor:pointer;
+  font-size:14px;
+}
+
+input[type="checkbox"] {    
+  
+  margin-left: 5px;
+  cursor:pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e9ecee;
+  box-sizing: border-box;
+  position: relative;
+  box-sizing: content-box ;
+  width: 25px;
+  height: 25px;
+  border-width: 0;
+  transition: all .1s linear;
+  
+} 
+
+
+
+
+input[type="checkbox"]:checked{
+  background-color: #2ECC71;
+}
+
+
+ 
+
+input[type="checkbox"]:focus{
+  outline: 0 none;
+  box-shadow: none;
+}
+
+
+input[type="radio_checkbox"]{
+  margin-left: 5px;
+  cursor:pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e9ecee;
+  box-sizing: border-box;
+  position: relative;
+  box-sizing: content-box ;
+  width: 25px;
+  height: 25px;
+  border-width: 0;
+  border-radius: 25px;
+  transition: all .1s linear;
+  
+}
+
+input[type="radio_checkbox"]:checked{
+  background-color: #2ECC71;  
+}
+
+input[type="radio_checkbox"]:focus{
+  outline: 0 none;
+  box-shadow: none;
+}
+
+#iatse_permit_days, #permit_days{
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  width: 150px;
+  display: inline-block;
+}
+
+
+

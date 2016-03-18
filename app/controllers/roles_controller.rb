@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  
+
   def index
         
   end
@@ -13,5 +13,10 @@ class RolesController < ApplicationController
    
     #Show selected jobs in specific role
     @jobs= @c.jobs
-  end 
+  end
+
+  private 
+  def role_params
+    params.require(:role).permit(:name)
+  end
 end
