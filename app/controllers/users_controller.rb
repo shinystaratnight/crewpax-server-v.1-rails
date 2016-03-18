@@ -46,11 +46,9 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     respond_to do |format|
-      
       if user_params[:roles_ids].present?
         @label= Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
         @label.destroy
-       
         format.json{render json: "label is deleted"}
       else
         format.html{redirect_to @user}

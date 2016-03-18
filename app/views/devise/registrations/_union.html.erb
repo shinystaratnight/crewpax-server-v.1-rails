@@ -15,7 +15,7 @@
 
           <%@unions.each do |union| %>
             <% if union.name == "DGC" %>
-              <div><%union.id %></div>
+              <div hidden="true"><%=union.id %></div>
             <%end%>
           <%end %>
           <a role="button" id="DGC" data-union-name="DGC" data-union-id="" data-toggle="collapse" href="#unionOne" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
@@ -25,7 +25,7 @@
        
           <div id="unionOne" class="collapse" data-union-id="">
             <div id="dgcStatus" data-union-name="DGC">
-              <input type="checkbox" id="dgc_permit" data-name="permit" value= /> 
+              <input type="checkbox" id="dgc_permit" data-name="permit"  value="" /> 
               <label for="dgc_permit"> Permit </label>
                 <span hidden="true" id="dgc_number_days"> * Number of Days:
                   <div contenteditable="true" hidden="true" id="permit_days"></div>
@@ -172,7 +172,7 @@
         </div>
         <div id="roleTwo" class="collapse">
           <div id="iatseStatus" data-union-name="IATSE">            
-            <input type="checkbox" id="iatse_permit" data-name="permit" value= /> 
+            <input type="checkbox" id="iatse_permit" data-name="permit" value="" /> 
             <label for="iatse_permit">Permit </label>
               <span hidden="true" id="iatse_number_days"> * Number of Days:
                 <div contenteditable="true" hidden="true" id="iatse_permit_days"></div>
@@ -186,7 +186,7 @@
                 <div hidden="true" ><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" class="roles" data-role-id="" data-label-id="" data-eligibility-id="" value="Accountant"/> Accounting
+              <input type="checkbox" class="IATSE_roles" data-role-id="" data-label-id="" data-eligibility-id="" value="Accountant"/> Accounting
             </label> 
 
             <label>
@@ -195,7 +195,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" data-label-id="" class="roles" data-eligibility-id="" value="Art / Production Design"/> Art
+              <input type="checkbox" data-role-id="" data-label-id="" class="IATSE_roles" data-eligibility-id="" value="Art / Production Design"/> Art
             </label>
 
             <label>
@@ -204,7 +204,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Construction" /> Construction
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Construction" /> Construction
             </label>
 
             <label>
@@ -213,7 +213,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Costumes" /> Costume
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Costumes" /> Costume
             </label>
 
             <label>
@@ -222,7 +222,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id=""class="roles" data-label-id="" data-eligibility-id="" value="Editors"/> Editing
+              <input type="checkbox" data-role-id=""class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Editors"/> Editing
             </label>
 
             <label>
@@ -231,7 +231,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
             </label>
             
             <label>
@@ -240,7 +240,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Greens"/> Greens
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Greens"/> Greens
             </label>
 
             <label>
@@ -249,7 +249,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Grips"/> Grips
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Grips"/> Grips
             </label>
 
             <label>
@@ -258,7 +258,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Hair" /> Hair
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Hair" /> Hair
             </label>
             
             <label>
@@ -267,7 +267,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
             </label>
 
             <label>
@@ -276,7 +276,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Make Up"/> Make-up
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Make Up"/> Make-up
             </label>
 
             <label>
@@ -285,7 +285,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Paint" /> Painting
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Paint" /> Painting
             </label>
 
             <label>
@@ -294,7 +294,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Production" /> Production
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Production" /> Production
             </label>
 
             <label>
@@ -303,7 +303,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Office" /> Office 
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Office" /> Office 
             </label>
 
             <label>
@@ -312,7 +312,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Properties (Props)" /> Props
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Properties (Props)" /> Props
             </label>
 
             <label>
@@ -321,7 +321,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
             </label>
 
             <label>
@@ -330,7 +330,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Set Dec" /> Set Decorating 
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Set Dec" /> Set Decorating 
             </label>
             
             <label>
@@ -339,7 +339,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox"data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Sound" /> Sound
+              <input type="checkbox"data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Sound" /> Sound
             </label>
 
             <label>
@@ -348,7 +348,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Special Effects (SPFX)" /> Special Effects
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Special Effects (SPFX)" /> Special Effects
             </label>
 
             <label>
@@ -357,7 +357,7 @@
                 <div hidden="true"><%=role.id %></div>
                 <%end%>  
               <%end %>
-              <input type="checkbox" data-role-id="" class="roles" data-label-id="" data-eligibility-id="" value="Visual Effects" /> Visual Effects 
+              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Visual Effects" /> Visual Effects 
             </label>
         </div>
           
