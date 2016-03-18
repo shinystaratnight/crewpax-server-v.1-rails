@@ -83,31 +83,6 @@ input[type="checkbox"]:focus{
 }
 
 
-input[type="radio_checkbox"]{
-  margin-left: 5px;
-  cursor:pointer;
-  -webkit-appearance: none;
-  appearance: none;
-  background: #e9ecee;
-  box-sizing: border-box;
-  position: relative;
-  box-sizing: content-box ;
-  width: 25px;
-  height: 25px;
-  border-width: 0;
-  border-radius: 25px;
-  transition: all .1s linear;
-  
-}
-
-input[type="radio_checkbox"]:checked{
-  background-color: #2ECC71;  
-}
-
-input[type="radio_checkbox"]:focus{
-  outline: 0 none;
-  box-shadow: none;
-}
 
 #iatse_permit_days, #permit_days{
   border-bottom-style: solid;
@@ -182,5 +157,4 @@ input[type="radio_checkbox"]:focus{
   padding: 0px 26px;
   
 }
-
 

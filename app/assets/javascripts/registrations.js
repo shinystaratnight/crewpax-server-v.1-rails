@@ -602,18 +602,25 @@ $(function(){
     if($("#available").is(":checked")){
       var day=$(this).data("day");
       console.log("day:", day)
+      ajaxAddAvailability(day, $(this));
+     
     }
     else if ($("#unavailable").is(":checked")){
       var day=$(this).data("day");
+      var availability_id=$(this).data("availability-id")
+      if(availability_id > 0){
+        ajaxDeleteAvailability(day, availability_id, $(this))
+      }
       console.log("day:", day)
+      $(this).addClass("red");
 
     }
     else{
       alert("Please click either available or unavailable")
     }
   });
-
-
+   
+  
 
 
 
@@ -715,6 +722,38 @@ $(function(){
     });
   }
  
+   function ajaxAddAvailability(day, checkbox){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/users/"+user_id + "/appointments",
+      method: "post",
+      dataType:"json",
+      data:{appointment:{day: day, user_id: user_id}},
+      success: function(response){
+        checkbox.addClass("green");
+        checkbox.data("availability-id", response.id)
+        console.log("availability id:", checkbox.data("availability-id"))
+      }
+    })
+
+   }
+
+   function ajaxDeleteAvailability(day,availability_id,checkbox){
+    $.ajax({
+      url: "/appointments/" + availability_id,
+      method: "delete",
+      dataType: "json",
+      data:{appointment:{day: day, id: availability_id}},
+      success: function(response){
+        console.log("response:", response)
+        checkbox.data("availability-id", "")
+        checkbox.removeClass("green").addClass("red");
+        console.log("delete availability id attributes", checkbox.data("availability-id"))
+        
+      }
+    });
+
+   }
 
 
 

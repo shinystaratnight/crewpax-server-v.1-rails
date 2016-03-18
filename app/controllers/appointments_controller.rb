@@ -1,4 +1,29 @@
 class AppointmentsController < ApplicationController
+  def create
+    @appointment= Appointment.new(appointment_params)
+    respond_to do |format|
+      if @appointment.save!
+        format.html{redirect_to @user}
+        format.json{render json: @appointment}
+      else
+        format.html{render action: "new"}
+        format.json{render json: @address.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
+  end
+  
+  def destroy
+    @appointment = Appointment.find(params[:id])
+    respond_to do |format|
+      if @appointment.destroy 
+        format.html{render @user }
+        format.json{render json: @appointment, status: :no_content}
+      else
+        format.json{render json: @appointment.errors.full_messages}
+      end
+    end
+  end
+
   # before_filter :authenticate_user!
 
   # def toggle
@@ -12,4 +37,9 @@ class AppointmentsController < ApplicationController
 
   #   render nothing: true
   # end
+  private
+
+  def appointment_params
+    params.require(:appointment).permit(:user_id,:day, :id)
+  end
 end
