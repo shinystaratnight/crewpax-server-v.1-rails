@@ -26,11 +26,9 @@ ActiveRecord::Schema.define(version: 20160318182412) do
   add_index "addresses", ["user_id"], name: "index_addresses_on_user_id", using: :btree
 
   create_table "appointments", force: :cascade do |t|
-    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.boolean  "availability"
     t.string   "day"
   end
 
