@@ -8,22 +8,19 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        <h5> Green(Available), Red(Unavailable)</h5>
-        <label>
-          <input type="checkbox" id="available" value="available" /> Available 
-        </label>
-        <label>
-          <input type="checkbox" id="unavailable" value="unavailable"/> Unavailable
-        </label>
-        <br>
-        <button type="checkbox" class="m-btn" id="sunday" data-day="Sunday" data-availability-id="">Sunday</button>
-        <button type="button" class="m-btn" id="monday" data-day="Monday" data-availability-id=""> Monday </button>
-        <button type="button" class="m-btn" id="tuesday" data-day="Tuesday" data-availability-id=""> Tuesday </button>
-        <button type="button" class="m-btn" id="wednesday" data-day="Wednesday" data-availability-id=""> Wednesday</button>
-        <button type="button" class="m-btn" id="thursday" data-day="Thursday" data-availability-id=""> Thursday</button>
-        <br>
-        <button type="button" class="m-btn" id="friday" data-day="Friday" data-availability-id=""> Friday</button>
-        <button type="button" class="m-btn" id="saturday" data-day="Saturday" data-availability-id=""> Saturday</button>
+   
+          <div class="m-btn sm green" id="available">Green</div><span>  Available</span> 
+          <div class="m-btn sm red" id="unavailable">Red</div><span>  Unavailable</span> 
+            
+        
+        <h5 id="available_days">Please choose your available days: </h5>
+        <button class="m-btn red" id="sunday" data-day="Sunday" data-availability-id="">Sunday</button>
+        <button type="button" class="m-btn red" id="monday" data-day="Monday" data-availability-id=""> Monday </button>
+        <button type="button" class="m-btn red" id="tuesday" data-day="Tuesday" data-availability-id=""> Tuesday </button>
+        <button type="button" class="m-btn red" id="wednesday" data-day="Wednesday" data-availability-id=""> Wednesday</button>
+        <button type="button" class="m-btn red" id="thursday" data-day="Thursday" data-availability-id=""> Thursday</button>
+        <button type="button" class="m-btn red" id="friday" data-day="Friday" data-availability-id=""> Friday</button>
+        <button type="button" class="m-btn red" id="saturday" data-day="Saturday" data-availability-id=""> Saturday</button>
       </div> 
     </div>
   </div> 

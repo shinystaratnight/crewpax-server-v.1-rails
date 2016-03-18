@@ -599,39 +599,21 @@ $(function(){
 // Registration Form Calender Section
 //********************************************************************************************************  
   $(".m-btn").on("click", function(){
-    if($("#available").is(":checked")){
+    var availability_id=$(this).data("availability-id")
+    if(availability_id==0){
       var day=$(this).data("day");
-      console.log("day:", day)
       ajaxAddAvailability(day, $(this));
      
     }
-    else if ($("#unavailable").is(":checked")){
-      var day=$(this).data("day");
-      var availability_id=$(this).data("availability-id")
-      if(availability_id > 0){
-        ajaxDeleteAvailability(day, availability_id, $(this))
-      }
-      console.log("day:", day)
+    else if (availability_id>0){
+      var day=$(this).data("day");  
+      ajaxDeleteAvailability(day, availability_id, $(this))
       $(this).addClass("red");
+    }
+   
 
-    }
-    else{
-      alert("Please click either available or unavailable")
-    }
   });
-   
-  
-
-
-
-
-
-
-
-
-      
-   
-   
+     
 });
 
 
