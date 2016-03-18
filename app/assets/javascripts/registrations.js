@@ -578,7 +578,6 @@ $(function(){
   $("#NON_UNION").on("click", function(){
     var union_id = $(this).prev().text();
     $(this).data("union-id", union_id);
-    console.log("non union union id:", $(this).data("union-id"))
   });
 
   $(".NON_UNION_roles").on("click", function(){
@@ -669,7 +668,6 @@ $(function(){
       data:{eligibility:{union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id")) 
       }
     });
   }
@@ -684,7 +682,6 @@ $(function(){
       data:{eligibility:{member:data, union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id"))      
       }          
     });
   }
@@ -698,7 +695,6 @@ $(function(){
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id,role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id"))
         
       }
     });
@@ -714,7 +710,6 @@ $(function(){
       success: function(response){
         checkbox.addClass("green");
         checkbox.data("availability-id", response.id)
-        console.log("availability id:", checkbox.data("availability-id"))
       }
     })
 
@@ -727,10 +722,8 @@ $(function(){
       dataType: "json",
       data:{appointment:{day: day, id: availability_id}},
       success: function(response){
-        console.log("response:", response)
         checkbox.data("availability-id", "")
         checkbox.removeClass("green").addClass("red");
-        console.log("delete availability id attributes", checkbox.data("availability-id"))
         
       }
     });
