@@ -6,6 +6,7 @@ class RegistrationsController < Devise::RegistrationsController
     @roles= Role.all
     @eligibilities = Eligibility.all 
     @unions= Union.all
+    @certificates= Certificate.all
   end
 
   def create

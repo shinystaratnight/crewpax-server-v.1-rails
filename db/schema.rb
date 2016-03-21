@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318182412) do
+ActiveRecord::Schema.define(version: 20160321174711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 20160318182412) do
   end
 
   add_index "appointments", ["user_id"], name: "index_appointments_on_user_id", using: :btree
+
+  create_table "certifiables", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "certificate_id"
+  end
+
+  add_index "certifiables", ["certificate_id"], name: "index_certifiables_on_certificate_id", using: :btree
+  add_index "certifiables", ["user_id"], name: "index_certifiables_on_user_id", using: :btree
+
+  create_table "certificates", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "eligibilities", force: :cascade do |t|
     t.boolean "member"
@@ -111,6 +123,8 @@ ActiveRecord::Schema.define(version: 20160318182412) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "addresses", "users"
+  add_foreign_key "certifiables", "certificates"
+  add_foreign_key "certifiables", "users"
   add_foreign_key "eligibilities", "roles"
   add_foreign_key "eligibilities", "unions"
   add_foreign_key "eligibilities", "users"
