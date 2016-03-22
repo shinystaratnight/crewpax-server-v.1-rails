@@ -7,12 +7,19 @@
       </h3>
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div class="chosen-select"> 
-        <%@certificates.each do |certificate| %>
-          <%= certificate.name %>
-        <% end %>
-      </div>
-
+      <div> Please select certificates that you have: </div>
+       
+          <select class="chosen-select" multiple="true" name="certificate">
+            <%@certificates.each do |certificate| %>
+              <option value="<%=certificate.id%>" data-certifiable-id="">
+                <%= certificate.name %>
+                <%= certificate.id %>
+              </option>
+             <% end %>
+          </select>
+           
+      
+             
 
 
     </div>

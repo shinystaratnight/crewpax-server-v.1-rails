@@ -16,6 +16,7 @@ Bcpax::Application.routes.draw do
   # end
   resources :roles, only:[:index]
 
+  resources :certifiables, only:[:create, :destroy]
   resources :users, shallow: true do
     resources :roles 
     resources :appointments
