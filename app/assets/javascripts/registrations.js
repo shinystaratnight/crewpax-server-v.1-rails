@@ -617,28 +617,13 @@ $(function(){
 // Registration Form Certificate Section
 //********************************************************************************************************  
   $(".chosen-select").chosen({width: "95%"});
-  $(".chosen-select").on("change", function(evt, params){
-     var selected_option_arr_index= $(".search-choice-close").data("option-array-index");
-    // debugger
-    // var selected_option= $(".chosen-select option:selected").text();
-    
-    
-    // console.log("certificate id:", selected.data("certificate-id"))
-    // console.log("selected certificate:",selected_option)
-    
+  $(".chosen-select").on("change", function(evt, params){    
     var selected = params.selected
-    console.log("selected", selected)
     var deselected = params.deselected 
-  
-    console.log("deselected", deselected)
-    if(selected >0 ){
-   
-      ajaxCreateCertifiable(selected,selected_option_arr_index)
-      
-    }else if(deselected >0)
-    {
-     
-      ajaxdeleteCertifiable(deselected, selected_option_arr_index)
+      if(selected >0 ){
+      ajaxCreateCertifiable(selected,$(".search-choice-close"))  
+    }else if(deselected >0){
+      ajaxdeleteCertifiable(deselected, $(".search-choice-close"))
     }
   });
 });
@@ -758,7 +743,7 @@ $(function(){
 
    }
 
-   function ajaxCreateCertifiable(selected_certificate,selected_option_arr_index){
+   function ajaxCreateCertifiable(selected_certificate,selected_option){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/certifiables",
@@ -766,15 +751,14 @@ $(function(){
       dataType: "json",
       data:{certifiable:{user_id: user_id, certificate_id: selected_certificate}},
       success: function(response){      
-        $(".search-choice-close").data("certifiable-id", response.id)
-        console.log("after create certifiable id:", $(".search-choice-close").data("certifiable-id"))
+        selected_option.data("certifiable-id", response.id)
 
       }
     });
 
    }
 
-   function ajaxdeleteCertifiable(deselected,selected_option_arr_index){
+   function ajaxdeleteCertifiable(deselected,deselected_option){
     var user_id= $("#info").data("user-id");
     var certifiable_id=$(".search-choice-close").data("certifiable-id");
     $.ajax({
@@ -783,8 +767,7 @@ $(function(){
       dataType: "json",
       data:{certifiable:{user_id: user_id, id: certifiable_id, certificate_id:deselected}},
       success: function(response){
-        $(".search-choice-close").data("certifiable-id", "")
-        console.log("after delete, certifiable id is:", $(".search-choice-close").data("certifiable-id"))
+        deselected_option.data("certifiable-id", "")
 
       }
     })
