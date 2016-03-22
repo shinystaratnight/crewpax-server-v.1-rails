@@ -618,7 +618,6 @@ $(function(){
 //********************************************************************************************************  
   $(".chosen-select").chosen({width: "100%"});
   $(".chosen-select").on("change", function(evt, params){  
-
     var selected = params.selected
     var deselected = params.deselected 
       if(selected >0 ){
@@ -628,14 +627,6 @@ $(function(){
     }
   });
 });
-  // // Chosen touch support.
-  //   if ($('.search-choice-close').length > 0) {
-  //     $('.search-choice-close').on('tap', function(e){
-  //       e.stopPropagation(); e.preventDefault();
-  //       // Trigger the mousedown event.
-  //       $(this).trigger('mousedown');
-  //     });
-  //   }  
 
    
 //============================Common ajax call for sending data ================================================

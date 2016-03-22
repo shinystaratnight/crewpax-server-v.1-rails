@@ -8,14 +8,11 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div> Please select certificates that you have: </div>
-       
-          <select class="chosen-select" multiple="true" name="certificate" placeholder="Please choose certificates">
-            <%@certificates.each do |certificate| %>
-              <option value="<%=certificate.id%>" data-certifiable-id="">
-                <%= certificate.name %>
-                <%= certificate.id %>
-              </option>
-             <% end %>
-          </select>
-    
-    </div>
+        <select class="chosen-select" multiple="true" name="certificate">
+          <%@certificates.each do |certificate| %>
+            <option value="<%=certificate.id%>" data-certifiable-id="">
+            <%= certificate.name %>
+            </option>
+          <% end %>
+        </select>
+      </div>
