@@ -15,7 +15,7 @@ gem 'fog'
 gem 'kaminari'
 gem 'simple_form'
 gem 'pry'
-
+gem 'carrierwave-dropbox'
 
 
 group :assets do

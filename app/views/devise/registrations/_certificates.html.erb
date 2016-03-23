@@ -1,18 +1,17 @@
- <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingThree">
-      <h3 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Certificates
-        </a>
-      </h3>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div> Please select certificates that you have: </div>
-        <select class="chosen-select" multiple="true" name="certificate">
-          <%@certificates.each do |certificate| %>
-            <option value="<%=certificate.id%>" data-certifiable-id="">
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingThree">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Certificates</a>
+    </h3>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div> Please select certificates that you have: </div>
+      <select class="chosen-select" multiple="true" name="certificate">
+        <%@certificates.each do |certificate| %>
+          <option value="<%=certificate.id%>" data-certifiable-id="">
             <%= certificate.name %>
-            </option>
-          <% end %>
-        </select>
-      </div>
+          </option>
+        <% end %>
+      </select>
+    </div>
+</div>

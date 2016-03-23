@@ -35,6 +35,10 @@ Bcpax::Application.routes.draw do
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
 
   resources :users
+  get  "dropbox/main"
+  post "dropbox/upload"
+  get  "dropbox/auth_start"
+  get  "dropbox/auth_finish"
 
   root 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

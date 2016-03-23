@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :addresses, dependent: :destroy
   has_many :certifiables
   has_many :certificates, through: :certifiables
+  has_many :attachments, dependent: :destroy
 
   default_scope { order :name }
 
