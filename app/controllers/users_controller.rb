@@ -18,7 +18,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
     respond_to do |format|
       # this is for carrierwave photo upload
       if user_params[:image].present?

@@ -7,6 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
     @eligibilities = Eligibility.all 
     @unions= Union.all
     @certificates= Certificate.all
+    @attachment = Attachment.new
   end
 
   def create
@@ -94,7 +95,5 @@ class RegistrationsController < Devise::RegistrationsController
     :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input])
   end
 
-
-  
 
 end

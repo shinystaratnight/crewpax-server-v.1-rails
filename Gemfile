@@ -18,6 +18,7 @@ gem 'pry'
 gem 'carrierwave-dropbox'
 
 
+
 group :assets do
   gem 'asset_sync'
 end

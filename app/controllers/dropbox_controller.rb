@@ -23,10 +23,6 @@
 require 'dropbox_sdk'
 require 'securerandom'
 
-APP_KEY = "zz3pblvk6kdse0x"
-APP_SECRET = "1jifk36lowfmhdn"
-
-
 
 class DropboxController < ApplicationController
 
@@ -115,14 +111,4 @@ class DropboxController < ApplicationController
         end
     end
 
-    flow = DropboxOAuth2FlowNoRedirect.new(APP_KEY, APP_SECRET)
-    authorize_url = flow.start()
-    # This will fail if the user gave us an invalid authorization code
-#     puts '1. Go to: ' + authorize_url
-# puts '2. Click "Allow" (you might have to log in first)'
-# puts '3. Copy the authorization code'
-# print 'Enter the authorization code here: '
-     code = gets.strip
-    access_token, user_id = flow.finish(code)
-    client = DropboxClient.new(access_token)
 end
