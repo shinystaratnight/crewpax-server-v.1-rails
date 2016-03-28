@@ -6,49 +6,20 @@
   </div>
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
   <p> Please upload a file </p>
-<!--   <form method="post", action="">
-    <input type="file"/>
+   <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+    <!-- <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> -->
+    <input id="upload_file" type="file" name="file">
     Type of the attachment:
-    <select class="chosen-select">
+    <select id="selected_file">
       <option value="Resume">Resume</option>
       <option value="NOA">NOA</option>
       <option value="Drivers_License">Drivers License</option>
+      <option value="other"> Other </option>
     </select>
+    <button id="submit_button">Upload</button> 
+  </form> 
 
 
 
-
-  </form> -->
-  <%=form_for @attachment, url:attachments_path, html: { multipart: true, method: "create" } do |f|%>
-    <% if @attachment.errors.any? %>
-      <div>
-        <%= pluralize(@attachment.errors.count,"error")%> prevented this file from being submitted:
-        <ul>
-          <%@attachment.errors.full_messages.each do |msg| %>
-            <li><%=msg %> </li>
-          <%end%>
-        </ul>
-      </div>  
-    <%end%>
-    <div>
-      <%= f.file_field :file %> Type of the attachment: 
-      <%= select_tag(:type, options_for_select([["Resume","Resume"], ["NOA", "NOA"],
-      ["Drivers License","Drivers License" ]]))%>
-      <div id="submit_button"><%= f.submit %></div>
-
-     <!--   <select class="chosen-select" name="attachment" style="width: 30%">
-          <option value="Resume">
-            Resume
-          </option>
-          <option value="NOA">
-            NOA
-          </option>
-          <option value="Drivers_License">
-            Drivers License
-          </option>
-
-      </select> -->
-    </div>
-  <%end%> 
   </div>
 </div>

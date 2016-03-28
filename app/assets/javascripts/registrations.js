@@ -626,14 +626,93 @@ $(function(){
       ajaxdeleteCertifiable(deselected, $(".search-choice-close"))
     }
   });
-});
 
 //*********************************************************************************************************
 // Registration Files Upload Section
 //********************************************************************************************************  
-  $("#submit_button").on("click", function(){
+  $("#file_upload_form").on("submit", function(event){
+    event.preventDefault();
+
+    var user_id=$("#info").data("user-id");
+    var file_type= $("#selected_file :selected").val()
+     
+    var formData= new FormData();
+    $input= $("#upload_file");
+    var file_name=$input[0].files[0].name
+    var name= user_id +"_"+file_type+"_"+file_name;
+  
+    formData.append("attachment[file]", $input[0].files[0]);
+
+    // if ($("#selected_file :selected").data("attachment-id")==0){
+     
+      $.ajax({
+        url:"/attachments",
+        method: "post",
+        dataType: "json",    
+        data:{attachment:{user_id:user_id, type:file_type, name: name}},
+        success: function(response){
+          $("#selected_file :selected").data("attachment-id",response.id)
+
+          console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))
+           var attachment_id=$("#selected_file :selected").data("attachment-id");
+            $.ajax({
+              url:"/attachments/" + attachment_id,
+              method: "put",
+              dataType: "json",
+              data:formData,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function(response){
+                debugger
+              }
+            });
+        }
+      });
     
-  })
+
+    // } else if($("#selected_file :selected").data("attachment-id")>0){
+      // if ($("#selected_file :selected").data("attachment-id")>0){
+        // var attachment_id=$("#selected_file :selected").data("attachment-id");
+        // $.ajax({
+        //   url:"/attachments/" + attachment_id,
+        //   method: "put",
+        //   dataType: "json",
+        //   data:formData,
+        //   cache: false,
+        //   contentType: false,
+        //   processData: false,
+        //   success: function(response){
+
+        //   }
+        // });
+      // }
+   
+  
+    // return false;
+    
+
+  });
+
+  // $("#attachment_file").on("change", function(){
+  //   var formData = new FormData();
+  //   alert("get file from local files folder")
+  // })
+
+  // $("#attachment_file").on("change", function(){
+    
+  //   alert("this");
+  // });
+// $("#attachment_file").onchange=function(){
+//   alert("this");
+//   var formData = new FormData();
+// }
+
+
+
+
+});
+
 
    
 //============================Common ajax call for sending data ================================================
