@@ -20,8 +20,7 @@ class AttachmentsController < ApplicationController
     @attachment= Attachment.find(params[:id])
     respond_to do |format|
       if @attachment.update_attributes(attachment_params)
-        # dropbox_path=@attachment.file.file["path"]
-        # @attachment.update(:file =>dropbox_path)
+        # @dropbox_path=@attachment.file.file["path"]
         binding.pry
         format.html{render @user}
         format.json{render json: @attachment}

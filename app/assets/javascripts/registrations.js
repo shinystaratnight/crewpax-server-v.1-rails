@@ -649,10 +649,9 @@ $(function(){
         url:"/attachments",
         method: "post",
         dataType: "json",    
-        data:{attachment:{user_id:user_id, type:file_type, name: name}},
+        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null"}},
         success: function(response){
           $("#selected_file :selected").data("attachment-id",response.id)
-
           console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))
            var attachment_id=$("#selected_file :selected").data("attachment-id");
             $.ajax({
@@ -664,7 +663,14 @@ $(function(){
               contentType: false,
               processData: false,
               success: function(response){
-                debugger
+                $.ajax({
+                  url:"https://api.dropboxapi.com/1/shares/auto/" + 
+                  method: "post"
+                  dataType: "json",
+                  success: function(response){
+
+                  }
+                })
               }
             });
         }
