@@ -630,6 +630,28 @@ $(function(){
 //*********************************************************************************************************
 // Registration Files Upload Section
 //********************************************************************************************************  
+  // $("#upload_file_title").on("click", function(){
+  //   var user_id=$("#info").data("user-id");
+
+
+  //   $.ajax({
+  //     url:"https://api.dropboxapi.com/2/users/get_account",
+  //     method:"post",
+  //     dataType:"json",  
+  //     contentType: "application/json",
+  //     processData:false,
+  //     beforeSend: function(xhr){
+  //       xhr.setRequestHeader("Authorization", "Bearer a5EOiD-7NCAAAAAAAAAAHotGKwB3UEY-9CIXCX8qedyUtVWmHN7pPC5Jw16CVxvr")
+  //     },
+  //     data: '{"account_id": "dbid:AAH4f99T0taONIb-OurWxbNQ6ywGRopQngc"}',
+  //     success: function(response){
+  //       debugger
+  //     }
+  //   })
+  // })
+
+
+
   $("#file_upload_form").on("submit", function(event){
     event.preventDefault();
 
@@ -663,18 +685,39 @@ $(function(){
               contentType: false,
               processData: false,
               success: function(response){
-                $.ajax({
-                  url:"https://api.dropboxapi.com/1/shares/auto/" + 
-                  method: "post"
-                  dataType: "json",
-                  success: function(response){
+                console.log("response", response)
+                debugger
+                if (response){
+                  $.ajax({
+                    url:"https://api.dropboxapi.com/1/shares/auto/" + path,
+                    method: "post",
+                    dataType: "json",
+                    success: function(response){
 
-                  }
-                })
+
+                    }
+                  });
+                }
               }
             });
+          // $.ajax({
+          //   url:"/dropbox/upload",
+          //   method:"post",
+          //   dataType:"json", 
+          //   data:formData,
+          //   cache: false,
+          //   contentType: false,
+          //   processData: false,
+          //   success: function(response){
+          //     console.log("response", response)
+                
         }
       });
+    });
+
+
+
+      
     
 
     // } else if($("#selected_file :selected").data("attachment-id")>0){
@@ -698,7 +741,7 @@ $(function(){
     // return false;
     
 
-  });
+  // });
 
   // $("#attachment_file").on("change", function(){
   //   var formData = new FormData();

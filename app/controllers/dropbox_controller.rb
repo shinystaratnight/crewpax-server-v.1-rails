@@ -23,16 +23,19 @@
 require 'dropbox_sdk'
 require 'securerandom'
 
+APP_KEY = ENV["APP_KEY"]
+APP_SECRET = ENV["APP_SECRET"]
+
 
 class DropboxController < ApplicationController
 
     def main
-        client = get_dropbox_client
-        unless client
-            redirect_to(:action => 'auth_start') and return
-        end
+        @client = DropboxClient.new(ENV["ACCESS_TOKEN"])
+        # unless client
+        #     redirect_to(:action => 'auth_start') and return
+        # end
 
-        account_info = client.account_info
+        account_info = @client.account_info
 
         # Show a file upload page
         render :inline =>
@@ -40,36 +43,40 @@ class DropboxController < ApplicationController
     end
 
     def upload
-        client = get_dropbox_client
-        unless client
-            redirect_to(:action => 'auth_start') and return
-        end
+        # client = get_dropbox_client
+        # unless client
+        #     redirect_to(:action => 'auth_start') and return
+        # end
 
-        begin
+        # begin
+        binding.pry
+         client = get_dropbox_client 
             # Upload the POST'd file to Dropbox, keeping the same name
-            resp = client.put_file(params[:file].original_filename, params[:file].read)
+         attachment_params[:file]
+            binding.pry
+            resp = client.put_file(attachment_params[:file].original_filename, open(attachment_params[:file]),overwrite=false, parent_rev=nil)
             render :text => "Upload successful.  File now at #{resp['path']}"
-        rescue DropboxAuthError => e
-            session.delete(:access_token)  # An auth error means the access token is probably bad
-            logger.info "Dropbox auth error: #{e}"
-            render :text => "Dropbox auth error"
-        rescue DropboxError => e
-            logger.info "Dropbox API error: #{e}"
-            render :text => "Dropbox API error"
-        end
+        # rescue DropboxAuthError => e
+        #     session.delete(:access_token)  # An auth error means the access token is probably bad
+        #     logger.info "Dropbox auth error: #{e}"
+        #     render :text => "Dropbox auth error"
+        # rescue DropboxError => e
+        #     logger.info "Dropbox API error: #{e}"
+        #     render :text => "Dropbox API error"
+        # end
     end
 
     def get_dropbox_client
-        if session[:access_token]
-            begin
-                access_token = session[:access_token]
-                DropboxClient.new(access_token)
-            rescue
-                # Maybe something's wrong with the access token?
-                session.delete(:access_token)
-                raise
-            end
-        end
+        # if session[:access_token]
+        #     begin
+                # access_token = session[ENV["ACCESS_TOKEN"]]
+                DropboxClient.new(ENV["ACCESS_TOKEN"])
+            # rescue
+            #     # Maybe something's wrong with the access token?
+            #     session.delete(:access_token)
+            #     raise
+            # end
+        # end
     end
 
     def get_web_auth()
@@ -110,5 +117,14 @@ class DropboxController < ApplicationController
             render :text => "Error communicating with Dropbox servers."
         end
     end
+    
+    private
+      def attachment_params
+        params.require(:attachment).permit(:id, :name, :type, :file,:user_id)
+       
+      end
+
 
 end
+
+
