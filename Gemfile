@@ -16,6 +16,7 @@ gem 'kaminari'
 gem 'simple_form'
 gem 'pry'
 gem 'carrierwave-dropbox'
+gem 'httparty'
 
 
 
