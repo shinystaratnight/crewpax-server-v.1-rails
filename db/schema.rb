@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160330165605) do
     t.string  "file"
     t.integer "user_id"
     t.string  "client_email"
+    t.string  "client_name"
     t.string  "file_store_path"
     t.string  "file_share_link"
   end
