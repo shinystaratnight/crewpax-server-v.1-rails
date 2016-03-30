@@ -630,31 +630,10 @@ $(function(){
 //*********************************************************************************************************
 // Registration Files Upload Section
 //********************************************************************************************************  
-  // $("#upload_file_title").on("click", function(){
-  //   var user_id=$("#info").data("user-id");
-
-
-  //   $.ajax({
-  //     url:"https://api.dropboxapi.com/2/users/get_account",
-  //     method:"post",
-  //     dataType:"json",  
-  //     contentType: "application/json",
-  //     processData:false,
-  //     beforeSend: function(xhr){
-  //       xhr.setRequestHeader("Authorization", "Bearer a5EOiD-7NCAAAAAAAAAAHotGKwB3UEY-9CIXCX8qedyUtVWmHN7pPC5Jw16CVxvr")
-  //     },
-  //     data: '{"account_id": "dbid:AAH4f99T0taONIb-OurWxbNQ6ywGRopQngc"}',
-  //     success: function(response){
-  //       debugger
-  //     }
-  //   })
-  // })
-
-
-
   $("#file_upload_form").on("submit", function(event){
     event.preventDefault();
-
+    var client_email= $("#client_email").val();
+    debugger
     var user_id=$("#info").data("user-id");
     var file_type= $("#selected_file :selected").val()
      
@@ -671,7 +650,7 @@ $(function(){
         url:"/attachments",
         method: "post",
         dataType: "json",    
-        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null"}},
+        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
         success: function(response){
           $("#selected_file :selected").data("attachment-id",response.id)
           console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))
@@ -686,77 +665,18 @@ $(function(){
               processData: false,
               success: function(response){
                 console.log("response", response)
-                debugger
-                if (response){
-                  $.ajax({
-                    url:"https://api.dropboxapi.com/1/shares/auto/" + path,
-                    method: "post",
-                    dataType: "json",
-                    success: function(response){
-
-
-                    }
-                  });
-                }
+               
+               
               }
             });
-          // $.ajax({
-          //   url:"/dropbox/upload",
-          //   method:"post",
-          //   dataType:"json", 
-          //   data:formData,
-          //   cache: false,
-          //   contentType: false,
-          //   processData: false,
-          //   success: function(response){
-          //     console.log("response", response)
-                
-        }
+          }
       });
     });
 
 
 
       
-    
-
-    // } else if($("#selected_file :selected").data("attachment-id")>0){
-      // if ($("#selected_file :selected").data("attachment-id")>0){
-        // var attachment_id=$("#selected_file :selected").data("attachment-id");
-        // $.ajax({
-        //   url:"/attachments/" + attachment_id,
-        //   method: "put",
-        //   dataType: "json",
-        //   data:formData,
-        //   cache: false,
-        //   contentType: false,
-        //   processData: false,
-        //   success: function(response){
-
-        //   }
-        // });
-      // }
    
-  
-    // return false;
-    
-
-  // });
-
-  // $("#attachment_file").on("change", function(){
-  //   var formData = new FormData();
-  //   alert("get file from local files folder")
-  // })
-
-  // $("#attachment_file").on("change", function(){
-    
-  //   alert("this");
-  // });
-// $("#attachment_file").onchange=function(){
-//   alert("this");
-//   var formData = new FormData();
-// }
-
 
 
 
