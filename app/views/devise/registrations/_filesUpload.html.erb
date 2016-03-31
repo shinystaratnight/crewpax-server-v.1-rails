@@ -5,8 +5,10 @@
     </h3>
   </div>
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-  <p> Please upload a file </p>
-   <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+  
+  <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+    </br>Recipient's name: <input type="text" id="client_name" name="client_name">
+    </br>Recipient's email address:<input type="text" id="client_email" name="client_email"> 
     <!-- <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> -->
     <input id="upload_file" type="file" name="file">
     Type of the attachment:
@@ -16,9 +18,6 @@
       <option value="Drivers_License">Drivers License</option>
       <option value="other"> Other </option>
     </select>
-    </br>
-    Recipient's email address:<input type="text" id="client_email" name="client_email"> 
-    Recipient's name: <input type="text" id="client_name" name="client_name">
     <button id="submit_button">Email</button> 
   </form> 
 

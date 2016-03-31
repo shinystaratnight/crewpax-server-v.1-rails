@@ -6,7 +6,11 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(pdf doc htm html docx pages txt)
+    %w(pdf doc htm html docx pages txt jpg jpeg )
+  end
+
+  def filename
+    model.name if original_filename
   end
   
 end

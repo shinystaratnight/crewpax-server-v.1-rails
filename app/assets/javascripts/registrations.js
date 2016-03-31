@@ -633,7 +633,7 @@ $(function(){
   $("#file_upload_form").on("submit", function(event){
     event.preventDefault();
     var client_email= $("#client_email").val();
-    debugger
+    var client_name= $("#client_name").val();
     var user_id=$("#info").data("user-id");
     var file_type= $("#selected_file :selected").val()
      
@@ -650,7 +650,7 @@ $(function(){
         url:"/attachments",
         method: "post",
         dataType: "json",    
-        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
+        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email, client_name: client_name}},
         success: function(response){
           $("#selected_file :selected").data("attachment-id",response.id)
           console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))

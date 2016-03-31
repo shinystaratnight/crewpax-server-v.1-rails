@@ -1,10 +1,5 @@
-
-APP_KEY = ENV["APP_KEY"]
-APP_SECRET = ENV["APP_SECRET"]
-
-
 class AttachmentsController < ApplicationController
-  include HTTParty
+ 
   protect_from_forgery
   def create
     @attachment= Attachment.new(attachment_params)
@@ -26,12 +21,14 @@ class AttachmentsController < ApplicationController
     client = dropbox_client
     @attachment= Attachment.find(params[:id])
     @attachment.update_attributes(attachment_params)
-    binding.pry
     file_store_path=@attachment.file.file["path"]
     file_share_link=client.shares(file_store_path)["url"]
     @attachment.update(file_store_path: file_store_path, file_share_link: file_share_link)
-
-   
+    
+    #send the email
+    if file_share_link.present?
+      AttachmentMailer.email_attachment(@attachment).deliver_now
+    end
   
     # response= HTTParty.post("https://api.dropboxapi.com/2/files/get_metedata",:query=>{:path=>@dropbox_path},:header=>{"Authorization"=>"Bearer a5EOiD-7NCAAAAAAAAAAIr6OyOLBb4hmsPGXGrw4MUduHZZTRYIjbtYuDstFUSEN"})
     
@@ -53,7 +50,7 @@ class AttachmentsController < ApplicationController
 
   private
   def attachment_params
-    params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path)
+    params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path,:client_name)
   end
 
   def dropbox_client
