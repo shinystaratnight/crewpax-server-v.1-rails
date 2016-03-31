@@ -5,23 +5,28 @@
     </h3>
   </div>
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div></div>
+    <a role="button" class="m-btn blue" id="upload_new_documents_button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">Upload new documents</a>
+    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+        </br>Recipient's email address:<input type="text" id="client_email" name="client_email"> 
+        <!-- <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> -->
+        <input id="upload_file" type="file" name="file">
+        Type of the attachment:
+        <select id="selected_file">
+          <option value="Resume">Resume</option>
+          <option value="NOA">NOA</option>
+          <option value="Drivers_License">Drivers License</option>
+          <option value="other"> Other </option>
+        </select>
+        <button id="submit_button">Email</button> 
+      </form> 
+    </div>
   
-  <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
-    </br>Recipient's name: <input type="text" id="client_name" name="client_name">
-    </br>Recipient's email address:<input type="text" id="client_email" name="client_email"> 
-    <!-- <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> -->
-    <input id="upload_file" type="file" name="file">
-    Type of the attachment:
-    <select id="selected_file">
-      <option value="Resume">Resume</option>
-      <option value="NOA">NOA</option>
-      <option value="Drivers_License">Drivers License</option>
-      <option value="other"> Other </option>
-    </select>
-    <button id="submit_button">Email</button> 
-  </form> 
 
 
 
   </div>
+
+
 </div>

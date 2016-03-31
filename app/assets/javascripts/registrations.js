@@ -633,7 +633,6 @@ $(function(){
   $("#file_upload_form").on("submit", function(event){
     event.preventDefault();
     var client_email= $("#client_email").val();
-    var client_name= $("#client_name").val();
     var user_id=$("#info").data("user-id");
     var file_type= $("#selected_file :selected").val()
      
@@ -642,15 +641,12 @@ $(function(){
     var file_name=$input[0].files[0].name
     var name= user_id +"_"+file_type+"_"+file_name;
   
-    formData.append("attachment[file]", $input[0].files[0]);
-
-    // if ($("#selected_file :selected").data("attachment-id")==0){
-     
+    formData.append("attachment[file]", $input[0].files[0]);     
       $.ajax({
         url:"/attachments",
         method: "post",
         dataType: "json",    
-        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email, client_name: client_name}},
+        data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
         success: function(response){
           $("#selected_file :selected").data("attachment-id",response.id)
           console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))

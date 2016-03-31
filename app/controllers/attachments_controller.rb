@@ -50,7 +50,7 @@ class AttachmentsController < ApplicationController
 
   private
   def attachment_params
-    params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path,:client_name)
+    params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path)
   end
 
   def dropbox_client
