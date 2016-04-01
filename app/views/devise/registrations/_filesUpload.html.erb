@@ -5,21 +5,92 @@
     </h3>
   </div>
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-    <div></div>
-    <a role="button" class="m-btn blue" id="upload_new_documents_button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">Upload new documents</a>
+    <div class="existing_file" data-file-type="Resume"> 
+      <span id="resume_info" hidden="true">
+        <i class="fa fa-file-pdf-o" style="font-size: 50px;"></i>
+        <p>Resume</p>
+      </span>  
+    </div>
+
+    <div class="existing_file" data-file-type="NOA">
+      <span id="NOA_info" >   
+        <label for="file_pdf">
+          <i class="fa fa-file-pdf-o" id="file_pdf" style="font-size: 50px;"></i>
+          </br> 
+          NOA
+        </label>    
+        <a href="" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray; margin-left: -15px;"></i></a>    
+      </span>
+    
+    </div>
+   
+    <form class="form-inline">
+      <div class="form-group" class="file_upload">
+        <label for="client_email" class="document_email"> Recipient's email address:</label>
+        <input type="text" name="client_email"> 
+      </div>
+
+ 
+       <button class="btn btn-primary" id="submit_button"><i class="fa fa-envelope-o"></i>Email</button>
+          
+          <span id="uploading" hidden="true">
+            <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i>  
+          </span>
+         
+          <span id="success_upload" hidden="true">
+            <i class="fa fa-check-circle" style="font-size: 40px; color:green"></i>
+          </span>  
+    </form>
+
+
+
+
+    <div class="existing_file" data-file-type="Drivers_License"> 
+      <span id="drivers_license" hidden="true">
+        <i class="fa fa-file-pdf-o" style="font-size: 50px; margin-left: 25px;"></i>
+        <p>Driver's License</p>
+      </span>
+    </div>
+
+    <div class="existing_file" data-file-type="other"> 
+      <span id="other" hidden="true">  
+        <i class="fa fa-file-pdf-o" style="font-size: 50px;"></i>
+        <p>Other</p>
+      </span>  
+    </div>
+    </br>
+    <a role="button" class="btn btn-primary" id="upload_new_documents_button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">Upload new documents</a>
     <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <form id="file_upload_form" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
-        </br>Recipient's email address:<input type="text" id="client_email" name="client_email"> 
-        <!-- <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> -->
-        <input id="upload_file" type="file" name="file">
-        Type of the attachment:
-        <select id="selected_file">
-          <option value="Resume">Resume</option>
-          <option value="NOA">NOA</option>
-          <option value="Drivers_License">Drivers License</option>
-          <option value="other"> Other </option>
-        </select>
-        <button id="submit_button">Email</button> 
+      <form id="file_upload_form" class="form-inline" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+        <div class="form-group" class="file_upload">
+          <label for="client_email" class="document_email"> Recipient's email address:</label>
+          <input type="text"id="client_email" name="client_email"> 
+        </div>
+
+        <div class="form-group" class="file_upload">
+          <label for="upload_file"  class="document_email"> File: </label> 
+          <input id="upload_file" type="file" name="file">
+        </div>
+
+        <div class="form-group" class="file_upload">
+        <label class="document_email">Type of the attachment: </label>  
+          <select id="selected_file">
+            <option value="Resume">Resume</option>
+            <option value="NOA">NOA</option>
+            <option value="Drivers_License">Drivers License</option>
+            <option value="other"> Other </option>
+          </select>
+        </div>
+          <button class="btn btn-primary" id="submit_button"><i class="fa fa-envelope-o"></i>Email</button>
+          
+          <span id="uploading" hidden="true">
+            <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i>  
+          </span>
+         
+          <span id="success_upload" hidden="true">
+            <i class="fa fa-check-circle" style="font-size: 40px; color:green"></i>
+          </span>  
+         
       </form> 
     </div>
   

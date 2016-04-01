@@ -632,6 +632,8 @@ $(function(){
 //********************************************************************************************************  
   $("#file_upload_form").on("submit", function(event){
     event.preventDefault();
+    $("#submit_button").hide();
+    $("#uploading").show();
     var client_email= $("#client_email").val();
     var user_id=$("#info").data("user-id");
     var file_type= $("#selected_file :selected").val()
@@ -660,7 +662,22 @@ $(function(){
               contentType: false,
               processData: false,
               success: function(response){
-                console.log("response", response)
+                $("#success_upload").show();
+                $("#uploading").hide();
+               
+                // if(response.type== $(".existing_file").data["file_type"]){
+                //  debugger 
+                //   $(this).append("<a href="+ response.file_share_link + ">").show();
+                // }
+                $.each($('.existing_file'), function(i,element){
+                  if($(this).data("file-type")==response.type){
+                    debugger
+                    $(this).children(".share_link").attr("href", response.file_share_link);
+                    $(this).children().show();
+                  }
+
+                });
+               
                
                
               }

@@ -170,8 +170,55 @@ input[type="checkbox"]:focus{
 
 //=======For Email Documents ===============================================================
 
-#upload_new_documents_button{
-  margin: 8px 15px;
+#upload_new_documents_button {
+  margin: 5px 15px;
+  font-size:medium;
   
 }
 
+#submit_button{
+  margin-bottom: 5px;
+  font-size:medium;
+}
+
+#file_upload_form{
+  margin-left:15px;
+}
+
+
+.document_email{
+  font-weight: normal;
+  max-width:35%;
+}
+
+.file_upload{
+  margin-right: -50px;
+}
+
+#upload_file{
+  max-width: 220px;
+}
+
+#client_email{
+  border:1px solid lightgray;
+  background: transparent;
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+#selected_file{
+  border: 1px solid lightgray;
+  background: transparent;
+}
+
+icon .fa fa-file-pdf-o{
+  font-size: 50px;
+}
+
+.existing_file{
+  max-width:200px;
+  margin-top:10px;
+  margin-left:15px;
+  display: inline-block;
+
+}
