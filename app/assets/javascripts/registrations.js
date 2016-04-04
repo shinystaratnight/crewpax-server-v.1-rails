@@ -664,15 +664,13 @@ $(function(){
               success: function(response){
                 $("#success_upload").show();
                 $("#uploading").hide();
-               
-                // if(response.type== $(".existing_file").data["file_type"]){
-                //  debugger 
-                //   $(this).append("<a href="+ response.file_share_link + ">").show();
-                // }
                 $.each($('.existing_file'), function(i,element){
                   if($(this).data("file-type")==response.type){
+               
+                    $(this).find(".share_link").attr("href", response.file_share_link);
+                    $(this).find(".file_info").data("file-id", response.id)
+                    console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))
                     debugger
-                    $(this).children(".share_link").attr("href", response.file_share_link);
                     $(this).children().show();
                   }
 
@@ -686,7 +684,22 @@ $(function(){
       });
     });
 
+// Email existing uploaded files to mutliple users
+  $("#email_form").on("submit", function(event){
+    event.preventDefault();
+    $("#email_sent").hide();
+    $("#sending").show();
+    // $.ajax({
+    //   url:"//attachments/" + attachment_id,
+    //   method:"get",
+    //   dataType: "json",
+    //   data:
+    //   success: function(response){
 
+    //   }
+
+    // })
+  });
 
       
    

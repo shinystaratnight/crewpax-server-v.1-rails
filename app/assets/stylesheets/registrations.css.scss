@@ -185,6 +185,9 @@ input[type="checkbox"]:focus{
   margin-left:15px;
 }
 
+#email_form{
+  margin-left:15px;
+}
 
 .document_email{
   font-weight: normal;
@@ -199,7 +202,7 @@ input[type="checkbox"]:focus{
   max-width: 220px;
 }
 
-#client_email{
+.client_email{
   border:1px solid lightgray;
   background: transparent;
   width: 150px;
@@ -211,9 +214,6 @@ input[type="checkbox"]:focus{
   background: transparent;
 }
 
-icon .fa fa-file-pdf-o{
-  font-size: 50px;
-}
 
 .existing_file{
   max-width:200px;
@@ -221,4 +221,8 @@ icon .fa fa-file-pdf-o{
   margin-left:15px;
   display: inline-block;
 
+}
+
+.file_info{
+  color:black;
 }
