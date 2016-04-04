@@ -672,11 +672,6 @@ $(function(){
                     $(this).children().show();
                     
                     $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
-                    
-                    // $("#success_msg").fadeOut(500, function(){
-                    //   debugger
-                    //   $(this).remove();
-                    // }, 3000);   
 
                     $("#submit_button").show();
                   }
@@ -692,22 +687,45 @@ $(function(){
     });
 
 // Email existing uploaded files to mutliple users
+  $(".existing_file").on("click",function(){
+    alert("existing_file clicked")
+    // add a data attribute indicates which existing_file is click
+    $(this).data("clickable", "true")
+    console.log("existing file clicked:", $(this).data("clickable"))
+    var attachment_id=$(this).find(".file_info").data("file-id")
+  })
+
+  
   $("#email_form").on("submit", function(event){
     event.preventDefault();
     $("#email_sent").hide();
     $("#sending").show();
-    // $.ajax({
-    //   url:"//attachments/" + attachment_id,
-    //   method:"get",
-    //   dataType: "json",
-    //   data:
-    //   success: function(response){
+    var new_client_email= $("#new_client_email").val();
+    console.log("new client email:", new_client_email)
+    $.each($('.existing_file'), function(i,element){
+      if($(this).data("clickable")=="true"){
+        var attachment_id = $(this).find(".file_info").data("file-id")
+        console.log("attachment_id:", attachment_id)
+          $.ajax({
+            url:"/attachments/"+attachment_id,
+            method:"put",
+            dataType: "json",
+            data:{attachment:{client_email:new_client_email}},
+            success: function(response){
+              $("#success_sent").show()
+              $("#email_sent").show();
+              $("#sending").hide();
+              $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+              
+            }
 
-    //   }
+          });
+      }
 
-    // })
+    });
+  
+   
   });
-
       
    
 

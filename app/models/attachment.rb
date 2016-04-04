@@ -5,6 +5,6 @@ class Attachment < ActiveRecord::Base
   #to have a database column named type
   self.inheritance_column = nil 
   mount_uploader :file, AttachmentUploader
-  validates :client_email,length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
+  validates :client_email, presence:true, length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
   if: "client_email.present?"
 end
