@@ -29,24 +29,21 @@ class AttachmentsController < ApplicationController
       end
     else
       client = dropbox_client
-      @attachment.update_attributes(attachment_params)
-      file_store_path=@attachment.file.file["path"]
-      file_share_link=client.shares(file_store_path)["url"]
-      @attachment.update(file_store_path: file_store_path, file_share_link: file_share_link)
-      
-      #send the email after receive dropbox share link
-      if file_share_link.present?
-        AttachmentMailer.email_attachment(@attachment).deliver_now
-      end
-    
-      # response= HTTParty.post("https://api.dropboxapi.com/2/files/get_metedata",:query=>{:path=>@dropbox_path},:header=>{"Authorization"=>"Bearer a5EOiD-7NCAAAAAAAAAAIr6OyOLBb4hmsPGXGrw4MUduHZZTRYIjbtYuDstFUSEN"})
-      
       respond_to do |format|  
-        if file_share_link.present?  
-          format.html{render @user}
-          format.json{render json: @attachment}
+        if @attachment.update_attributes(attachment_params)         
+          file_store_path=@attachment.file.file["path"]
+          file_share_link=client.shares(file_store_path)["url"]
+          @attachment.update(file_store_path: file_store_path, file_share_link: file_share_link)
+          if file_share_link.present? 
+            AttachmentMailer.email_attachment(@attachment).deliver_now
+            format.html{render @user}
+            format.json{render json:@attachment}
+          end
+        else
+          format.json{render json: @attachment.errors.full_messages}
         end
       end
+      # response= HTTParty.post("https://api.dropboxapi.com/2/files/get_metedata",:query=>{:path=>@dropbox_path},:header=>{"Authorization"=>"Bearer a5EOiD-7NCAAAAAAAAAAIr6OyOLBb4hmsPGXGrw4MUduHZZTRYIjbtYuDstFUSEN"})   
     end
   end
 
@@ -70,3 +67,19 @@ class AttachmentsController < ApplicationController
   end
   
 end
+
+
+   
+      
+      #send the email after receive dropbox share link
+      # if file_share_link.present?
+      #   AttachmentMailer.email_attachment(@attachment).deliver_now
+      # end
+    
+      
+      # respond_to do |format|  
+      #   if file_share_link.present?  
+      #     format.html{render @user}
+      #     format.json{render json: @attachment}        
+      #   end
+      # end

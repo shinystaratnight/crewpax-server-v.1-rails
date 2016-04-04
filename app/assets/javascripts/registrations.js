@@ -631,23 +631,28 @@ $(function(){
 // Registration Files Upload Section
 //********************************************************************************************************  
   $("#file_upload_form").on("submit", function(event){
-    var client_email= $("#recipient_email").val().trim();
+    var client_email= $("#recipient_email").val().trim(); 
+    var user_id=$("#info").data("user-id");
+    var file_type= $("#selected_file :selected").val()
+    var formData= new FormData();
+    $input= $("#upload_file");
+  
+    if ($input[0].files.length==0){
+      $("#fail_msg").text("Attachment can't be blank, please choose your file").show().delay(3000).fadeOut(1000)
+      return false;      
+    }
+
     if (client_email == ""){
       $("#fail_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000)
       return false;
-    }else{
+    }else{    
+      var file_name=$input[0].files[0].name
+      var name= user_id +"_"+file_type+"_"+file_name;
+      formData.append("attachment[file]", $input[0].files[0]);   
       $("#fail_msg").hide();
       event.preventDefault();
       $("#submit_button").hide();
-      $("#uploading").show();
-     
-      var user_id=$("#info").data("user-id");
-      var file_type= $("#selected_file :selected").val()
-      var formData= new FormData();
-      $input= $("#upload_file");
-      var file_name=$input[0].files[0].name
-      var name= user_id +"_"+file_type+"_"+file_name;
-      formData.append("attachment[file]", $input[0].files[0]);     
+      $("#uploading").show();       
         $.ajax({
           url:"/attachments",
           method: "post",
@@ -667,25 +672,26 @@ $(function(){
                   contentType: false,
                   processData: false,
                   success: function(response){
-                    $("#success_upload").show();
-                    $("#uploading").hide();
-                    $.each($('.existing_file'), function(i,element){
-                      if($(this).data("file-type")==response.type){
-                   
-                        $(this).find(".share_link").attr("href", response.file_share_link);
-                        $(this).find(".file_info").data("file-id", response.id)
-                        console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))
-                        
-                        $(this).children().show();
-                        
-                        $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
-
-                        $("#submit_button").show();
-                      }
-
-                    });  
-                                   
-                  }                
+                    if(response.file_share_link === undefined){
+                      $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
+                      $("#uploading").hide();
+                      $("#submit_button").show();
+                    }else{
+                      $("#success_upload").show();
+                      $("#uploading").hide();
+                      $.each($('.existing_file'), function(i,element){
+                        if($(this).data("file-type")==response.type){
+                     
+                          $(this).find(".share_link").attr("href", response.file_share_link);
+                          $(this).find(".file_info").data("file-id", response.id)
+                          console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))                          
+                          $(this).children().show();                          
+                          $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
+                          $("#submit_button").show();
+                        }
+                      });                                     
+                    }
+                  }               
                 });
               }else{
                 $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
@@ -712,8 +718,8 @@ $(function(){
   $("#email_form").on("submit", function(event){
     var new_client_email= $("#new_client_email").val().trim();
     if(new_client_email==""){
-      $("#fail_new_client_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000)
-      return false
+      $("#fail_new_client_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000);
+      return false;
     }
     event.preventDefault();
     $("#email_sent").hide();
