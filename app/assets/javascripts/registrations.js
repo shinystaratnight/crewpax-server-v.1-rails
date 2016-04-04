@@ -656,38 +656,42 @@ $(function(){
           success: function(response){
             $("#selected_file :selected").data("attachment-id",response.id)
             console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))
-             var attachment_id=$("#selected_file :selected").data("attachment-id");
-              $.ajax({
-                url:"/attachments/" + attachment_id,
-                method: "put",
-                dataType: "json",
-                data:formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response){
-                  $("#success_upload").show();
-                  $("#uploading").hide();
-                  $.each($('.existing_file'), function(i,element){
-                    if($(this).data("file-type")==response.type){
-                 
-                      $(this).find(".share_link").attr("href", response.file_share_link);
-                      $(this).find(".file_info").data("file-id", response.id)
-                      console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))
-                      
-                      $(this).children().show();
-                      
-                      $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
+            var attachment_id=$("#selected_file :selected").data("attachment-id");
+              if(response.id>0){
+                $.ajax({
+                  url:"/attachments/" + attachment_id,
+                  method: "put",
+                  dataType: "json",
+                  data:formData,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  success: function(response){
+                    $("#success_upload").show();
+                    $("#uploading").hide();
+                    $.each($('.existing_file'), function(i,element){
+                      if($(this).data("file-type")==response.type){
+                   
+                        $(this).find(".share_link").attr("href", response.file_share_link);
+                        $(this).find(".file_info").data("file-id", response.id)
+                        console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))
+                        
+                        $(this).children().show();
+                        
+                        $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
 
-                      $("#submit_button").show();
-                    }
+                        $("#submit_button").show();
+                      }
 
-                  });
-                 
-                 
-                 
-                }
-              });
+                    });  
+                                   
+                  }                
+                });
+              }else{
+                $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#uploading").hide();
+                $("#submit_button").show();
+              }
             }
 
         });
@@ -726,11 +730,16 @@ $(function(){
             dataType: "json",
             data:{attachment:{client_email:new_client_email}},
             success: function(response){
-              $("#success_sent").show()
-              $("#email_sent").show();
-              $("#sending").hide();
-              $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-              
+              if(response.id >0){
+                $("#success_sent").show()
+                $("#email_sent").show();
+                $("#sending").hide();
+                $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+              }else{
+                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#sending").hide();
+                $("#email_sent").show();
+              }
             }
 
           });

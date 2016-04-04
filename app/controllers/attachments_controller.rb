@@ -9,23 +9,24 @@ class AttachmentsController < ApplicationController
         format.html{render @user}
         format.json{render json: @attachment}
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors.full_messages}
+        format.html{render action: "new" }
+        format.json{render json: @attachment.errors.full_messages}
       end
     end
   end    
    
   def update
     @attachment= Attachment.find(params[:id])
-
     if @attachment.file_share_link.present?
-      @attachment.update_attributes(attachment_params)
-      AttachmentMailer.email_attachment(@attachment).deliver_now
       respond_to do |format|
-        format.html{render @user}
-        format.json{render json: @attachment}
+        if @attachment.update_attributes(attachment_params)
+          AttachmentMailer.email_attachment(@attachment).deliver_now
+          format.html{render @user}
+          format.json{render json: @attachment}
+        else
+          format.json{render json: @attachment.errors.full_messages}
+        end
       end
-
     else
       client = dropbox_client
       @attachment.update_attributes(attachment_params)
@@ -44,7 +45,6 @@ class AttachmentsController < ApplicationController
         if file_share_link.present?  
           format.html{render @user}
           format.json{render json: @attachment}
-
         end
       end
     end
