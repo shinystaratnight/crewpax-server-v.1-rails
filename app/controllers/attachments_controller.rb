@@ -50,13 +50,7 @@ class AttachmentsController < ApplicationController
     end
   end
 
-  def show
-    @attachment= Attachment.find(params[:id])
-    @attachment.update(client_email: new_client_email)
-    binding.pry
-    AttachmentMailer.email_attachment(@attachment).deliver_now
-
-  end
+ 
 
   def destroy
 
