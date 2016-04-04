@@ -5,8 +5,11 @@
     </h3>
   </div>
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="success_msg">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
     <div class="existing_file" data-file-type="Resume"> 
-      <span>
+      <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
           <label class="file_info" data-file-id="">
             <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
@@ -21,7 +24,7 @@
     
   
     <div class="existing_file" data-file-type="NOA">
-      <span>
+      <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">   
           <label for="file_pdf" class="file_info" data-file-id="">
             <i class="fa fa-file-pdf-o" id="file_pdf" style="font-size: 50px; color:black;"></i>
@@ -35,7 +38,7 @@
    
    
     <div class="existing_file" data-file-type="Drivers_License"> 
-      <span>
+      <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
         <label class="file_info" data-file-id="">
           <i class="fa fa-file-pdf-o" style="font-size: 50px; margin-left: 25px; color:black;"></i>
@@ -48,7 +51,7 @@
     </div>
 
     <div class="existing_file" data-file-type="other"> 
-      <span>
+      <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
         <label class="file_info" data-file-id="">
           <i class="fa fa-file-pdf-o" style="font-size: 50px;color:black;"></i>
@@ -70,9 +73,10 @@
     <a role="button" class="btn btn-primary" id="upload_new_documents_button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">Upload new documents</a>
     <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <form id="file_upload_form" class="form-inline" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
+
         <div class="form-group" class="file_upload">
           <label for="client_email" class="document_email"> Recipient's email address:</label>
-          <input type="text" class="client_email" name="client_email"> 
+          <input type="text" class="client_email" name="client_email" id="recipient_email"> 
         </div>
 
         <div class="form-group" class="file_upload">
@@ -101,6 +105,7 @@
         </span>  
        
       </form> 
+      
     </div>
   
 

@@ -634,15 +634,13 @@ $(function(){
     event.preventDefault();
     $("#submit_button").hide();
     $("#uploading").show();
-    var client_email= $("#client_email").val();
+    var client_email= $("#recipient_email").val();
     var user_id=$("#info").data("user-id");
     var file_type= $("#selected_file :selected").val()
-     
     var formData= new FormData();
     $input= $("#upload_file");
     var file_name=$input[0].files[0].name
     var name= user_id +"_"+file_type+"_"+file_name;
-  
     formData.append("attachment[file]", $input[0].files[0]);     
       $.ajax({
         url:"/attachments",
@@ -670,8 +668,17 @@ $(function(){
                     $(this).find(".share_link").attr("href", response.file_share_link);
                     $(this).find(".file_info").data("file-id", response.id)
                     console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))
-                    debugger
+                    
                     $(this).children().show();
+                    
+                    $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
+                    
+                    // $("#success_msg").fadeOut(500, function(){
+                    //   debugger
+                    //   $(this).remove();
+                    // }, 3000);   
+
+                    $("#submit_button").show();
                   }
 
                 });

@@ -36,6 +36,7 @@ class AttachmentsController < ApplicationController
       if file_share_link.present?  
         format.html{render @user}
         format.json{render json: @attachment}
+
       end
     end
 
