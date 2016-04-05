@@ -15,7 +15,8 @@ Bcpax::Application.routes.draw do
   #   resources :jobs
   # end
   resources :roles, only:[:index]
-
+  resources :attachments, only:[:create,:update, :destroy]
+  resources :certifiables, only:[:create, :destroy]
   resources :users, shallow: true do
     resources :roles 
     resources :appointments
@@ -32,8 +33,6 @@ Bcpax::Application.routes.draw do
   # end
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
-
-  resources :users
 
   root 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

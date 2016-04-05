@@ -578,7 +578,6 @@ $(function(){
   $("#NON_UNION").on("click", function(){
     var union_id = $(this).prev().text();
     $(this).data("union-id", union_id);
-    console.log("non union union id:", $(this).data("union-id"))
   });
 
   $(".NON_UNION_roles").on("click", function(){
@@ -613,10 +612,149 @@ $(function(){
    
 
   });
-     
+
+//*********************************************************************************************************
+// Registration Form Certificate Section
+//********************************************************************************************************  
+  $(".chosen-select").chosen({width: "100%"});
+  $(".chosen-select").on("change", function(evt, params){  
+    var selected = params.selected
+    var deselected = params.deselected 
+      if(selected >0 ){
+      ajaxCreateCertifiable(selected,$(".search-choice-close"))  
+    }else if(deselected >0){
+      ajaxdeleteCertifiable(deselected, $(".search-choice-close"))
+    }
+  });
+
+//*********************************************************************************************************
+// Registration Files Upload Section
+//********************************************************************************************************  
+  $("#file_upload_form").on("submit", function(event){
+    var client_email= $("#recipient_email").val().trim(); 
+    var user_id=$("#info").data("user-id");
+    var file_type= $("#selected_file :selected").val()
+    var formData= new FormData();
+    $input= $("#upload_file");
+  
+    if ($input[0].files.length==0){
+      $("#fail_msg").text("Attachment can't be blank, please choose your file").show().delay(3000).fadeOut(1000)
+      return false;      
+    }
+    else if (client_email == ""){
+      $("#fail_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000)
+      return false;
+    }else{    
+      var file_name=$input[0].files[0].name
+      var name= user_id +"_"+file_type+"_"+file_name;
+      formData.append("attachment[file]", $input[0].files[0]);   
+      $("#fail_msg").hide();
+      event.preventDefault();
+      $("#submit_button").hide();
+      $("#uploading").show();       
+        $.ajax({
+          url:"/attachments",
+          method: "post",
+          dataType: "json",    
+          data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
+          success: function(response){
+            $("#selected_file :selected").data("attachment-id",response.id)
+            var attachment_id=$("#selected_file :selected").data("attachment-id");
+              if(response.id>0){
+                $.ajax({
+                  url:"/attachments/" + attachment_id,
+                  method: "put",
+                  dataType: "json",
+                  data:formData,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  success: function(response){
+                    if(response.file_share_link === undefined){
+                      $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
+                      $("#uploading").hide();
+                      $("#submit_button").show();
+                    }else{
+                      $("#success_upload").show();
+                      $("#uploading").hide();
+                      $.each($('.existing_file'), function(i,element){
+                        if($(this).data("file-type")==response.type){                     
+                          $(this).find(".share_link").attr("href", response.file_share_link);
+                          $(this).find(".file_info").data("file-id", response.id);
+                          $(this).children().show();                          
+                          $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+                          $("#submit_button").show();
+                        }
+                      });                                     
+                    }
+                  }               
+                });
+              }else{
+                $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#uploading").hide();
+                $("#submit_button").show();
+              }
+            }
+
+        });
+    }
+    
+  });
+
+// Email existing uploaded files to mutliple users
+  $(".existing_file").on("click",function(){
+    // add a data attribute indicates which existing_file is click
+    $(this).data("clickable", "true")    
+  });
+
+  
+  $("#email_form").on("submit", function(event){
+    var new_client_email= $("#new_client_email").val().trim();
+    if(new_client_email==""){
+      $("#fail_new_client_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000);
+      return false;
+    }
+    event.preventDefault();
+    $("#email_sent").hide();
+    $("#sending").show();
+  
+    $.each($('.existing_file'), function(i,element){
+      if($(this).data("clickable")=="true"){
+        var attachment_id = $(this).find(".file_info").data("file-id")
+          $.ajax({
+            url:"/attachments/"+attachment_id,
+            method:"put",
+            dataType: "json",
+            data:{attachment:{client_email:new_client_email}},
+            success: function(response){
+              if(response.id >0){
+                $("#success_sent").show()
+                $("#email_sent").show();
+                $("#sending").hide();
+                $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+              }else{
+                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#sending").hide();
+                $("#email_sent").show();
+              }
+            }
+
+          });
+      }
+
+    });
+  
+   
+  });
+//======================================================================================================      
+   
+
+
+
 });
 
 
+   
 //============================Common ajax call for sending data ================================================
 
   function ajaxDeleteEligibility(union_id, role_id,eligibility_id){
@@ -669,7 +807,6 @@ $(function(){
       data:{eligibility:{union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id")) 
       }
     });
   }
@@ -684,7 +821,6 @@ $(function(){
       data:{eligibility:{member:data, union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id"))      
       }          
     });
   }
@@ -698,7 +834,6 @@ $(function(){
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id,role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-        console.log("checked eligibility row id:", checkbox.data("eligibility-id"))
         
       }
     });
@@ -714,7 +849,6 @@ $(function(){
       success: function(response){
         checkbox.addClass("green");
         checkbox.data("availability-id", response.id)
-        console.log("availability id:", checkbox.data("availability-id"))
       }
     })
 
@@ -727,14 +861,42 @@ $(function(){
       dataType: "json",
       data:{appointment:{day: day, id: availability_id}},
       success: function(response){
-        console.log("response:", response)
         checkbox.data("availability-id", "")
         checkbox.removeClass("green").addClass("red");
-        console.log("delete availability id attributes", checkbox.data("availability-id"))
         
       }
     });
 
+   }
+
+   function ajaxCreateCertifiable(selected_certificate,selected_option){
+    var user_id= $("#info").data("user-id");
+    $.ajax({
+      url:"/certifiables",
+      method: "post",
+      dataType: "json",
+      data:{certifiable:{user_id: user_id, certificate_id: selected_certificate}},
+      success: function(response){      
+        selected_option.data("certifiable-id", response.id)
+
+      }
+    });
+
+   }
+
+   function ajaxdeleteCertifiable(deselected,deselected_option){
+    var user_id= $("#info").data("user-id");
+    var certifiable_id=$(".search-choice-close").data("certifiable-id");
+    $.ajax({
+      url:"/certifiables/"+ certifiable_id,
+      method: "delete",
+      dataType: "json",
+      data:{certifiable:{user_id: user_id, id: certifiable_id, certificate_id:deselected}},
+      success: function(response){
+        deselected_option.data("certifiable-id", "")
+
+      }
+    })
    }
 
 

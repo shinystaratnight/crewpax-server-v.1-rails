@@ -15,6 +15,11 @@ gem 'fog'
 gem 'kaminari'
 gem 'simple_form'
 gem 'pry'
+gem 'carrierwave-dropbox'
+gem 'font-awesome-sass'
+
+
+
 
 
 
