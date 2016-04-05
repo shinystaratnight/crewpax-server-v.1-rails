@@ -34,6 +34,7 @@ class AttachmentsController < ApplicationController
           file_store_path=@attachment.file.file["path"]
           file_share_link=client.shares(file_store_path)["url"]
           @attachment.update(file_store_path: file_store_path, file_share_link: file_share_link)
+          #send the email after receive dropbox share link
           if file_share_link.present? 
             AttachmentMailer.email_attachment(@attachment).deliver_now
             format.html{render @user}

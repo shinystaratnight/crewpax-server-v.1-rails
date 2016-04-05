@@ -641,8 +641,7 @@ $(function(){
       $("#fail_msg").text("Attachment can't be blank, please choose your file").show().delay(3000).fadeOut(1000)
       return false;      
     }
-
-    if (client_email == ""){
+    else if (client_email == ""){
       $("#fail_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000)
       return false;
     }else{    
@@ -660,7 +659,6 @@ $(function(){
           data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
           success: function(response){
             $("#selected_file :selected").data("attachment-id",response.id)
-            console.log("attachment-id:", $("#selected_file :selected").data("attachment-id"))
             var attachment_id=$("#selected_file :selected").data("attachment-id");
               if(response.id>0){
                 $.ajax({
@@ -680,13 +678,11 @@ $(function(){
                       $("#success_upload").show();
                       $("#uploading").hide();
                       $.each($('.existing_file'), function(i,element){
-                        if($(this).data("file-type")==response.type){
-                     
+                        if($(this).data("file-type")==response.type){                     
                           $(this).find(".share_link").attr("href", response.file_share_link);
-                          $(this).find(".file_info").data("file-id", response.id)
-                          console.log("file-id add to attachment label for sending to mutliple users:", $(this).find(".file_info").data("file-id"))                          
+                          $(this).find(".file_info").data("file-id", response.id);
                           $(this).children().show();                          
-                          $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000)
+                          $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
                           $("#submit_button").show();
                         }
                       });                                     
@@ -701,7 +697,6 @@ $(function(){
             }
 
         });
-
     }
     
   });
@@ -709,9 +704,7 @@ $(function(){
 // Email existing uploaded files to mutliple users
   $(".existing_file").on("click",function(){
     // add a data attribute indicates which existing_file is click
-    $(this).data("clickable", "true")
-    console.log("existing file clicked:", $(this).data("clickable"))
-    
+    $(this).data("clickable", "true")    
   });
 
   
@@ -725,11 +718,9 @@ $(function(){
     $("#email_sent").hide();
     $("#sending").show();
   
-    console.log("new client email:", new_client_email)
     $.each($('.existing_file'), function(i,element){
       if($(this).data("clickable")=="true"){
         var attachment_id = $(this).find(".file_info").data("file-id")
-        console.log("attachment_id:", attachment_id)
           $.ajax({
             url:"/attachments/"+attachment_id,
             method:"put",
@@ -755,7 +746,7 @@ $(function(){
   
    
   });
-      
+//======================================================================================================      
    
 
 
