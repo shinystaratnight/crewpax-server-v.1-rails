@@ -597,20 +597,51 @@ $(function(){
 //*********************************************************************************************************
 // Registration Form Calender Section
 //********************************************************************************************************  
-  $(".m-btn").on("click", function(){
+  $("#day .btn").on("click", function(){
     var availability_id=$(this).data("availability-id")
     if(availability_id==0){
       var day=$(this).data("day");
-      ajaxAddAvailability(day, $(this));
+      var date= $(this).data("date");
+      var week=$("#weeklyDatePicker").val();
+      ajaxAddAvailability(day,date,week,$(this));
      
     }
     else if (availability_id>0){
-      var day=$(this).data("day");  
-      ajaxDeleteAvailability(day, availability_id, $(this))
-      $(this).addClass("red");
+      var day=$(this).data("day"); 
+      var date= $(this).data("date");
+      var week=$("#weeklyDatePicker").val();
+      ajaxDeleteAvailability(day,date,week,availability_id, $(this))
     }
    
 
+  });
+
+  $("#weeklyDatePicker").datepicker({
+    format: "mm/dd/yyyy",
+    todayHighlight: true,
+    forceParse : false,
+    autoclose:true
+    
+  });
+
+  //Get the value of Start and End of Week
+  $("#weeklyDatePicker").on("change.dp",function(){
+
+    var value = $("#weeklyDatePicker").val();
+    var sunday= moment(value, "MM/DD/YYYY").day(0).format("YYYY-MM-DD")
+    var saturday = moment(value, "MM/DD/YYYY").day(6).format("YYYY-MM-DD");
+
+    $("#weeklyDatePicker").val(sunday + " - " + saturday);
+    $("#date_range").text("Week of : " + $("#weeklyDatePicker").val())
+    $("#sunday").data("date", sunday);
+    $("#monday").data("date", moment(value, "MM/DD/YYYY").day(1).format("YYYY-MM-DD"));
+    $("#tuesday").data("date",moment(value, "MM/DD/YYYY").day(2).format("YYYY-MM-DD"));
+    $("#wednesday").data("date",moment(value, "MM/DD/YYYY").day(3).format("YYYY-MM-DD"));
+    $("#thursday").data("date", moment(value, "MM/DD/YYYY").day(4).format("YYYY-MM-DD"));
+    $("#friday").data("date",moment(value, "MM/DD/YYYY").day(5).format("YYYY-MM-DD") );
+    $("#saturday").data("date",saturday );
+   
+   
   });
 
 //*********************************************************************************************************
@@ -839,30 +870,30 @@ $(function(){
     });
   }
  
-   function ajaxAddAvailability(day, checkbox){
+   function ajaxAddAvailability(day,date,week,checkbox){
     var user_id= $("#info").data("user-id");
     $.ajax({
       url:"/users/"+user_id + "/appointments",
       method: "post",
       dataType:"json",
-      data:{appointment:{day: day, user_id: user_id}},
+      data:{appointment:{day: day, user_id: user_id, date: date, week:week}},
       success: function(response){
-        checkbox.addClass("green");
+        checkbox.removeClass("btn-danger").addClass("btn-success")
         checkbox.data("availability-id", response.id)
       }
     })
 
    }
 
-   function ajaxDeleteAvailability(day,availability_id,checkbox){
+   function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
     $.ajax({
       url: "/appointments/" + availability_id,
       method: "delete",
       dataType: "json",
-      data:{appointment:{day: day, id: availability_id}},
+      data:{appointment:{day: day, id: availability_id, date:date, week:week}},
       success: function(response){
         checkbox.data("availability-id", "")
-        checkbox.removeClass("green").addClass("red");
+        checkbox.removeClass("btn-success").addClass("btn-danger");
         
       }
     });
