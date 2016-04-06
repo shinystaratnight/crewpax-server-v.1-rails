@@ -1,0 +1,16 @@
+<h2> Certificates </h2>
+  <div>
+    <% if @certificates.present?%>
+      <% @certificates.each do |certificate| %>
+      <div>
+        <i class="fa fa-check" style="color:green;"></i>
+        <%= certificate.name %>
+      </div> 
+      <% end %>
+    <% else %>
+      <div class="info_font">
+        <i class="fa fa-meh-o" style="font-size: 20px;"></i>
+        <%= "Opps, User does not have any certificates yet" %>
+      </div>
+    <% end %>
+  </div> 

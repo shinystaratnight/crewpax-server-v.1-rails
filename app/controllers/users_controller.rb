@@ -14,6 +14,12 @@ class UsersController < ApplicationController
   def show
     @user = User.find params[:id]
     @calendar = @user.calendar
+  
+    @eligibilities= @user.eligibilities
+    unions= @user.unions
+    @unions= unions.uniq{|union| union["id"]}
+    @roles = @user.roles
+    @certificates=@user.certificates
   end
 
   def update

@@ -1,0 +1,27 @@
+<%= content_tag_for :article, @user do %>
+  <header>
+    <div class="page-header">
+      <h1>
+        <%= @user.name %>
+      </h1>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-md-4">
+      <%= render "personalinfo" %>  
+    </div> 
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
+      <%= render "union" %>
+      <%= render "certificate" %>
+      <%= render 'calendar' %>
+    </div>
+  </div>
+   
+   
+  <% if @user == current_user %>
+    <p>
+      <%= link_to 'Edit', edit_registration_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
+    </p>
+  <% end %>
+<% end %>
