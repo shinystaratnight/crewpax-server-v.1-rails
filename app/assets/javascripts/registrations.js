@@ -886,7 +886,6 @@ $(function(){
    }
 
    function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
-    debugger
     $.ajax({
       url: "/appointments/" + availability_id,
       method: "delete",
