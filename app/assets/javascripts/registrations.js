@@ -610,9 +610,7 @@ $(function(){
       var day=$(this).data("day"); 
       var date= $(this).data("date");
       var week=$("#weeklyDatePicker").val();
-      debugger
       ajaxDeleteAvailability(day,date,week,availability_id, $(this))
-      // $(this).addClass("red");
     }
    
 
@@ -621,7 +619,8 @@ $(function(){
   $("#weeklyDatePicker").datepicker({
     format: "mm/dd/yyyy",
     todayHighlight: true,
-    forceParse : false
+    forceParse : false,
+    autoclose:true
     
   });
 
@@ -629,12 +628,9 @@ $(function(){
   $("#weeklyDatePicker").on("change.dp",function(){
 
     var value = $("#weeklyDatePicker").val();
-
     var sunday= moment(value, "MM/DD/YYYY").day(0).format("YYYY-MM-DD")
-    debugger
     var saturday = moment(value, "MM/DD/YYYY").day(6).format("YYYY-MM-DD");
-    
-    console.log("firstDate:", sunday, "lastDate:", saturday )
+
     $("#weeklyDatePicker").val(sunday + " - " + saturday);
     $("#date_range").text("Week of : " + $("#weeklyDatePicker").val())
     $("#sunday").data("date", sunday);
@@ -644,8 +640,7 @@ $(function(){
     $("#thursday").data("date", moment(value, "MM/DD/YYYY").day(4).format("YYYY-MM-DD"));
     $("#friday").data("date",moment(value, "MM/DD/YYYY").day(5).format("YYYY-MM-DD") );
     $("#saturday").data("date",saturday );
-    debugger
-    console.log("#weeklyDatePicker value:", $("#weeklyDatePicker").val())
+   
    
   });
 
