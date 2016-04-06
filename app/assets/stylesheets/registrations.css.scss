@@ -168,6 +168,23 @@ input[type="checkbox"]:focus{
   margin-left: 5px;
 }
 
+.datepicker-days tbody tr:hover {
+    background-color: #e6e6e6;
+}
+
+#DateDemo{
+  display: inline-block;
+  margin-left: 8px;
+  margin-top: 5px;
+
+}
+
+#weeklyDatePicker{
+  width: 200px;
+  border: 1px solid lightgray;
+}
+
+
 //=======For Email Documents ===============================================================
 
 #upload_new_documents_button {

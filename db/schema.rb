@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331192850) do
+ActiveRecord::Schema.define(version: 20160406040656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(version: 20160331192850) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "day"
+    t.string   "week"
+    t.date     "date"
   end
 
   add_index "appointments", ["user_id"], name: "index_appointments_on_user_id", using: :btree
