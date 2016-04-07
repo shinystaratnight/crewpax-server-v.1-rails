@@ -51,10 +51,10 @@ class User < ActiveRecord::Base
   end
 
   class Calendar
-    Day = Struct.new :date, :active, :unavailable
+    Day = Struct.new :date, :active, :available
 
     def initialize(appointments)
-      @unavailable_dates = appointments.map &:date
+      @available_dates = appointments.map &:date
       @days = days
     end
 
@@ -76,8 +76,8 @@ class User < ActiveRecord::Base
       end
 
       (today..later).each do |date|
-        unavailable = @unavailable_dates.include?(date)
-        days << Day.new(date, true, unavailable)
+        available = @available_dates.include?(date)
+        days << Day.new(date, true, available)
       end
 
       append.times do |i|

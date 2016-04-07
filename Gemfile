@@ -17,7 +17,7 @@ gem 'simple_form'
 gem 'pry'
 gem 'carrierwave-dropbox'
 gem 'font-awesome-sass'
-
+gem "watu_table_builder", :require => "table_builder"
 
 
 

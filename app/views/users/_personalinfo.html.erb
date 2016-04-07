@@ -24,15 +24,15 @@
  
   <div class="panel-body">
     <dl>
-      <dt>Name</dt>
+      <dt>Name:</dt>
       <dd>
         <%= @user.name %>
       </dd>
-      <dt>Phone</dt>
+      <dt>Phone:</dt>
       <dd>
         <%= link_to @user.phone, "tel:#{@user.phone}" %>
       </dd>
-      <dt>Email</dt>
+      <dt>Email:</dt>
       <dd>
         <%= mail_to @user.email %>
       </dd>

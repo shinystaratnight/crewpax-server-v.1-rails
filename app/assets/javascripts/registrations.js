@@ -7,14 +7,13 @@ $(function(){
   $("#name").on("blur", function(){
     //Retrieve the info from user's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a user is already created and decide which url the ajax should send to(create/update) 
-    var user_id= $("#info").data("user-id");
-    if(user_id== ""){
+    var user_id = $("#info").data("user-id");
+    if(user_id == ""){
       var url = "/users";
       var method = "post";
-    } 
-    else {
+    } else {
       var url = "/users/" + user_id;
-      var method ="put";
+      var method = "put";
     }
     var name = $("#name").text().trim();
     // There are two rounds of validations, front-end and back-end. Here's the front-end validation
@@ -22,8 +21,7 @@ $(function(){
       $(this).addClass("invalid");
       $(this).next().show();
       return false;
-    }
-    else{
+    }else{
       $("#name-error").hide();
       $.ajax({
         url: url,
@@ -34,9 +32,8 @@ $(function(){
           if(response.id){
             $("#info").data("user-id", response.id);
             $("#name").addClass("valid");
-          }
-          else{              
-            var errors= response.toString();
+          }else{              
+            var errors = response.toString();
             $("#name-error").text("*"+ errors).show();
             $("#name").addClass("invalid");   
           }
@@ -50,7 +47,7 @@ $(function(){
   $("#phone").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var phone=$("#phone").text().trim();
-      if (phone ==""){
+      if (phone == ""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
@@ -79,8 +76,8 @@ $(function(){
 //============================================================================================
   $("#email").on("blur", function(){
     var user_id = $("#info").data("user-id");
-    var email=$("#email").text().trim();
-    if (email ==""){
+    var email = $("#email").text().trim();
+    if (email == ""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
@@ -114,19 +111,19 @@ $(function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#mailing_address_info").data("address-id");
     
-    if (address_id==""){
-      var url ="/addresses";
+    if (address_id == ""){
+      var url = "/addresses";
       var method = "post";
     } else{
-      var url ="/addresses/" + address_id;
+      var url = "/addresses/" + address_id;
       var method = "put";
     }
     
-    var mailing_address=$("#mailing_address").text().trim();
+    var mailing_address = $("#mailing_address").text().trim();
     var type = "Mailing";
     var user_id = $("#info").data("user-id");
     
-    if (mailing_address==""){
+    if (mailing_address == ""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
@@ -153,19 +150,19 @@ $(function(){
     
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#billing_address_info").data("billing-id");
-    if (address_id==""){
-      var url ="/addresses";
+    if (address_id == ""){
+      var url = "/addresses";
       var method = "post";
     } else{
-      var url ="/addresses/" + address_id;
+      var url = "/addresses/" + address_id;
       var method = "put";
     }
  
-    var billing_address= $("#billing_address").text().trim();
+    var billing_address = $("#billing_address").text().trim();
     var type = "Billing";
     var user_id = $("#info").data("user-id");
 
-    if (billing_address ==""){
+    if (billing_address == ""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
@@ -193,19 +190,19 @@ $(function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#shipping_address_info").data("shipping-id");
     
-    if (address_id==""){
-      var url ="/addresses";
+    if (address_id == ""){
+      var url = "/addresses";
       var method = "post";
     } else{
-      var url ="/addresses/" + address_id;
+      var url = "/addresses/" + address_id;
       var method = "put";
     }
     
-    var shipping_address= $("#shipping_address").text().trim();
+    var shipping_address = $("#shipping_address").text().trim();
     var type = "Shipping";
     var user_id = $("#info").data("user-id");
 
-    if (shipping_address ==""){
+    if (shipping_address == ""){
         $(this).addClass("invalid");
         $(this).next().show();
         return false;
@@ -285,13 +282,12 @@ $(function(){
 
 //===================================================================================
   $("#password").on("blur", function(){
-    var password= $(this).text().trim();
-    if(password ==""){
+    var password = $(this).text().trim();
+    if(password == ""){
       $(this).addClass("invalid");
       $("#password-error").show();
       return false;
-    }
-    else{
+    }else{
       $("#password").addClass("valid");
       $("#password-error").hide();
     }
@@ -303,8 +299,7 @@ $(function(){
       onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
         if($(this).text()){
           $.fn.pStrength('changeBackground',$(this), passwordStrength);
-        } 
-        else {
+        } else {
           $.fn.pStrength('resetStyle', $(this));
         }
       }
@@ -319,12 +314,11 @@ $(function(){
     var password = $("#password").text().trim();
     var user_id = $("#info").data("user-id");
 
-    if(password_confirmation ==""){
+    if(password_confirmation == ""){
       $(this).addClass("invalid");
       $("#pw-confirmation-error").show();
       return false;
-    }
-    else if(password==password_confirmation){
+    }else if(password == password_confirmation){
       $("#pw-confirmation-error").hide();
          
         $.ajax({
@@ -336,8 +330,7 @@ $(function(){
           $("#pw_confirmation").addClass("valid"); 
             }
         });
-    }
-    else{
+    }else{
       $("#pw-confirmation-error").show();
       return false;
       
@@ -350,8 +343,7 @@ $(function(){
     onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
       if($(this).text()){
         $.fn.pStrength('changeBackground',$(this), passwordStrength);
-      } 
-      else {
+      } else {
         $.fn.pStrength('resetStyle', $(this));
       }
         $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')    
@@ -390,31 +382,29 @@ $(function(){
 
   $(".roles").on("click",function(){
     if($("#dgc_member").is(":checked")){
-      var data=$("#dgc_member").val();
-      var union_id= $("#DGC").data("union-id");
-      var role_id= $(this).prev().text();
+      var data = $("#dgc_member").val();
+      var union_id = $("#DGC").data("union-id");
+      var role_id = $(this).prev().text();
       $(this).data("role-id", role_id);
       if ($(this).is(":checked")){
         ajaxMember(data, union_id, role_id, $(this)); 
         ajaxCreateLabel(role_id);  
-      }
-      else{  
-        var eligibility_id=$(this).data("eligibility-id");
+      }else{  
+        var eligibility_id = $(this).data("eligibility-id");
         ajaxDeleteEligibility(union_id, role_id,eligibility_id);
         ajaxDeleteLabel(role_id);
       }    
     } 
     else if($("#dgc_permit").is(":checked")){
-      var data= $("#dgc_permit").val()
-      var union_id= $("#DGC").data("union-id");
-      var role_id= $(this).prev().text();
+      var data = $("#dgc_permit").val()
+      var union_id = $("#DGC").data("union-id");
+      var role_id = $(this).prev().text();
       $(this).data("role-id", role_id);
       if ($(this).is(":checked")){
         ajaxPermit(data, union_id, role_id, $(this)); 
         ajaxCreateLabel(role_id);  
-      }
-      else{  
-        var eligibility_id=$(this).data("eligibility-id");
+      }else{  
+        var eligibility_id = $(this).data("eligibility-id");
         ajaxDeleteEligibility(union_id, role_id,eligibility_id);
         ajaxDeleteLabel(role_id)
       } 

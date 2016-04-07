@@ -1,9 +1,9 @@
-<h2> Unions and Roles </h2>
+<h3> Unions and Roles </h3>
   <div>
     <% if @unions.present? %>
       <% @unions.each do |union| %>       
       <div class='info_font'>
-        <%= union.name %>
+        <%= union.name + ":" %>
       </div>
       <div class="role_font"> 
         <% eligibility= @eligibilities.find_by(union_id: union.id) %>
@@ -18,7 +18,7 @@
           <% if e.union_id == union.id %> 
            <% role=@roles.find(e.role_id) %>
             <div class="role_font">
-              <i class="fa fa-check" style="color:green;"></i>
+              <i class="fa fa-circle" style="font-size:8px;"></i>
               <%= role.name %>
             </div>                         
           <% end %>          
