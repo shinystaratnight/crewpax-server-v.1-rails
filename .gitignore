@@ -1,6 +1,5 @@
 /.bundle
 /.env
-/config/database.yml
 /public/assets
 /log/*.log
 /tmp

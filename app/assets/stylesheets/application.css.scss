@@ -4,5 +4,20 @@
 @import "calendar";
 @import "jobs";
 @import "registrations";
+@import "prettify";
+@import "bootstrap-switch.min";
+@import "chosen.min";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap-datepicker3.min";
+
+
+
 
 //= require_self
+//= require_tree .
+
+
+
+
+

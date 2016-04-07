@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.4'
+gem 'rails'
 gem 'pg'
 gem 'sass-rails'
 gem 'bootstrap-sass'
@@ -14,6 +14,14 @@ gem 'carrierwave'
 gem 'fog'
 gem 'kaminari'
 gem 'simple_form'
+gem 'pry'
+gem 'carrierwave-dropbox'
+gem 'font-awesome-sass'
+
+
+
+
+
 
 group :assets do
   gem 'asset_sync'

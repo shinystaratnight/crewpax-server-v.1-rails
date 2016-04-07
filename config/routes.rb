@@ -1,17 +1,38 @@
 Bcpax::Application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
+ 
+  # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
-  patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
+  resources :jobs, shallow: true do
+    resources :roles
+  end
+  
+  # resources :jobs do
+  #   resources :roles 
+  # end
 
-  resources :categories do
-    resources :jobs
-    resources :users
+  # resources :roles, shallow: true do 
+  #   resources :jobs
+  # end
+  resources :roles, only:[:index]
+  resources :attachments, only:[:create,:update, :destroy]
+  resources :certifiables, only:[:create, :destroy]
+  resources :users, shallow: true do
+    resources :roles 
+    resources :appointments
   end
 
+  # resources :users do
+  #   resources :roles 
+  # end
+  
+  resources :addresses
+  resources :eligibilities
+  # resources :jobs do
+  #   resources :labels
+  # end
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
-
-  resources :users
 
   root 'home#index'
   # The priority is based upon order of creation: first created -> highest priority.

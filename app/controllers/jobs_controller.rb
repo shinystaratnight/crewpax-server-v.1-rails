@@ -1,14 +1,17 @@
 class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
-  before_filter :authorize, only: [:edit, :update, :destroy]
-  before_filter :set_category, only: :index
-
+  before_filter :authorize, only: [ :edit, :update, :destroy]
+  before_filter :set_role, only: :index
+  
+  
   def index
-    scope = Job.published
-    if @category.present?
-      scope.where! category_id: @category.id
-    end
-    @jobs = scope.page(params[:page] || 1).per(20)
+    #scope will return false b/c in jobs table, :published filed is set default 
+    #to be false
+    @jobs = Job.published 
+      # if @role.present?
+      #   @jobs = @jobs.by_role @role
+      # end
+    @jobs = @jobs.page(params[:page] || 1).per(20)
   end
 
   def new
@@ -16,16 +19,16 @@ class JobsController < ApplicationController
   end
 
   def create
-    @job = Job.new job_params
+    @job = Job.new(job_params)
     if @job.save
-      JobMailer.confirmation(@job).deliver
+      JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
       render :new
     end
   end
 
-  def show
+  def show # GET method, can be triggered by anything, gmail, bots, etc...
     unless @job.published
       if @authenticated
         @job.update_attribute :published, true
@@ -54,16 +57,16 @@ class JobsController < ApplicationController
 
   protected
 
-  def set_category
-    @category = Category.find params[:category_id]
+  def set_role
+    @role = Category.find params[:role_id] if params[:role_id]
   end
 
   def set_job
-    @job = Job.find params[:id]
+    @job = Job.find(params[:id])
   end
 
   def authenticate
-    @authenticated = @job.secret == params[:secret]
+    @authenticated = user_signed_in? || @job.secret == params[:secret] # https://www.owasp.org/index.php/Covert_timing_channel
   end
 
   def authorize
@@ -71,6 +74,8 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit :name, :category_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
+    params.require(:job).permit :id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
   end
+
+ 
 end

@@ -1,12 +1,50 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  #Include default devise modules. Others are available are:
+  #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+         :trackable
   mount_uploader :image, ImageUploader
-
+  #comment out devise :validatable
   has_many :appointments, dependent: :destroy
+  has_many :labels
+  has_many :jobs
+  has_many :roles, through: :labels
+  has_many :eligibilities
+  has_many :unions, through: :eligibilities
+  has_many :addresses, dependent: :destroy
+  has_many :certifiables
+  has_many :certificates, through: :certifiables
+  has_many :attachments, dependent: :destroy
 
   default_scope { order :name }
 
-  validates :name, presence: true
+
+
+  validates :name, uniqueness: true, presence: true, length: {maximum: 64}
+  validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 
+  length: {maximum: 10}, if: "phone.present?"
+  validates :email,length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
+  if: "email.present?"
+
+  
+  #scope :search_by_role, ->(params){ Label.where roles_ids: params}
+  # , ->(role) { where {role_ids: include role.id} }
+
+  # def self.search_by_role(params)
+  #   #selected_role_ids = params.split().map(&:to_i)
+  #     User.all.map do |user| 
+  #       user.labels.all.map do |l|
+            
+  #         if l.role_id==params
+            
+  #           @user = User.find(l.user_id) 
+  #           @users =[]
+  #           @users << @user
+  #         end
+  #       end
+  #     end 
+  # end
+
 
   def calendar
     Calendar.new appointments
