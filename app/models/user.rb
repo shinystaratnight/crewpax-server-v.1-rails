@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :attachments, dependent: :destroy
 
   default_scope { order :name }
-
+  
 
 
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
     def initialize(appointments)
       @available_dates = appointments.map &:date
       @days = days
+    end
+
+    def start_time
+      :sunday
     end
 
     def weeks

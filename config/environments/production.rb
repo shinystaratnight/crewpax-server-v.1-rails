@@ -89,4 +89,5 @@ Bcpax::Application.configure do
     authentication: :plain,
   }
   config.action_mailer.delivery_method = :smtp
+  config.beginning_of_week = :sunday
 end

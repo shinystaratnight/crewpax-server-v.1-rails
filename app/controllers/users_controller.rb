@@ -13,15 +13,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
-    @appointments = @user.appointments
+    @user.appointments.each{|a| @appointments = a.date.to_s}
+    binding.pry
     @calendar= @user.calendar
     @eligibilities= @user.eligibilities
     unions= @user.unions
     @unions= unions.uniq{|union| union["id"]}
     @roles = @user.roles
     @certificates=@user.certificates
-   
-    @date=params[:month]? Date.parse(params[:month]):Date.today
+  
   end
 
   def update

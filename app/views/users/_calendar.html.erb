@@ -17,27 +17,16 @@
         <% week.each do |day| %>
            <% d= Date.parse(day.date.to_s) %>
            
-          <td><%=d.mday %></td>
+          <td class="available"><%=d.mday %></td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<div class="calendar">
-  <h2 id="month">
-    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y-%m") %>
-    <%=h @date.strftime("%B %Y") %>
-    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y-%m") %>
-  </h2>
-  <%= calendar_for(@appointments, :year => @date.year, :month=> @date.month) do |t| %>
-  <%= t.head('Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat') %>
-  <%= t.day do |day, tasks| %>
-    <%= day.day %>
-    <% tasks.each do |task| %>
-      <%= h(task.name) %>
-    <% end %>
-  <% end %>
-<% end %>
 
-</div>
+<%= month_calendar  do |day| %>
+  
+  <%=Date.parse(day.to_s).mday%>
+
+<% end %>
