@@ -1,11 +1,12 @@
 .simple-calendar {
-  
-  width: 320px;
+  margin-left: -12px;
+  width: 280px;
     .day {
       margin: 2px;
-      width: 36px;
+      width: 36px; 
       height: 30px;
       padding-left: 10px;
+
     }
     
     .wday-0 {}
@@ -37,17 +38,14 @@
 }
 
 .available{
-  height: 4px;
-  margin-bottom: 5px;
-  background-color: green;
-  width: 50%;
+  border: 5px solid white;
+  background-color: #5cb85c;
+ 
 }
 
 .unavailable{
-  height: 4px;
-  margin-bottom: 5px;
-  background-color: red;
-  width: 50%;
+  border: 5px solid white;
+ 
   
 }
 
