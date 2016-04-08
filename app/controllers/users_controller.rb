@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_filter :set_role, only: :index
-
+  respond_to :html, :js, :json
   def index
-    @users= User.all
+    @users = User.all
       # binding.pry
       # if @role.present?
       #   @labels= Label.search_by_role(params[:role_id])
@@ -12,16 +12,31 @@ class UsersController < ApplicationController
   end
 
   def show
+
     @user = User.find params[:id]
-    @user.appointments.each{|a| @appointments = a.date.to_s}
-    binding.pry
-    @calendar= @user.calendar
-    @eligibilities= @user.eligibilities
-    unions= @user.unions
-    @unions= unions.uniq{|union| union["id"]}
+    @appointments = @user.appointments.map{|a| a.date} 
+    @eligibilities = @user.eligibilities
+    unions = @user.unions
+    @unions = unions.uniq{|union| union["id"]}
     @roles = @user.roles
-    @certificates=@user.certificates
-  
+    @certificates = @user.certificates
+   
+    respond_to do |format|
+    # start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
+    # button to view the other month
+      if params[:start_date].present? 
+        @start_date = params[:start_date]
+        @date_range = @user.date_range(@start_date)
+       
+        format.js
+      else
+        @start_date = @user.start_date
+        @date_range = @user.date_range(@start_date)
+        format.html{render :show}
+
+      end
+    end
+
   end
 
   def update
@@ -30,12 +45,12 @@ class UsersController < ApplicationController
       # this is for carrierwave photo upload
       if user_params[:image].present?
         @file = user_params[:image]
-        @user.image= @file
+        @user.image = @file
         @user.save
         format.json{render json: @user}
       # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
       elsif user_params[:roles_ids].present?
-        @label= Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
+        @label = Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
         if @label.save!
           format.json{render json: @label}
         end
@@ -54,7 +69,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       if user_params[:roles_ids].present?
-        @label= Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
+        @label = Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
         @label.destroy
         format.json{render json: @label, status: :no_content}
       else
@@ -96,4 +111,9 @@ class UsersController < ApplicationController
   def label_params
     params.require(:label).permit(:user_id,:job_id,:role_id)
   end
+  
+
+  
+
+     
 end

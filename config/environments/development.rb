@@ -29,5 +29,4 @@ Bcpax::Application.configure do
   
   config.action_mailer.delivery_method = :letter_opener
   config.beginning_of_week = :sunday
-  # config.time_zone = 'Central Time (US & Canada)'
 end

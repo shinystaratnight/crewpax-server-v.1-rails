@@ -1,35 +1,58 @@
-.calendar {
-  padding-left: 15px;
-  padding-right: 15px;
-
-  .day {
-    margin: 1px;
-    width: 36px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-    color: $gray-darker;
-
-    &.inactive {
-      color: $gray-lighter;
+.simple-calendar {
+  
+  width: 320px;
+    .day {
+      margin: 2px;
+      width: 36px;
+      height: 30px;
+      padding-left: 10px;
     }
+    
+    .wday-0 {}
+    .wday-1 {}
+    .wday-2 {}
+    .wday-3 {}
+    .wday-4 {}
+    .wday-5 {}
+    .wday-6 {}
 
-    &.available {
-      border-radius: 100%;
-      background-color: red;
-      color: white;
-
-      a {
-        color: white;
-      }
+    .today {
+      background-color: #ffffcc;
     }
+    .past {}
+    .future {}
 
-    a {
-      display: block;
-      width: 100%;
-      height: 100%;
-      color: $gray-darker;
-      text-decoration: none;
+    .start-date {}
+
+    .prev-month {}
+    .next-month { }
+    .current-month {}
+
+    .has-events {}
+    .th{
+      padding-left:10px;
+      padding-right:10px;
     }
-  }
+    
+}
+
+.available{
+  height: 4px;
+  margin-bottom: 5px;
+  background-color: green;
+  width: 50%;
+}
+
+.unavailable{
+  height: 4px;
+  margin-bottom: 5px;
+  background-color: red;
+  width: 50%;
+  
+}
+
+#links_to_other_month{
+  font-size: 16px;
+  margin-left: 80px;
+  padding-right: 10px;
 }

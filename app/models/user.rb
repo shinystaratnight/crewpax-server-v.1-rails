@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  
   #Include default devise modules. Others are available are:
   #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
@@ -44,52 +45,85 @@ class User < ActiveRecord::Base
   #       end
   #     end 
   # end
-
-
-  def calendar
-    Calendar.new appointments
+  def start_date   
+    Date.today
+  end
+  
+  def date_range(start_date)   
+    (start_date.to_date.beginning_of_month.beginning_of_week..start_date.to_date.end_of_month.end_of_week).to_a
   end
 
-  class Calendar
-    Day = Struct.new :date, :active, :available
+  def td_classes_for(day)
+    today = Time.zone.now.to_date
 
-    def initialize(appointments)
-      @available_dates = appointments.map &:date
-      @days = days
-    end
-
-    def start_time
-      :sunday
-    end
-
-    def weeks
-      days.in_groups_of 7
-    end
-
-    def days
-      days = []
-
-      today = Date.current
-      later = today + 13.days
-
-      prepend = today.wday
-      append  = 6 - later.wday
-
-      prepend.times do |i|
-        days << Day.new(today - (prepend - i).days)
-      end
-
-      (today..later).each do |date|
-        available = @available_dates.include?(date)
-        days << Day.new(date, true, available)
-      end
-
-      append.times do |i|
-        i = i + 1
-        days << Day.new(later + i.days)
-      end
-
-      days
-    end
+    td_class = ["day"]
+    td_class << "wday-#{day.wday.to_s}"
+    td_class << "today"         if today == day
+    td_class << "past"          if today > day
+    td_class << "future"        if today < day
+    td_class << 'start-date'    if day.to_date == start_date.to_date
+    td_class << "prev-month"    if start_date.month != day.month && day < start_date
+    td_class << "next-month"    if start_date.month != day.month && day > start_date
+    td_class << "current-month" if start_date.month == day.month
+    td_class
   end
+ 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+#   def calendar
+#     Calendar.new appointments
+#   end
+
+#   class Calendar
+#     Day = Struct.new :date, :active, :available
+
+#     def initialize(appointments)
+#       @available_dates = appointments.map &:date
+#       @days = days
+#     end
+
+   
+
+#     def weeks
+#       days.in_groups_of 7
+#     end
+
+#     def days
+#       days = []
+
+#       today = Date.current
+#       later = today + 13.days
+
+#       prepend = today.wday
+#       append  = 6 - later.wday
+
+#       prepend.times do |i|
+#         days << Day.new(today - (prepend - i).days)
+#       end
+
+#       (today..later).each do |date|
+#         available = @available_dates.include?(date)
+#         days << Day.new(date, true, available)
+#       end
+
+#       append.times do |i|
+#         i = i + 1
+#         days << Day.new(later + i.days)
+#       end
+
+#       days
+#     end
+#   end
 end
