@@ -1,0 +1,32 @@
+<div class="panel panel-default" id="user_info">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      Contacts
+    </h3>
+  </div>
+  <div class="panel-body">
+      <dl>
+        <dt>Name:</dt>
+        <dd>
+          <%= @user.name %>
+        </dd>
+        <dt>Phone:</dt>
+        <dd>
+          <%= link_to @user.phone, "tel:#{@user.phone}" %>
+        </dd>
+        <dt>Email:</dt>
+        <dd>
+          <%= mail_to @user.email %>
+        </dd>
+      </dl>   
+    </div> 
+  </div>
+   <p id="contact_user">
+    <%= mail_to @user.email, 'Contact', class: 'btn btn-block btn-lg btn-success' %>
+  </p>
+   
+  <% if @user == current_user %>
+    <p id="edit_user">
+      <%= link_to 'Edit', edit_registration_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
+    </p>
+  <% end %>

@@ -1,17 +1,76 @@
 //=================These are for User show view page========================
 
-.info_font{
+.info_font {
   font-size: 16px;
   margin-top: 10px;
   margin-left: 15px;
 
 }
 
-#user_info{
+#user_info {
   margin-top: 20px;
+  width:400px;
 }
 
-.role_font{
+.role_font {
   font-size: 16px;
   margin-left: 35px;
 }
+
+
+//================Contacts========================================================
+
+#contact_user {
+  width: 400px;
+}
+
+#edit_user {
+  width: 400px;
+}
+
+/* ----------- iPhone 5 and 5S ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #contact_user {
+      width: 290px;
+    }
+
+    #user_info {
+      margin-top: 20px;
+      width:290px;
+    }
+ 
+    #edit_user {
+      width: 290px;
+    }
+
+}
+
+/* ----------- iPhone 6 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+    #contact_user {
+      width: 340px;
+    }
+
+    #user_info {
+      margin-top: 20px;
+      width:340px;
+    }
+ 
+    #edit_user {
+      width: 340px;
+    }
+
+}
+
+
+

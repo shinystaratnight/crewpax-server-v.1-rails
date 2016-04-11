@@ -14,14 +14,8 @@
     <div class="col-md-7">
       <%= render "union" %>
       <%= render "certificate" %>
-      <%= render 'calendar' %>
+      <%= render 'contacts' %>
     </div>
   </div>
-   
-   
-  <% if @user == current_user %>
-    <p>
-      <%= link_to 'Edit', edit_registration_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
-    </p>
-  <% end %>
+ 
 <% end %>
