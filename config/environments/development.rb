@@ -29,4 +29,5 @@ Bcpax::Application.configure do
   
   config.action_mailer.delivery_method = :letter_opener
   config.beginning_of_week = :sunday
+ 
 end

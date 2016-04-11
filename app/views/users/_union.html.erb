@@ -16,7 +16,7 @@
       </div>
         <% @eligibilities.each do |e| %>          
           <% if e.union_id == union.id %> 
-           <% role=@roles.find(e.role_id) %>
+           <% role = @roles.find(e.role_id) %>
             <div class="role_font">
               <i class="fa fa-circle" style="font-size:8px;"></i>
               <%= role.name %>

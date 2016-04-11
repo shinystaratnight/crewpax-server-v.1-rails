@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @unions = unions.uniq{|union| union["id"]}
     @roles = @user.roles
     @certificates = @user.certificates
-   
+    
     respond_to do |format|
     # start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
     # button to view the other month
@@ -66,6 +66,13 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @user = User.find(params[:id])
+    @addresses = @user.addresses 
+    
+    @user_unions = @user.unions 
+    @unions = Union.all
+    @roles = @user.roles
+    @eligibilities = @user.eligibilities
 
   end
 
