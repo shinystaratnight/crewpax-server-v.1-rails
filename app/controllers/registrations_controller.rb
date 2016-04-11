@@ -34,6 +34,13 @@ class RegistrationsController < Devise::RegistrationsController
     # #   render :new
     # end
     #   response.to_json
+  
+ 
+
+
+
+
+
   end
    
   # def update

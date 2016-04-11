@@ -27,6 +27,6 @@
    
   <% if @user == current_user %>
     <p id="edit_user">
-      <%= link_to 'Edit', edit_registration_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
+      <%= link_to 'Edit',  edit_user_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
     </p>
   <% end %>
