@@ -70,10 +70,11 @@ class UsersController < ApplicationController
     @addresses = @user.addresses 
     
     @user_unions = @user.unions 
+
     @unions = Union.all
     @roles = @user.roles
     @eligibilities = @user.eligibilities
-
+  
   end
 
 

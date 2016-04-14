@@ -21,143 +21,183 @@
             DGC
           </a>
         </div> 
-       
-          <div id="unionOne" class="collapse" data-union-id="">
-            <div id="dgcStatus" data-union-name="DGC">
-              <input type="checkbox" id="dgc_permit" name="dgc_permit" data-name="permit"  value="" /> 
-              <label for="dgc_permit"> Permit </label>
-                <span hidden="true" id="dgc_number_days"> * Number of Days:
-                  <div contenteditable="true" hidden="true" id="permit_days"></div>
+        
+        <div id="unionOne" class="collapse" data-union-id="">
+          <div id="dgcStatus" data-union-name="DGC">
+          
+            <!-- Step 1: Check to see if user belongs to the DGC union -->
+            <% if @user_unions.any?{|u| u.name == "DGC"}%>
+              <% @dgc_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"DGC").id} %>
+              <!-- Although a user has
+            many elibilities, a user can only be a member/hold a permit in the same union. Therefore,
+            it's unnecessary to find all eligibilities of the users   -->
+              <% @dgc_user_eligibility = @eligibilities.find_by(union_id: @user_unions.find_by(name:"DGC").id) %>
+              <% if @dgc_user_eligibility.permit_days == nil %>
+                <%= check_box_tag :dgc_permit, "", false %>
+                  <label for="dgc_permit"> Permit </label>
+                  <span id="dgc_number_days" hidden="true"> * Number of Days:
+                    <div contenteditable="true" id="permit_days"></div>
+                  </span>                              
+              <% else %>
+                <%= check_box_tag :dgc_permit, "", true %>
+                <label for="dgc_permit"> Permit </label>
+                <span id="dgc_number_days"> * Number of Days:<div contenteditable="true" id="permit_days"><%=@dgc_user_eligibility.permit_days%> </div>
                 </span>
-
-              <%= check_box_tag :dgc_memeber, "true", @eligibilities.find_by(union_id:"1").member %>
-              <label for="dgc_member"> Member </label>   
+                 <%= check_box_tag :dgc_member, "true", false %>
+                <label for="dgc_member"> Member </label> 
+              <% end %> 
+              <% if @dgc_user_eligibility.member == true %>
+                <%= check_box_tag :dgc_member, "true", true %>
+                <label for="dgc_member"> Member </label>
+              <% end %>        
+            <% else %>
+              <!--If user does not belong to the union, permit and membership unchecked -->
+              <% @dgc_user_eligibilities = [] %>
+              <%= check_box_tag :dgc_permit, "", false %>
+              <label for="dgc_permit"> Permit </label>
+                <span id="dgc_number_days" hidden="true"> * Number of Days:
+                  <div contenteditable="true" id="permit_days"></div>
+                </span>
+              <%= check_box_tag :dgc_member, "true", false %>
+              <label for="dgc_member"> Member </label> 
+            <% end %>   
             <br>
-            
+
             <div id="dgc_roles">
-            <label for= "DGC_PA">
-              <%@roles.each do |role|%>
-                <% if role.name == "Producer’s Assistant" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
+              <label for= "DGC_PA">
+                <div hidden="true"><%=@role_id = Role.find_by(name: "Producer’s Assistant").id %></div> 
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>                
+                  <input type="checkbox" class="roles" id="DGC_PA" name="DGC_PA" data-label-id="" data-role-id="" data-eligibility-id="" value="Producer’s Assistant" />PA           
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id} %>
+                  <input type="checkbox" class="roles" id="DGC_PA" name="DGC_PA" data-label-id="" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Producer’s Assistant" checked />PA           
+                <% end %> 
+              </label>
+               
+            
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name: "Key PA").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| 
+                r.role_id == @role_id}.empty? %>
+                  <input type="checkbox"  class="roles" id= "DGC_Key_PA"name="DGC_Key_PA" data-role-id="" data-eligibility-id="" data-label-id="" value="Key PA" /> Key PA 
+                <% else %>             
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id} %>
+                  <input type="checkbox"  class="roles" id= "DGC_Key_PA"name="DGC_Key_PA" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" value="Key PA" checked /> Key PA             
+                <% end %> 
+               
+              </label>
+              
+            
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name: "On Set Key").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_On_Set_Key" name="DGC_On_Set_Key" data-role-id="" data-eligibility-id="" data-label-id="" value="On Set Key"/> On Set Key
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}  %>
+                  <input type="checkbox" class="roles" id="DGC_On_Set_Key" name="DGC_On_Set_Key" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" value="On Set Key" checked/> On Set Key
+                <% end %>
+              </label>
+              
 
-              <input type="checkbox" class="roles" id="DGC_PA" name="DGC_PA" data-label-id="" data-role-id="" data-eligibility-id="" value="Producer’s Assistant"/>
-              <span class="label-text">
-              PA 
-              </span>
-            </label>
+              <label>            
+                <div hidden="true"><%=@role_id = Role.find_by(name: "Office Production Assistant (OPA)").id%></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| 
+                r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_OPA" name="DGC_OPA" value="Office Production Assistant (OPA)" data-role-id="" data-label-id="" data-eligibility-id=""/> Office PA
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}%>
+                  <input type="checkbox" class="roles" id="DGC_OPA" name="DGC_OPA" value="Office Production Assistant (OPA)" data-role-id="<%=@role_id %>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" checked/> Office PA
+                <% end %>
+              </label>
+              
+
+              <label>                 
+                <div hidden="true"><%= @role_id = Role.find_by(name: "Transport").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| 
+                r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_Transport" name="DGC_Transport" value="Transport" data-role-id="" data-eligibility-id="" data-label-id=""/> Van Driver
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}  %>
+                  <input type="checkbox" class="roles" id="DGC_Transport" name="DGC_Transport" value="Transport" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" checked/> Van Driver
+                <% end %>
+              </label>
+              
+               
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name: "Trainee Assistant Location Manager (TAL)").id %></div>                 
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_TAL" name="DGC_TAL" data-role-id=""  data-eligibility-id="" data-label-id="" value="Trainee Assistant Location Manager (TAL)" /> TAL  
+                <% else %>   
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_TAL" name="DGC_TAL" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" value="Trainee Assistant Location Manager (TAL)" checked/> TAL                              
+                <% end %>             
+              </label>
              
-          
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Key PA" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox"  class="roles" id= "DGC_Key_PA"name="DGC_Key_PA" data-role-id="" data-eligibility-id="" data-label-id="" value="Key PA" /> Key PA
-            </label>
-            
-          
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "On Set Key" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_On_Set_Key" name="DGC_On_Set_Key" data-role-id="" data-eligibility-id="" data-label-id="" value="On Set Key"/> On Set Key
-            </label>
-            
+              
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"Assistant Location Manager (ALM)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                  <input type="checkbox" class="roles" id="DGC_ALM" name="DGC_ALM" value="Assistant Location Manager (ALM)" data-role-id="" data-label-id="" data-eligibility-id=""/> ALM
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_ALM" name="DGC_ALM" value="Assistant Location Manager (ALM)" data-role-id="<%=@role_id %>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" checked/> ALM
+                <% end %>
+              </label>
+              
+              
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"Location Manager (LM)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>               
+                  <input type="checkbox" class="roles" id="DGC_LM" name="DGC_LM" value="Location Manager (LM)" data-role-id="" data-label-id="" data-eligibility-id=""/> LM
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id} %>  
+                  <input type="checkbox" class="roles" id="DGC_LM" name="DGC_LM" value="Location Manager (LM)" data-role-id="<%=@role_id %>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" checked/> LM
+                <% end %>
+              </label>
+              
 
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Office Production Assistant (OPA)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_OPA" name="DGC_OPA" value="Office Production Assistant (OPA)" data-role-id="" data-label-id="" data-eligibility-id=""/> Office PA
-            </label>
-            
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"Trainee Assistant Director (TAD)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_TAD" name="DGC_TAD" value="Trainee Assistant Director (TAD)" data-role-id="" data-label-id="" data-eligibility-id=""/> TAD
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_TAD" name="DGC_TAD" value="Trainee Assistant Director (TAD)" data-role-id="<%=@role_id %>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" checked/> TAD
+                <% end %>
+              </label>
+             
 
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Transport" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_Transport" name="DGC_Transport" value="Transport" data-role-id="" data-eligibility-id="" data-label-id=""/> Van Driver
-            </label>
-            
-
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Trainee Assistant Location Manager (TAL)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_TAL" name="DGC_TAL" data-role-id="" 
-              data-eligibility-id="" data-label-id="" value="Trainee Assistant Location Manager (TAL)" /> TAL
-            </label>
-           
-            
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Assistant Location Manager (ALM)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_ALM" name="DGC_ALM" value="Assistant Location Manager (ALM)" data-role-id="" data-label-id="" data-eligibility-id=""/> ALM
-            </label>
-            
-            
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Location Manager (LM)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_LM" name="DGC_LM" value="Location Manager (LM)" data-role-id="" data-label-id="" data-eligibility-id=""/> LM
-            </label>
-            
-
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "Trainee Assistant Director (TAD)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_TAD" name="DGC_TAD" value="Trainee Assistant Director (TAD)" data-role-id="" data-label-id="" data-eligibility-id=""/> TAD
-            </label>
-           
-
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "3rd Assistant Director (3rd AD)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_3RD_AD" name="DGC_3RD_AD"  value="3rd Assistant Director (3rd AD)" data-role-id="" data-label-id="" data-eligibility-id=""/> 3RD AD
-            </label>
-            
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "2nd Assistant Director (2nd AD)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_2ND_AD" name="DGC_2ND_AD"  value="2nd Assistant Director (2nd AD)" data-role-id="" data-eligibility-id="" data-label-id=""/> 2ND AD
-            </label>
-            
-            <label>
-              <%@roles.each do |role|%>
-                <% if role.name == "1st Assistant Director (1st AD)" %>
-                  <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="roles" id="DGC_1ST_AD" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id="" data-label-id="" data-eligibility-id=""/> 1ST AD
-            </label>
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"3rd Assistant Director (3rd AD)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_3RD_AD" name="DGC_3RD_AD"  value="3rd Assistant Director (3rd AD)" data-role-id="" data-label-id="" data-eligibility-id=""/> 3RD AD
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_3RD_AD" name="DGC_3RD_AD"  value="3rd Assistant Director (3rd AD)" data-role-id="<%=@role_id %>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" checked/> 3RD AD
+                <% end %>
+              </label>
+              
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"2nd Assistant Director (2nd AD)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_2ND_AD" name="DGC_2ND_AD"  value="2nd Assistant Director (2nd AD)" data-role-id="" data-eligibility-id="" data-label-id=""/> 2ND AD
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_2ND_AD" name="DGC_2ND_AD"  value="2nd Assistant Director (2nd AD)" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" checked/> 2ND AD                  
+                <% end %>
+              </label>
+              
+              <label>
+                <div hidden="true"><%=@role_id = Role.find_by(name:"1st Assistant Director (1st AD)").id %></div>
+                <% if @dgc_user_eligibilities.empty? || @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                  <input type="checkbox" class="roles" id="DGC_1ST_AD" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id="" data-label-id="" data-eligibility-id=""/> 1ST AD
+                <% else %>
+                  <% @eligibility_id = @dgc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                  <input type="checkbox" class="roles" id="DGC_1ST_AD" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" checked /> 1ST AD
+                <% end %>
+              </label>
             </div>
-            </div>         
+          </div>         
         </div>
     
         <div class="list-group-item">
@@ -171,193 +211,242 @@
           </a>
         </div>
         <div id="roleTwo" class="collapse">
-          <div id="iatseStatus" data-union-name="IATSE">            
-            <input type="checkbox" id="iatse_permit" data-name="permit" value="" /> 
-            <label for="iatse_permit">Permit </label>
-              <span hidden="true" id="iatse_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" id="iatse_permit_days"></div>
-              </span>
-            <input type="checkbox" id="iatse_member"data-name="member" value="true"/> 
-            <label for="iatse_member"> Member </label>    
+          <div id="iatseStatus" data-union-name="IATSE">
+            <% if @user_unions.any?{|u| u.name == "IATSE"}%>
+              
+              <% @iatse_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"IATSE").id}  %>
+              <% @iatse_user_eligibility = @eligibilities.find_by(union_id: @user_unions.find_by(name:"IATSE").id) %>
+              <% if @iatse_user_eligibility.permit_days == nil %>
+                <%= check_box_tag :iatse_permit, "", false %>
+                  <label for="iatse_permit"> Permit </label>
+                  <span id="iatse_number_days" hidden="true"> * Number of Days:
+                    <div contenteditable="true" id="iatse_permit_days"></div>
+                  </span>
+              <% else %>
+                <%= check_box_tag :iatse_permit, "", true %>
+                <label for="iatse_permit"> Permit </label>
+                <span id="iatse_number_days"> * Number of Days:
+                  <div contenteditable="true" id="iatse_permit_days"><%=@iatse_user_eligibility.permit_days%></div>
+                </span>
+                <%= check_box_tag :iatse_member, "true", false %>
+                <label for="iatse_member"> Member </label>
+              <% end %>
+              <% if @iatse_user_eligibility.member == true%>
+                <%= check_box_tag :iatse_member, "true", true %>
+                <label for="iatse_member"> Member </label>               
+              <% end %>            
+            <% else %>
+              <!--If user does not belong to the union, permit and membership unchecked -->
+              <% @iatse_user_eligibilities = [] %>
+              <%= check_box_tag :iatse_permit, "", false %>
+              <label for="iatse_permit"> Permit </label>
+                <span id="iatse_number_days" hidden="true"> * Number of Days:
+                  <div contenteditable="true" id="iatse_permit_days"></div>
+                </span>
+              <%= check_box_tag :iatse_member, "true", false %>
+              <label for="iatse_member"> Member </label> 
+            <% end %>                                                  
           </div>
+
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Accountant" %>
-                <div hidden="true" ><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" class="IATSE_roles" data-role-id="" data-label-id="" data-eligibility-id="" value="Accountant"/> Accounting
+              <div hidden="true"><%=@role_id = Role.find_by(name:"Accountant").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>      
+                <input type="checkbox" class="IATSE_roles" data-role-id="" data-label-id="" data-eligibility-id="" value="Accountant"/> Accounting
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" class="IATSE_roles" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Accountant" checked/> Accounting
+
+              <% end %>
             </label> 
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Art / Production Design" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" data-label-id="" class="IATSE_roles" data-eligibility-id="" value="Art / Production Design"/> Art
+              <div hidden="true"><%=@role_id = Role.find_by(name:"Art / Production Design").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>                
+                <input type="checkbox" data-role-id="" data-label-id="" class="IATSE_roles" data-eligibility-id="" value="Art / Production Design"/> Art
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" data-label-id="" class="IATSE_roles" data-eligibility-id="<%=@eligibility_id[0].id%>" value="Art / Production Design" checked/> Art
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Construction" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Construction" /> Construction
+              <div hidden="true"><%=@role_id = Role.find_by(name:"Construction").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Construction" /> Construction
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id %>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" value="Construction" checked/> Construction
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Costumes" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Costumes" /> Costume
+              <div hidden="true"><%=@role_id = Role.find_by(name:"Costumes").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>              
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Costumes" /> Costume
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id %>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" value="Costumes" checked/> Costume
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Editors" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id=""class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Editors"/> Editing
+              <div hidden="true"><%=@role_id = Role.find_by(name:"Editors").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>                            
+                <input type="checkbox" data-role-id=""class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Editors"/> Editing
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id %>"class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" value="Editors" checked/> Editing
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="First Aid / Craft Services (FACS)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
+              <div hidden="true"><%=@role_id = Role.find_by(name: "First Aid / Craft Services (FACS)").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="First Aid / Craft Services (FACS)" /> First Aid/Craft Service
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id %>"class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" value="First Aid / Craft Services (FACS)" checked/> First Aid/Craft Service
+              <% end %>
             </label>
             
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Greens" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Greens"/> Greens
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Greens").id %></div>             
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Greens"/> Greens
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Greens" checked/> Greens
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Grips"%>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Grips"/> Grips
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Grips").id %></div>             
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>               
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Grips"/> Grips
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Grips" checked/> Grips
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Hair" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Hair" /> Hair
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Hair").id %></div>             
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Hair" /> Hair
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Hair" checked/> Hair
+              <% end %>
             </label>
             
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Lighting / Electrics (LX)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Lighting / Electrics (LX)").id %></div>             
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>              
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Lighting / Electrics (LX)"/> Lighting/Electrics
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Lighting / Electrics (LX)" checked/> Lighting/Electrics
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Make Up" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Make Up"/> Make-up
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Make Up").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>   
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Make Up"/> Make-up
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Make Up" checked/> Make-up
+              <%end %>              
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Paint" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Paint" /> Painting
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Paint").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>             
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Paint" /> Painting
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Paint" checked/> Painting
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Production" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Production" /> Production
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Production").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>                           
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Production" /> Production
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Production" checked /> Production
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Office"%>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Office" /> Office 
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Office").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Office" /> Office 
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Office" checked /> Office 
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Properties (Props)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Properties (Props)" /> Props
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Properties (Props)").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Properties (Props)" /> Props
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Properties (Props)" checked /> Props
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Script Supervisors/Continuity Coordinator" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors/Continuity Coordinator").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Script Supervisors/Continuity Coordinator" checked/> Script Supervisors/ Continuity Coordinator 
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Set Dec" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Set Dec" /> Set Decorating 
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Set Dec").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Set Dec" /> Set Decorating 
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Set Dec" checked/> Set Decorating
+              <% end %>
             </label>
             
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Sound" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox"data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Sound" /> Sound
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Sound").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>              
+                <input type="checkbox"data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Sound" /> Sound
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+                <input type="checkbox"data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Sound" checked/> Sound
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Special Effects (SPFX)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Special Effects (SPFX)" /> Special Effects
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Special Effects (SPFX)").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>  
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Special Effects (SPFX)" /> Special Effects
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Special Effects (SPFX)" checked/> Special Effects
+              <% end %>
             </label>
 
             <label>
-              <%@roles.each do |role|%>
-                <% if role.name=="Visual Effects" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-              <%end %>
-              <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Visual Effects" /> Visual Effects 
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Visual Effects").id %></div>
+              <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %>
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Visual Effects" /> Visual Effects 
+              <% else %>
+                <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Visual Effects" checked/> Visual Effects 
+              <% end %>
             </label>
         </div>
           
@@ -368,243 +457,279 @@
               <div hidden="true"><%=union.id %></div>
             <%end%>
           <%end %>
+       
+
           <a role="button" id="ACFC" data-union-name="ACFC" data-union-id="" data-toggle="collapse" href="#roleThree" aria-expanded="false">
             ACFC
           </a> 
         </div>
         <div id="roleThree" class="collapse">
+         
+          <% if @user_unions.any?{|u| u.name == "ACFC"}%>
+            <% @acfc_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"ACFC").id} %>
+          <% else %>
+            <% @acfc_user_eligibilities = [] %>
+          <% end %> 
+         
+        
           <label>
-            <%@roles.each do |role|%>
-                <% if role.name=="Accountant" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id=""  class="ACFC_roles" value="Accountant" />Accountant
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Accountant").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id=""  class="ACFC_roles" value="Accountant" />Accountant
+            <% else %>            
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+              <input type="checkbox" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id=""  class="ACFC_roles" value="Accountant" checked />Accountant
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Art / Production Design" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Art / Production Design" /> Art
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Art / Production Design").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>            
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Art / Production Design" /> Art
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+              <input type="checkbox" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles"  value="Art / Production Design" checked /> Art
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Catering" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Catering
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Catering").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Catering" /> Catering
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+              <input type="checkbox" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles"  value="Catering" checked/> Catering
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Construction" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Construction" /> Construction
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Construction").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>                        
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Construction" /> Construction
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
+              <input type="checkbox" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value="Construction" checked/> Construction
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Costumes" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Costumes").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>                        
             <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Costumes" /> Costume
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id %>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value="Costumes" checked /> Costume 
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Script Supervisors/Continuity Coordinator" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= "Script Supervisors/Continuity Coordinator"/> Continuity
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors/Continuity Coordinator").id %></div>  
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>                        
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= "Script Supervisors/Continuity Coordinator"/> Continuity
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value= "Script Supervisors/Continuity Coordinator" checked/> Continuity
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="First Aid / Craft Services (FACS)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="First Aid / Craft Services (FACS)" /> Craft Service 
+            <div hidden="true"><%=@role_id = Role.find_by(name: "First Aid / Craft Services (FACS)").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>   
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="First Aid / Craft Services (FACS)" /> Craft Service 
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value="First Aid / Craft Services (FACS)" checked/> Craft Service
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Editors" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Editors"/> Editing
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Editors").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Editors"/> Editing
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Editors" checked/> Editing
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Lighting / Electrics (LX)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Lighting / Electrics (LX)"/> Electrics
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Lighting / Electrics (LX)").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>           
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Lighting / Electrics (LX)"/> Electrics
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Lighting / Electrics (LX)" checked/> Electrics
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Greens" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Greens"/> Greens
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Greens").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>           
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Greens"/> Greens
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Greens" checked/> Greens 
+            <% end %>     
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Grips"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Grips"/> Grips
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Grips").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Grips"/> 
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles" value="Grips" checked/> Grips
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Hair" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Hair"/> Hair
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Hair").id%></div> 
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Hair"/> Hair
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Hair" checked/> Hair
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Make Up" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Make Up"/> Make-up
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Make Up").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>  
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Make Up"/> Make-up
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Make Up" checked/> Make-up
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Production" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id=""data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Production
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Production").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id=""data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Production" /> Production
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Production"  checked/> Production
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Office"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Office
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Office").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Office"/> Office
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Office" checked/> Office
+            <% end %> 
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Properties (Props)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= "Properties (Props)" /> Props
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Properties (Props)").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= "Properties (Props)" /> Props
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value= "Properties (Props)" checked/> Props
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Prop Building" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value=/> Prop Building
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Prop Building").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Prop Building"/> Prop Building
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles" value="Prop Building" checked/> Prop Building
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Publicity" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Publicity
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Publicity").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Publicity" /> Publicity
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Publicity"  checked /> Publicity
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Scenic Art" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Scenic Art
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Scenic Art").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>           
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Scenic Art" /> Scenic Art
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Scenic Art" checked/> Scenic Art
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Security" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value= /> Security
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Security").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>              
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Security" /> Security
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Security" checked/> Security
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Set Dec" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Set Dec"/> Set Decorating 
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Set Dec").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Set Dec"/> Set Decorating 
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles" value="Set Dec" checked/> Set Decorating 
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Sound" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Sound" /> Sound
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Sound").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Sound" /> Sound
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Sound" checked/> Sound
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Special Effects (SPFX)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Special Effects (SPFX)" /> Special Effects
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Special Effects (SPFX)").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Special Effects (SPFX)" /> Special Effects
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Special Effects (SPFX)" checked /> Special Effects
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Transport" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Transport"/> Transportation
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Transport").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles"  value="Transport"/> Transportation
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles"  value="Transport" checked/> Transportation
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Wranglers" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= /> Wranglers
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Wranglers").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Wranglers" /> Wranglers
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles" value="Wranglers" checked /> Wranglers
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Animals" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= /> Animals
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Animals").id%></div>
+            <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>            
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value="Animals" /> Animals
+            <% else %>
+              <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACFC_roles" value="Animals" checked /> Animals
+            <% end %>
           </label>
         </div>
       
@@ -619,21 +744,30 @@
           </a>
         </div>
         <div id="rolefour" class="collapse">
+          <% if @user_unions.any?{|u| u.name == "TEAMSTERS"}%>
+            <% @teamsters_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"TEAMSTERS").id} %>
+          <% else %>
+            <% @teamsters_user_eligibilities = [] %>
+          <% end %> 
+
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name=="Security" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="TEAMSTERS_roles" value= /> Security
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Security").id%></div>           
+            <% if @teamsters_user_eligibilities.empty? || @teamsters_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="TEAMSTERS_roles" value="Security" /> Security
+            <% else %>             
+              <% @eligibility_id = @teamsters_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="TEAMSTERS_roles" value="Security" checked /> Security
+            <% end %>
           </label>
+
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Transport" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="TEAMSTERS_roles" value="Transport" /> Transport
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Transport").id%></div>           
+            <% if @teamsters_user_eligibilities.empty? || @teamsters_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="TEAMSTERS_roles" value="Transport" /> Transport
+            <% else %>
+              <% @eligibility_id = @teamsters_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="TEAMSTERS_roles" value="Transport" checked /> Transport
+            <% end %>
           </label>
         </div>
         
@@ -648,31 +782,40 @@
           </a>
         </div>
         <div id="rolefive" class="collapse">
+          <% if @user_unions.any?{|u| u.name == "UBCP"}%>
+            <% @ubcp_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"UBCP").id} %>
+          <% else %>
+            <% @ubcp_user_eligibilities = [] %>
+          <% end %> 
+
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Actor"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="UBCP_Actor" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value= /> Actor
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Actor").id%></div>           
+            <% if @ubcp_user_eligibilities.empty? || @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" name="UBCP_Actor" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value="Actor" /> Actor
+            <% else %>
+              <% @eligibility_id = @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="UBCP_Actor" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" data-role-id="<%=@role_id%>" class="UBCP_roles" value="Actor" checked /> Actor
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Stand In"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="UBCP_Stand_in" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value= /> Stand in
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Stand In").id%></div>           
+            <% if @ubcp_user_eligibilities.empty? || @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>            
+              <input type="checkbox" name="UBCP_Stand_in" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value="Stand In" /> Stand in
+            <% else %>
+              <% @eligibility_id = @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="UBCP_Stand_in" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" data-role-id="<%=@role_id%>" class="UBCP_roles" value="Stand In" checked/> Stand in
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Extra"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="UBCP_Extra" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value= /> Extra
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Extra").id%></div>         
+            <% if @ubcp_user_eligibilities.empty? || @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>  
+              <input type="checkbox" name="UBCP_Extra" data-eligibility-id="" data-label-id="" data-role-id="" class="UBCP_roles" value="Extra" /> Extra
+            <% else %>
+              <% @eligibility_id = @ubcp_user_eligibilities.find_all{|r| r.role_id == @role_id } %>   
+              <input type="checkbox" name="UBCP_Extra" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" data-role-id="<%=@role_id%>" class="UBCP_roles" value="Extra" checked/> Extra
+            <% end %>
           </label>
         </div>
 
@@ -687,31 +830,41 @@
           </a>
         </div>
         <div id="rolesix" class="collapse">
+          <% if @user_unions.any?{|u| u.name == "ACTRA"}%>
+            <% @actra_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"ACTRA").id} %>
+          <% else %>
+            <% @actra_user_eligibilities = [] %>
+          <% end %>
+                  
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Actor"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles" value= /> Actor
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Actor").id%></div>         
+            <% if @actra_user_eligibilities.empty? || @actra_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>   
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles" value="Actor" /> Actor         
+            <% else %>
+              <% @eligibility_id = @actra_user_eligibilities.find_all{|r| r.role_id == @role_id } %>   
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACTRA_roles" value="Actor" checked /> Actor
+            <% end %>            
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Stand In"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Stand In").id%></div>         
+            <% if @actra_user_eligibilities.empty? || @actra_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles"value="Stand In" /> Stand in
+            <% else %>
+              <% @eligibility_id = @actra_user_eligibilities.find_all{|r| r.role_id == @role_id } %>   
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACTRA_roles" value="Stand In" checked/> Stand in
             <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles"value= /> Stand in
+            
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Extra"%>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles" value= /> Extra
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Extra").id%></div>         
+            <% if @actra_user_eligibilities.empty? || @actra_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACTRA_roles" value="Extra" /> Extra
+            <% else %>
+              <% @eligibility_id = @actra_user_eligibilities.find_all{|r| r.role_id == @role_id } %>   
+                <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="ACTRA_roles" value="Extra"  checked/> Extra
+            <% end %>
           </label>
         </div>
          
@@ -726,112 +879,131 @@
           </a>
         </div>
         <div id="roleseven" class="collapse">
+          <% if @user_unions.any?{|u| u.name == "NON UNION"}%>
+            <% @non_union_user_eligibilities = @eligibilities.find_all{|e| e.union_id == @user_unions.find_by(name:"NON UNION").id} %>
+          <% else %>
+            <% @non_union_user_eligibilities = [] %>
+          <% end %>
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "Producer’s Assistant" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_PA" data-role-id="" data-eligibility-id="" data-label-id="" class="NON_UNION_roles" value="Producer’s Assistant"/> PA
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Producer’s Assistant").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>                   
+              <input type="checkbox" name="NU_PA" data-role-id="" data-eligibility-id="" data-label-id="" class="NON_UNION_roles" value="Producer’s Assistant"/> PA
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+                <input type="checkbox" name="NU_PA" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="NON_UNION_roles" value="Producer’s Assistant" checked /> PA
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "Key PA" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_Key_PA" data-role-id="" data-eligibility-id="" data-label-id="" class="NON_UNION_roles" value="Key PA"/> Key PA
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Key PA").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>           
+              <input type="checkbox" name="NU_Key_PA" data-role-id="" data-eligibility-id="" data-label-id="" class="NON_UNION_roles" value="Key PA"/> Key PA
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_Key_PA" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id%>" data-label-id="" class="NON_UNION_roles" value="Key PA" checked /> Key PA
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "On Set Key" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_On_Set_Key" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value=/> On Set Key
+            <div hidden="true"><%=@role_id = Role.find_by(name: "On Set Key").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" name="NU_On_Set_Key" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="On Set Key"/> On Set Key
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_On_Set_Key" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="On Set Key" checked/> On Set Key
+            <% end %> 
+
+          </label>
+
+
+          <label>
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Office Production Assistant (OPA)").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" name="NU_OPA" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Office Production Assistant (OPA)" /> Office PA
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_OPA" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="Office Production Assistant (OPA)" checked/> Office PA
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-                <% if role.name == "Office Production Assistant (OPA)" %>
-                <div hidden="true"><%=role.id %></div>
-                <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_OPA" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Office Production Assistant (OPA)" /> Office PA
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Transport").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>            
+              <input type="checkbox" name="NU_Transport" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value= "Transport"/> Van Driver
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_Transport" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value= "Transport" checked/> Van Driver
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Transport" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_Transport" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value= "Transport"/> Van Driver
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Trainee Assistant Location Manager (TAL)").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>             
+              <input type="checkbox" name="NU_TAL" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Trainee Assistant Location Manager (TAL)" /> TAL
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_TAL" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="Trainee Assistant Location Manager (TAL)" checked/> TAL
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "Trainee Assistant Location Manager (TAL)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_TAL" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Trainee Assistant Location Manager (TAL)" /> TAL
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Assistant Location Manager (ALM)").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>  
+              <input type="checkbox" name="NU_ALM" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Assistant Location Manager (ALM)" /> ALM
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_ALM" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="Assistant Location Manager (ALM)" checked/> ALM
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "Assistant Location Manager (ALM)" %>
-                <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_ALM" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Assistant Location Manager (ALM)" /> ALM
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Location Manager (LM)").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" name="NU_LM" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Location Manager (LM)"/> LM
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %>
+              <input type="checkbox" name="NU_LM" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="Location Manager (LM)" checked/> LM
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name =="Location Manager (LM)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_LM" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Location Manager (LM)"/> LM
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Trainee Assistant Director (TAD)").id%></div> 
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" name="NU_TAD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Trainee Assistant Director (TAD)"/> TAD
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" name="NU_TAD" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="Trainee Assistant Director (TAD)" checked/> TAD
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "Trainee Assistant Director (TAD)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_TAD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="Trainee Assistant Director (TAD)"/> TAD
+            <div hidden="true"><%=@role_id = Role.find_by(name: "3rd Assistant Director (3rd AD)").id%></div>
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" name="NU_3RD_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="3rd Assistant Director (3rd AD)"/> 3RD AD
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" name="NU_3RD_AD" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="3rd Assistant Director (3rd AD)" checked/> 3RD AD
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "3rd Assistant Director (3rd AD)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_3RD_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="3rd Assistant Director (3rd AD)"/> 3RD AD
+            <div hidden="true"><%=@role_id = Role.find_by(name: "2nd Assistant Director (2nd AD)").id%></div>
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%> 
+              <input type="checkbox" name="NU_2ND_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="2nd Assistant Director (2nd AD)"/> 2ND AD
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" name="NU_2ND_AD" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="2nd Assistant Director (2nd AD)" checked/> 2ND AD
+            <% end %>
           </label>
 
           <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "2nd Assistant Director (2nd AD)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_2ND_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="2nd Assistant Director (2nd AD)"/> 2ND AD
-          </label>
-
-          <label>
-            <%@roles.each do |role|%>
-              <% if role.name == "1st Assistant Director (1st AD)" %>
-              <div hidden="true"><%=role.id %></div>
-              <%end%>  
-            <%end %>
-            <input type="checkbox" name="NU_1ST_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="1st Assistant Director (1st AD)"/> 1ST AD
+            <div hidden="true"><%=@role_id = Role.find_by(name: "1st Assistant Director (1st AD)").id%></div>
+            <% if @non_union_user_eligibilities.empty? || @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>            
+              <input type="checkbox" name="NU_1ST_AD" data-role-id="" data-label-id="" data-eligibility-id="" class="NON_UNION_roles" value="1st Assistant Director (1st AD)"/> 1ST AD
+            <% else %>
+              <% @eligibility_id = @non_union_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
+              <input type="checkbox" name="NU_1ST_AD" data-role-id="<%=@role_id%>" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id%>" class="NON_UNION_roles" value="1st Assistant Director (1st AD)" checked/> 1ST AD
+            <% end %>
           </label>
         </div>
           

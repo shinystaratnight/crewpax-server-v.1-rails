@@ -361,16 +361,25 @@ $(function(){
     $(this).data("union-id", union_id);
    
   }); 
+
+  $("#dgc_member").on("click", function(){
+    var union_id = $("#DGC").data("union-id");
+    if($(this).is(":checked") == false){
+      changeDGCStatus($(this), union_id)
+    }
+  });
   
   $("#dgc_permit").on("click", function(){
     if ($(this).is(":checked")) {
-      $("#dgc_number_days, #permit_days").show();
-      $("#permit_days").on("blur", function(){
-        var data = $("#permit_days").text().trim();
+      $("#dgc_number_days, #dgc_permit_days").show();
+      $("#permit_days").on("blur", function(){    
+        var data = $("#permit_days").text().trim();        
         $("#dgc_permit").val(data);
       });
     } else {
       $("#dgc_number_days, #permit_days").hide();
+      var union_id = $("#DGC").data("union-id");
+      changeDGCStatus($(this), union_id)           
     }
   });
 
@@ -399,7 +408,8 @@ $(function(){
         ajaxCreateLabel(role_id);  
       } else {  
         var eligibility_id = $(this).data("eligibility-id");
-        ajaxDeleteEligibility(union_id, role_id,eligibility_id);
+
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id);
         ajaxDeleteLabel(role_id)
       } 
     } else {
@@ -417,6 +427,12 @@ $(function(){
    
   }); 
 
+  $("#iatse_member").on("click", function(){
+    if($(this).is(":checked") == false){ 
+      var union_id = $("#IATSE").data("union-id");     
+      changeIATSEStatus($(this), union_id)
+    }   
+  });
 
   $("#iatse_permit").on("click", function(){
     if ($(this).is(":checked")) {
@@ -427,6 +443,9 @@ $(function(){
       });
     } else {
       $("#iatse_number_days, #iatse_permit_days").hide();
+      var union_id = $("#IATSE").data("union-id"); 
+      changeIATSEStatus($(this), union_id)
+
     }
   });
  
@@ -518,11 +537,13 @@ $(function(){
     var union_id = $("#UBCP").data("union-id");
     var role_id = $(this).prev().text();
     $(this).data("role-id", role_id);
+
     if ($(this).is(":checked")) {
       ajaxRoles(union_id, role_id, $(this));
       ajaxCreateLabel(role_id);
     } else {
       var eligibility_id = $(this).data("eligibility-id");
+
       ajaxDeleteLabel(role_id);
       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
     }
@@ -539,6 +560,7 @@ $(function(){
     var union_id = $("#ACTRA").data("union-id");
     var role_id = $(this).prev().text();
     $(this).data("role-id", role_id);
+
     if ($(this).is(":checked")) {
       ajaxRoles(union_id, role_id, $(this));
       ajaxCreateLabel(role_id);
@@ -889,7 +911,7 @@ $(function(){
 
    }
 
-   function ajaxdeleteCertifiable(deselected,deselected_option){
+  function ajaxdeleteCertifiable(deselected,deselected_option){
     var user_id = $("#info").data("user-id");
     var certifiable_id = $(".search-choice-close").data("certifiable-id");
     $.ajax({
@@ -902,8 +924,28 @@ $(function(){
 
       }
     })
-   }
+  }
 
+  function changeIATSEStatus(checkbox, union_id){   
+    $.each($(".IATSE_roles:checkbox:checked"), function(index, checkbox){      
+      var role_id = $(checkbox).data("role-id");
+      var eligibility_id = $(checkbox).data("eligibility-id");
+      ajaxDeleteLabel(role_id);
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      $(checkbox).prop("checked", false)
+    });  
+   
+  };
+
+  function changeDGCStatus(checkbox, union_id){    
+    $.each($(".roles:checkbox:checked"), function(index, checkbox){      
+      var role_id = $(checkbox).data("role-id");
+      var eligibility_id = $(checkbox).data("eligibility-id");     
+      ajaxDeleteLabel(role_id);
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      $(checkbox).prop("checked", false)
+    });        
+  };
 
 
 
