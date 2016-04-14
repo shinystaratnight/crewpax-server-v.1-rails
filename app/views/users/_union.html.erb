@@ -2,7 +2,7 @@
   <div>
     <% if @unions.present? %>
       <% @unions.each do |union| %>       
-      <div class='info_font'>
+      <div class='union_font'>
         <%= union.name + ":" %>
       </div>
       <div class="role_font"> 
@@ -25,7 +25,7 @@
         <% end %>          
       <% end %>      
     <% else %>
-      <div class="info_font">        
+      <div class="union_font">        
         <%= "Non Union" %>
       </div>
     <% end %>

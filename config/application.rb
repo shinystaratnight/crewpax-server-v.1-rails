@@ -22,7 +22,6 @@ module Bcpax
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
     config.action_mailer.default_options = { from: 'BCPAX <robot@bcpax.com>' }
     # config.assets.enabled = true
-    
-
+   
   end
 end
