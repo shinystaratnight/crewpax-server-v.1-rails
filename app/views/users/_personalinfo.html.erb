@@ -1,5 +1,5 @@
 <div class="field"> 
-  <%=image_tag(@user.image.url)%>   
+  <span id="display_image"><%=image_tag(@user.image.url) %> </span> 
 </div> 
 
 <% if @user.has_vehicle? %>
