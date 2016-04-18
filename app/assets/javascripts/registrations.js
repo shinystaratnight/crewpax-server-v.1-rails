@@ -724,7 +724,7 @@ $(function(){
 // Registration Form Certificate Section
 //********************************************************************************************************  
   $(".chosen-select").chosen({width: "100%"});
-  $(".chosen-select").on("change", function(evt, params){  
+  $("#create-certificate").on("change", function(evt, params){  
     var selected = params.selected
     var deselected = params.deselected 
       if (selected >0 ) {
@@ -733,6 +733,8 @@ $(function(){
         ajaxdeleteCertifiable(deselected, $(".search-choice-close"))
       }
   });
+
+
 
 //*********************************************************************************************************
 // Registration Files Upload Section
@@ -978,7 +980,7 @@ $(function(){
 
    }
 
-   function ajaxCreateCertifiable(selected_certificate,selected_option){
+  function ajaxCreateCertifiable(selected_certificate,selected_option){
     var user_id = $("#info").data("user-id");
     $.ajax({
       url:"/certifiables",
@@ -996,6 +998,7 @@ $(function(){
   function ajaxdeleteCertifiable(deselected,deselected_option){
     var user_id = $("#info").data("user-id");
     var certifiable_id = $(".search-choice-close").data("certifiable-id");
+  
     $.ajax({
       url:"/certifiables/"+ certifiable_id,
       method: "delete",
@@ -1005,7 +1008,7 @@ $(function(){
         deselected_option.data("certifiable-id", "")
 
       }
-    })
+    });
   }
 
   function changeIATSEStatus(checkbox, union_id){   

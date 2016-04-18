@@ -72,7 +72,9 @@ class UsersController < ApplicationController
     @unions = Union.all
     @roles = @user.roles
     @eligibilities = @user.eligibilities
-    @certificates = @user.certificates
+    @user_certificates = @user.certificates
+    @certificates = Certificate.all
+    @certifiables = @user.certifiables
   end
 
 
