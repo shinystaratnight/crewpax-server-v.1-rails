@@ -75,6 +75,8 @@ class UsersController < ApplicationController
     @user_certificates = @user.certificates
     @certificates = Certificate.all
     @certifiables = @user.certifiables
+
+    @attachments = @user.attachments
   end
 
 

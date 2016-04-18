@@ -660,8 +660,7 @@ $(function(){
                 appointment_dates.push(e.date) 
                 appointments_info.push({date: e.date, availability_id: e.id})
 
-              });
-            
+              });            
               $.each($("#day .btn"), function(i,b){
                 //check each buttons to see if their data-date attributes are the same as the availiabilities from database
                 //If not the same, will return -1, and avaialability-id will remain empty.
@@ -688,30 +687,6 @@ $(function(){
 
 
      
-      //     else {           
-      //       $.each(response, function(i, e){
-      //           debugger
-      //         if($(e).week == $("#weeklyDatePicker").val()){
-      //           debugger
-      //           if ($(this) == e.date){
-
-      //           }
-      //         } else {
-      //           debugger
-      //           $("#day .btn").removeClass("btn-success").addClass("btn-danger");
-      //         }
-      //       });
-      //     }
-      //     // $.each($("#day .btn"), function(i, e){ 
-      //     //   $(this).removeClass("btn-success").addClass("btn-danger");
-      //     //   // Using ajax to get user's apppointment info
-      //     //   debugger
-     
-      
-      //     // });
-      //   }
-
-      // });
 
 
 
@@ -813,7 +788,8 @@ $(function(){
 // Email existing uploaded files to mutliple users
   $(".existing_file").on("click",function(){
     // add a data attribute indicates which existing_file is click
-    $(this).data("clickable", "true")    
+    $(this).data("clickable", "true") 
+
   });
 
   
@@ -830,6 +806,8 @@ $(function(){
     $.each($('.existing_file'), function(i,element){
       if ($(this).data("clickable") == "true") {
         var attachment_id = $(this).find(".file_info").data("file-id")
+        var file = $(this)
+        debugger
           $.ajax({
             url:"/attachments/" + attachment_id,
             method:"put",
@@ -837,10 +815,12 @@ $(function(){
             data:{attachment:{client_email:new_client_email}},
             success: function(response){
               if (response.id > 0) {
-                $("#success_sent").show()
+                $("#success_sent").show().delay(3000).fadeOut(1000);
                 $("#email_sent").show();
                 $("#sending").hide();
                 $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+                //for mutliple files under the same type               
+                $(file).data("clickable", "")
               } else {
                 $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
                 $("#sending").hide();
