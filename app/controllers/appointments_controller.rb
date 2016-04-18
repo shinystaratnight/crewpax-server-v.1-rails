@@ -1,8 +1,26 @@
 class AppointmentsController < ApplicationController
+  def index
+   
+    @user = User.find(params[:user_id])
+    @appointments = @user.appointments
+    respond_to do |format|
+      if @appointments.empty? 
+
+        format.html {render @user}
+        format.json {render json: @appointments}
+      else 
+        format.html {render @user}
+        format.json {render json: @appointments}
+      end
+    end
+
+
+  end
+
   def create
     @appointment= Appointment.new(appointment_params)
     respond_to do |format|
-      if @appointment.save!
+      if @appointment.save
         format.html{redirect_to @user}
         format.json{render json: @appointment}
       else

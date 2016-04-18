@@ -20,6 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
         format.html { render action: "new" }
         format.json { render json: @user.errors.full_messages}
       end
+   
     end
     # response = {result: false}
     # if @user.save!  
