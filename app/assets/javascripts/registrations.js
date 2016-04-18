@@ -597,7 +597,6 @@ $(function(){
 //********************************************************************************************************  
   $("#day .btn").on("click", function(){
     var availability_id = $(this).data("availability-id")
-    debugger
     if (availability_id == 0) {
       var day = $(this).data("day");
       var date = $(this).data("date");
@@ -655,34 +654,31 @@ $(function(){
               button.removeClass("btn-success").addClass("btn-danger");                             
             });            
           } else {
+              var appointment_dates = [];
+              var appointments_info = [];
+              $.grep(response, function(e){              
+                appointment_dates.push(e.date) 
+                appointments_info.push({date: e.date, availability_id: e.id})
 
-                var appointment_dates = [];
-                var appointments_info = [];
-                $.grep(response, function(e){              
-                  appointment_dates.push(e.date) 
-                  appointments_info.push({date: e.date, availability_id: e.id})
-
-                });
-
-               console.log("appointments info:", appointments_info)
+              });
             
-                $.each($("#day .btn"), function(i,b){
-                  //check each buttons to see if their data-date attributes are the same as the availiabilities from database
-                  //If not the same, will return -1, and avaialability-id will remain empty.
-                  if ($.inArray($(b).data("date"), appointment_dates) == -1){                  
-                    $(b).removeClass("btn-success").addClass("btn-danger");
-                    $(b).data("availability-id", "")
-                  }else{
-                    $(b).removeClass("btn-danger").addClass("btn-success")
-              // Need to add the availability id to the availability-id data attributes         
-                    $.map(appointments_info,function(info){                    
-                      if (info.date == $(b).data("date")){
-                        $(b).data("availability-id", info.availability_id)
-                      }
-                    })
+              $.each($("#day .btn"), function(i,b){
+                //check each buttons to see if their data-date attributes are the same as the availiabilities from database
+                //If not the same, will return -1, and avaialability-id will remain empty.
+                if ($.inArray($(b).data("date"), appointment_dates) == -1){                  
+                  $(b).removeClass("btn-success").addClass("btn-danger");
+                  $(b).data("availability-id", "")
+                }else{
+                  $(b).removeClass("btn-danger").addClass("btn-success")
+            // Need to add the availability id to the availability-id data attributes         
+                  $.map(appointments_info,function(info){                    
+                    if (info.date == $(b).data("date")){
+                      $(b).data("availability-id", info.availability_id)
+                    }
+                  })
 
-                  }
-                });
+                }
+              });
            
 
           }

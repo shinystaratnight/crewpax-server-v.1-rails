@@ -68,13 +68,11 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @addresses = @user.addresses 
-    
     @user_unions = @user.unions 
-
     @unions = Union.all
     @roles = @user.roles
     @eligibilities = @user.eligibilities
-  
+    @certificates = @user.certificates
   end
 
 
