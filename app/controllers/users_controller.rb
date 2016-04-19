@@ -12,31 +12,26 @@ class UsersController < ApplicationController
   end
 
   def show
-
     @user = User.find params[:id]
     @appointments = @user.appointments.map{|a| a.date} 
     @eligibilities = @user.eligibilities
     unions = @user.unions
     @unions = unions.uniq{|union| union["id"]}
     @roles = @user.roles
-    @certificates = @user.certificates
-    
+    @certificates = @user.certificates    
     respond_to do |format|
     # start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
     # button to view the other month
       if params[:start_date].present? 
         @start_date = params[:start_date]
-        @date_range = @user.date_range(@start_date)
-       
+        @date_range = @user.date_range(@start_date)       
         format.js
       else
         @start_date = @user.start_date
         @date_range = @user.date_range(@start_date)
         format.html{render :show}
-
       end
     end
-
   end
 
   def update

@@ -807,7 +807,6 @@ $(function(){
       if ($(this).data("clickable") == "true") {
         var attachment_id = $(this).find(".file_info").data("file-id")
         var file = $(this)
-        debugger
           $.ajax({
             url:"/attachments/" + attachment_id,
             method:"put",

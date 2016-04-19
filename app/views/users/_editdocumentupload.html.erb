@@ -14,16 +14,22 @@
 
     <% if resume_attachments.present? %>  
       <% resume_attachments.map{|resume| %> 
-        <div class="existing_file" data-file-type="Resume" data-clickable="">          
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
-            <label class="file_info" data-file-id="<%=resume.id%>">
-              <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
-              </br>
-              Resume
-            </label>
-          </a>
-          <a href="<%=resume.file_share_link%>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>          
-        </div>
+        <span id="edit_resume">
+          <div class="existing_file" data-file-type="Resume" data-clickable="">          
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
+              <label class="file_info" id="resume_info" data-file-id="<%=resume.id%>">
+                <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
+                </br>
+                Resume
+              </label>
+            </a>
+            <a href="<%=resume.file_share_link%>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a> 
+            <span class="resume_delete"><i class="fa fa-times" aria-hidden="true" style="color: #d9534f; font-size: 18px; cursor:pointer;" data-attachment-id="<%=resume.id%>"></i></span>
+          </div>
+        </span>    
+            <span id="resume_deleting" hidden="true"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i></span>  
+            <span id="resume_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span>        
+        
       <% } %>
     <% else %>
       <div class="existing_file" data-file-type="Resume" data-clickable=""> 
@@ -35,23 +41,28 @@
               Resume
             </label>
           </a>
-          <a href="" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a> 
+          <a href="" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>         
         </span>  
       </div>     
     <% end %>
     
     <% if noa_attachments.present? %>
-      <% noa_attachments.map{|noa| %> 
-        <div class="existing_file" data-file-type="NOA" data-clickable="">         
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">   
-            <label for="file_pdf" class="file_info" data-file-id="<%=noa.id%>">
-              <i class="fa fa-file-pdf-o" id="file_pdf" style="font-size: 50px; color:black;"></i>
-              </br> 
-              NOA
-            </label>
-          </a>    
-          <a href="<%=noa.file_share_link%>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray; margin-left: -15px;"></i></a>    
-        </div>
+      <% noa_attachments.map{|noa| %>
+        <span id="edit_noa"> 
+          <div class="existing_file" data-file-type="NOA" data-clickable="">         
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">   
+              <label for="file_pdf" class="file_info" data-file-id="<%=noa.id%>">
+                <i class="fa fa-file-pdf-o" id="file_pdf" style="font-size: 50px; color:black;"></i>
+                </br> 
+                NOA
+              </label>
+            </a>    
+            <a href="<%=noa.file_share_link%>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray; margin-left: -15px;"></i></a> 
+            <span class="noa_delete"><i class="fa fa-times" aria-hidden="true" style="color: #d9534f; font-size: 18px; cursor:pointer;" data-attachment-id="<%=noa.id%>"></i></span>    
+          </div>
+        </span>
+        <span id="noa_deleting" hidden="true"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i></span>  
+        <span id="noa_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span> 
       <% } %>
     <% else %>
         <div class="existing_file" data-file-type="NOA" data-clickable="">
@@ -69,17 +80,22 @@
     <% end %>     
 
     <% if driver_attachments.present? %> 
-      <% driver_attachments.map {|driver| %>          
-        <div class="existing_file" data-file-type="Drivers_License" data-clickable=""> 
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
-          <label class="file_info" data-file-id="<%=driver.id%>">
-            <i class="fa fa-file-pdf-o" style="font-size: 50px; margin-left: 25px; color:black;"></i>
-            </br>
-            Driver's License
-          </label>
-          </a>
-          <a href="<%=driver.file_share_link %>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>     
-        </div>
+      <% driver_attachments.map {|driver| %>
+        <span id="edit_driver">          
+          <div class="existing_file" data-file-type="Drivers_License" data-clickable=""> 
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
+            <label class="file_info" data-file-id="<%=driver.id%>">
+              <i class="fa fa-file-pdf-o" style="font-size: 50px; margin-left: 25px; color:black;"></i>
+              </br>
+              Driver's License
+            </label>
+            </a>
+            <a href="<%=driver.file_share_link %>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>
+            <span class="driver_delete"><i class="fa fa-times" aria-hidden="true" style="color: #d9534f; font-size: 18px; cursor:pointer;" data-attachment-id="<%=driver.id%>"></i></span> 
+          </div>
+        </span>
+        <span id="driver_deleting" hidden="true"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i></span>  
+        <span id="driver_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span> 
       <% } %>
     <% else %>
       <div class="existing_file" data-file-type="Drivers_License" data-clickable=""> 
@@ -99,17 +115,22 @@
 
 
     <% if other_attachments.present? %>  
-      <% other_attachments.map {|other| %>     
-        <div class="existing_file" data-file-type="other">       
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
-          <label class="file_info" data-file-id="<%=other.id%>">
-            <i class="fa fa-file-pdf-o" style="font-size: 50px;color:black;"></i>
-            </br>
-            Other
-          </label>
-          </a>
-          <a href="<%=other.file_share_link %>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>       
-        </div>
+      <% other_attachments.map {|other| %>
+        <span id="edit_other">      
+          <div class="existing_file" data-file-type="other">       
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
+            <label class="file_info" data-file-id="<%=other.id%>">
+              <i class="fa fa-file-pdf-o" style="font-size: 50px;color:black;"></i>
+              </br>
+              Other
+            </label>
+            </a>
+            <a href="<%=other.file_share_link %>" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a>
+            <span class="other_delete"><i class="fa fa-times" aria-hidden="true" style="color: #d9534f; font-size: 18px; cursor:pointer;" data-attachment-id="<%=other.id%>"></i></span>       
+          </div>
+        </span>
+        <span id="other_deleting" hidden="true"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i></span>  
+        <span id="other_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span> 
       <% } %>
     <% else %>
         <div class="existing_file" data-file-type="other"> 
