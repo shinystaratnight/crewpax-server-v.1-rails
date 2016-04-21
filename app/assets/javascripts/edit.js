@@ -104,12 +104,10 @@ $(function(){
 
 //======================delete files that were uploaded from edit view page=======================================================================
   $("#new_uploaded_file").on("click", ".ajax_document_delete",function(){
-   
     $(this).parentsUntil("#document_template").hide()
     $("#ajax_document_deleting").show(); 
     var attachment_id = $(this).data("attachment-id")
     console.log("attachment id:", attachment_id)
-    debugger
     ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
 
@@ -274,7 +272,6 @@ $(function(){
 
   function ajaxDeleteNewDocument(attachment_id, processing, docs){
     var user_id = $("#info").data("user-id");   
-    debugger
     $.ajax({
       url:"/attachments/"+ attachment_id,
       method:"delete",
