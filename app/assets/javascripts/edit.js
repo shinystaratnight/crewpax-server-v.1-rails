@@ -127,14 +127,12 @@ $(function(){
 
   $(".noa_delete").on("click", function(){ 
     $(this).parents("span").hide()
-    // $("#edit_noa").hide();
     $("#noa_deleting").show();
     var attachment_id = $(this).children().data("attachment-id");
     ajaxDeleteNewDocument(attachment_id,$("#noa_deleting"),$(this))
   });
 
   $(".driver_delete").on("click", function(){
-    // $("#edit_driver").hide();
     $(this).parents("span").hide()
     $("#driver_deleting").show();
     var attachment_id = $(this).children().data("attachment-id") 
@@ -143,7 +141,6 @@ $(function(){
 
   $(".other_delete").on("click", function(){
     $(this).parents("span").hide()
-    // $("#edit_other").hide();
     $("#other_deleting").show();
     var attachment_id = $(this).children().data("attachment-id") 
     ajaxDeleteNewDocument(attachment_id, $("#other_deleting"),$(this))
@@ -165,15 +162,9 @@ $(function(){
     $(this).data("clickable", "true")
  
     // Use color to indicate which file is selected by the user   
-    // $.each($('.uploaded_file'), function(i,element){
-    //   if($(element).data("clickable")=="true"){
-    //     $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
-    //     $(this).find(".file_info").addClass("selected_document")
-    //   }
-    // });
+    
     labelSeletedDocument($('.uploaded_file'))
     
-    console.log("file is clicked:", $(this).data("clickable"))
   
     
   });
@@ -182,23 +173,12 @@ $(function(){
   $("#new_uploaded_file").on("click",".uploaded_file",function(){
     // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
     //First reset every data-clickable attribute to none
-
     resetDocumentDataAttr($("#new_uploaded_file .uploaded_file"))
-    resetDocumentDataAttr($('.uploaded_file'))
-      
+    resetDocumentDataAttr($('.uploaded_file'))      
     // add a data attribute indicates which existing_file is click
-    // $(this).find(".uploaded_file").data("clickable", "true")
     $(this).data("clickable", "true")
     // Use color to indicate which file is selected by the user   
-    // $.each($('.uploaded_file'), function(i,element){
-    //   if($(element).data("clickable")=="true"){
-    //     $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
-    //     $(this).find(".file_info").addClass("selected_document")
-    //   }
-    // });
-    // labelSeletedDocument($('#new_uploaded_file .uploaded_file
     labelSeletedDocument($(this))    
-    console.log("file is clicked:", $(this).data("clickable"))
       
   });
 
