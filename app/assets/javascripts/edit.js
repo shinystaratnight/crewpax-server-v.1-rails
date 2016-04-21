@@ -77,66 +77,16 @@ $(function(){
                       $("#uploading").hide();
                       $("#submit_button").show();
                       // for multiple files upload under the same type
-                      
-                      
-                        debugger
-                        var $docs_upload = $("#document_template").clone();
-
-                       
-                        $docs_upload.find(".document_info").data("file-id", response.id);
-
-                        $docs_upload.find("#document_name").text(response.type)
-                        
+                        var $docs_upload = $("#document_template").clone();                       
+                        $docs_upload.find("#document_info").data("file-id", response.id);
+                        $docs_upload.find("#document_name").text(response.type)                        
                         $docs_upload.find(".ajax_document_delete").data("attachment-id", response.id);
                         $docs_upload.find(".document_share_link").attr("href", response.file_share_link);
                         $("#new_uploaded_file").append($docs_upload.show());
-// debugger                $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-                        // $("#ajax_edit_resume").clone().appendTo("#new_uploaded_file").show();
-                        // $("#ajax_edit_resume").clone().appendTo("#new_uploaded_file").show();
-                   
-                        $("#success_msg").text(response.type + "has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
+                        $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
                         console.log("resume delete attachment-id:", $docs_upload.find(".ajax_document_delete").data("attachment-id") )
-                        console.log("resume info file id:", $docs_upload.find(".document_info").data("file-id"))
-
-                      
-                      // $("#new_uploaded_file").append(
-                      //   "<span id='edit_resume'>" + 
-                      //     "<div class='uploaded_file' data-file-type='Resume' data-clickable=''>" +         
-                      //       "<a data-toggle='collapse' data-parent='#accordion' href='#collapseSix' aria-expanded='false' aria-controls='collapseThree'>" +  
-                      //         "<label class='file_info' id='resume_info' data-file-id="+ response.id +">" +
-                      //           "<i class='fa fa-file-pdf-o' style='font-size: 50px; color:black;'>" + "</i>"+
-                      //           "</br>" +
-                      //           "Resume" +
-                      //         "</label>" +
-                      //       "</a>" +
-                      //       "<a href="+response.file_share_link + " class='share_link'>"+"<i class='fa fa-paperclip' style='font-size: 20px; color: gray;'>"+"</i>"+"</a>" +
-                      //       "<span class='resume_delete'>"+"<i class='fa fa-times' aria-hidden='true' style='color: #d9534f; font-size: 18px; cursor:pointer;' data-attachment-id="+response.id +">"+"</i>"+"</span>"+
-                      //     "</div>"+
-                      //   "</span>"+    
-                        
-                      //   "<span id='resume_deleting' hidden='true'>"+"<i class='fa fa-spinner fa-spin' style='font-size: 40px; color: gray;'>"+"</i>"+"</span>" + 
-                      //   "<span id='resume_delete_completed' hidden='true'>"+"<i class='fa fa-check-circle' style='font-size: 40px; color:green'>"+"</i>"+"</span>"
-                      // )
-
-                      // $.each($('.uploaded_file'), function(i,element){
-                      //     debugger
-                      //   if ($(this).data("file-type") == response.type) {   
-                      //     $(this).parent().show()                  
-                      //     $(this).find(".share_link").attr("href", response.file_share_link);
-                      //     $(this).find(".file_info").data("file-id", response.id)
-                      //     debugger
-                      //     var icon = $(this).children()[2]
-                      //     $(icon).children().data("attachment-id", response.id)
-                                   
-                      //     $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-                      //     $("#submit_button").show();
-                      //     console.log("response id:", response.id)
-                      //     console.log("data attribute file id:", $(this).find(".file_info").data("file-id"))
-                      //     console.log("icon attachment id:", $(icon).children().data("attachment-id"))
-                      //   }
-                      // }); 
-
-                      // $("#new_uploaded_file").append($("#edit_resume").show())                               
+                        console.log("resume info file id:", $docs_upload.find("#document_info").data("file-id"))                              
+                     
                     }
                   }               
                 });
@@ -152,52 +102,168 @@ $(function(){
     
   }); 
 
-
-
-
-
-
-
-
-
-//========================== Delete already uploaded files==========================================
-
-  $(".resume_delete").on("click", function(){
-    $("#edit_resume").hide();
-    $("#resume_deleting").show();
-    var attachment_id = $(this).children().data("attachment-id") 
-    ajaxDeleteDocument(attachment_id,$("#resume_deleting"), $("#resume_delete_completed"), $("#resume_info"), $("#resume_delete"))
+//======================delete files that were uploaded from edit view page=======================================================================
+  $("#new_uploaded_file").on("click", ".ajax_document_delete",function(){
+   
+    $(this).parentsUntil("#document_template").hide()
+    $("#ajax_document_deleting").show(); 
+    var attachment_id = $(this).data("attachment-id")
+    console.log("attachment id:", attachment_id)
+    ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
 
-  $(".noa_delete").on("click", function(){  
-    $("#edit_noa").hide();
-    $("#noa_deleting").show();
+
+
+
+
+//========================== Delete already uploaded files(Data are rendered from server when page is refreshed)==========================================
+
+  $(".resume_delete").on("click", function(){
+    $(this).parents("span").hide()
+    $("#resume_deleting").show();
     var attachment_id = $(this).children().data("attachment-id") 
-    ajaxDeleteDocument(attachment_id,$("#noa_deleting"),$("#noa_delete_completed"))
+    ajaxDeleteNewDocument(attachment_id,$("#resume_deleting"),$(this))
+  });
+
+  $(".noa_delete").on("click", function(){ 
+    $(this).parents("span").hide()
+    // $("#edit_noa").hide();
+    $("#noa_deleting").show();
+    var attachment_id = $(this).children().data("attachment-id");
+    ajaxDeleteNewDocument(attachment_id,$("#noa_deleting"),$(this))
   });
 
   $(".driver_delete").on("click", function(){
-    $("#edit_driver").hide();
+    // $("#edit_driver").hide();
+    $(this).parents("span").hide()
     $("#driver_deleting").show();
     var attachment_id = $(this).children().data("attachment-id") 
-    ajaxDeleteDocument(attachment_id, $("#driver_deleting"), $("#driver_delete_completed"))
+    ajaxDeleteNewDocument(attachment_id, $("#driver_deleting"), $(this))
   })
 
   $(".other_delete").on("click", function(){
-    $("#edit_other").hide();
+    $(this).parents("span").hide()
+    // $("#edit_other").hide();
     $("#other_deleting").show();
     var attachment_id = $(this).children().data("attachment-id") 
-    ajaxDeleteDocument(attachment_id, $("#other_deleting"), $("#other_delete_completed"))
+    ajaxDeleteNewDocument(attachment_id, $("#other_deleting"),$(this))
   })
 
-//=============================================================================================
+//=============email existing uploaded files to mutliple users==================================================================
+
+  $(".uploaded_file").on("click",function(){
+    // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
+    //First reset every data-clickable attribute to none
+
+    $.each($('.uploaded_file'), function(i,element){
+      $(element).data("clickable", "")
+      $(this).find(".file_info").removeClass("selected_document");
+      $(this).find(".file_info").find("i").css({"color": "black"})
+    });
+
+    // add a data attribute indicates which existing_file is click
+    $(this).data("clickable", "true")
+ 
+    // Use color to indicate which file is selected by the user   
+    // $.each($('.uploaded_file'), function(i,element){
+    //   if($(element).data("clickable")=="true"){
+    //     $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
+    //     $(this).find(".file_info").addClass("selected_document")
+    //   }
+    // });
+    labelSeletedDocument($('.uploaded_file'))
+    
+    console.log("file is clicked:", $(this).data("clickable"))
+  
+    
+  });
+
+
+  $("#new_uploaded_file").on("click",".uploaded_file",function(){
+    // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
+    //First reset every data-clickable attribute to none
+
+    resetDocumentDataAttr($("#new_uploaded_file .uploaded_file"))
+    resetDocumentDataAttr($('.uploaded_file'))
+      
+    // add a data attribute indicates which existing_file is click
+    // $(this).find(".uploaded_file").data("clickable", "true")
+    $(this).data("clickable", "true")
+    // Use color to indicate which file is selected by the user   
+    // $.each($('.uploaded_file'), function(i,element){
+    //   if($(element).data("clickable")=="true"){
+    //     $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
+    //     $(this).find(".file_info").addClass("selected_document")
+    //   }
+    // });
+    // labelSeletedDocument($('#new_uploaded_file .uploaded_file
+    labelSeletedDocument($(this))    
+    console.log("file is clicked:", $(this).data("clickable"))
+      
+  });
+
+  $("#email_new_form").on("submit", function(event){
+    var new_client_email = $("#new_client_email").val().trim();
+    if (new_client_email == "") {
+      $("#fail_new_client_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000);
+      return false;
+    }
+    event.preventDefault();
+    $("#email_sent").hide();
+    $("#sending").show();
+
+    $.each($('.uploaded_file'), function(i,element){
+      if ($(this).data("clickable") == "true") {
+        var attachment_id = $(this).find(".file_info").data("file-id")
+        var file = $(this)
+          $.ajax({
+            url:"/attachments/" + attachment_id,
+            method:"put",
+            dataType: "json",
+            data:{attachment:{client_email:new_client_email}},
+            success: function(response){
+              if (response.id > 0) {
+                $("#email_sent").show();
+                $("#sending").hide();
+                $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+              } else {
+                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#sending").hide();
+                $("#email_sent").show();
+              }
+            }
+
+          });
+      }
+
+    });
+  
+   
+  });
+
+
+
+
+
+
+
+
+
+
+//=======================================================================================================
 
 
 
 
 });
 
+ 
+
+
+
+
 //===============================Common method========================================================
+
 
   function ajaxEditAddCertifiable(selected_certificate){
     var user_id = $("#info").data("user-id");
@@ -225,7 +291,8 @@ $(function(){
     });
   }
 
-  function ajaxDeleteDocument(attachment_id, processing, completion, docs, icon){  
+
+  function ajaxDeleteNewDocument(attachment_id, processing, docs){
     var user_id = $("#info").data("user-id");   
     $.ajax({
       url:"/attachments/"+ attachment_id,
@@ -233,14 +300,30 @@ $(function(){
       dataType: "json",
       data:{attachment: {id: attachment_id, user_id: user_id}},
       success: function(response){
-        debugger
         if(response === undefined){
-          $(docs).data("file-id", "")
-          $(icon).data("attachment-id", "")
           $(processing).hide();
-          $(completion).show().delay(3000).fadeOut(1000);
-
+          $("#success_msg").text("File has been successfully deleted.").show().delay(3000).fadeOut(1000);
+          $(this).parents("span").remove();         
+          
         }
+      }
+    });
+  }
+
+  function resetDocumentDataAttr(user_documents){
+      $.each($(user_documents), function(i,element){
+        $(element).data("clickable", "")
+        $(this).find(".file_info").removeClass("selected_document");
+        $(this).find(".file_info").find("i").css({"color": "black"})
+    });
+
+  }
+
+  function labelSeletedDocument(user_docs){
+    $.each($(user_docs), function(i,element){
+      if($(element).data("clickable")=="true"){
+        $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
+        $(this).find(".file_info").addClass("selected_document")
       }
     });
   }
