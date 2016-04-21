@@ -153,7 +153,7 @@ $(function(){
       var url = "/addresses/" + address_id;
       var method = "put";
     }
- 
+     
     var billing_address = $("#billing_address").text().trim();
     var type = "Billing";
     var user_id = $("#info").data("user-id");
@@ -226,7 +226,7 @@ $(function(){
 
 //=================Has a vehicle?============================================================
   
-   stateSwitch($('#vehicle'))
+  stateSwitch($('#vehicle'))
 //===================================================================================
   $("#upload_picture").on("change", function(){
     var formData = new FormData();
@@ -611,11 +611,7 @@ $(function(){
     $("#thursday").data("date", moment(value, "MM/DD/YYYY").day(4).format("YYYY-MM-DD"));
     $("#friday").data("date",moment(value, "MM/DD/YYYY").day(5).format("YYYY-MM-DD") );
     $("#saturday").data("date",saturday );
- 
-   
-
-
-
+    
       // Using ajax to get user's apppointment info
       $.ajax({
         url: "/users/"+ user_id +"/appointments",
@@ -635,7 +631,6 @@ $(function(){
               $.grep(response, function(e){              
                 appointment_dates.push(e.date) 
                 appointments_info.push({date: e.date, availability_id: e.id})
-
               });            
               $.each($("#day .btn"), function(i,b){
                 //check each buttons to see if their data-date attributes are the same as the availiabilities from database
@@ -645,19 +640,15 @@ $(function(){
                   $(b).data("availability-id", "")
                 }else{
                   $(b).removeClass("btn-danger").addClass("btn-success")
-                // Need to add the availability id to the availability-id data attributes         
+                  // Need to add the availability id to the availability-id data attributes         
                   $.map(appointments_info,function(info){                    
                     if (info.date == $(b).data("date")){
                       $(b).data("availability-id", info.availability_id)
                     }
-                  })
-
+                  });
                 }
               });
-           
-
           }
-
         }
       });
 
@@ -748,17 +739,7 @@ $(function(){
                         $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
                         console.log("resume delete attachment-id:", $docs_upload.find(".ajax_document_delete").data("attachment-id"));
                         console.log("resume info file id:", $docs_upload.find("#document_info").data("file-id"))  ;                                                 
-                    }
-                      // $.each($('.existing_file'), function(i,element){
-                      //   if ($(this).data("file-type") == response.type) {                     
-                      //     $(this).find(".share_link").attr("href", response.file_share_link);
-                      //     $(this).find(".file_info").data("file-id", response.id);
-                      //     $(this).children().show();                          
-                      //     $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-                      //     $("#submit_button").show();
-                      //   }
-                      // });                                     
-                    
+                    }                                                        
                   }               
                 });
               } else {
@@ -786,11 +767,6 @@ $(function(){
 
 
 //============== Email existing uploaded files to mutliple users================================================================
-  // $(".existing_file").on("click",function(){
-  //   // add a data attribute indicates which existing_file is click
-  //   $(this).data("clickable", "true") 
-
-  // });
   $("#new_file").on("click",".uploaded_file",function(){
     // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
     //First reset every data-clickable attribute to none
@@ -814,27 +790,27 @@ $(function(){
   
     $.each($('.uploaded_file'), function(i,element){
       if ($(this).data("clickable") == "true") {
-        var attachment_id = $(this).find(".file_info").data("file-id")
-        var file = $(this)
-          $.ajax({
-            url:"/attachments/" + attachment_id,
-            method:"put",
-            dataType: "json",
-            data:{attachment:{client_email:new_client_email}},
-            success: function(response){
-              if (response.id > 0) {
-                $("#success_sent").show().delay(3000).fadeOut(1000);
-                $("#email_sent").show();
-                $("#sending").hide();
-                $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-              } else {
-                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
-                $("#sending").hide();
-                $("#email_sent").show();
-              }
+        var attachment_id = $(this).find(".file_info").data("file-id");
+        var file = $(this);
+        $.ajax({
+          url:"/attachments/" + attachment_id,
+          method:"put",
+          dataType: "json",
+          data:{attachment:{client_email:new_client_email}},
+          success: function(response){
+            if (response.id > 0) {
+              $("#success_sent").show().delay(3000).fadeOut(1000);
+              $("#email_sent").show();
+              $("#sending").hide();
+              $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+            } else {
+              $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
+              $("#sending").hide();
+              $("#email_sent").show();
             }
+          }
 
-          });
+        });
       }
 
     });
@@ -934,7 +910,7 @@ $(function(){
     });
   }
  
-   function ajaxAddAvailability(day,date,week,checkbox){
+  function ajaxAddAvailability(day,date,week,checkbox){
     var user_id = $("#info").data("user-id");
     $.ajax({
       url:"/users/" + user_id + "/appointments",
@@ -949,9 +925,9 @@ $(function(){
       }
     })
 
-   }
+  }
 
-   function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
+  function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
     $.ajax({
       url: "/appointments/" + availability_id,
       method: "delete",
@@ -964,7 +940,7 @@ $(function(){
       }
     });
 
-   }
+  }
 
   function ajaxCreateCertifiable(selected_certificate,selected_option){
     var user_id = $("#info").data("user-id");
@@ -979,7 +955,7 @@ $(function(){
       }
     });
 
-   }
+  }
 
   function ajaxdeleteCertifiable(deselected,deselected_option){
     var user_id = $("#info").data("user-id");

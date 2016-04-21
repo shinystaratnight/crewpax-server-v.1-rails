@@ -12,7 +12,7 @@ $(function(){
   $("#edit-certificate").on("change", function(evt, params){     
     var selected = params.selected
     var deselected = params.deselected 
-      if (selected >0 ) {
+      if (selected > 0 ) {
         ajaxEditAddCertifiable(selected)  
       } else if (deselected > 0) {
         $.map($(selection), function(option){
@@ -96,10 +96,8 @@ $(function(){
                 $("#submit_button").show();
               }
             }
-
         });
-    }
-    
+    }    
   }); 
 
 //======================delete files that were uploaded from edit view page=======================================================================
@@ -186,10 +184,10 @@ $(function(){
       $("#fail_new_client_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000);
       return false;
     }
+
     event.preventDefault();
     $("#email_sent").hide();
     $("#sending").show();
-
     $.each($('.uploaded_file'), function(i,element){
       if ($(this).data("clickable") == "true") {
         var attachment_id = $(this).find(".file_info").data("file-id")
@@ -205,18 +203,15 @@ $(function(){
                 $("#sending").hide();
                 $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
               } else {
-                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
+                $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000);
                 $("#sending").hide();
                 $("#email_sent").show();
               }
             }
-
           });
       }
-
     });
-  
-   
+     
   });
 
 
@@ -253,7 +248,6 @@ $(function(){
       success: function(response){            
       }
     });
-
   }
 
   function ajaxEditDeleteCertifiable(deselected, certifiable_id){
@@ -263,8 +257,7 @@ $(function(){
       method: "delete",
       dataType: "json",
       data:{certifiable:{user_id: user_id, id: certifiable_id, certificate_id:deselected}},
-      success: function(response){
-        
+      success: function(response){        
       }
     });
   }
@@ -281,8 +274,7 @@ $(function(){
         if(response === undefined){
           $(processing).hide();
           $("#success_msg").text("File has been successfully deleted.").show().delay(3000).fadeOut(1000);
-          $(this).parents("span").remove();         
-          
+          $(this).parents("span").remove();                   
         }
       }
     });
@@ -294,7 +286,6 @@ $(function(){
         $(this).find(".file_info").removeClass("selected_document");
         $(this).find(".file_info").find("i").css({"color": "black"})
     });
-
   }
 
   function labelSeletedDocument(user_docs){
