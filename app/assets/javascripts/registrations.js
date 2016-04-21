@@ -221,40 +221,17 @@ $(function(){
   // To trigger Bootstrap Switch 
   $("[name='my-checkbox']").bootstrapSwitch();
 
-//===================================================================================
+//=====================Has a traffic control ticket? =========================================================  
+  stateSwitch($('#traffic_control'))
 
-  $('#traffic_control').on('switchChange.bootstrapSwitch', 
-    function(event, state) {  
-      var user_id = $("#info").data("user-id");
-      $.ajax({
-        url:"/users/"+ user_id,
-        method: "put",
-        dataType: "json",
-        data: {user: {has_traffic_control_ticket: state}},
-        success: function(response) {
-        }
-      });
-    });
-//===================================================================================
-  $('#vehicle').on('switchChange.bootstrapSwitch', 
-    function(event, state) {
-      var user_id = $("#info").data("user-id");
-      $.ajax({
-        url:"/users/"+ user_id,
-        method: "put",
-        dataType: "json",
-        data: {user: {has_vehicle: state}},
-        success: function(response) {
-        }
-      });
-    });
+//=================Has a vehicle?============================================================
+  
+   stateSwitch($('#vehicle'))
 //===================================================================================
   $("#upload_picture").on("change", function(){
     var formData = new FormData();
     var user_id = $("#info").data("user-id");
-
-    $input=$("#upload_picture");
-    
+    $input=$("#upload_picture");    
     formData.append("user[image]",$input[0].files[0]);
     
     $.ajax({
@@ -542,7 +519,6 @@ $(function(){
       ajaxCreateLabel(role_id);
     } else {
       var eligibility_id = $(this).data("eligibility-id");
-
       ajaxDeleteLabel(role_id);
       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
     }
@@ -669,7 +645,7 @@ $(function(){
                   $(b).data("availability-id", "")
                 }else{
                   $(b).removeClass("btn-danger").addClass("btn-success")
-            // Need to add the availability id to the availability-id data attributes         
+                // Need to add the availability id to the availability-id data attributes         
                   $.map(appointments_info,function(info){                    
                     if (info.date == $(b).data("date")){
                       $(b).data("availability-id", info.availability_id)
@@ -818,9 +794,7 @@ $(function(){
   $("#new_file").on("click",".uploaded_file",function(){
     // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
     //First reset every data-clickable attribute to none
-    debugger
     resetDocumentDataAttr($("#new_file .uploaded_file"))
-    // resetDocumentDataAttr($('.uploaded_file'))      
     // add a data attribute indicates which existing_file is click
     $(this).data("clickable", "true")
     // Use color to indicate which file is selected by the user   
@@ -1060,6 +1034,27 @@ $(function(){
         $(this).find(".file_info").find("i").css({"color": "black"})
     });
 
+  }
+
+
+  function stateSwitch(section){    
+    $(section).on('switchChange.bootstrapSwitch', 
+    function(event, state) { 
+      if ($(section).data("section") == "traffic_control") {
+        var data = {user: {has_traffic_control_ticket: state}}
+      } else {
+        var data = {user: {has_vehicle: state}}
+      }  
+      var user_id = $("#info").data("user-id");
+      $.ajax({
+        url:"/users/"+ user_id,
+        method: "put",
+        dataType: "json",
+        data: data,
+        success: function(response) {
+        }
+      });
+    });
   }
 
 

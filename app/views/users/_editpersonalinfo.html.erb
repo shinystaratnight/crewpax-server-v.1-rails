@@ -44,11 +44,11 @@
           <h5> Do you have a traffic control? </h5>           
             <% if @user.has_traffic_control_ticket == true %>           
               <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
-              data-off-text= "No" data-on-color="success" data-off-color="danger" checked="true" id="traffic_control"> 
+              data-off-text= "No" data-on-color="success" data-off-color="danger" checked="true" id="traffic_control" data-section="traffic_control"> 
             <% else %>
               <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
               data-off-text= "No" data-on-color="success" data-off-color="danger" 
-              id="traffic_control">  
+              id="traffic_control" data-section="traffic_control">  
             <% end %>
         </div>
         
@@ -57,11 +57,11 @@
             <% if @user.has_vehicle %>
               <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
               data-off-text= "No" data-on-color="success" data-off-color="danger" 
-              id="vehicle" checked="true">
+              id="vehicle" checked="true" data-section="vehicle">
             <% else %>
               <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
               data-off-text= "No" data-on-color="success" data-off-color="danger" 
-              id="vehicle">
+              id="vehicle" data-section="vehicle" >
             <% end %>
         </div> 
         
