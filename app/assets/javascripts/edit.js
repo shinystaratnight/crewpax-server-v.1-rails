@@ -84,8 +84,6 @@ $(function(){
                         $docs_upload.find(".document_share_link").attr("href", response.file_share_link);
                         $("#new_uploaded_file").append($docs_upload.show());
                         $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
-                        console.log("resume delete attachment-id:", $docs_upload.find(".ajax_document_delete").data("attachment-id") )
-                        console.log("resume info file id:", $docs_upload.find("#document_info").data("file-id"))                              
                      
                     }
                   }               
@@ -105,7 +103,6 @@ $(function(){
     $(this).parentsUntil("#document_template").hide()
     $("#ajax_document_deleting").show(); 
     var attachment_id = $(this).data("attachment-id")
-    console.log("attachment id:", attachment_id)
     ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
 
