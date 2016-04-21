@@ -7,8 +7,28 @@
   <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
     <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="success_msg"></div>
     <div class="alert alert-danger alert-dismissible"  role="alert" hidden="true" id="fail_msg"></div>
+    <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="success_new_client_msg"></div>
+    <div class="alert alert-danger alert-dismissible" hidden="true" role="alert" id="fail_new_client_msg"></div>
+    <span id="new_file"></span> 
+    <span id="file_template" hidden="true">
+      <div class="uploaded_file" data-file-type="" data-clickable="">          
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" >  
+          <label class="file_info" id="document_info" data-file-id="">
+            <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
+            </br>
+            <p id="document_name"></p>
+          </label>
+        </a>
+        <a href="" class="document_share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a> 
+        <span class="ajax_document_delete"><i class="fa fa-times" style="color: #d9534f; font-size: 18px; cursor:pointer;" data-attachment-id=""></i></span>
+      </div>
+    </span>    
+    <span id="ajax_document_deleting" hidden="true"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;"></i></span>  
+    <span id="document_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span>
 
-    <div class="existing_file" data-file-type="Resume" data-clickable=""> 
+
+
+   <!--  <div class="existing_file" data-file-type="Resume" data-clickable=""> 
       <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">  
           <label class="file_info" data-file-id="">
@@ -19,11 +39,11 @@
         </a>
         <a href="" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a> 
       </span>  
-    </div>
+    </div> -->
 
     
   
-    <div class="existing_file" data-file-type="NOA" data-clickable="">
+    <!-- <div class="existing_file" data-file-type="NOA" data-clickable="">
       <span hidden="true">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree">   
           <label for="file_pdf" class="file_info" data-file-id="">
@@ -61,7 +81,7 @@
         </a>
         <a href="" class="share_link"><i class="fa fa-paperclip" style="font-size: 20px; color: gray;"></i></a> 
       </span>  
-    </div>
+    </div> -->
  
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <%= render 'emailForm' %>

@@ -109,6 +109,7 @@ $(function(){
     $("#ajax_document_deleting").show(); 
     var attachment_id = $(this).data("attachment-id")
     console.log("attachment id:", attachment_id)
+    debugger
     ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
 
@@ -161,8 +162,7 @@ $(function(){
     // add a data attribute indicates which existing_file is click
     $(this).data("clickable", "true")
  
-    // Use color to indicate which file is selected by the user   
-    
+    // Use color to indicate which file is selected by the user       
     labelSeletedDocument($('.uploaded_file'))
     
   
@@ -274,6 +274,7 @@ $(function(){
 
   function ajaxDeleteNewDocument(attachment_id, processing, docs){
     var user_id = $("#info").data("user-id");   
+    debugger
     $.ajax({
       url:"/attachments/"+ attachment_id,
       method:"delete",

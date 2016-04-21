@@ -714,6 +714,7 @@ $(function(){
 //*********************************************************************************************************
 // Registration Files Upload Section
 //********************************************************************************************************  
+//==============================Upload New File============================================================== 
   $("#file_upload_form").on("submit", function(event){
     var client_email = $("#recipient_email").val().trim(); 
     var user_id = $("#info").data("user-id");
@@ -759,18 +760,29 @@ $(function(){
                       $("#uploading").hide();
                       $("#submit_button").show();
                     } else {
-                      $("#success_upload").show();
+                      $("#success_upload").show().delay(3000).fadeOut(1000);
                       $("#uploading").hide();
-                      $.each($('.existing_file'), function(i,element){
-                        if ($(this).data("file-type") == response.type) {                     
-                          $(this).find(".share_link").attr("href", response.file_share_link);
-                          $(this).find(".file_info").data("file-id", response.id);
-                          $(this).children().show();                          
-                          $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-                          $("#submit_button").show();
-                        }
-                      });                                     
+                      $("#submit_button").show();
+                      var $docs_upload = $("#file_template").clone();
+                        $docs_upload.find("#document_info").data("file-id", response.id);
+                        $docs_upload.find("#document_name").text(response.type)                        
+                        $docs_upload.find(".ajax_document_delete").data("attachment-id", response.id);
+                        $docs_upload.find(".document_share_link").attr("href", response.file_share_link);
+                        $("#new_file").append($docs_upload.show());
+                        $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
+                        console.log("resume delete attachment-id:", $docs_upload.find(".ajax_document_delete").data("attachment-id"));
+                        console.log("resume info file id:", $docs_upload.find("#document_info").data("file-id"))  ;                                                 
                     }
+                      // $.each($('.existing_file'), function(i,element){
+                      //   if ($(this).data("file-type") == response.type) {                     
+                      //     $(this).find(".share_link").attr("href", response.file_share_link);
+                      //     $(this).find(".file_info").data("file-id", response.id);
+                      //     $(this).children().show();                          
+                      //     $("#success_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
+                      //     $("#submit_button").show();
+                      //   }
+                      // });                                     
+                    
                   }               
                 });
               } else {
@@ -785,13 +797,36 @@ $(function(){
     
   });
 
-// Email existing uploaded files to mutliple users
-  $(".existing_file").on("click",function(){
-    // add a data attribute indicates which existing_file is click
-    $(this).data("clickable", "true") 
-
+//=========================== Delete already uploaded file ========================================================================
+  $("#new_file").on("click", ".ajax_document_delete",function(){
+    $(this).parentsUntil("#file_template").hide()
+    $("#ajax_document_deleting").show(); 
+    var attachment_id = $(this).data("attachment-id")
+    console.log("attachment id:", attachment_id)
+    ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
 
+
+
+
+//============== Email existing uploaded files to mutliple users================================================================
+  // $(".existing_file").on("click",function(){
+  //   // add a data attribute indicates which existing_file is click
+  //   $(this).data("clickable", "true") 
+
+  // });
+  $("#new_file").on("click",".uploaded_file",function(){
+    // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
+    //First reset every data-clickable attribute to none
+    debugger
+    resetDocumentDataAttr($("#new_file .uploaded_file"))
+    // resetDocumentDataAttr($('.uploaded_file'))      
+    // add a data attribute indicates which existing_file is click
+    $(this).data("clickable", "true")
+    // Use color to indicate which file is selected by the user   
+    labelSeletedDocument($(this))    
+      
+  });
   
   $("#email_form").on("submit", function(event){
     var new_client_email = $("#new_client_email").val().trim();
@@ -803,7 +838,7 @@ $(function(){
     $("#email_sent").hide();
     $("#sending").show();
   
-    $.each($('.existing_file'), function(i,element){
+    $.each($('.uploaded_file'), function(i,element){
       if ($(this).data("clickable") == "true") {
         var attachment_id = $(this).find(".file_info").data("file-id")
         var file = $(this)
@@ -818,8 +853,6 @@ $(function(){
                 $("#email_sent").show();
                 $("#sending").hide();
                 $("#success_new_client_msg").text(response.type + " has been successfully sent to " + response.client_email + ".").show().delay(3000).fadeOut(1000);
-                //for mutliple files under the same type               
-                $(file).data("clickable", "")
               } else {
                 $("#fail_new_client_msg").text(response).show().delay(3000).fadeOut(1000)
                 $("#sending").hide();
@@ -1011,6 +1044,23 @@ $(function(){
     });        
   };
 
+  function labelSeletedDocument(user_docs){
+    $.each($(user_docs), function(i,element){
+      if($(element).data("clickable")=="true"){
+        $(this).find(".file_info").find("i").css({"color": "#5cb85c"})
+        $(this).find(".file_info").addClass("selected_document")
+      }
+    });
+  }
+ 
+  function resetDocumentDataAttr(user_documents){
+      $.each($(user_documents), function(i,element){
+        $(element).data("clickable", "")
+        $(this).find(".file_info").removeClass("selected_document");
+        $(this).find(".file_info").find("i").css({"color": "black"})
+    });
+
+  }
 
 
 
