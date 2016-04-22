@@ -13,6 +13,11 @@
    
   .required-fields {
    @extend .field;
+   background-color: #dbf1f7;
+   .field {
+    margin: 5px 2px 0 10px;
+    background-color: #f5f5f5;
+   }
 
   }
   
