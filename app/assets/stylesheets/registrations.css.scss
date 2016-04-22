@@ -47,9 +47,10 @@
 
 //=== They are for departments roles checkboxes/radio buttons===============================
 
-label{
-  cursor:pointer;
-  font-size:14px;
+label {
+  cursor: pointer;
+  font-size:  14px;
+  padding: 0 8px 0 0;
 }
 
 input[type="checkbox"] {    
@@ -62,11 +63,15 @@ input[type="checkbox"] {
   box-sizing: border-box;
   position: relative;
   box-sizing: content-box ;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-width: 0;
   transition: all .1s linear;
-  
+  border-radius: 50%;
+  top: 5px;
+  left: 2px;
+  position: relative;
+
 } 
 
 
@@ -74,6 +79,7 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:checked{
   background-color: #2ECC71;
+ 
 }
 
 

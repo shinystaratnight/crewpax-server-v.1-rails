@@ -1,7 +1,10 @@
 <div class="panel panel-default" >
   <div class="panel-heading">
     <h3> Personal Information </h3>
-
+      <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="profile-success"> 
+        <button class="close" type="button" data-dismiss="alert"> &times;</button>
+        Your profile has been successfully created! <br />Please continue adding details.
+      </div>
       <div class="required-fields">
       <h5>Required:</h5>
         <div class="field" id ="info" data-user-id="">
@@ -30,7 +33,7 @@
           <span class="error" hidden="true" id="pw-confirmation-error"> *Password is not valid</span>
         </div>
 
-        <div id="profile-success" hidden="true">
+        <div id="" hidden="true">
           <h5>Your profile has been successfully created! Please continue adding details.</h5>
         </div>
       </div>

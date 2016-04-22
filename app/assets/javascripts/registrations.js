@@ -336,7 +336,6 @@ $(function(){
 function userCreated() {
   if ($("#password").hasClass("valid") && $("#pw_confirmation").hasClass("valid") && $("#email").hasClass("valid") && $("#name").hasClass("valid"))
   {
-    console.log("success message");
     $("#profile-success").show();
     //or create an alert?
   }
