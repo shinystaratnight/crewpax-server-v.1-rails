@@ -400,12 +400,12 @@
             </label>
 
             <label>
-              <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors/Continuity Coordinator").id %></div>
+              <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors").id %></div>
               <% if @iatse_user_eligibilities.empty? || @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty? %> 
-                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Script Supervisors/Continuity Coordinator" /> Script Supervisors/ Continuity Coordinator 
+                <input type="checkbox" data-role-id="" class="IATSE_roles" data-label-id="" data-eligibility-id="" value="Script Supervisors" /> Script Supervisors/ Continuity Coordinator 
               <% else %>
                 <% @eligibility_id = @iatse_user_eligibilities.find_all{|r| r.role_id == @role_id } %>  
-                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Script Supervisors/Continuity Coordinator" checked/> Script Supervisors/ Continuity Coordinator 
+                <input type="checkbox" data-role-id="<%=@role_id%>" class="IATSE_roles" data-label-id="" data-eligibility-id="<%=@eligibility_id[0].id %>" value="Script Supervisors" checked/> Script Supervisors/ Continuity Coordinator 
               <% end %>
             </label>
 
@@ -523,12 +523,12 @@
           </label>
 
           <label>
-            <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors/Continuity Coordinator").id %></div>  
+            <div hidden="true"><%=@role_id = Role.find_by(name: "Script Supervisors").id %></div>  
             <% if @acfc_user_eligibilities.empty? || @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id}.empty?%>                        
-              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= "Script Supervisors/Continuity Coordinator"/> Continuity
+              <input type="checkbox" data-role-id="" data-eligibility-id="" data-label-id="" class="ACFC_roles" value= "Script Supervisors"/> Continuity
             <% else %>
               <% @eligibility_id = @acfc_user_eligibilities.find_all{|r| r.role_id == @role_id } %> 
-              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value= "Script Supervisors/Continuity Coordinator" checked/> Continuity
+              <input type="checkbox" data-role-id="<%=@role_id%>" data-eligibility-id="<%=@eligibility_id[0].id %>" data-label-id="" class="ACFC_roles" value= "Script Supervisors" checked/> Continuity
             <% end %>
           </label>
 
