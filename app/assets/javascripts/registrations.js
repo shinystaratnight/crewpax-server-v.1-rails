@@ -45,7 +45,7 @@ $(function(){
 //=====================================================================================
   $("#phone").on("blur", function(){
     var user_id = $("#info").data("user-id");
-    var phone = $("#phone").text().trim();
+    var phone = $("#phone").text().trim().replace(/[^0-9]/g, '');
       if (phone == "") {
         $(this).addClass("invalid");
         $(this).next().show();
