@@ -1,6 +1,21 @@
 //==========In General==========================
   
+  .field {
+    border: 1px solid #ddd;
+    margin: 5px 2px;
+    padding: 2px;
+    border-radius: 4px;
+    h5 {
+      margin: 2px 0;
+      padding: 0 5px;
+    }
+  }
+   
+  .required-fields {
+   @extend .field;
 
+  }
+  
   .union_font {
     font-size: 16px;
     margin-top: 10px;

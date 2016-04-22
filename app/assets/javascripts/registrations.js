@@ -91,7 +91,7 @@ $(function(){
           $("#email").addClass("valid");  
         },
         error: function(xhr){
-          var errors = $.parseJSON(xhr.responseText).toString();
+          var errors = $.parseJSON(xhr.responseText).error;
           $("#email").addClass("invalid");
           $("#email-error").text("*"+ errors).show();
   
@@ -314,10 +314,10 @@ $(function(){
     onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
       if($(this).text()){
         $.fn.pStrength('changeBackground',$(this), passwordStrength);
+        $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')    
       } else {
         $.fn.pStrength('resetStyle', $(this));
       }
-        $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')    
       },
     onValidatePassword: function(strengthPercentage){
       $('#pw_confirmation_strength_precentage').text(
