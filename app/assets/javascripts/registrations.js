@@ -620,7 +620,7 @@ function userCreated() {
     var user_id = $("#info").data("user-id");
 
     $("#weeklyDatePicker").val(sunday + " - " + saturday);
-    $("#date_range").text("Week of : " + $("#weeklyDatePicker").val())
+    $("#date_range").text($("#weeklyDatePicker").val())
     $("#sunday").data("date", sunday);
     $("#monday").data("date", moment(value, "MM/DD/YYYY").day(1).format("YYYY-MM-DD"));
     $("#tuesday").data("date",moment(value, "MM/DD/YYYY").day(2).format("YYYY-MM-DD"));
