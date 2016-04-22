@@ -1,0 +1,27 @@
+<% unless user_signed_in? %>
+  <%= link_to new_registration_path(:user), class: 'btn btn-block btn-primary btn-lg' do %>
+    <div class="glyphicon glyphicon-user"></div>
+    Create Profile
+  <% end %>
+<% end %>
+<div class="page-header">
+  <h1>Hiring Board</h1>
+</div>
+<%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role' %>
+<table class="table">
+  <tr>
+    <th>Photo</th>
+    <th>Name</th>
+  </tr>
+  <% for user in @users %>
+    <tr>
+      <td>
+        <%= link_to image_tag(user.image.url(:thumb)), user_path(user) %>
+      </td>
+      <td>
+        <%= link_to user.name, user_path(user) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @users %>
