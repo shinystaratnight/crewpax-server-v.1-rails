@@ -91,7 +91,7 @@ $(function(){
           $("#email").addClass("valid");  
         },
         error: function(xhr){
-          var errors = $.parseJSON(xhr.responseText).error;
+          var errors = $.parseJSON(xhr.responseText).error || $.parseJSON(xhr.responseText).toString();
           $("#email").addClass("invalid");
           $("#email-error").text("*"+ errors).show();
   
