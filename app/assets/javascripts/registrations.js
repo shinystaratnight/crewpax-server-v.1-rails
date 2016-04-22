@@ -60,6 +60,7 @@ $(function(){
           data:{user:{phone: phone}},
           success: function(response){
             $("#phone").addClass("valid");
+            userCreated();
           },
           error: function(xhr){  
             var errors = $.parseJSON(xhr.responseText).toString();
@@ -88,7 +89,8 @@ $(function(){
         dataType:"json",
         data:{user:{email: email}},
         success: function(response){
-          $("#email").addClass("valid");  
+          $("#email").addClass("valid"); 
+          userCreated(); 
         },
         error: function(xhr){
           var errors = $.parseJSON(xhr.responseText).error || $.parseJSON(xhr.responseText).toString();
@@ -260,6 +262,7 @@ $(function(){
       return false;
     } else {
       $("#password").addClass("valid");
+      userCreated();
       $("#password-error").hide();
     }
   });    
@@ -299,8 +302,10 @@ $(function(){
           data:{user:{password: password_confirmation}},
           success: function(response){
           $("#pw_confirmation").addClass("valid"); 
+          userCreated();
           }
         });
+
     } else {
       $("#pw-confirmation-error").show();
       return false;
@@ -326,6 +331,18 @@ $(function(){
       );
     }
   });
+//===================================================================================
+// this will display an alert that the four necessary fields have been successfully saved and that the user has been created
+function userCreated() {
+  if ($("#password").hasClass("valid") && $("#pw_confirmation").hasClass("valid") && $("#email").hasClass("valid") && $("#name").hasClass("valid"))
+  {
+    console.log("success message");
+    $("#profile-success").show();
+    //or create an alert?
+  }
+};
+
+
 
 //==========================================================================================================
 //*********************************************************************************************************

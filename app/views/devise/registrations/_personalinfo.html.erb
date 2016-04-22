@@ -3,6 +3,7 @@
     <h3> Personal Information </h3>
 
       <div class="required-fields">
+      <h5>Required:</h5>
         <div class="field" id ="info" data-user-id="">
           <h5> Name:</h5>
           <div class="profile_input" data-profile-entry="name" id="name" contenteditable="true"></div>
@@ -27,6 +28,10 @@
           <div class="profile_input" id="pw_confirmation" contenteditable="true"></div>
           <div id="pw_confirmation_strength_precentage"></div>
           <span class="error" hidden="true" id="pw-confirmation-error"> *Password is not valid</span>
+        </div>
+
+        <div id="profile-success" hidden="true">
+          <h5>Your profile has been successfully created!</h5>
         </div>
       </div>
 
