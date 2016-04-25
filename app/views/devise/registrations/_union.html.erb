@@ -14,27 +14,49 @@
 <!------------------Render checkboxes ids(roles ids) when page is loaded-------------------->
 
           <% @unions.each do |union| %>
-            <% if union.name == "DGC" %>
-              <div hidden="true"><%=union.id %></div>
-            <%end%>
-          <%end %>
-          <a role="button" id="DGC" data-union-name="DGC" data-union-id="" data-toggle="collapse" href="#unionOne" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
-            DGC
-          </a>
-        </div>
-       
-          <div id="unionOne" class="collapse" data-union-id="">
-            <div id="dgcStatus" data-union-name="DGC">
-              <input type="checkbox" id="dgc_permit" data-name="permit"  value="" /> 
-              <label for="dgc_permit"> Permit </label>
-                <span hidden="true" id="dgc_number_days"> * Number of Days:
-                  <div contenteditable="true" hidden="true" id="permit_days"></div>
-                </span>
-              <input type="checkbox" id="dgc_member" data-name="member" value="true" /> 
-              <label for="dgc_member"> Member </label>   
-            <br>
-          
-            <div id="dgc_roles">
+            <div hidden="true"><%=union.id %></div>
+
+            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
+          <%=union.name%>
+            </a>
+            
+            <div id="union-<%=union.name%>" class="collapse" data-union-id="">
+              <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
+                <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit"  value="" /> 
+                <label for="<%=union.name.downcase%>_permit"> Permit </label>
+                  <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
+                    <div contenteditable="true" hidden="true" id="permit_days"></div>
+                  </span>
+                <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" /> 
+                <label for="<%=union.name.downcase%>_member"> Member </label>   
+              <br>
+              </div>
+        
+
+            <div id="<%=union.name.downcase%>_roles">
+              <%union.roles.each do |role|%>
+                <label for= "<%=role.name%>">
+                  <input type="checkbox" class="roles" id="<%=role.name%>" name="<%=role.name%>" data-label-id="" data-role-id="" data-eligibility-id="" value="<%=role.name%>"/>
+                  <span class="label-text">
+                  <%=role.name%> 
+                  </span>
+                </label>
+              <%end%>
+            </div>
+
+          <%end%>  
+          </div> 
+    
+      </div>
+    </div>
+  </div> 
+</div>      
+
+  
+  
+
+<!-- 
+
             <label for= "DGC_PA">
               <%@roles.each do |role|%>
                 <% if role.name == "Producer’s Assistant" %>
@@ -157,9 +179,9 @@
               <input type="checkbox" class="roles" id="DGC_1ST_AD" name="DGC_1ST_AD" value="1st Assistant Director (1st AD)" data-role-id="" data-label-id="" data-eligibility-id=""/> 1ST AD
             </label>
             </div>
-            </div>         
-        </div>
-    
+            </div>    -->     
+        </div> 
+    <!-- 
         <div class="list-group-item">
           <%@unions.each do |union| %>
             <% if union.name == "IATSE" %>
@@ -835,12 +857,9 @@
           </label>
         </div>
           
-                
-      </div>
-    </div>
-  </div> 
-</div>
-  
+ -->
+            
       
 
 
+ 

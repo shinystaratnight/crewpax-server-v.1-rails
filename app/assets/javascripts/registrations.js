@@ -378,10 +378,15 @@ function userCreated() {
 
   $(".roles").on("click",function(){
     if ($("#dgc_member").is(":checked")) {
+      console.log($(this));
       var data = $("#dgc_member").val();
       var union_id = $("#DGC").data("union-id");
       var role_id = $(this).prev().text();
       $(this).data("role-id", role_id);
+      console.log(data);
+            console.log(union_id);
+      console.log(role_id);
+
       if ($(this).is(":checked")) {
         ajaxMember(data, union_id, role_id, $(this)); 
         ajaxCreateLabel(role_id);  
