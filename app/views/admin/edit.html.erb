@@ -11,8 +11,32 @@
 
     Edit/Delete Union
 
+
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#editUnion" aria-expanded="false" aria-controls="editUnion">Edit/Delete Union</a>
+    </h3>
+  </div>
+  <div id="editUnion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editUnion">
+    <div> Please select certificates that you have: </div>
+      <select id="edit-union" name="union">
+        <%@unions.each do |union| %>
+          <option value="<%= %>" data-certifiable-id="">
+            <%= union.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+</div>
+
+
+
+
+
+
       <!--put dropdown of union names here -->
-      <!--goes to union's page, where we can add roles? -->
+      <!--pulls down union's accordion?, where we can add roles? -->
       <!--and add certificates? -->
 
     </div>

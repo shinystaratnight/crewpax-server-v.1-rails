@@ -16,8 +16,8 @@
           <div hidden="true">
             <%=union.id %>
           </div>
-          <div class="list-group-item">
 
+          <div class="list-group-item">
             <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
               <%=union.name%>
             </a>
@@ -28,13 +28,12 @@
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                    <div contenteditable="true" hidden="true" id="permit_days"></div>
-                  </span>
+                <div contenteditable="true" hidden="true" id="permit_days"></div>
+              </span>
               <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" />
               <label for="<%=union.name.downcase%>_member"> Member </label>
               <br>
             </div>
-
 
             <div id="<%=union.name.downcase%>_roles">
               <%union.roles.each do |role|%>
@@ -46,9 +45,10 @@
                 </label>
                 <%end%>
             </div>
-            
+
           </div>
           <%end%>
+
       </div>
     </div>
   </div>
