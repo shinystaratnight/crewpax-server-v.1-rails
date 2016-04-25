@@ -17,7 +17,7 @@
       <ul class="dropdown-menu">
         <%@unions.each do |union| %>
           <li>
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr!(' ','-')%>" aria-expanded="false" aria-controls="edit<%=union.name%>">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=union.name.tr(' ','-')%>">
               <%= union.name %>
             </a>
           </li>
@@ -30,12 +30,17 @@
       </ul>
     </div>
 
+    <!---TODO
+      make sure the other unions collapse when one is opened -->
 
     <%@unions.each do |union| %>
-      <div id="edit<%=union.name%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=union.name%>">
+      <div id="edit<%=union.name.tr(' ','-')%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=union.name.tr(' ','-')%>">
 
-        Some stuff about
-        <%=union.name%>
+        <div class="field union-info" data-union-id="<%=union.id %>">
+          <h5> Union Name: </h5>
+          <div class="union_input" class="union-name" contenteditable="true"><%=union.name %></div>
+          <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
+        </div>
 
       </div>
     <%end%>
