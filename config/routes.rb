@@ -7,6 +7,9 @@ Bcpax::Application.routes.draw do
     resources :roles
   end
   
+  resources :roles do 
+    resources :labels, only:[:index]
+  end 
   # resources :jobs do
   #   resources :roles 
   # end
@@ -18,12 +21,12 @@ Bcpax::Application.routes.draw do
   resources :attachments, only:[:create,:update, :index, :destroy]
   resources :certifiables, only:[:create, :destroy]
   resources :users, shallow: true do
-    resources :roles 
     resources :appointments
   end
 
-  # resources :users do
-  #   resources :roles 
+  # resources :roles, shallow: true do
+  #   resources :users 
+
   # end
   
   resources :addresses

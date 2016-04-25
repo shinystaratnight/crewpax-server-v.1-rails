@@ -3,6 +3,24 @@ class UsersController < ApplicationController
   respond_to :html, :js, :json
   def index
     @users = User.all
+    @labels = Label.all 
+   
+  
+    
+   
+   
+    # @users.each do |user|
+    #   @last_log_in = user.last_sign_in_at    
+    #   @unions = user.unions
+    #   @roles = user.roles
+    #   @eligibilities = user.eligibilities 
+    #   @user_unions_status = {}
+    #   @eligibilities.each do |e|
+    #     @user_unions_status = { union_name: Union.find(e.union_id).name, union_status: e.member || e.permit_days}
+    #   end
+    # end
+
+    
       # binding.pry
       # if @role.present?
       #   @labels= Label.search_by_role(params[:role_id])
@@ -119,7 +137,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :id, :image, :password, :password_confirmation,
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    :admin, :phone, { roles_ids: [] }, :addresses_attributes => [:type, :address_input])      
+    :admin, :phone, :roles_ids=>[], :addresses_attributes => [:type, :address_input])      
   end
 
   def label_params

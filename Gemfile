@@ -23,7 +23,6 @@ gem "simple_calendar", "~> 2.0"
 
 
 
-
 group :assets do
   gem 'asset_sync'
 end

@@ -1,27 +1,77 @@
-<% unless user_signed_in? %>
-  <%= link_to new_registration_path(:user), class: 'btn btn-block btn-primary btn-lg' do %>
-    <div class="glyphicon glyphicon-user"></div>
-    Create Profile
-  <% end %>
-<% end %>
 <div class="page-header">
   <h1>Hiring Board</h1>
 </div>
-<%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role' %>
-<table class="table">
-  <tr>
-    <th>Photo</th>
-    <th>Name</th>
-  </tr>
-  <% for user in @users %>
-    <tr>
-      <td>
-        <%= link_to image_tag(user.image.url(:thumb)), user_path(user) %>
-      </td>
-      <td>
-        <%= link_to user.name, user_path(user) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+
+Show me crews filter by Role:<%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role' %>
+
+
+
+
+
+</br>
+
+  <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
+  <div class="container">
+    <% for user in @users %> 
+      <!-- <div class="row">  -->
+        <div class="user-card col-md-4 col-sm-12" data-user-id = "<%=user.id%>">
+          <div class="instagram-content">          
+            <div class="row photos-wrap">
+              <!-- Instafeed target div -->
+                <div id="instafeed"></div>
+                  <!-- The following HTML will be our template inside instafeed -->                    
+                    <div class="photo-box">
+                      <div class="image-wrap">                        
+                        <%= image_tag(user.image.url)%>
+                      </div>
+                      <div class="description">
+                        <%= user.name %>
+                        <% if user.has_vehicle == true %>
+                          <i class="fa fa-car" aria-hidden="true" style="font-size: 20px; margin-left: 10px;"></i>
+                        <% end %> 
+                     
+                        <% if user.appointments.any?{|a| a.date == Date.today} %>                        
+                          <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:green; font-size: 15px;">Available Today</i> 
+                        <% else %>
+                          <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>
+                        <% end %>  
+
+
+
+
+                        <% @user_unions = user.unions %>
+                        <% if @user_unions.present? %>
+                          <% @user_unions.group_by(&:id).map do |k, v| %>
+                            <!--Get Rid of Duplicated elements in the array to find the Union Name -->
+                              <!--To find the eligibility with the union id and find whether a user is a member or has a permit with days -->
+                                <% membership = user.eligibilities.find_by(union_id: v.first.id).member %>
+                                <% permit_days = user.eligibilities.find_by(union_id: v.first.id).permit_days %>                               
+                                <% if membership.present? %>
+                                  <div> Member: <%= v.first.name%></div>
+                                <% elsif permit_days.present? %>
+                                  <div> Permit:  <%= v.first.name%> :<%=permit_days%>days</div>
+                                <% else %>
+                                  <div> Unions Status: <%=v.first.name %> </div>
+                                <% end %>                           
+                          <% end %>                            
+                        <% end %>
+                      </div>
+                      
+                     
+
+                      <div>
+                        <%=link_to "View Profile", user_path(user.id)%>
+                      </div>
+                    </div>
+                 
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+    <% end %>
+  </div>
+
+
+
+
 <%= paginate @users %>
