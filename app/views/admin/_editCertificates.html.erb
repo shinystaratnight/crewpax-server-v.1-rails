@@ -32,7 +32,7 @@
       <div id="edit<%=certificate.name.tr(' ','-')%>" class="panel collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
 
         <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
-          <h5> certificate Name: </h5>
+          <h5> Certificate Name: </h5>
           <div class="certificate-name" contenteditable="true"><%=certificate.name %></div>
           <span class="error" hidden="true" class="certificate-name-error"> *Name is not valid</span>
         </div>
@@ -53,7 +53,7 @@
 
 
         <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
-          <h5> Delete Button</h5>
+          <button class="deleteCertificate"> Delete Button</button>
         </div>
 
       </div>
