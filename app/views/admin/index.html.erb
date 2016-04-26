@@ -2,6 +2,8 @@
   <h1>Admin</h1>
 </div>
 
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
 <div class="panel panel-default">
   <div class="panel-heading" role="tab" id="">
     <h3 class="panel-title">
@@ -11,23 +13,24 @@
 
   <div id="editUnion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editUnion">
 
-    <div class="dropdown" id="edit-union" name="union">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Union
-        <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <%@unions.each do |union| %>
-          <li>
+     <div class="list-group">
+
+
+<!--       <ul class="dropdown-menu">
+ -->        <%@unions.each do |union| %>
+          <div class="list-group-item">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=union.name.tr(' ','-')%>">
               <%= union.name %>
             </a>
-          </li>
+          </div>
         <% end %>
-            <li>
+                      <div class="list-group-item">
+
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newUnion" aria-expanded="false" aria-controls="newUnion">
               Create New
             </a>
-            </li>
-      </ul>
+            </div>
+      </div>
     </div>
 
     <!---TODO
@@ -36,11 +39,29 @@
     <%@unions.each do |union| %>
       <div id="edit<%=union.name.tr(' ','-')%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=union.name.tr(' ','-')%>">
 
-        <div class="field union-info" data-union-id="<%=union.id %>">
+        <div class="field union-info col-md-3" data-union-id="<%=union.id %>">
           <h5> Union Name: </h5>
           <div class="union-name" contenteditable="true"><%=union.name %></div>
           <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
         </div>
+
+
+        <div class="field union-info col-md-3" data-union-id="<%=union.id %>">
+          <h5> Add some roles: </h5>
+        </div>
+
+
+        <div class="field union-info col-md-3" data-union-id="<%=union.id %>">
+          <h5> Add some certificates: </h5>
+        </div>
+
+
+        <div class="field union-info col-md-2" data-union-id="<%=union.id %>">
+          <h5> Delete Button</h5>
+        </div>
+
+
+
 
       </div>
     <%end%>
