@@ -20,7 +20,7 @@ $(function(){
 
     }
     var name = $(this).closest(".union-name").text().trim();
-    // There are two rounds of validations, front-end and back-end. Here's the front-end validation
+
     if (name == "") {
       $(this).addClass("invalid").next().show();
       return false;
@@ -32,14 +32,15 @@ $(function(){
         dataType: "json",
         data:{union: {name: name}},
         success: function(response){
-          if (response.id) {
-            $(".union-info").data("union-id", response.id);
-            $(".union-name").addClass("valid");
-          } else {              
-            var errors = response.toString();
-            $(".union-name-error").text("*"+ errors).show();
-            $(".union-name").addClass("invalid");   
-          }
+          console.log(response)
+          // if (response.id) {
+          //   $(".union-info").data("union-id", response.id);
+          //   $(".union-name").addClass("valid");
+          // } else {              
+          //   var errors = response.toString();
+          //   $(".union-name-error").text("*"+ errors).show();
+          //   $(".union-name").addClass("invalid");   
+          // }
         }
       });
     }
