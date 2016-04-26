@@ -1,3 +1,5 @@
+
+
 <div class="panel panel-default">
   <div class="panel-heading" role="tab" id="">
     <h3 class="panel-title">
@@ -7,19 +9,17 @@
 
   <div id="editCertificate" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editCertificate">
 
-  Stuff?
-<!-- 
    <div class="list-group">
-      <%@roles.each do |role| %>
+      <%@certificates.each do |certificate| %>
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=role.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=role.name.tr(' ','-')%>">
-            <%= role.name %>
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=certificate.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=certificate.name.tr(' ','-')%>">
+            <%= certificate.name %>
           </a>
         </div>
       <% end %>
 
       <div class="list-group-item">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newrole" aria-expanded="false" aria-controls="newrole">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newCertificate" aria-expanded="false" aria-controls="newCertificate">
           Create New
         </a>
       </div>
@@ -28,32 +28,40 @@
   </div>
 
 
-    <%@roles.each do |role| %>
-      <div id="edit<%=role.name.tr(' ','-')%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=role.name.tr(' ','-')%>">
+    <%@certificates.each do |certificate| %>
+      <div id="edit<%=certificate.name.tr(' ','-')%>" class="panel collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
 
-        <div class="field role-info" data-role-id="<%=role.id %>">
-          <h5> role Name: </h5>
-          <div class="role-name" contenteditable="true"><%=role.name %></div>
-          <span class="error" hidden="true" class="role-name-error"> *Name is not valid</span>
+        <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
+          <h5> certificate Name: </h5>
+          <div class="certificate-name" contenteditable="true"><%=certificate.name %></div>
+          <span class="error" hidden="true" class="certificate-name-error"> *Name is not valid</span>
+        </div>
+
+        <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
+          <h5> Add some users: </h5>
+          <%@users.each do |user| %>
+              <label>            
+                <div hidden="true"><%=user.id%></div>
+                <% if user.certificates.include? certificate %>
+               <input type="checkbox" class="users" id="<%=certificate.id%>-<%=user.id%>" name="<%=certificate.id%>-<%=user.id%>" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id="" checked/><%=user.name%>
+                  <%else%>
+                  <input type="checkbox" class="users" id="<%=certificate.id%>-<%=user.id%>" name="<%=certificate.id%>-<%=user.id%>" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id=""/><%=user.name%>
+                  <%end%>
+              </label>
+          <%end%>
         </div>
 
 
-        <div class="field role-info" data-role-id="<%=role.id %>">
-          <h5> Add to unions: </h5>
-        </div>
-
-
-        <div class="field role-info" data-role-id="<%=role.id %>">
+        <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
           <h5> Delete Button</h5>
         </div>
 
-
       </div>
+
     <%end%>
 
-      <div id="newrole" class="panel-collapse collapse" role="tabpanel" aria-labelledby="newrole">
+      <div id="newCertificate" class="panel-collapse collapse" role="tabpanel" aria-labelledby="newCertificate">
 
         Here's where you make a new one! yay!
-      </div> -->
-  </div>
+      </div>
   </div>
