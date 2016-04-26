@@ -40,11 +40,24 @@
 
         <div class="field union-info" data-union-id="<%=union.id %>">
           <h5> Add some roles: </h5>
+            <%@roles.each do |role| %>
+
+              <label>            
+                <div hidden="true"><%=role.id%></div>
+                  <% if union.roles.include? role %>
+                  <input type="checkbox" class="roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="" checked/><%=role.name%>
+                  <%else%>
+                  <input type="checkbox" class="roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
+                  <%end%>
+              </label>
+              <%end%>
+
         </div>
 
 
         <div class="field union-info" data-union-id="<%=union.id %>">
           <h5> Add some certificates: </h5>
+          
         </div>
 
 
