@@ -1,4 +1,6 @@
 $(function(){
+//=============================Search Employees with given roles=========================================  
+
   $("#user_role, #select_user_role").on("change",function(){
     var role_id = $(this).val();
   // when the selection is all  
@@ -17,7 +19,7 @@ $(function(){
           $(".user-card").hide();
           $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
         }else{
-          $('.user-card').hide()
+          $('.user-card').hide();
           $.map ($(response),function(resp){          
             var user_id = resp.user_id.toString();            
             $('.user-card[data-user-id='+ user_id+']').show();
@@ -27,6 +29,28 @@ $(function(){
     });
 
   });
+
+
+//==================================Sort Employees by Last Sign in ========================================================
+  // $("#most_recent_log_in").on("click", function(event){
+  //   event.preventDefault();
+  //   $.ajax({
+  //     url:"/users",
+  //     method: "get",
+  //     dataType: "json",
+  //     data:{user{last_sign_in_at: last_sign_in_at}},
+  //     success: function(response){
+
+  //     } 
+  //   })
+    
+
+
+  // });
+
+
+
+
 
 
 

@@ -2,26 +2,26 @@ class UsersController < ApplicationController
   before_filter :set_role, only: :index
   respond_to :html, :js, :json
   def index
-    @users = User.all
-    @labels = Label.all 
+
+    @users = User.all.sort_user(params[:last_sign_in_at])
    
-  
-    
-   
-   
-    # @users.each do |user|
-    #   @last_log_in = user.last_sign_in_at    
-    #   @unions = user.unions
-    #   @roles = user.roles
-    #   @eligibilities = user.eligibilities 
-    #   @user_unions_status = {}
-    #   @eligibilities.each do |e|
-    #     @user_unions_status = { union_name: Union.find(e.union_id).name, union_status: e.member || e.permit_days}
+    # respond_to do |format|
+    #   if params[:sort].present?
+    #     @users = User.order(params[:sort])
+    #     binding.pry
+    #     format.html{render @users}
+    #     format.json{render json: "Most recent"}
+    #   else
+    #     @users = User.all
+    #     format.html{render @users}
+    #     format.json{render json: "Normal order"}
     #   end
     # end
-
+    # @most_recent_sign_in = User.order(params[:sort])
     
-      # binding.pry
+    
+  
+
       # if @role.present?
       #   @labels= Label.search_by_role(params[:role_id])
       # end
@@ -135,9 +135,9 @@ class UsersController < ApplicationController
 
   # To prevent Mass assignments.Require that :user be a key in the params Hash to accept various attributes
   def user_params
-    params.require(:user).permit(:name, :id, :image, :password, :password_confirmation,
+    params.require(:user).permit(:name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    :admin, :phone, :roles_ids=>[], :addresses_attributes => [:type, :address_input])      
+    :admin, :phone,  :roles_ids=>[], :addresses_attributes => [:type, :address_input])      
   end
 
   def label_params
