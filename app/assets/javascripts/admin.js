@@ -49,15 +49,34 @@ $(function(){
 //add roles to union by creating eligibilities
   $(".edit-roles").on("click",function(){
 
-      var data = $(this).val();
       var union_id = $(this).closest(".union-info").data("union-id");
       var role_id = $(this).prev().text();
-      var url = "/admin/eligibilities"
+      var eligibility_id = $(this).data("eligibility-id");
 
       if ($(this).is(":checked")) {
       $.ajax({
-        url: url,
+        url: "/admin/eligibilities",
         method:"post",
+        dataType: "json",
+        data:{eligibility: {   
+                union_id: union_id, 
+                role_id: role_id}},
+        success: function(response){
+          console.log(response.id);
+          if (response.id) {
+            $(this).data("eligibility-id", response.id);
+          } else {              
+            var errors = response.toString();
+            console.log(errors);
+          }
+        }
+      });
+
+     } else {
+
+      $.ajax({
+        url: "/admin/eligibilities" + eligibility_id,
+        method:"delete",
         dataType: "json",
         data:{eligibility: {   
                 union_id: union_id, 
@@ -72,16 +91,6 @@ $(function(){
           // }
         }
       });
-
-    //     ajaxMember(data, union_id, role_id, $(this)); 
-    //     ajaxCreateLabel(role_id);  
-    //   } else {  
-    //     var eligibility_id = $(this).data("eligibility-id");
-    //     ajaxDeleteEligibility(union_id, role_id,eligibility_id);
-    //     ajaxDeleteLabel(role_id);
-    //   }    
-    // }); 
-
 
      };
   });
