@@ -1,23 +1,23 @@
-= link_to new_job_path, class: 'btn btn-block btn-primary btn-lg' do
-  .glyphicon.glyphicon-edit
-  Post Job
+/ = link_to new_job_path, class: 'btn btn-block btn-primary btn-lg' do
+/   .glyphicon.glyphicon-edit
+/   Post Job
 
-.page-header
-  %h1 Jobs
+/ .page-header
+/   %h1 Jobs
 
-= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_role'
+/ = select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_role'
 
-%table.table
-  %tr
-    %th Job position
-    %th Starts on
-  - for job in @jobs
-    %tr
-      %td= link_to job.name, job_path(job)
-      %td= job.starts_on.to_s :long
+/ %table.table
+/   %tr
+/     %th Job position
+/     %th Starts on
+/   - for job in @jobs
+/     %tr
+/       %td= link_to job.name, job_path(job)
+/       %td= job.starts_on.to_s :long
 
-= paginate @jobs
+/ = paginate @jobs
 
-%p
-  %small.disclaimer
-    Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.
+/ %p
+/   %small.disclaimer
+/     Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.

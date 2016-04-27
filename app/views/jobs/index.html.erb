@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1 id="job_board">Job Board</h1>
+  <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
+  <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
+  Post Job
+  <% end %>
+</div>
+<%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category' %>
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Starts on</th>
+  </tr>
+  <% for job in @jobs %>
+    <tr>
+      <td>
+        <%= link_to job.name, job_path(job) %>
+      </td>
+      <td>
+        <%= job.starts_on.to_s :long %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @jobs %>
+<p>
+  <small class="disclaimer">
+    Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.
+  </small>
+</p>

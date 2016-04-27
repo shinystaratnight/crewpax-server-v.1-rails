@@ -20,7 +20,7 @@ class JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    if @job.save
+    if @job.save!
       JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
@@ -58,7 +58,7 @@ class JobsController < ApplicationController
   protected
 
   def set_role
-    @role = Category.find params[:role_id] if params[:role_id]
+    @role = Role.find params[:role_id] if params[:role_id]
   end
 
   def set_job
@@ -74,7 +74,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit :id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
+    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret)
   end
 
  

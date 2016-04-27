@@ -1,3 +1,103 @@
-.disclaimer {
-  color: $gray-light;
-}
+//==============================Job Index Page============================================================
+
+//---------------------***** For Desktop view *****-------------------------------------------------------
+
+  .disclaimer {
+    color: $gray-light;
+  }
+
+  #job_board{
+    display:inline;
+  }
+
+
+  #post_job_button{
+    margin-left: 75%;
+  }
+
+
+
+
+//-------***** iphone 5 & 5s *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+
+  @media only screen 
+    and (min-device-width: 320px) 
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+    #post_job_button{
+      margin-left: 55%;
+      margin-top: 10px;
+    }
+
+
+
+
+  }
+
+//-------***** iPhone 6 *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+
+  @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+
+  #post_job_button{
+    margin-left: 60%;
+    margin-top: 10px;
+  }
+
+
+
+  }
+
+
+//==============================Job New Page============================================================
+//---------------------***** For Desktop view *****-------------------------------------------------------
+
+  #cancel_job_post{
+    color:white;
+  }
+
+
+  .form-control{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+
+  }
+  
+  .form-control:hover,
+  .form-control:active,
+  .form-control:focus{
+    color: black;
+  }
+
+  #job_post_form{
+    margin: auto;
+    width: 600px;
+  }
+
+  #post_job_title{
+    margin-left: 600px;
+  }
+
+  #post_submit{
+    margin-left:200px;
+  }
+
+
+
+
+
+//==============================Job Edit Page============================================================
+//---------------------***** For Desktop view *****-------------------------------------------------------
+
+  #edit_post_submit{
+    margin-left:150px;
+  }
+

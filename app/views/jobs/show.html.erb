@@ -1,0 +1,70 @@
+<%= content_tag_for :article, @job do %>
+  <header>
+    <div class="page-header">
+      <h1>
+        <%= @job.name %>
+        <br/>
+        
+      </h1>
+    </div>
+  </header>
+  <%= simple_format @job.description %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Details
+      </h3>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Company</dt>
+        <dd>
+          <%= @job.company_name %>
+        </dd>
+        <dt>Location</dt>
+        <dd>
+          <%= @job.location %>
+        </dd>
+        <dt>Starts on</dt>
+        <dd>
+          <%= @job.starts_on.to_s :long %>
+        </dd>
+        <dt>Ends on</dt>
+        <dd>
+          <%= @job.ends_on.to_s :long %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Contact
+      </h3>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>
+          <%= @job.contact_name %>
+        </dd>
+        <dt>Phone</dt>
+        <dd>
+          <%= @job.contact_phone %>
+        </dd>
+        <dt>Email</dt>
+        <dd>
+          <%= @job.contact_email %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <p>
+    <%= mail_to @job.contact_email, 'Apply', class: 'btn btn-block btn-lg btn-success', subject: @job.name, body: job_url(@job) %>
+  </p>
+  <% if @authenticated %>
+    <p>
+      <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), class: 'btn btn-block btn-lg btn-primary' %>
+    </p>
+  <% end %>
+<% end %>
