@@ -44,12 +44,13 @@
 
               <label>            
                 <div hidden="true"><%=role.id%>
-
-                  <%= Eligibility.find_by(union_id: union.id, role_id: role.id, user_id: nil)%>
-
                 </div>
                   <% if union.roles.include? role %>
-                  <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="" checked/><%=role.name%>
+                  <% eligibility_id = Eligibility.find_by(union_id: union.id, role_id: role.id, user_id: nil)%>
+                  <% if eligibility_id %>
+                  
+
+                  <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="<%=eligibility_id.id%>" checked/><%end%><%=role.name%>
 
                   <%else%>
                   <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>

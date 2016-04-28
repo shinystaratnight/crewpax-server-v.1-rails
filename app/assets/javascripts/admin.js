@@ -75,12 +75,10 @@ $(function(){
      } else {
 
       $.ajax({
-        url: "/admin/eligibilities" + eligibility_id,
+        url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
-        data:{eligibility: {   
-                union_id: union_id, 
-                role_id: role_id}},
+        data:{eligibility_id},
         success: function(response){
           console.log(response);
           // if (response.id) {
