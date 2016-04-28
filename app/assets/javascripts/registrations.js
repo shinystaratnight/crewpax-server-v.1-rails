@@ -922,7 +922,7 @@ function userCreated() {
       dataType:"json",
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id,role_id: role_id}},
       success: function(response){
-        checkbox.data("eligibility-id",response.id);
+        checkbox.data("eligibility-id",response.id); //this doesn't do anything 
         
       }
     });

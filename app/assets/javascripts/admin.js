@@ -54,6 +54,8 @@ $(function(){
       var eligibility_id = $(this).data("eligibility-id");
 
       if ($(this).is(":checked")) {
+        //new eligibility
+
       $.ajax({
         url: "/admin/eligibilities",
         method:"post",
@@ -75,6 +77,8 @@ $(function(){
      } else {
 
       $.ajax({
+        //existing eligibility to be deleted
+
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
@@ -92,4 +96,26 @@ $(function(){
 
      };
   });
+
+$(".delete-union").on("click", function(){
+
+    var union_id = $(this).closest(".union-info").data("union-id");
+      $.ajax({
+        url: "/admin/unions/" + union_id,
+        method: "delete",
+        success: function(response){
+          console.log(response)
+          // if (response.id) {
+          //   $(".union-info").data("union-id", response.id);
+          //   $(".union-name").addClass("valid");
+          // } else {              
+          //   var errors = response.toString();
+          //   $(".union-name-error").text("*"+ errors).show();
+          //   $(".union-name").addClass("invalid");   
+          // }
+        }
+      });
+
+  });
+  
 });

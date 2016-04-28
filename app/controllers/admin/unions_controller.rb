@@ -17,6 +17,27 @@ class Admin::UnionsController < ApplicationController
     end
   end
 
+  def create
+    @union = Union.new(params)
+      respond_to do |format|
+        if @union.save
+          format.html{render @user}
+          format.json{render json: @union}
+        else 
+          format.html { render action: "new" }
+          format.json { render json: @user.errors.full_messages}
+        end
+      end  
+  end
+
+  def destroy
+    @union = Union.find(params[:id])
+    if @union.destroy
+      redirect_to '/admin/index', notice: 'Union was deleted'
+    end
+  end
+
+
   private
 
   def union_params
