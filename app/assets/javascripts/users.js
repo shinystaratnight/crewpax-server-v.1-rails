@@ -14,16 +14,22 @@ $(function(){
       method: "get",
       dataType: "json",
       data:{label:{role_id: role_id}},
-      success: function(response){
+      success: function(response){    
         if (response == undefined){  
-          $(".user-card").hide();
-          $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
-        }else{
+          UserNotFound(); 
+        }else if(response.length > 1){
           $('.user-card').hide();
-          $.map ($(response),function(resp){          
-            var user_id = resp.user_id.toString();            
-            $('.user-card[data-user-id='+ user_id+']').show();
+          $.map ($(response),function(resp){ 
+            if (resp.user_id > 0 ) {       
+              var user_id = resp.user_id.toString();            
+              $('.user-card[data-user-id='+ user_id+']').show();
+            } 
           });
+        }else{
+          if (response[0].user_id==null){
+            UserNotFound(); 
+          }
+          
         }
       }
     });
@@ -50,12 +56,21 @@ $(function(){
 
 
 
-
-
-
-
   
 
 });
 
- 
+//======================================Common function====================================================
+  function UserNotFound(){
+    $(".user-card").hide();
+    $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
+  }
+
+
+
+
+
+
+
+
+

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
 
     @users = User.all.sort_user(params[:last_sign_in_at])
-   
+    
     # respond_to do |format|
     #   if params[:sort].present?
     #     @users = User.order(params[:sort])

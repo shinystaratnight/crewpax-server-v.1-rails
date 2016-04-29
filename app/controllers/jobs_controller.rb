@@ -8,6 +8,10 @@ class JobsController < ApplicationController
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
     @jobs = Job.published 
+    @jobs.find_most_recent(params[:updated_at]) 
+    if params[:search_location].present?
+      @jobs = Job.published.search_location(params[:search_location].titleize)
+    end
       # if @role.present?
       #   @jobs = @jobs.by_role @role
       # end
@@ -20,7 +24,11 @@ class JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    if @job.save!
+      binding.pry 
+    if current_user.present?
+      @job.user_id = current_user.id
+    end  
+    if @job.save      
       JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
@@ -31,8 +39,15 @@ class JobsController < ApplicationController
   def show # GET method, can be triggered by anything, gmail, bots, etc...
     unless @job.published
       if @authenticated
-        @job.update_attribute :published, true
-        flash.now[:success] = 'Job has been published.'
+        if current_user.present?
+          @job.labels.create(role_id: @job.role_id, user_id: current_user.id)
+          @job.update_attribute :published, true
+          flash.now[:success] = 'Job has been published.'
+        else
+          @job.labels.create(role_id: @job.role_id)
+          @job.update_attribute :published, true
+          flash.now[:success] = 'Job has been published.'
+        end
       else
         raise ActionController::RoutingError.new 'Not Found'
       end
@@ -51,11 +66,15 @@ class JobsController < ApplicationController
   end
 
   def destroy
-    @job.destroy
-    redirect_to jobs_path, notice: 'Job has been removed.'
+    if @job.destroy
+      @job.labels.find_by(job_id: @job.id).destroy   
+      redirect_to jobs_path, notice: 'Job has been removed.'
+    end
   end
 
   protected
+
+
 
   def set_role
     @role = Role.find params[:role_id] if params[:role_id]
@@ -74,7 +93,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret)
+    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updaetd_at,:user_id)
   end
 
  

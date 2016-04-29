@@ -15,8 +15,24 @@
     margin-left: 75%;
   }
 
+  #job_category{
+    width: 300px;
+    display: inline;
+    margin-left: 10px;
+    margin-right:10px;
+    margin-bottom:10px;
+  }
 
+  #search_location_form{
+    display: inline;
+  }
 
+  .job_location_search{
+    width: 300px;
+    display:inline-block;
+    margin-right:10px;
+    margin-bottom:-13px;
+  }
 
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
@@ -62,7 +78,7 @@
   }
 
 
-  .form-control{
+  .job_form{
     background-color: transparent;
     border: none;
     box-shadow: none;
@@ -71,9 +87,9 @@
 
   }
   
-  .form-control:hover,
-  .form-control:active,
-  .form-control:focus{
+  .job_form:hover,
+  .job_form:active,
+  .job_form:focus{
     color: black;
   }
 
