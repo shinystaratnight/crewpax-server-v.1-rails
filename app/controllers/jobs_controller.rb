@@ -2,16 +2,29 @@ class JobsController < ApplicationController
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
   before_filter :set_role, only: :index
-  
+  respond_to :html, :js, :json
   
   def index
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
     @jobs = Job.published 
     @jobs.find_most_recent(params[:updated_at]) 
-    if params[:search_location].present?
-      @jobs = Job.published.search_location(params[:search_location].titleize)
-    end
+    
+      
+      if params[:search_content].present? 
+        respond_to do |format|        
+          if job_params[:role_id].present?
+            @filter_jobs = Role.find(job_params[:role_id]).jobs.search_location(params[:search_content].titleize)
+            # format.html{render @jobs}
+            format.json{render json: @filter_jobs}
+          else
+            @jobs = Job.published.search_location(params[:search_content].titleize)
+            # format.html{render @jobs}
+            format.json{render json: @jobs}
+          end
+        end    
+      end
+  
       # if @role.present?
       #   @jobs = @jobs.by_role @role
       # end
