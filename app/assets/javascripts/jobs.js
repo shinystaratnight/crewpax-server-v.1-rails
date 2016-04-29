@@ -6,34 +6,24 @@ $(function(){
       $(".job_detail").show();
       return false;
     }else{
+      $(this).data("job-role", "clicked");
+      var job_board_status = $(this).data("job-role")
       $.ajax({
         url: "/roles/" + role_id + "/labels",
         method: "get",
         dataType: "json",
-        data:{label:{role_id: role_id}},
+        data:{label:{role_id: role_id, job_board: job_board_status }},
         success: function(response){ 
-    
           if (response == undefined){
             JobNotFound();
-          }else if ($.type(response)=="object" ){
+          }else {
             $(".job_detail").hide();
-            $.map($(response.nil_user), function(resp){   
-     
-              if(resp.job_id != null ){
-                var job_id = resp.job_id;
-                $(".job_detail[data-job-id="+ job_id + "]").show()
-              }
+            $.map($(response), function(resp){ 
+              $(".job_detail[data-job-id="+ resp.job_id + "]").show()
             });
-          }else{
-            if(response[0].job_id == null){     
-              JobNotFound();
-            }else{
-              $(".job_detail").hide();
-              $(".job_detail[data-job-id="+ response[0].job_id + "]").show();
-            }
           }
-         
         }
+        
       });
     }
 
@@ -41,7 +31,24 @@ $(function(){
     
   });
 
-
+  //    
+        //     $.map($(response), function(resp){   
+     
+        //       if(resp.job_id != null ){
+        //         var job_id = resp.job_id;
+        //         $(".job_detail[data-job-id="+ job_id + "]").show()
+        //       }
+        //     });
+        //   }else{
+        //     if(response[0].job_id == null){     
+        //       JobNotFound();
+        //     }else{
+        //       $(".job_detail").hide();
+        //       $(".job_detail[data-job-id="+ response[0].job_id + "]").show();
+        //     }
+        //   }
+         
+        // }
 //======================================================================================================
 //====================================Location Search Form Submit Through Ajax=======================================================
   // $("#search_location_form").on("submit", function(){
