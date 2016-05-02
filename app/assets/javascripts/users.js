@@ -24,10 +24,15 @@ $(function(){
           }else{
             $('.user-card').hide();
             $("#user_role").data("selected-user-role", "");
-            debugger
-            $.map($(response),function(resp){ 
-             
-              $('.user-card[data-user-id='+ resp.user_id+']').show();
+
+            $.map($(response),function(resp){
+            // If a job id exist, this label is job_label not user_label 
+              if(resp.job_id == null){
+                $('.user-card[data-user-id='+ resp.user_id+']').show();               
+              }else{                
+                UserNotFound();
+              }
+              
             });
               //Reset selected role id first
               $("#most_recent_log_in > a").data("selected-role-id", "")
@@ -48,23 +53,45 @@ $(function(){
     // roles_ids.push($(this).data("selected-role-id"));
     var last_sign_in_at = "most_recent"
     var role_id = $(this).data("selected-role-id")
-    $.ajax({
-      url:"/users",
-      method: "get",
-      dataType: "json",
-      data:{role_id: role_id, last_sign_in_at: last_sign_in_at},
-      success: function(response){
-        debugger
-        if(response == undefined){
-          UserNotFound
-        }else{
-          $('.user-card').hide();
-          $.map($(response),function(resp){ 
-            $('.user-card[data-user-id='+ resp.id+']').show().insertBefore(".filter_result");
-          });
-        }
-      } 
-    })
+    if(role_id == ""){
+      $.ajax({
+        url:"/users",
+        method: "get",
+        dataType: "json",
+        data:{last_sign_in_at: last_sign_in_at},
+        success: function(response){
+          if(response == undefined){
+            UserNotFound();
+            $('.user-card').hide();
+          }else{
+            $('.user-card').hide();
+            $.map($(response),function(resp){ 
+              $('.user-card[data-user-id='+ resp.id+']').show().appendTo(".filter_result row");
+            });
+          }
+        } 
+      })
+
+    }else{
+      $.ajax({
+        url:"/users",
+        method: "get",
+        dataType: "json",
+        data:{role_id: role_id, last_sign_in_at: last_sign_in_at},
+        success: function(response){
+         
+          if(response == undefined || $.isEmptyObject(response)){
+            UserNotFound();
+          
+          }else{
+            $('.user-card').hide();
+            $.map($(response),function(resp){ 
+              $('.user-card[data-user-id='+ resp.id+']').show().insertBefore(".filter_result");
+            });
+          }
+        } 
+      })
+    }
     
 
 

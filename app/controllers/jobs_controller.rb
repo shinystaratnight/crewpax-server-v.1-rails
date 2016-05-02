@@ -37,7 +37,6 @@ class JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-      binding.pry 
     if current_user.present?
       @job.user_id = current_user.id
     end  

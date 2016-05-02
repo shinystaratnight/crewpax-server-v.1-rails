@@ -1,47 +1,36 @@
 class UsersController < ApplicationController
   before_filter :set_role, only: :index
-  respond_to :html, :js, :json
+  respond_to :html, :json,:js
   def index
     @users = User.all 
-       
-      if params[:role_id].present?
-        respond_to do |format|
-          @filter_id = params[:role_id]         
-          @filter_users = Role.find(@filter_id).users.uniq{|u|u.user_id}
-          binding.pry 
-          #sort filter users based on their most recent log in 
-          @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}
-        
-          format.html{redirect_to users_path}
-          format.json{render json: @most_recent_login_users}
-        end
+    # Filter out never login users
+    @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
+    @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
+  
+    respond_to do |format|
+   
+      if @role.present?
+        @filter_users = Role.find(@role.id).users.find_all{|u|u.last_sign_in_at !=nil}.uniq{|u|u.user_id}
+        #sort filter users based on their most recent log in 
+        @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
+        format.html {render @most_recent_login_users}
+        format.json {render json: @most_recent_login_users}        
       else
-          @sorted_users = User.all.sort_by{|e| e[:last_sign_in_at]}.reverse 
+        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
+        # @users =  @users.page(params[:page] || 1).per(6)
+        format.html{render :index}
+        format.json{render json: @sorted_users}
       end
- 
-    
-    # respond_to do |format|
-    #   if params[:sort].present?
-    #     @users = User.order(params[:sort])
-    #     binding.pry
-    #     format.html{render @users}
-    #     format.json{render json: "Most recent"}
-    #   else
-    #     @users = User.all
-    #     format.html{render @users}
-    #     format.json{render json: "Normal order"}
-    #   end
-    # end
-    # @most_recent_sign_in = User.order(params[:sort])
-    
+    end
     
   
 
-      # if @role.present?
-      #   @labels= Label.search_by_role(params[:role_id])
-      # end
+    # if @role.present?
+    #   @labels= Label.search_by_role(params[:role_id])
+    # end
     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-     @users = @users.page(params[:page] || 1).per(20)
+    # binding.pry 
+    # @users_page = @users.page(params[:page] || 1).per(20)
   end
 
   def show
@@ -113,10 +102,13 @@ class UsersController < ApplicationController
 
 
   def destroy
+    @labels = Label.all 
     @user = User.find(params[:id])
     respond_to do |format|
-      if user_params[:roles_ids].present?
-        @label = Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
+      if user_params[:roles_ids].present? 
+        @users_labels_without_job_posts = @labels.find_all{|l| l.role_id == user_params[:roles_ids][0].to_i && l.job_id==nil}
+        # @label = Label.find_by(role_id:user_params[:roles_ids][0], user_id: @user.id) 
+        @label = @users_labels_without_job_posts.detect{|l| l.user_id == @user.id}
         @label.destroy
         format.json{render json: @label, status: :no_content}
       else
