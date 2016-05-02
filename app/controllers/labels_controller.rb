@@ -1,34 +1,67 @@
 class LabelsController < ApplicationController
+ 
   def index
-
     @users = User.all 
     @jobs = Job.all 
     # Find the labels that contain the selected role ids. There may be different users who have the same role_id
     @label = Label.select{|label| label.role_id == label_params[:role_id].to_i}
 
+    #Find labels that job ids exist to represent relationship between jobs and roles 
+    @job_labels = @label.find_all{|object| object[:job_id].present? == true }
+    #Firstly eliminate labels that users id are nil, secondly eliminate repreated user ids
+    # Note: when a user has the same roles in different unions, a new label is also created, 
+    #which result in labels that have the same user id        
+    @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
+    
     respond_to do |format|
-      if @label.present?
-        #Find labels that job ids exist to represent relationship between jobs and roles 
-        @job_labels = @label.find_all{|object| object[:job_id].present? == true }
-        #Firstly eliminate labels that users id are nil, secondly eliminate repreated user ids
-        # Note: when a user has the same roles in different unions, a new label is also created, 
-        #which result in labels that have the same user id        
-        @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
-        
-        if label_params[:job_board ] == "clicked"
+      if @job_labels.present? && label_params[:job_board ] == "clicked"
           format.html{redirect_to jobs_path}
           format.json{render json: @job_labels}
-          # format.json{render json: {job_labels: @job_labels, user_labels: @user_labels}}
-        end
 
-
+      elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
+          format.html{render @users}
+          format.json{render json: @user_labels} 
       else
-        if label_params[:job_board] == "clicked"
-          format.html{redirect_to jobs_path}
-          format.json{render json: "Labels not found",status: :no_content}
-        end
+        format.json{render json: "Labels not found", status: :no_content}
+     
       end
 
+    end
+
+  end
+
+
+
+  # respond_to do |format|
+    #   if @user_labels.present? && label_params[:hiring_board] == "clicked"
+    #     format.html{redirect_to users_path}
+    #     format.json{render json: @user_labels }
+    #   end
+
+    # end
+
+ # else
+      #   format.html{redirect_to jobs_path}
+      #   format.json{render json:"Labels not found", status: :no_content}
+          # format.json{render json: {job_labels: @job_labels, user_labels: @user_labels}}
+        
+        # elsif label_params[:hiring_board] == "clicked"
+        #   format.html{render :show}
+        #   format.json{render json: @user_labels} 
+        # else
+        #   format.json{render json: "Labels not found", status: :no_content}
+
+        # if label_params[:hiring_board] == "clicked"
+        #   format.html{redirect_to users_path}
+        #   format.json{render json: @user_labels} 
+        # else
+        #   format.html{redirect_to users_path}     
+        #   format.json{render json:"Labels not found",status: :no_content} 
+        # end
+      
+    
+
+      #   format.json{render json:"Labels not found",status: :no_content }} 
 
 
 
@@ -38,10 +71,7 @@ class LabelsController < ApplicationController
 
 
 
-
-
-
-    end 
+ 
 
 
 
@@ -83,7 +113,7 @@ class LabelsController < ApplicationController
 #       end 
 
 #     end
-  end
+  
 
 
   private

@@ -2,7 +2,8 @@
   <h1>Hiring Board</h1>
 </div>
 
-<span>Show me crews filter by Role: </span><%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role' %>
+<span>Show me crews filter by Role: </span><%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role', data:{selected_user_role: ""}
+  %>
 
 
   <div class= "btn-group"> 
@@ -11,7 +12,7 @@
       <i class="fa fa-angle-down"></i>
     </button>
     <ul class="dropdown-menu">
-     <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent')%></li>
+     <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
      
     </ul>
   </div>
@@ -20,6 +21,7 @@
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
   <div class="container">
+    <div class= "filter_result"></div>
     <% for user in @users %> 
       <!-- <div class="row">  -->
         <div class="user-card col-md-4 col-sm-12" data-user-id = "<%=user.id%>">

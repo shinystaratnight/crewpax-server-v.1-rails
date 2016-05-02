@@ -2,8 +2,23 @@ class UsersController < ApplicationController
   before_filter :set_role, only: :index
   respond_to :html, :js, :json
   def index
-
-    @users = User.all.sort_user(params[:last_sign_in_at])
+    @users = User.all 
+       
+      if params[:role_id].present?
+        respond_to do |format|
+          @filter_id = params[:role_id]         
+          @filter_users = Role.find(@filter_id).users.uniq{|u|u.user_id}
+          binding.pry 
+          #sort filter users based on their most recent log in 
+          @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}
+        
+          format.html{redirect_to users_path}
+          format.json{render json: @most_recent_login_users}
+        end
+      else
+          @sorted_users = User.all.sort_by{|e| e[:last_sign_in_at]}.reverse 
+      end
+ 
     
     # respond_to do |format|
     #   if params[:sort].present?
@@ -129,6 +144,8 @@ class UsersController < ApplicationController
 
   protected
 
+ 
+
   def set_role
     @role = Role.find params[:role_id] if params[:role_id]
   end
@@ -137,7 +154,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
     :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    :admin, :phone,  :roles_ids=>[], :addresses_attributes => [:type, :address_input])      
+    :admin, :phone,  { roles_ids:[] }, :addresses_attributes => [:type, :address_input])      
   end
 
   def label_params

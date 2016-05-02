@@ -9,25 +9,7 @@ $(function(){
       $(this).data("job-role", "clicked");
       var job_board_status = $(this).data("job-role")
       searchJobLabel(role_id, job_board_status)
-      // $.ajax({
-      //   url: "/roles/" + role_id + "/labels",
-      //   method: "get",
-      //   dataType: "json",
-      //   data:{label:{role_id: role_id, job_board: job_board_status }},
-      //   success: function(response){ 
-      //     if (response == undefined){
-      //       JobNotFound();
-      //       $("#job_category").data("job-role", "")
-      //     }else {
-      //       $(".job_detail").hide();
-      //       $("#job_category").data("job-role", "")
-      //       $.map($(response), function(resp){ 
-      //         $(".job_detail[data-job-id="+ resp.job_id + "]").show();
-      //       });
-      //     }
-      //   }
-        
-      // });
+      
     }
 
 

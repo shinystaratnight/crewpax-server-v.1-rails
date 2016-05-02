@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
   
   
   def self.sort_user(sort_order)
+    binding.pry 
     if sort_order == "most_recent"
       reorder(last_sign_in_at: :desc)
     else 
@@ -39,7 +40,9 @@ class User < ActiveRecord::Base
   end
 
 
-
+  def self.sort_filter_user(sort_order)
+    binding.pry 
+  end
 
 
 
