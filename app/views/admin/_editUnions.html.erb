@@ -1,5 +1,3 @@
-
-
 <div class="panel panel-default">
   <div class="panel-heading" role="tab" id="">
     <h3 class="panel-title">
@@ -9,7 +7,7 @@
 
   <div id="editUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editUnion">
 
-   <div class="list-group">
+    <div class="list-group">
       <%@unions.each do |union| %>
         <div class="list-group-item">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=union.name.tr(' ','-')%>">
@@ -27,86 +25,68 @@
     </div>
   </div>
 
-
-    <%@unions.each do |union| %>
-      <div id="edit<%=union.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=union.name.tr(' ','-')%>">
-
-        <div class="field union-info" data-union-id="<%=union.id %>">
-          <h5> Union Name: </h5>
-          <div class="union-name" contenteditable="true"><%=union.name %></div>
-          <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
-        </div>
-
-
-        <div class="field union-info" data-union-id="<%=union.id %>">
-          <h5> Add some roles: </h5>
-            <%@roles.each do |role| %>
-
-              <label>            
-                <div hidden="true"><%=role.id%>
-                </div>
-                  <% if union.roles.include? role %>
-                    
-                    <% if role.eligibilities.find_by(union_id: union.id, user_id: nil) %>
-                      <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="<%= role.eligibilities.find_by(union_id: union.id, user_id: nil).id%>" checked/><%=role.name%>
-                    <% end %>
-
-                  <%else%>
-
-                    <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
-
-                  <%end%>
-              </label>
-
-              <%end%>
-        </div>
-
-
-<!--   Just realised that adding users to unions by creating eligibilities isn't a good idea because they're added for each role. Better to add them from the user page
+  <%@unions.each do |union| %>
+    <div id="edit<%=union.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=union.name.tr(' ','-')%>">
 
       <div class="field union-info" data-union-id="<%=union.id %>">
-          <h5> Add some users: </h5>
-          <%@users.each do |user| %>
-              <label>            
-                <div hidden="true"><%=user.id%></div>
-                  <% if union.users.include? user %>
-                  <input type="checkbox" class="edit-users" id="<%=union.id%>-<%=user.id%>" name="<%=union.id%>-<%=user.id%>" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id="" checked/><%=user.name%>
-                  <%else%>
-                  <input type="checkbox" class="edit-users" id="<%=union.id%>-<%=user.id%>" name="<%=union.id%>-<%=user.id%>" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id=""/><%=user.name%>
-                  <%end%>
-              </label>
+        <h5> Union Name: </h5>
+        <div class="union-name" contenteditable="true"><%=union.name %></div>
+        <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
+      </div>
+
+      <div class="field union-info" data-union-id="<%=union.id %>">
+        <h5> Add some roles: </h5>
+          <%@roles.each do |role| %>
+            <label>            
+              <div hidden="true"><%=role.id%>
+              </div>
+              <% if union.roles.include? role %>
+                  
+                <% if role.eligibilities.find_by(union_id: union.id, user_id: nil) %>
+                  <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="<%= role.eligibilities.find_by(union_id: union.id, user_id: nil).id%>" checked/><%=role.name%>
+                <% end %>
+
+              <%else%>
+
+                <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
+
+              <%end%>
+            </label>
+
           <%end%>
-        </div> -->
-
-
-        <div class="field union-info" data-union-id="<%=union.id %>">
-          <button class="delete-union">Delete</button>
-        </div>
-
       </div>
 
-    <%end%>
-
-      <div id="newUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newUnion">
-
-        <div class="field union-info" data-union-id="">
-          <h5> Union Name: </h5>
-          <div class="union-name" contenteditable="true"></div>
-          <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
-        </div>
-
-        <div class="field union-info" data-union-id="" id="new-union-roles">
-          <h5> Add some roles: </h5>
-            <%@roles.each do |role| %>
-              
-              <label>  
-                <div hidden="true"><%=role.id%>
-                </div>         
-                <input type="checkbox" class="edit-roles" id="new-<%=role.id%>" name="new-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
-              </label>
-
-            <%end%>
-        </div>
+      <div class="field union-info" data-union-id="<%=union.id %>">
+        <button class="delete-union">Delete</button>
       </div>
+
     </div>
+
+  <%end%>
+
+  <div id="newUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newUnion">
+
+    <div class="field union-info" data-union-id="">
+      <h5> Union Name: </h5>
+      <div class="union-name" contenteditable="true"></div>
+      <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
+    </div>
+
+    <div class="field union-info" data-union-id="" id="new-union-roles">
+      <h5> Add some roles: </h5>
+      <%@roles.each do |role| %>              
+        <label>  
+          <div hidden="true"><%=role.id%>
+          </div>         
+          <input type="checkbox" class="edit-roles" id="new-<%=role.id%>" name="new-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
+        </label>
+
+      <%end%>
+    </div>
+
+    <div class="field union-info" data-union-id="<%=union.id %>">
+      <button class="delete-union">Cancel</button>
+    </div>
+  </div>
+</div>
 

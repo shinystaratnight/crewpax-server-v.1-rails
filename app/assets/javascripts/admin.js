@@ -5,7 +5,6 @@ $(function(){
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".union-name").on("blur", function(){
-    //Retrieve the info from union's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a union is already created and decide which url the ajax should send to(create/update) 
     var union_id = $(this).closest(".union-info").data("union-id");
     if (union_id == "") {
@@ -94,7 +93,7 @@ $(function(){
      };
   });
 
-$(".delete-union").on("click", function(){
+ $(".delete-union").on("click", function(){ //doesn't work
 
     var union_id = $(this).closest(".union-info").data("union-id");
       $.ajax({
@@ -108,13 +107,11 @@ $(".delete-union").on("click", function(){
 
   });
   
-
 //*********************************************************************************************************
 // Update or Delete Role Section
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".role-name").on("blur", function(){
-    //Retrieve the info from role's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a role is already created and decide which url the ajax should send to(create/update) 
     var role_id = $(this).closest(".role-info").data("role-id");
     if (role_id == "") {
@@ -203,7 +200,7 @@ $(".delete-union").on("click", function(){
      };
   });
 
-$(".delete-role").on("click", function(){
+  $(".delete-role").on("click", function(){ //doesn't work
 
     var role_id = $(this).closest(".role-info").data("role-id");
       $.ajax({
@@ -217,13 +214,11 @@ $(".delete-role").on("click", function(){
 
   });
 
-
 //*********************************************************************************************************
 // Update or Delete Certificate Section
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".certificate-name").on("blur", function(){
-    //Retrieve the info from certificate's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a certificate is already created and decide which url the ajax should send to(create/update) 
     var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
     if (certificate_id == "") {
@@ -312,7 +307,7 @@ $(".delete-role").on("click", function(){
      };
   });
 
-$(".delete-certificate").on("click", function(){
+  $(".delete-certificate").on("click", function(){ //doesn't work
 
     var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
       $.ajax({
@@ -323,7 +318,6 @@ $(".delete-certificate").on("click", function(){
           // window.location.reload;
         }
       });
-
   });
 
 });
