@@ -11,13 +11,9 @@ $(function(){
     if (union_id == "") {
       var url = "admin/unions";
       var method = "post";
-            console.log('we did a post');
-
     } else {
       var url = "admin/unions/" + union_id;
       var method = "put";
-            console.log('we did a put');
-
     }
     var name = $(this).closest(".union-name").text().trim();
 
@@ -32,10 +28,10 @@ $(function(){
         dataType: "json",
         data:{union: {name: name}},
         success: function(response){
-          // console.log(response)
           if (response.id) {
             $(".union-info").data("union-id", response.id);
-            $(".union-name").addClass("valid");
+            $(this).addClass("valid"); //doesn't work
+            $("#new-union-info").hide(); //doesn't work
           } else {              
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
