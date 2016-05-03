@@ -44,7 +44,7 @@ $(function(){
   });
 
 //add roles to union by creating eligibilities
-  $(".edit-roles").on("click",function(){
+  $(".edit-unions").on("click",function(){
 
       var union_id = $(this).closest(".union-info").data("union-id");
       var role_id = $(this).prev().text();

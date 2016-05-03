@@ -71,7 +71,29 @@
 
       <div id="newRole" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newRole">
 
-        Here's where you make a new one! yay!
+                <div class="field role-info" data-role-id="">
+          <h5> Role Name: </h5>
+          <div class="role-name" contenteditable="true"></div>
+          <span class="error" hidden="true" class="role-name-error"> *Name is not valid</span>
+        </div>
+
+
+        <div class="field role-info" data-role-id="">
+          <h5> Add to unions: </h5>
+           <%@unions.each do |union| %>
+
+              <label>            
+                <div hidden="true"><%=union.id%>
+                </div>
+
+
+                    <input type="checkbox" class="edit-unions" id="new-role-<%=union.id%>" name="new-role-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id=""/><%=union.name%>
+
+         
+              </label>
+
+              <%end%>
+        </div>
       </div>
   </div>
 
