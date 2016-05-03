@@ -36,7 +36,7 @@
     width: 400px;
   }
 
-//================Contacts========================================================
+//================User show Contacts========================================================
   .col-md-5 {
     margin-left: -75px;
   }
@@ -50,15 +50,38 @@
     width: 400px;
   }
 
+//==================User index =============================================================
+  #user_role{
+    width: 25%;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  #hiring_board_title, #role_filter{
+    margin-left: 120px;
+  }
+
+//*------------------------User Index User Cards--------------------------------------------
+  .user-card{
+    display: inline-block;   
+  }
+
+
+//============================================================================================
+
 }
 
-/* ----------- iPhone 5 and 5S ----------- */
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
 @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
+ 
+//=================================User Show Page=======================================================
+
     #contact_user {
       width: 290px;
     }
@@ -76,15 +99,40 @@
       width: 290px;
     }
 
+//=======================================User index selection=============================================
+    #sort_by_label{
+      display:none;
+    }
+
+    #user_role{
+      width: 70%;
+      margin-bottom: 10px;
+      display: inline-block;
+
+    }
+
+    .dropdown-menu > li > a{
+      width: 20%;
+      padding: 3px 20px;
+      display: inline-block;
+      font-weight: normal;
+      line-height: 1.42857143;
+      color: #333333;
+      white-space: normal;
+      margin-right: 300px;
+    }
+
 }
 
-/* ----------- iPhone 6 ----------- */
+/* ----------- iPhone 6 ---------------------------------------------------------------------------- */
 
 /* Portrait and Landscape */
 @media only screen 
   and (min-device-width: 375px) 
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
+//=================================User Show Page=======================================================
+  
     #contact_user {
       width: 340px;
     }
@@ -102,26 +150,16 @@
       width: 340px;
     }
 
+    #sort_by_label{
+      visibility: hidden;
+    }
+
+
+
+
+
+//======================================================================================================
+
 }
 
-// =====================User Index =======================================================
-//*------------------------User selection--------------------------------------------
-#user_role{
-  width: 25%;
-  display: inline-block;
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
 
-
-//*------------------------User Cards--------------------------------------------
-//=================Desktop==============================================================
-
-
-@media (min-width: 992px) { 
-
-  .user-card{
-    display: inline-block;
-   
-  }
-}
