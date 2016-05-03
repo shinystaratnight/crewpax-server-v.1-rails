@@ -32,15 +32,15 @@ $(function(){
         dataType: "json",
         data:{union: {name: name}},
         success: function(response){
-          console.log(response)
-          // if (response.id) {
-          //   $(".union-info").data("union-id", response.id);
-          //   $(".union-name").addClass("valid");
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".union-name-error").text("*"+ errors).show();
-          //   $(".union-name").addClass("invalid");   
-          // }
+          // console.log(response)
+          if (response.id) {
+            $(".union-info").data("union-id", response.id);
+            $(".union-name").addClass("valid");
+          } else {              
+            var errors = response.toString();
+            $(".union-name-error").text("*"+ errors).show();
+            $(".union-name").addClass("invalid");   
+          }
         }
       });
     }
@@ -66,10 +66,10 @@ $(function(){
         success: function(response){
           console.log(response.id);
           if (response.id) {
-            $(this).data("eligibility-id", response.id);
+            $(".edit-roles").data("eligibility-id", response.id);
           } else {              
             var errors = response.toString();
-            console.log(errors);
+            $(".union-name-error").text("*"+ errors).show();
           }
         }
       });

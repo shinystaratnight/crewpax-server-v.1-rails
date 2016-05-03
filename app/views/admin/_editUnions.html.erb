@@ -98,8 +98,10 @@
         <div class="field union-info" data-union-id="">
           <h5> Add some roles: </h5>
             <%@roles.each do |role| %>
-
-              <label>            
+              
+              <label>  
+                <div hidden="true"><%=role.id%>
+                </div>         
                 <input type="checkbox" class="edit-roles" id="new-<%=role.id%>" name="new-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
               </label>
 
