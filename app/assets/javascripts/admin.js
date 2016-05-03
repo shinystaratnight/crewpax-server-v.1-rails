@@ -77,7 +77,7 @@ $(function(){
      } else {
 
       $.ajax({
-        //existing eligibility to be deleted
+        //existing eligibility to be deleted (this doesn't work)
 
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
@@ -103,16 +103,9 @@ $(".delete-union").on("click", function(){
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
-        success: function(response){
-          console.log(response)
-          // if (response.id) {
-          //   $(".union-info").data("union-id", response.id);
-          //   $(".union-name").addClass("valid");
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".union-name-error").text("*"+ errors).show();
-          //   $(".union-name").addClass("invalid");   
-          // }
+        success: function(response){    
+          console.log('success');
+          // window.location.reload;
         }
       });
 

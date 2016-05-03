@@ -32,9 +32,18 @@ class Admin::UnionsController < ApplicationController
 
   def destroy
     @union = Union.find(params[:id])
-    if @union.destroy
-      redirect_to '/admin/index', notice: 'Union was deleted'
-    end
+    # binding.pry
+    # respond_to do |format|
+      if @union.destroy
+      redirect_to admin_index_path, notice: 'Union was deleted'
+
+      #   format.html { redirect_to admin_index_path, notice: 'Union was deleted' }
+      #   format.json { render json: @union }
+      # else
+      #   # format.html { redirect_to '/admin', notice: 'Union was deleted' }
+      #   format.json { render json: @union.errors.full_messages}
+      end
+    # end
   end
 
 

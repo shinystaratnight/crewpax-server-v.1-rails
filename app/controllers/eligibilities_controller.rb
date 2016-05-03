@@ -12,22 +12,26 @@ class EligibilitiesController < ActionController::Base
       end  
   end
 
+
+  def update 
+    @eligibility = Eligibility.find (params[:id])
+  end
+
   def destroy
-    @eligibility= Eligibility.find(eligibility_params[:id])
-    # respond_to do |format|
+    @eligibility= Eligibility.find(params[:id])
+    respond_to do |format|
       if @eligibility.destroy
-    #     format.html{render @user}
-    #     format.json{render json: @eligibility, status: :no_content}
-    #   else
-    #     format.json{render json: @eligibility.errors.full_messages}
+        format.html{render @user}
+        format.json{render json: @eligibility, status: :no_content}
+      else
+        format.json{render json: @eligibility.errors.full_messages}
       end
-    # end
+    end
   end
 
   private
-
   def eligibility_params
-    params.require(:eligibility).permit(:id, :member, :permit_days, :user_id, :union_id, :role_id)
+    params.require(:eligibility).permit(:id,:member,:permit_days, :user_id, :union_id, :role_id)
   end
 
 end
