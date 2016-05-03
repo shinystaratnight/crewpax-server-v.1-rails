@@ -281,7 +281,7 @@ $(".delete-role").on("click", function(){
         success: function(response){
           console.log(response.id);
           if (response.id) {
-            $(".edit-roles").data("certifiable-id", response.id);
+            $(".edit-users").data("certifiable-id", response.id);
           } else {              
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
