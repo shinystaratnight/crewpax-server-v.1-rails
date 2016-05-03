@@ -250,7 +250,7 @@ $(".delete-role").on("click", function(){
         success: function(response){
           if (response.id) {
             $(".certificate-info").data("certificate-id", response.id);
-            $("#new-certificate-roles").show();
+            $("#new-certificate-users").show();
           } else {              
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
