@@ -4,4 +4,12 @@ class Admin::RolesController < ApplicationController
     @roles = Role.all
   end
 
-end
+  def destroy
+    @role = Role.find(params[:id])
+
+     @role.destroy
+
+  end
+
+
+end 

@@ -108,4 +108,114 @@ $(".delete-union").on("click", function(){
 
   });
   
+
+//*********************************************************************************************************
+// Update or Delete Role Section
+//********************************************************************************************************
+//When a mouse leaves the entry div, it will trigger ajax
+  $(".role-name").on("blur", function(){
+    //Retrieve the info from role's entries and turn data into a nicely structured object (nesting included!)
+    //Check to see if a role is already created and decide which url the ajax should send to(create/update) 
+    var role_id = $(this).closest(".role-info").data("role-id");
+    if (role_id == "") {
+      var url = "admin/roles";
+      var method = "post";
+    } else {
+      var url = "admin/roles/" + role_id;
+      var method = "put";
+    }
+    var name = $(this).closest(".role-name").text().trim();
+
+    if (name == "") {
+      $(this).addClass("invalid").next().show();
+      return false;
+    } else {
+      $(".role-name-error").hide();
+      $(this).addClass("valid");            
+
+      $.ajax({
+        url: url,
+        method:method,
+        dataType: "json",
+        data:{role: {name: name}},
+        success: function(response){
+          if (response.id) {
+            $(".role-info").data("role-id", response.id);
+            $("#new-role-roles").show();
+          } else {              
+            var errors = response.toString();
+            $(".role-name-error").text("*"+ errors).show();
+            $(".role-name").addClass("invalid");   
+          }
+        }
+      });
+    }
+  });
+
+//add roles to unions by creating eligibilities
+  $(".edit-roles").on("click",function(){
+
+      var role_id = $(this).closest(".role-info").data("role-id");
+      var union_id = $(this).prev().text();
+      var eligibility_id = $(this).data("eligibility-id");
+
+      if ($(this).is(":checked")) {
+        //new eligibility
+
+      $.ajax({
+        url: "/admin/eligibilities",
+        method:"post",
+        dataType: "json",
+        data:{eligibility: {   
+                role_id: role_id, 
+                union_id: union_id}},
+        success: function(response){
+          console.log(response.id);
+          if (response.id) {
+            $(".edit-roles").data("eligibility-id", response.id);
+          } else {              
+            var errors = response.toString();
+            $(".role-name-error").text("*"+ errors).show();
+          }
+        }
+      });
+
+     } else {
+
+      $.ajax({
+        //existing eligibility to be deleted (this doesn't work)
+
+        url: "/admin/eligibilities/" + eligibility_id,
+        method:"delete",
+        dataType: "json",
+        data:{eligibility_id},
+        success: function(response){
+          console.log(response);
+          // if (response.id) {
+          //   $(".role-info").data("role-id", response.id);
+          // } else {              
+          //   var errors = response.toString();
+          //   $(".role-name-error").text("*"+ errors).show();
+          // }
+        }
+      });
+
+     };
+  });
+
+$(".delete-role").on("click", function(){
+
+    var role_id = $(this).closest(".role-info").data("role-id");
+      $.ajax({
+        url: "/admin/roles/" + role_id,
+        method: "delete",
+        success: function(response){    
+          console.log('success');
+          // window.location.reload;
+        }
+      });
+
+  });
+
+
 });
