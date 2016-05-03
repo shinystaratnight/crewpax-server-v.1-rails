@@ -7,7 +7,7 @@
     </h3>
   </div>
 
-  <div id="editCertificate" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editCertificate">
+  <div id="editCertificate" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editCertificate">
 
    <div class="list-group">
       <%@certificates.each do |certificate| %>
@@ -29,7 +29,7 @@
 
 
     <%@certificates.each do |certificate| %>
-      <div id="edit<%=certificate.name.tr(' ','-')%>" class="panel collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
+      <div id="edit<%=certificate.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
 
         <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
           <h5> Certificate Name: </h5>
@@ -53,15 +53,32 @@
 
 
         <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
-          <button class="deleteCertificate"> Delete Button</button>
+          <button class="deleteCertificate">Delete</button>
         </div>
 
       </div>
 
     <%end%>
 
-      <div id="newCertificate" class="panel-collapse collapse" role="tabpanel" aria-labelledby="newCertificate">
+      <div id="newCertificate" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newCertificate">
 
-        Here's where you make a new one! yay!
+        <div class="field certificate-info" data-certificate-id="">
+          <h5> Certificate Name: </h5>
+          <div class="certificate-name" contenteditable="true"></div>
+          <span class="error" hidden="true" class="certificate-name-error"> *Name is not valid</span>
+        </div>
+
+        <div class="field certificate-info" data-certificate-id="">
+          <h5> Add some users: </h5>
+          <%@users.each do |user| %>
+              <label>            
+                <div hidden="true"><%=user.id%></div>
+    
+                  <input type="checkbox" class="users" id="" name="" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id=""/><%=user.name%>
+             
+              </label>
+          <%end%>
+        </div>
+
       </div>
   </div>

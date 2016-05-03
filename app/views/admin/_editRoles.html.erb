@@ -7,19 +7,19 @@
     </h3>
   </div>
 
-  <div id="editRole" class="panel-collapse collapse" role="tabpanel" aria-labelledby="editRole">
+  <div id="editRole" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editRole">
 
    <div class="list-group">
       <%@roles.each do |role| %>
         <div class="list-group-item">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=role.id%>" aria-expanded="false" aria-controls="edit<%=role.id%>">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit-role-<%=role.id%>" aria-expanded="false" aria-controls="edit-role-<%=role.id%>">
             <%= role.name %>
           </a>
         </div>
       <% end %>
 
       <div class="list-group-item">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newrole" aria-expanded="false" aria-controls="newrole">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newRole" aria-expanded="false" aria-controls="newRole">
           Create New
         </a>
       </div>
@@ -29,7 +29,7 @@
 
 
     <%@roles.each do |role| %>
-      <div id="edit<%=role.id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=role.id%>">
+      <div id="edit-role-<%=role.id%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit-role-<%=role.id%>">
 
         <div class="field role-info" data-role-id="<%=role.id %>">
           <h5> Role Name: </h5>
@@ -40,18 +40,38 @@
 
         <div class="field role-info" data-role-id="<%=role.id %>">
           <h5> Add to unions: </h5>
+           <%@unions.each do |union| %>
+
+              <label>            
+                <div hidden="true"><%=union.id%>
+                </div>
+                  <% if union.roles.include? role %>
+                    
+                    <% if union.eligibilities.find_by(role_id: role.id, user_id: nil) %>
+                      <input type="checkbox" class="edit-unions" id="<%=role.id%>-<%=union.id%>" name="<%=role.id%>-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id="<%= union.eligibilities.find_by(role_id: role.id, user_id: nil).id%>" checked/><%=union.name%>
+                    <% end %>
+
+                  <%else%>
+
+                    <input type="checkbox" class="edit-unions" id="<%=role.id%>-<%=union.id%>" name="<%=role.id%>-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id=""/><%=union.name%>
+
+                  <%end%>
+              </label>
+
+              <%end%>
         </div>
 
         <div class="field role-info" data-role-id="<%=role.id %>">
-          <h5> Delete Button</h5>
+          <button class="delete-role">Delete</button>
         </div>
 
 
       </div>
     <%end%>
 
-      <div id="newrole" class="panel-collapse collapse" role="tabpanel" aria-labelledby="newrole">
+      <div id="newRole" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newRole">
 
         Here's where you make a new one! yay!
       </div>
   </div>
+

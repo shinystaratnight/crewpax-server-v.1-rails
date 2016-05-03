@@ -32,8 +32,7 @@ $(function(){
         success: function(response){
           if (response.id) {
             $(".union-info").data("union-id", response.id);
-
-            $("#new-union-roles").show(); //doesn't work
+            $("#new-union-roles").show();
           } else {              
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
