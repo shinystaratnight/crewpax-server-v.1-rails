@@ -22,6 +22,8 @@ $(function(){
       return false;
     } else {
       $(".union-name-error").hide();
+      $(this).addClass("valid");            
+
       $.ajax({
         url: url,
         method:method,
@@ -30,8 +32,8 @@ $(function(){
         success: function(response){
           if (response.id) {
             $(".union-info").data("union-id", response.id);
-            $(this).addClass("valid"); //doesn't work
-            $("#new-union-info").hide(); //doesn't work
+
+            $("#new-union-roles").show(); //doesn't work
           } else {              
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
