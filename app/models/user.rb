@@ -7,13 +7,13 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImageUploader
   #comment out devise :validatable
   has_many :appointments, dependent: :destroy
-  has_many :labels
+  has_many :labels, dependent: :destroy
   has_many :jobs
   has_many :roles, through: :labels
-  has_many :eligibilities
+  has_many :eligibilities, dependent: :destroy
   has_many :unions, through: :eligibilities
   has_many :addresses, dependent: :destroy
-  has_many :certifiables
+  has_many :certifiables, dependent: :destroy
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
 

@@ -320,4 +320,61 @@ $(function(){
       });
   });
 
+
+//*********************************************************************************************************
+// Update or Delete User Section
+//********************************************************************************************************
+//When a mouse leaves the entry div, it will trigger ajax
+  $(".user-name").on("blur", function(){
+    //Check to see if a user is already created and decide which url the ajax should send to(create/update) 
+    var user_id = $(this).closest(".user-info").data("user-id");
+    if (user_id == "") {
+      var url = "admin/users";
+      var method = "post";
+    } else {
+      var url = "admin/users/" + user_id;
+      var method = "put";
+    }
+    var name = $(this).closest(".user-name").text().trim();
+
+    if (name == "") {
+      $(this).addClass("invalid").next().show();
+      return false;
+    } else {
+      $(".user-name-error").hide();
+      $(this).addClass("valid");            
+
+      $.ajax({
+        url: url,
+        method:method,
+        dataType: "json",
+        data:{user: {name: name}},
+        success: function(response){
+          if (response.id) {
+            $(".user-info").data("user-id", response.id);
+            // $("#new-user-roles").show();
+          } else {              
+            var errors = response.toString();
+            $(".user-name-error").text("*"+ errors).show();
+            $(".user-name").addClass("invalid");   
+          }
+        }
+      });
+    }
+  });
+
+ $(".delete-user").on("click", function(){ //doesn't work
+
+    var user_id = $(this).closest(".user-info").data("user-id");
+      $.ajax({
+        url: "/admin/users/" + user_id,
+        method: "delete",
+        success: function(response){    
+          console.log('success');
+          // window.location.reload;
+        }
+      });
+
+  });
+
 });
