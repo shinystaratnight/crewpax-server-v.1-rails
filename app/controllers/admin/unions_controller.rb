@@ -18,7 +18,7 @@ class Admin::UnionsController < ApplicationController
   end
 
   def create
-    @union = Union.new(params)
+    @union = Union.new(union_params)
       respond_to do |format|
         if @union.save
           format.html{render @user}
