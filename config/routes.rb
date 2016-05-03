@@ -4,7 +4,7 @@ Bcpax::Application.routes.draw do
   # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
   namespace :admin do
-    resources :unions, :roles, :certificates, :users, :eligibilities
+    resources :unions, :roles, :certificates, :users, :eligibilities, :certifiables
   end
 
   resources :admin, only:[:index]

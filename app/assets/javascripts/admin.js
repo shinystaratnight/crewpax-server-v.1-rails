@@ -218,4 +218,112 @@ $(".delete-role").on("click", function(){
   });
 
 
+//*********************************************************************************************************
+// Update or Delete Certificate Section
+//********************************************************************************************************
+//When a mouse leaves the entry div, it will trigger ajax
+  $(".certificate-name").on("blur", function(){
+    //Retrieve the info from certificate's entries and turn data into a nicely structured object (nesting included!)
+    //Check to see if a certificate is already created and decide which url the ajax should send to(create/update) 
+    var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
+    if (certificate_id == "") {
+      var url = "admin/certificates";
+      var method = "post";
+    } else {
+      var url = "admin/certificates/" + certificate_id;
+      var method = "put";
+    }
+    var name = $(this).closest(".certificate-name").text().trim();
+
+    if (name == "") {
+      $(this).addClass("invalid").next().show();
+      return false;
+    } else {
+      $(".certificate-name-error").hide();
+      $(this).addClass("valid");            
+
+      $.ajax({
+        url: url,
+        method:method,
+        dataType: "json",
+        data:{certificate: {name: name}},
+        success: function(response){
+          if (response.id) {
+            $(".certificate-info").data("certificate-id", response.id);
+            $("#new-certificate-roles").show();
+          } else {              
+            var errors = response.toString();
+            $(".certificate-name-error").text("*"+ errors).show();
+            $(".certificate-name").addClass("invalid");   
+          }
+        }
+      });
+    }
+  });
+
+//add users to certificates by creating certifiables
+  $(".edit-users").on("click",function(){
+
+      var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
+      var user_id = $(this).prev().text();
+      var certifiable_id = $(this).data("certifiable-id");
+
+      if ($(this).is(":checked")) {
+        //new certifiable
+
+      $.ajax({
+        url: "/admin/certifiables",
+        method:"post",
+        dataType: "json",
+        data:{certifiable: {   
+                certificate_id: certificate_id, 
+                user_id: user_id}},
+        success: function(response){
+          console.log(response.id);
+          if (response.id) {
+            $(".edit-roles").data("certifiable-id", response.id);
+          } else {              
+            var errors = response.toString();
+            $(".certificate-name-error").text("*"+ errors).show();
+          }
+        }
+      });
+
+     } else {
+
+      $.ajax({
+        //existing certifiable to be deleted (this doesn't work)
+
+        url: "/admin/certifiables/" + certifiable_id,
+        method:"delete",
+        dataType: "json",
+        data:{certifiable_id},
+        success: function(response){
+          console.log(response);
+          // if (response.id) {
+          //   $(".certificate-info").data("certificate-id", response.id);
+          // } else {              
+          //   var errors = response.toString();
+          //   $(".certificate-name-error").text("*"+ errors).show();
+          // }
+        }
+      });
+
+     };
+  });
+
+$(".delete-certificate").on("click", function(){
+
+    var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
+      $.ajax({
+        url: "/admin/certificates/" + certificate_id,
+        method: "delete",
+        success: function(response){    
+          console.log('success');
+          // window.location.reload;
+        }
+      });
+
+  });
+
 });
