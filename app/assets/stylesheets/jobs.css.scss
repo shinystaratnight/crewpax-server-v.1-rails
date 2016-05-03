@@ -1,7 +1,7 @@
 //==============================Job Index Page============================================================
 
 //---------------------***** For Desktop view *****-------------------------------------------------------
-
+@media (min-width: 992px) { 
   .disclaimer {
     color: $gray-light;
   }
@@ -33,8 +33,18 @@
     margin-right:10px;
     margin-bottom:-13px;
   }
+  
+  #job_posts_table_filter input {
+    border: 1px solid #ccc;
+    border-radius:4px;
+
+  }
 
 
+
+
+
+}
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
 
@@ -48,8 +58,52 @@
       margin-top: 10px;
     }
 
+    #job_category{
+      width: 300px;
+      display: inline;
+      margin-right:10px;
+      margin-bottom:10px;
+    }
 
+    #job_posts_table_info{
+      margin-left: 55px;
+      text-align:left;
+    }
+   
+    #job_posts_table_length label{
+      margin-left: 60px;
+    }
 
+    #job_posts_table_length {
+      text-align:left;
+    }
+    
+    #job_posts_table_paginate {
+      text-align:left;
+      margin-left: 40px;
+    }
+
+    select[name= job_posts_table_length]{
+      border-color:gray;
+    }
+
+    #job_posts_table_filter{
+      text-align:left;
+    }
+    
+
+    #job_posts_table_filter input {
+      width: 290px;
+      height: 34px;
+      padding: 6px 12px;
+      line-height: 1.428571429;
+      color: #555;
+      vertical-align: middle;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+      margin-left: -2px;
+    }
 
   }
 
@@ -61,18 +115,60 @@
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
 
-  #post_job_button{
-    margin-left: 60%;
-    margin-top: 10px;
+    #post_job_button{
+      margin-left: 60%;
+      margin-top: 10px;
+    }
+
+    #job_posts_table_info{
+      margin-left: 90px;
+      text-align:left;
+    }
+
+    #job_posts_table_paginate {
+      text-align:left;
+      margin-left: 75px;
+    }
+
+    #job_posts_table_length {
+      text-align:left;
+      margin-left: 35px;
+    }
+
+    #job_posts_table_filter input {
+      width: 300px;
+    }
+
+    .job_location_search{
+      width: 300px;
+    }
+    
+
   }
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+  @media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+    #job_category {
+      width: 320px;      
+    }
+  
+    .job_location_search{
+      width: 320px;
+    }
 
-
+    #job_posts_table_filter input {
+      width: 320px;
+    }
+    
 
   }
 
 
 //==============================Job New Page============================================================
 //---------------------***** For Desktop view *****-------------------------------------------------------
+@media (min-width: 992px) { 
+  
 
   #cancel_job_post{
     color:white;
@@ -109,12 +205,82 @@
 
 
 
+}
+
+//-------***** iphone 5 & 5s *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+@media only screen 
+    and (min-device-width: 320px) 
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+  .job_form{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+
+  }
+
+
+  #new_job{
+    margin-left: 15px;
+  }
+
+  .form-control{
+    width:90%;
+  }
+
+  #post_submit{
+    margin-left: 40px;
+  }
+
+}
+
+//-------***** iPhone 6 *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+ @media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #post_submit{
+      margin-left: 60px;
+    }
+
+
+  }
+
+
+
+
+
+
+
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+    #post_submit{
+      margin-left: 80px;
+    }
+
+  }
+
+
+
 
 
 //==============================Job Edit Page============================================================
 //---------------------***** For Desktop view *****-------------------------------------------------------
-
+@media (min-width: 992px) { 
   #edit_post_submit{
     margin-left:150px;
   }
 
+
+
+
+
+
+}

@@ -16,24 +16,7 @@ $(function(){
     
   });
 
-  //    
-        //     $.map($(response), function(resp){   
-     
-        //       if(resp.job_id != null ){
-        //         var job_id = resp.job_id;
-        //         $(".job_detail[data-job-id="+ job_id + "]").show()
-        //       }
-        //     });
-        //   }else{
-        //     if(response[0].job_id == null){     
-        //       JobNotFound();
-        //     }else{
-        //       $(".job_detail").hide();
-        //       $(".job_detail[data-job-id="+ response[0].job_id + "]").show();
-        //     }
-        //   }
-         
-        // }
+
 //======================================================================================================
 //====================================Location Search Form Submit Through Ajax=======================================================
   $("#search_location_form").on("submit", function(event){
@@ -45,29 +28,8 @@ $(function(){
 
     }else if (search_content == "" && role_id != ""){
       var job_board_status = "clicked"     
-       searchJobLabel(role_id, job_board_status)
-    }else{
-      // $.ajax({
-      //   url: "/roles/" + role_id + "/labels",
-      //   method: "get",
-      //   dataType: "json",
-      //   data:{label:{role_id: role_id, job_board: job_board_status }},
-      //   success: function(response){ 
-      //     if (response == undefined){
-      //       JobNotFound();
-      //       $("#job_category").data("job-role", "")
-      //     }else {
-      //       $(".job_detail").hide();
-      //       $("#job_category").data("job-role", "")
-      //       $.map($(response), function(resp){ 
-      //         $(".job_detail[data-job-id="+ resp.job_id + "]").show();
-      //       });
-      //     }
-      //   }
-        
-      // });
-    
-      
+      searchJobLabel(role_id, job_board_status)
+    }else{      
       $.ajax({
         url:"/jobs",
         method: "get",
@@ -83,11 +45,8 @@ $(function(){
             });
           }       
         }
-      });
-      
-      
+      });      
     } 
-
   });
 
 
@@ -97,7 +56,8 @@ $(function(){
 
 
   $("#job_posts_table").DataTable({
-      responsive: true
+      responsive: true,
+      "dom": '<"top"f>rt<"bottom"lip><"clear">'
     // initComplete: function () {
 
     //   this.api().columns().every(function(){
