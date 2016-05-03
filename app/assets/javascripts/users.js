@@ -54,47 +54,13 @@ $(function(){
     var last_sign_in_at = "most_recent"
     var role_id = $(this).data("selected-role-id")
     if(role_id == ""){
-      $.ajax({
-        url:"/users",
-        method: "get",
-        dataType: "json",
-        data:{last_sign_in_at: last_sign_in_at},
-        success: function(response){
-          if(response == undefined){
-            UserNotFound();
-            $('.user-card').hide();
-          }else{
-            $('.user-card').hide();
-            $.map($(response),function(resp){ 
-              $('.user-card[data-user-id='+ resp.id+']').show().appendTo(".filter_result row");
-            });
-          }
-        } 
-      })
-
+      var user_data = {last_sign_in_at: last_sign_in_at}
+      sortUser(user_data);
     }else{
-      $.ajax({
-        url:"/users",
-        method: "get",
-        dataType: "json",
-        data:{role_id: role_id, last_sign_in_at: last_sign_in_at},
-        success: function(response){
-         
-          if(response == undefined || $.isEmptyObject(response)){
-            UserNotFound();
-          
-          }else{
-            $('.user-card').hide();
-            $.map($(response),function(resp){ 
-              $('.user-card[data-user-id='+ resp.id+']').show().insertBefore(".filter_result");
-            });
-          }
-        } 
-      })
+      var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
+      sortUser(user_data);
     }
     
-
-
   });
 
 
@@ -110,7 +76,31 @@ $(function(){
   }
 
 
-
+  function sortUser(data){
+    $.ajax({
+        url:"/users",
+        method: "get",
+        dataType: "json",
+        data: data,
+        success: function(response){         
+          if(response == undefined || $.isEmptyObject(response)){
+            UserNotFound();          
+          }else{
+            $('.user-card').hide();
+            var length = response.length;
+            var user_card;
+            for (i = 0; i < length; i++){              
+              // First reset data -index value
+              $('.user-card[data-user-id='+ response[i].id+']').data("order", "");
+              $('.user-card[data-user-id='+ response[i].id+']').data("order", i);
+              console.log("user-card data index",$('.user-card[data-user-id='+ response[i].id+']').data("order" ));              
+              $('.user-card[data-user-id='+ response[i].id+']').show().insertAfter(user_card);
+              var user_card = $('.user-card[data-user-id='+ response[i].id+']');
+            }
+          }
+        } 
+    });
+  }
 
 
 

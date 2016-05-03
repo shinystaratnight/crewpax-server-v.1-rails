@@ -10,8 +10,10 @@ class UsersController < ApplicationController
     respond_to do |format|
    
       if @role.present?
-        @filter_users = Role.find(@role.id).users.find_all{|u|u.last_sign_in_at !=nil}.uniq{|u|u.user_id}
+        
+        @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
         #sort filter users based on their most recent log in 
+        
         @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
         format.html {render @most_recent_login_users}
         format.json {render json: @most_recent_login_users}        
