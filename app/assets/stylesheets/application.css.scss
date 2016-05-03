@@ -12,8 +12,9 @@
 @import "bootstrap-datepicker3.min";
 @import "user";
 @import "hiring_board";
-@import "data-tables"
-
+@import "data-tables";
+@import "dataTables.bootstrap.min";
+@import "jquery.dataTables";
 //= require_self
 //= require_tree .
 //= require dataTables/jquery.dataTables
