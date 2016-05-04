@@ -21,7 +21,6 @@
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
   <div class="container">
-    <div class= "filter_result row"></div>
       <div class="row">
       <% for user in @users %> 
           <div class="user-card col-md-4" data-user-id = "<%=user.id%>" data-order="">
@@ -68,12 +67,14 @@
                         </div>
                         
 
-                        <div> Last Log In: <%= user.last_sign_in_at.present? ? (user.last_sign_in_at).strftime("%F") : "Never Log in" %></div>
+                        <div> Last Log In: <%= user.last_sign_in_at.present? ? (user.last_sign_in_at).strftime("%F") : "Never Log in" %>
+                          <i class="fa fa-user" aria-hidden="true"><%=link_to "View Profile", user_path(user.id)%></i>
+                        </div>
                        
 
-                        <div>
+                        <!-- <div>
                           <%=link_to "View Profile", user_path(user.id)%>
-                        </div>
+                        </div> -->
                       </div>
                    
               </div>
