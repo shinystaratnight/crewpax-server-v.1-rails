@@ -17,12 +17,6 @@
         </div>
       <% end %>
 
-      <div class="list-group-item">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newUser" aria-expanded="false" aria-controls="newUser">
-          Create New
-        </a>
-      </div>
-
     </div>
   </div>
 
@@ -223,8 +217,6 @@
         <%end%>
     </div>
 
-
-
 </div>
 
       <div class="field user-info" data-user-id="<%=user.id %>">
@@ -239,17 +231,4 @@
 
   <%end%>
 
-  <div id="newUser" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newUser">
-
-    <div class="field user-info" data-user-id="">
-      <h5> User Name: </h5>
-      <div class="user-name" contenteditable="true"></div>
-        <span class="error" hidden="true" class="user-name-error"> *Name is not valid</span>
-    </div>
-
-    <div class="field user-info" data-user-id="">
-      <button class="delete-user">Cancel</button>
-    </div>
-
-  </div>
 </div>
