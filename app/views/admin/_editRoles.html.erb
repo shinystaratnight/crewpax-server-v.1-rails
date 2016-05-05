@@ -43,7 +43,17 @@
             <% if union.roles.include? role %>
                   
               <% if union.eligibilities.find_by(role_id: role.id, user_id: nil) %>
-                <input type="checkbox" class="edit-unions" id="<%=role.id%>-<%=union.id%>" name="<%=role.id%>-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id="<%= union.eligibilities.find_by(role_id: role.id, user_id: nil).id%>" checked/><%=union.name%>
+                <input 
+                  type="checkbox" 
+                  class="edit-unions" 
+                  id="<%=role.id%>-<%=union.id%>" 
+                  name="<%=role.id%>-<%=union.id%>" 
+                  value="<%=union.name%>" 
+                  data-union-id="" 
+                  data-label-id="" 
+                  data-eligibility-id="<%= union.eligibilities.find_by(role_id: role.id, user_id: nil).id%>" 
+                  checked/>
+                  <%=union.name%>
               <% end %>
 
             <%else%>

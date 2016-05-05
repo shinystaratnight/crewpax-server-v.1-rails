@@ -43,13 +43,14 @@ $(function(){
   });
 
 //add roles to union by creating eligibilities
-  $(".edit-unions").on("click",function(){
+  $(".edit-roles").on("click",function(){
 
-      var union_id = $(this).closest(".union-info").data("union-id");
-      var role_id = $(this).prev().text();
-      var eligibility_id = $(this).data("eligibility-id");
+      var checkbox = $(this)
+      var union_id = checkbox.closest(".union-info").data("union-id");
+      var role_id = checkbox.prev().text();
+      var eligibility_id = checkbox.data("eligibility-id");
 
-      if ($(this).is(":checked")) {
+      if (checkbox.is(":checked")) {
         //new eligibility
 
       $.ajax({
@@ -62,7 +63,7 @@ $(function(){
         success: function(response){
           console.log(response.id);
           if (response.id) {
-            $(".edit-roles").data("eligibility-id", response.id);
+            $(checkbox).data("eligibility-id", response.id);
           } else {              
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
@@ -73,14 +74,14 @@ $(function(){
      } else {
 
       $.ajax({
-        //existing eligibility to be deleted (this doesn't work)
+        //existing eligibility to be deleted 
 
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
-          console.log(response);
+          console.log("successfully deleted eligibility #"+eligibility_id);
           // if (response.id) {
           //   $(".union-info").data("union-id", response.id);
           // } else {              
@@ -150,13 +151,14 @@ $(function(){
   });
 
 //add roles to unions by creating eligibilities
-  $(".edit-roles").on("click",function(){
+  $(".edit-unions").on("click",function(){
 
-      var role_id = $(this).closest(".role-info").data("role-id");
-      var union_id = $(this).prev().text();
-      var eligibility_id = $(this).data("eligibility-id");
+      var checkbox = $(this)
+      var role_id = checkbox.closest(".role-info").data("role-id");
+      var union_id = checkbox.prev().text();
+      var eligibility_id = checkbox.data("eligibility-id");
 
-      if ($(this).is(":checked")) {
+      if (checkbox.is(":checked")) {
         //new eligibility
 
       $.ajax({
@@ -169,7 +171,7 @@ $(function(){
         success: function(response){
           console.log(response.id);
           if (response.id) {
-            $(".edit-roles").data("eligibility-id", response.id);
+            checkbox.data("eligibility-id", response.id);
           } else {              
             var errors = response.toString();
             $(".role-name-error").text("*"+ errors).show();
@@ -178,22 +180,15 @@ $(function(){
       });
 
      } else {
-
+        //existing eligibility to be deleted 
       $.ajax({
-        //existing eligibility to be deleted (this doesn't work)
-
+      
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
-          console.log(response);
-          // if (response.id) {
-          //   $(".role-info").data("role-id", response.id);
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".role-name-error").text("*"+ errors).show();
-          // }
+          console.log("successfully deleted eligibility #" + eligibility_id);
         }
       });
 
@@ -295,7 +290,7 @@ $(function(){
         dataType: "json",
         data:{certifiable_id},
         success: function(response){
-          console.log("successfully deleted certifiable # " + certifiable_id);
+          console.log("successfully deleted certifiable #" + certifiable_id);
           // if (response.id) {
           //   $(".certificate-info").data("certificate-id", response.id);
           // } else {              
@@ -406,7 +401,7 @@ $(function(){
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
-          console.log("successfully deleted eligibility # " + eligibility_id);
+          console.log("successfully deleted eligibility #" + eligibility_id);
         }
       });
 
@@ -454,7 +449,7 @@ $(function(){
         dataType: "json",
         data:{certifiable_id},
         success: function(response){
-          console.log("successfully deleted certifiable # " + certifiable_id);
+          console.log("successfully deleted certifiable #" + certifiable_id);
         }
       });
 
