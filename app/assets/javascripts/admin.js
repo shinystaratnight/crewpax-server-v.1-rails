@@ -364,9 +364,57 @@ $(function(){
   });
 
 
+//add union roles to users by creating eligibilities
+  $(".edit-user-roles").on("click",function(){
+
+      var checkbox = $(this)
+      var user_id = checkbox.closest(".user-info").data("user-id");
+      var union_id = checkbox.prev().text();
+      var role_id = checkbox.data("role-id");
+      var eligibility_id = checkbox.data("eligibility-id")
+      
+      if (checkbox.is(":checked")) {
+        //new certifiable
+
+      $.ajax({
+        url: "/admin/eligibilities",
+        method:"post",
+        dataType: "json",
+        data:{eligibility: {   
+                union_id: union_id, 
+                role_id: role_id,
+                user_id: user_id}},
+        success: function(response){
+          console.log(response.id);
+          if (response.id) {
+            $(checkbox).data("eligibility-id", response.id);
+          } else {              
+            var errors = response.toString();
+            // $(".certificate-name-error").text("*"+ errors).show();
+          }
+        }
+      });
+
+     } else {
+ 
+      $.ajax({
+        //existing eligibility to be deleted 
+   
+        url: "/admin/eligibilities/" + eligibility_id,
+        method:"delete",
+        dataType: "json",
+        data:{eligibility_id},
+        success: function(response){
+          console.log("successfully deleted eligibility # " + eligibility_id);
+        }
+      });
+
+     };
+  });
 
 
-//add certificates users by creating certifiables
+
+//add certificates to users by creating certifiables
   $(".edit-certificates").on("click",function(){
 
       var user_id = $(this).closest(".user-info").data("user-id");
@@ -386,7 +434,6 @@ $(function(){
                 user_id: user_id}},
         success: function(response){
           console.log(response.id);
-          // debugger
           if (response.id) {
             $(checkbox).data("certifiable-id", response.id);
           } else {              
@@ -407,12 +454,6 @@ $(function(){
         data:{certifiable_id},
         success: function(response){
           console.log("successfully deleted certifiable # " + certifiable_id);
-          // if (response.id) {
-          //   $(".certificate-info").data("certificate-id", response.id);
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".certificate-name-error").text("*"+ errors).show();
-          // }
         }
       });
 

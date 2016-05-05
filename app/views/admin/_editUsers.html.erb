@@ -131,7 +131,7 @@
             <%=union.id %>
           </div>
 
-          <div class="list-group-item">
+          <div class="list-group-item field user-info" data-user-id="<%=user.id %>">
             <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
               <%=union.name%>
             </a>
@@ -152,7 +152,15 @@
             <div id="<%=union.name.downcase%>_roles">
               <%union.roles.each do |role|%>
                 <label for="<%=role.name%>">
-                  <input type="checkbox" class="roles" id="<%=role.name%>" name="<%=role.name%>" data-label-id="" data-role-id="" data-eligibility-id="" value="<%=role.name%>"/>
+                  <input 
+                    type="checkbox" 
+                    class="edit-user-roles" 
+                    id="<%=role.name%>" 
+                    name="<%=role.name%>" 
+                    data-label-id="" 
+                    data-role-id="<%=role.id%>" 
+                    data-eligibility-id="" 
+                    value="<%=role.name%>"/>
                   <span class="label-text">
                   <%=role.name%> 
                   </span>

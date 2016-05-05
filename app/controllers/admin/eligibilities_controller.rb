@@ -15,7 +15,7 @@ class Admin::EligibilitiesController < ApplicationController
 
 
   def destroy
-    @eligibility = Eligibility.find(eligibility_params)
+    @eligibility = Eligibility.find(params[:id])
      respond_to do |format|
       if @eligibility.destroy 
         format.html{render @user }
@@ -29,7 +29,7 @@ class Admin::EligibilitiesController < ApplicationController
   private
 
   def eligibility_params
-    params.require(:eligibility).permit(:union_id, :role_id)
+    params.require(:eligibility).permit(:union_id, :role_id, :user_id, :id)
   end
 
 
