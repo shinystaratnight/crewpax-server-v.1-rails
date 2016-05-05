@@ -27,11 +27,181 @@
   </div>
 
   <%@users.each do |user| %>
+
+
     <div id="edit<%=user.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=user.name.tr(' ','-')%>">
+
+    <div class="field">
+      <a role="button" data-toggle="collapse" href="#editUserInfo" aria-expanded="true" aria-controls="editUserInfo"><span class="caret"></span> Personal Info</a>
+    </div>
+
+    <div id="editUserInfo" class="panel panel-collapse collapse in" role="tabpanel" aria-labelledby="editUserInfo">
+
       <div class="field user-info" data-user-id="<%=user.id %>">
         <h5> User Name: </h5>
         <div class="user-name" contenteditable="true"><%=user.name %></div>
         <span class="error" hidden="true" class="user-name-error"> *Name is not valid</span>
+        </div>
+
+    <div class="field">
+      <h5> Email: </h5>
+      <div class="profile_input" data-profile-entry="email" id="email" contenteditable="true"><%=user.email %></div>
+      <span class="error" hidden="true" id="email-error"> *Email address is not valid</span>
+    </div>
+
+    <div class="field">
+      <h5> Phone:</h5>
+      <div class="profile_input" data-profile-entry="phone" id="phone" contenteditable="true"><%=user.phone %></div>
+      <span class="error" hidden="true" id="phone-error"> *Phone number is not valid</span>
+    </div>
+
+    <div class ="field" data-address-id="" id="mailing_address_info">
+      <h5> Mailing Address: </h5>
+      <div class="profile_input" id="mailing_address" contenteditable="true">
+      <%#if @addresses.find_by(type: "Mailing")%><%#@addresses.find_by(type: "Mailing").address_input%><%# end %>
+      </div>
+      <span class="error" hidden="true" id="mailing-address-error"> *Mailing address is not valid</span>
+    </div>
+      
+    <div class ="field" data-billing-id="" id="billing_address_info">
+      <h5> Billing Address: </h5>
+      <div class="profile_input" id="billing_address" contenteditable="true">
+      <%#if @addresses.find_by(type: "Billing")%><%#@addresses.find_by(type: "Billing").address_input%><%#end %>
+      </div>
+      <span class="error" hidden="true" id="billing-address-error"> *Billing address is not valid</span>
+    </div>
+      
+    <div class ="field" data-shipping-id="" id="shipping_address_info">
+      <h5> Shipping Address: </h5>
+      <div class="profile_input" id="shipping_address" contenteditable="true">
+      <%#if @addresses.find_by(type: "Shipping")%><%#@addresses.find_by(type: "Shipping").address_input%><%#end %>
+      </div>
+      <span class="error" hidden="true" id="shipping-address-error"> *Shipping address is not valid</span>
+    </div>
+
+    <div class="field">
+      <h5> Traffic control ticket? </h5>           
+        <% if user.has_traffic_control_ticket == true %>           
+          <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+          data-off-text= "No" data-on-color="success" data-off-color="danger" checked="true" id="traffic_control" data-section="traffic_control"> 
+        <% else %>
+          <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+          data-off-text= "No" data-on-color="success" data-off-color="danger" 
+          id="traffic_control" data-section="traffic_control">  
+        <% end %>
+    </div>
+    
+    <div class= "field">
+      <h5>Access to a vehicle? </h5> 
+        <% if user.has_vehicle %>
+          <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+          data-off-text= "No" data-on-color="success" data-off-color="danger" 
+          id="vehicle" checked="true" data-section="vehicle">
+        <% else %>
+          <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
+          data-off-text= "No" data-on-color="success" data-off-color="danger" 
+          id="vehicle" data-section="vehicle" >
+        <% end %>
+    </div> 
+    
+    <div class="field">
+      <h5>
+        Upload Profile Picture
+        <div> <%=image_tag(user.image.url(:thumb))%></div>
+        <input type="file" id="upload_picture" >
+        <input type="hidden" name="image_cache">
+        <div id="profile_pic" hidden="true" contenteditable="true">            
+        </div>
+      </h5>
+    </div>
+    </div>
+
+<!--add roles within unions-->
+  <div class="field">
+      <a role="button" data-toggle="collapse" href="#addUserToUnion" aria-expanded="false" aria-controls="addUserToUnion"><span class="caret"></span> Add to Unions</a>
+  </div>
+
+  <div id="addUserToUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserToUnion">
+
+   <div class="list-group">
+        <!--Render checkboxes ids(roles ids) when page is loaded-->
+
+        <% @unions.each do |union| %>
+          <div hidden="true">
+            <%=union.id %>
+          </div>
+
+          <div class="list-group-item">
+            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
+              <%=union.name%>
+            </a>
+          </div>
+
+          <div id="union-<%=union.name%>" class="collapse" data-union-id="">
+            <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
+              <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
+              <label for="<%=union.name.downcase%>_permit"> Permit </label>
+              <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
+                <div contenteditable="true" hidden="true" id="permit_days"></div>
+              </span>
+              <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" />
+              <label for="<%=union.name.downcase%>_member"> Member </label>
+              <br>
+            </div>
+
+            <div id="<%=union.name.downcase%>_roles">
+              <%union.roles.each do |role|%>
+                <label for="<%=role.name%>">
+                  <input type="checkbox" class="roles" id="<%=role.name%>" name="<%=role.name%>" data-label-id="" data-role-id="" data-eligibility-id="" value="<%=role.name%>"/>
+                  <span class="label-text">
+                  <%=role.name%> 
+                  </span>
+                </label>
+                <%end%>
+            </div>
+
+          </div>
+          <%end%>
+
+      </div>
+
+  </div>
+<!--add certificates-->
+
+  <div class="field">
+      <a role="button" data-toggle="collapse" href="#addUserCertificates" aria-expanded="false" aria-controls="addUserCertificates"><span class="caret"></span> Add Certificates</a>
+  </div>
+
+  <div id="addUserCertificates" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserCertificates">
+
+    <div class="field user-info" data-user-id="<%=user.id %>">
+      <h5> Add certificates: </h5>
+        <% @certificates.each do |certificate| %>
+          <label>            
+            <div hidden="true"><%=certificate.id%>
+            </div>
+            <% if user.certificates.include? certificate %>
+                
+              <% if user.certifiables.find_by(certificate_id: certificate.id, user_id: user.id) %>
+                <input type="checkbox" class="edit-certificates" id="<%=user.id%>-<%=certificate.id%>" name="<%=user.id%>-<%=certificate.id%>" value="<%=certificate.name%>" data-certificate-id="" data-label-id="" data-eligibility-id="<%= user.certifiables.find_by(certificate_id: certificate.id, user_id: user.id) %>" checked/><%=certificate.name%>
+              <% end %>
+
+            <%else%>
+
+              <input type="checkbox" class="edit-certificates" id="<%=user.id%>-<%=certificate.id%>" name="<%=user.id%>-<%=certificate.id%>" value="<%=certificate.name%>" data-certificate-id="" data-label-id="" data-eligibility-id=""/><%=certificate.name%>
+
+            <%end%>
+          </label>
+
+        <%end%>
+    </div>
+
+
+
+</div>
+
+      <div class="field user-info" data-user-id="<%=user.id %>">
+        <button class="reset-user-password">Reset Password</button>
       </div>
 
       <div class="field user-info" data-user-id="<%=user.id %>">
