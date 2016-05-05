@@ -12,20 +12,23 @@ class UsersController < ApplicationController
       if @role.present?
         
         @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
-        #sort filter users based on their most recent log in 
-        
+        #sort filter users based on their most recent log in         
         @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
+        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
+        @users = @most_recent_login_users.page(params[:page] || 1).per(6)
         format.html {render @most_recent_login_users}
         format.json {render json: @most_recent_login_users}        
       else
         # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        # @users =  @users.page(params[:page] || 1).per(6)
+        @users =  @users.page(params[:page] || 1).per(6)
         format.html{render :index}
         format.json{render json: @sorted_users}
       end
     end
     
-  
+      # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
+      # # @users =  @users.page(params[:page] || 1).per(6)
+      # @users = User.order(:name).page params[:page]
 
     # if @role.present?
     #   @labels= Label.search_by_role(params[:role_id])
@@ -63,30 +66,17 @@ class UsersController < ApplicationController
     respond_to do |format|
       # this is for carrierwave photo upload
 
-      ##########################################
-
       if user_params[:image].present?
         if Rails.env.production? #store images in dropbox
           @user.update(image: user_params[:image])
           client = dropbox_client 
           format.json{render json: @user}
         else
-          @file = user_params[:image]
+          @file = user_params[:image] #in development environment, store images locally
           @user.image = @file
-           binding.pry 
           @user.save 
           format.json{render json: @user}
         end
-     
-      # binding.pry 
-      # if user_params[:image].present? && @user.update(image: user_params[:image])
-      #   # @file = user_params[:image]
-      #   #  @user.image = @file
-                
-      #   # @user.update_attributes(image: @file.tempfile)
-      #   # binding.pry 
-      #   # @user.save
-      #   format.json{render json: @user}
       # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
       elsif user_params[:roles_ids].present?
         @label = Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
@@ -185,10 +175,6 @@ class UsersController < ApplicationController
     end
   end
   
-  # def store(file)
-  #   binding.pry
-  #   location = (config[:access_type] == "dropbox") ? "/#{uploader.store_path}" : uploader.store_path
-  #   dropbox_client.put_file(location, file.to_file)
-  # end
+
      
 end

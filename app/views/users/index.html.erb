@@ -30,10 +30,9 @@
                   <div id="instafeed"></div>
                     <!-- The following HTML will be our template inside instafeed -->                    
                       <div class="photo-box">
-                        <div class="image-wrap">
-                          <%#image_tag(user.image.default_url) %>
-                          
-                          <%=user.image.url.display ? image_tag(user.image.url): image_tag(user.image.default_url)%> 
+                        <div class="image-wrap">    
+                          <%=image_tag(user.image.url) %>                                              
+                          <%#user.image.url.present? ? image_tag(user.image.url): image_tag(user.image.default_url)%> 
                         </div>
                         <div class="description">
                           <%= user.name %>
@@ -88,5 +87,5 @@
 
 
 
-<% #paginate @users %>
+<%#paginate @users %>
  
