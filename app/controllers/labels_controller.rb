@@ -23,11 +23,11 @@ class LabelsController < ApplicationController
  
           user_ids = @user_labels.map{|l| l.user_id}
       
-          @users = User.where(:id => user_ids).page(params[:page]).per(6)
+          @users = User.where(:id => user_ids)
           # @users = @user_labels.map{|l| User.find(l.user_id)}
           # user_ids = @user_labels.map{|l| l.user_id}
           # binding.pry 
-          # @users =  @users.page(params[:page] || 1).per(6)
+          @users =  @users.page(params[:page]).per(6)
           format.html{render @users}
           format.json{render json: @user_labels} 
       else
