@@ -24,9 +24,10 @@ $(function(){
           }else{
             $('.user-card').hide();
             $("#user_role").data("selected-user-role", "");
-            debugger
+        
             $.map($(response),function(resp){
             // If a job id exist, this label is job_label not user_label 
+             debugger
               if(resp.job_id == null){
                 $('.user-card[data-user-id='+ resp.user_id+']').show();               
               }else{                

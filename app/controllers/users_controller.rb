@@ -15,12 +15,12 @@ class UsersController < ApplicationController
         #sort filter users based on their most recent log in         
         @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
         # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        @users = @most_recent_login_users.page(params[:page] || 1).per(6)
+        # @users = @most_recent_login_users.page(params[:page] || 1).per(6)
         format.html {render @most_recent_login_users}
         format.json {render json: @most_recent_login_users}        
       else
         # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        @users =  @users.page(params[:page] || 1).per(6)
+        # @users =  users.page(params[:page] || 1).per(6)
         format.html{render :index}
         format.json{render json: @sorted_users}
       end
