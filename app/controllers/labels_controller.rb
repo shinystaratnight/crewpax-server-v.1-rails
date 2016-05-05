@@ -17,26 +17,20 @@ class LabelsController < ApplicationController
       if @job_labels.present? && label_params[:job_board ] == "clicked"
           format.html{redirect_to jobs_path}
           format.json{render json: @job_labels}
-
       elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
-          # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
- 
-          user_ids = @user_labels.map{|l| l.user_id}
-      
-          @users = User.where(:id => user_ids)
-          # @users = @user_labels.map{|l| User.find(l.user_id)}
-          # user_ids = @user_labels.map{|l| l.user_id}
-          # binding.pry 
-          @users =  @users.page(params[:page]).per(6)
-          format.html{render @users}
-          format.json{render json: @user_labels} 
+        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20) 
+        # user_ids = @user_labels.map{|l| l.user_id}      
+        # @users = User.where(:id => user_ids).page(params[:page]).per(6)
+        # @users = @user_labels.map{|l| User.find(l.user_id)}
+        # user_ids = @user_labels.map{|l| l.user_id}
+        # binding.pry 
+        # @users =  @users.page(params[:page]).per(6)
+        format.html{render @users}
+        format.json{render json: @user_labels} 
       else
-        format.json{render json: "Labels not found", status: :no_content}
-     
+        format.json{render json: "Labels not found", status: :no_content}     
       end
-
     end
-
   end
 
 

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :set_role, only: :index
   respond_to :html, :json,:js
   def index
-    @users = User.all
+    @users = User.all.page(params[:page]).per(6)
     # Filter out never login users
     @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
     @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     end
     
       # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-      # # @users =  @users.page(params[:page] || 1).per(6)
+        # @users =  @users.page(params[:page] || 1).per(6)
       # @users = User.order(:name).page params[:page]
 
     # if @role.present?
