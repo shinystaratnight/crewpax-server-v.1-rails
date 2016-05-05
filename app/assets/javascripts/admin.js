@@ -372,6 +372,7 @@ $(function(){
       var user_id = $(this).closest(".user-info").data("user-id");
       var certificate_id = $(this).prev().text();
       var certifiable_id = $(this).data("certifiable-id");
+      var checkbox = $(this)
 
       if ($(this).is(":checked")) {
         //new certifiable
@@ -385,8 +386,9 @@ $(function(){
                 user_id: user_id}},
         success: function(response){
           console.log(response.id);
+          // debugger
           if (response.id) {
-            $(".edit-certificates").data("certifiable-id", response.id);
+            $(checkbox).data("certifiable-id", response.id);
           } else {              
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
@@ -395,16 +397,16 @@ $(function(){
       });
 
      } else {
-
+ 
       $.ajax({
-        //existing certifiable to be deleted (this doesn't work)
-
+        //existing certifiable to be deleted 
+   
         url: "/admin/certifiables/" + certifiable_id,
         method:"delete",
         dataType: "json",
         data:{certifiable_id},
         success: function(response){
-          console.log(response);
+          console.log("successfully deleted certifiable # " + certifiable_id);
           // if (response.id) {
           //   $(".certificate-info").data("certificate-id", response.id);
           // } else {              

@@ -183,12 +183,31 @@
             <% if user.certificates.include? certificate %>
                 
               <% if user.certifiables.find_by(certificate_id: certificate.id, user_id: user.id) %>
-                <input type="checkbox" class="edit-certificates" id="<%=user.id%>-<%=certificate.id%>" name="<%=user.id%>-<%=certificate.id%>" value="<%=certificate.name%>" data-certificate-id="" data-label-id="" data-eligibility-id="<%= user.certifiables.find_by(certificate_id: certificate.id, user_id: user.id) %>" checked/><%=certificate.name%>
+                <input 
+                  type="checkbox" 
+                  class="edit-certificates" 
+                  id="<%=user.id%>-<%=certificate.id%>" 
+                  name="<%=user.id%>-<%=certificate.id%>" 
+                  value="<%=certificate.name%>" 
+                  data-certifiable-id="<%= user.certifiables.find_by(certificate_id: certificate.id, user_id: user.id).id %>" 
+                  data-label-id="" 
+                  data-eligibility-id="" 
+                  checked/>
+                  <%=certificate.name%>
               <% end %>
 
             <%else%>
 
-              <input type="checkbox" class="edit-certificates" id="<%=user.id%>-<%=certificate.id%>" name="<%=user.id%>-<%=certificate.id%>" value="<%=certificate.name%>" data-certificate-id="" data-label-id="" data-eligibility-id=""/><%=certificate.name%>
+              <input 
+                type="checkbox" 
+                class="edit-certificates" 
+                id="<%=user.id%>-<%=certificate.id%>" 
+                name="<%=user.id%>-<%=certificate.id%>" 
+                value="<%=certificate.name%>" 
+                data-certifiable-id="" 
+                data-label-id="" 
+                data-eligibility-id=""/>
+                <%=certificate.name%>
 
             <%end%>
           </label>
