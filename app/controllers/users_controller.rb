@@ -62,11 +62,31 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       # this is for carrierwave photo upload
+
+      ##########################################
+
       if user_params[:image].present?
-        @file = user_params[:image]
-        @user.image = @file
-        @user.save
-        format.json{render json: @user}
+        if Rails.env.production? #store images in dropbox
+          @user.update(image: user_params[:image])
+          client = dropbox_client 
+          format.json{render json: @user}
+        else
+          @file = user_params[:image]
+          @user.image = @file
+           binding.pry 
+          @user.save 
+          format.json{render json: @user}
+        end
+     
+      # binding.pry 
+      # if user_params[:image].present? && @user.update(image: user_params[:image])
+      #   # @file = user_params[:image]
+      #   #  @user.image = @file
+                
+      #   # @user.update_attributes(image: @file.tempfile)
+      #   # binding.pry 
+      #   # @user.save
+      #   format.json{render json: @user}
       # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
       elsif user_params[:roles_ids].present?
         @label = Label.new(role_id:user_params[:roles_ids][0], user_id:@user.id)
@@ -155,8 +175,20 @@ class UsersController < ApplicationController
     params.require(:label).permit(:user_id,:job_id,:role_id)
   end
   
+  private
 
+  def dropbox_client
+    @dropbox_client ||= begin
+    session = DropboxSession.new(ENV["APP_KEY"], ENV["APP_SECRET"])
+    session.set_access_token( ENV["ACCESS_TOKEN"], ENV["ACCESS_TOKEN_SECRET"])
+    DropboxClient.new(session, "app_folder")
+    end
+  end
   
-
+  # def store(file)
+  #   binding.pry
+  #   location = (config[:access_type] == "dropbox") ? "/#{uploader.store_path}" : uploader.store_path
+  #   dropbox_client.put_file(location, file.to_file)
+  # end
      
 end

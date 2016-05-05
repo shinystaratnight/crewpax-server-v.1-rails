@@ -1,15 +1,30 @@
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  storage :file  
-  #storage Rails.env.test? ? :file : :fog
+  # storage :dropbox 
+  # storage Rails.env.test? ? :file : :drobpox
+  
+  Rails.env.production? ? (storage :dropbox) : (storage :file) 
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    if Rails.env.production?
+      "Images_uploads/"
+    else
+      "#{Rails.root}/tmp/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
   end
 
   def extension_white_list
     %w(jpg jpeg gif png)
+  end
+
+  def default_url
+    "/images/fallback/" + [version_name, "default_user_avatar.png"].compact.join('_')
+  end
+
+  def filename
+    # "profile_picture_"+ "user_id_"+ "#{model.id}" + "#{File.extname(original_filename).downcase}" if original_filename
+    "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
   end
 
   # version :desktop do 

@@ -1,6 +1,6 @@
 <div class="field"> 
-  <span id="display_image"><%=image_tag(@user.image.url) %> </span> 
-</div> 
+  <span id="display_image"><%=image_tag(@user.image.url) %> <%#@user.image.url.display ? image_tag(@user.image.url): image_tag(@user.image.default_url)%> </span> 
+</div>
 
 <% if @user.has_vehicle? %>
   <div class="info_font">

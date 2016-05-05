@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   has_many :appointments, dependent: :destroy
   has_many :labels
   has_many :jobs
-  # has_many :jobs, through: :labels
   has_many :roles, through: :labels
   has_many :eligibilities
   has_many :unions, through: :eligibilities
