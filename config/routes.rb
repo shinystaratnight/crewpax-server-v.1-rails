@@ -10,6 +10,7 @@ Bcpax::Application.routes.draw do
   resources :roles do 
     resources :labels, only:[:index]
   end 
+  
   # resources :jobs do
   #   resources :roles 
   # end
@@ -17,6 +18,7 @@ Bcpax::Application.routes.draw do
   # resources :roles, shallow: true do 
   #   resources :jobs
   # end
+  
   resources :roles, only:[:index]
   resources :attachments, only:[:create,:update, :index, :destroy]
   resources :certifiables, only:[:create, :destroy]
@@ -31,9 +33,7 @@ Bcpax::Application.routes.draw do
   
   resources :addresses
   resources :eligibilities
-  # resources :jobs do
-  #   resources :labels
-  # end
+  
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
 
