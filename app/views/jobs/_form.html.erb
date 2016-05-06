@@ -12,7 +12,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.label(:description, "Job Description:") %> 
+      <%= f.label(:description, "Job Description(Optional):") %> 
       <%= f.text_area(:description, class: "job_form form-control", size: "10x6")%>
     </div>
    
@@ -35,20 +35,32 @@
       <%= f.label(:location, "Location:") %> 
       <%= f.text_field :location, class: "job_form form-control"%>
     </div>
-
+    
     <div class="form-group">
       <%= f.label(:contact_name, "Contact Name:") %> 
-      <%= f.text_field :contact_name, class: "job_form form-control"%>
+      <% if current_user.present? %>
+        <%= f.text_field :contact_name, value: current_user.name,  class: "job_form form-control"%>
+      <% else %>
+        <%= f.text_field :contact_name, class: "job_form form-control"%>
+      <% end %>
     </div>
-    
+      
     <div class="form-group">
       <%= f.label(:contact_phone, "Contact Phone:") %> 
-      <%= f.text_field :contact_phone, class: "job_form form-control"%>
+      <% if current_user.present? %>
+        <%= f.text_field :contact_phone, value: current_user.phone, class: "job_form form-control"%>
+      <% else %>
+        <%= f.text_field :contact_phone, class: "job_form form-control"%>
+      <% end %>
     </div>
     
-    <div class="form-group">
+    <div class="form-group">      
       <%= f.label(:contact_email, "Contact Email:") %> 
-      <%= f.text_field :contact_email, class: "job_form form-control"%>
+      <% if current_user.present? %>
+        <%= f.text_field :contact_email, value: current_user.email, class: "job_form form-control"%>
+      <% else %>
+        <%= f.text_field :contact_email, class: "job_form form-control"%>
+      <% end %>
     </div>
     
     <%=submit_tag("Submit", class: "btn btn-lg btn-success",id: "post_submit")%>
