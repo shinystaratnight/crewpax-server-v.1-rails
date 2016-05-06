@@ -4,6 +4,10 @@ $(function(){
       return window.location.href= (role_id) ? "/roles/" + role_id : "/users";
   });
 
+
+
+  
+
 });
   
   

@@ -1,0 +1,27 @@
+<div id="links_to_other_month">
+  <%= link_to "<<", url_for(params.merge(start_date: @date_range.first - 1.day)), remote: true %>
+  <%= I18n.t("date.month_names")[@start_date.to_date.month] %> <%= @start_date.to_date.year %>
+  <%= link_to ">>", url_for(params.merge(start_date: @date_range.last + 1.day)), remote: true %>
+</div>
+<table>
+  <thead>
+    <tr>
+      <% @date_range.slice(0,7).each do |day| %>
+        <th class="th"><%=t('date.abbr_day_names')[day.wday]%></th>
+      <% end %>
+    </tr>
+  </thead>
+  
+  <tbody>        
+    <% @date_range.each_slice(7).each do |week| %>
+      <tr>           
+        <% week.each do |day| %>
+            <%= content_tag :td, class: @user.td_classes_for(day, @appointments) do %>
+              <%= Date.parse(day.to_s).mday %>               
+            <% end %>
+        <% end %>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>      
+

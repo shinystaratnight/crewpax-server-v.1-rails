@@ -1,0 +1,20 @@
+<%= content_tag_for :article, @user do %>
+  <header>
+    <div class="page-header">
+      <h1 id="user_display_name">
+        <%= @user.name %>
+      </h1>
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-md-7">
+      <%= render "personalinfo" %>  
+    </div> 
+    <div class="col-md-5">
+      <%= render "union" %>
+      <%= render "certificate" %>
+      <%= render 'contacts' %>
+    </div>
+  </div>
+ 
+<% end %>

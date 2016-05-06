@@ -6,13 +6,17 @@
   </div>
   <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
     <div> Please select certificates that you have: </div>
-      <select class="chosen-select" id="create-certificate" multiple="true" name="certificate">
+      <select class="chosen-select" id="edit-certificate" multiple="true" name="certificate">
         <%@certificates.each do |certificate| %>
-          <option value="<%=certificate.id%>" data-certifiable-id="">
+          <% if @user_certificates.include?(certificate) %> 
+            <% certifiable_id = @certifiables.find_by(certificate_id: certificate.id).id %>
+            <option value="<%=certificate.id%>" data-certifiable-id="<%=certifiable_id%>" selected/>      
+          <% else %>          
+            <option value="<%=certificate.id%>" data-certifiable-id="" />   
+          <% end %>                                          
             <%= certificate.name %>
           </option>
-        <% end %>
+        <% end %>   
       </select>
     </div>
 </div>
-

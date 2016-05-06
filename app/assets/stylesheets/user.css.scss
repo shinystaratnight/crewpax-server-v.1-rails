@@ -1,0 +1,108 @@
+//==========In General==========================
+  
+
+  .union_font {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .role_font {
+    font-size: 14px;
+    margin-left: 20px;
+  }
+
+//========== Medium devices (desktops, 992px and up) 
+
+@media (min-width: 992px) { 
+
+//=================These are for User show view page========================
+  #user_display_name {
+    margin-left: 250px;
+  }
+  
+  #user_info {
+    margin-top: 20px;
+    width:400px;
+  }
+
+  .info_font {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 250px;
+
+  }  
+  #display_image img {
+    margin-left: 250px;
+    width: 400px;
+  }
+
+//================Contacts========================================================
+  .col-md-5 {
+    margin-left: -75px;
+  }
+
+
+  #contact_user {
+    width: 400px;
+  }
+
+  #edit_user {
+    width: 400px;
+  }
+
+}
+
+/* ----------- iPhone 5 and 5S ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #contact_user {
+      width: 290px;
+    }
+
+    #user_info {
+      margin-top: 20px;
+      width:290px;
+    }
+ 
+    #edit_user {
+      width: 290px;
+    }
+
+    #display_image img{
+      width: 290px;
+    }
+
+}
+
+/* ----------- iPhone 6 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+    #contact_user {
+      width: 340px;
+    }
+
+    #user_info {
+      margin-top: 20px;
+      width:340px;
+    }
+ 
+    #edit_user {
+      width: 340px;
+    }
+
+    #display_image img{
+      width: 340px;
+    }
+
+}
+
+
+

@@ -101,63 +101,7 @@ input[type="checkbox"]:focus{
  font-size: 14px;
 }
 
-
-#sunday {
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-#monday {
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-
-#tuesday {
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-#wednesday {
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-#thursday {
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-#friday{
-  line-height: 38px;
-  height: 38px;
-  font-size: 16px;
-  padding: 0px 26px;
-  margin-left: 5px;
-  margin-bottom:8px;
-}
-
-#saturday{
+.calendar-day {
   line-height: 38px;
   height: 38px;
   font-size: 16px;
@@ -167,11 +111,11 @@ input[type="checkbox"]:focus{
   
 }
 
-.panel-body{
+.panel-body {
   padding: 10px;
 }
 
-#available_days{
+#available_days {
   margin-left: 5px;
 }
 
@@ -201,46 +145,46 @@ input[type="checkbox"]:focus{
   
 }
 
-#submit_button{
+#submit_button {
   margin-bottom: 5px;
   font-size:medium;
 }
 
-#file_upload_form{
+#file_upload_form {
   margin-left:15px;
 }
 
-#email_form{
+#email_form {
   margin-left:15px;
 }
 
-.document_email{
+.document_email {
   font-weight: normal;
   max-width:35%;
 }
 
-.file_upload{
+.file_upload {
   margin-right: -50px;
 }
 
-#upload_file{
+#upload_file {
   max-width: 220px;
 }
 
-.client_email{
+.client_email {
   border:1px solid lightgray;
   background: transparent;
   width: 150px;
   margin-bottom: 10px;
 }
 
-#selected_file{
+#selected_file { 
   border: 1px solid lightgray;
   background: transparent;
 }
 
 
-.existing_file{
+.existing_file {
   max-width:200px;
   margin-top:10px;
   margin-left:15px;
@@ -248,6 +192,17 @@ input[type="checkbox"]:focus{
 
 }
 
-.file_info{
+.uploaded_file {
+  max-width:200px;
+  margin-top:10px;
+  margin-left:15px;
+  display: inline-block;
+
+}
+.file_info {
   color:black;
+}
+
+.selected_document{
+  color: #5cb85c;
 }

@@ -52,6 +52,17 @@ class AttachmentsController < ApplicationController
 
   def destroy
 
+    @user = User.find(attachment_params[:user_id])
+    @attachment= Attachment.find(params[:id])
+
+    respond_to do |format|
+      if @attachment.destroy      
+        format.html{redirect_to @user}
+        format.json{head :no_content}
+      else
+        format.json{render json: @attachment.errors.full_messages}
+      end
+    end
   end
 
   private

@@ -12,9 +12,15 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  process :resize_to_fit => [290, 290]
+  # version :desktop do 
+    process :resize_to_fit => [400, 400]
+  # end
 
   version :thumb do
-    process :resize_to_fill => [90, 90]
+    process :resize_to_fit => [90, 90]
   end
+
+  # version :mobile do 
+  #   process :resize_to_fit => [290, 290]
+  # end
 end

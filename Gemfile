@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'pry'
 gem 'carrierwave-dropbox'
 gem 'font-awesome-sass'
+gem "simple_calendar", "~> 2.0"
 
 
 
