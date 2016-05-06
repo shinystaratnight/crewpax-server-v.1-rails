@@ -45,9 +45,10 @@
                           <% else %>
                             <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>
                           <% end %>  
+                          
 
 
-
+  
 
                           <% @user_unions = user.unions %>
                           <% if @user_unions.present? %>
@@ -65,6 +66,7 @@
                                   <% end %>                           
                             <% end %>                            
                           <% end %>
+                          <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:<%=user.phone %></div>
                         </div>
                         
 
