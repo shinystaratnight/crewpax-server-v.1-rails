@@ -1,6 +1,7 @@
 $(function(){
 //=============================Search Employees with given roles=========================================  
   $("#user_role, #select_user_role").on("change",function(){
+
     var role_id = $(this).val();
   // when the selection is all  
     if (role_id == 0){
@@ -25,17 +26,30 @@ $(function(){
             $('.user-card').hide();
             $("#user_role").data("selected-user-role", "");
             // Need to add a scenario when response number is more than 1 and one of the responses is a job post 
-            
-            $.map($(response),function(resp){
-            // If a job id exist, this label is job_label not user_label 
-             debugger
-              if(resp.job_id == null){
-                $('.user-card[data-user-id='+ resp.user_id+']').show();               
-              }else{                
-                UserNotFound();
-              }
-              
-            });
+            // Do something
+            var length = response.length;
+            var user_card;
+            var i = 0;
+              $.map($(response),function(resp){
+              // If a job id exist, this label is job_label not user_label
+                 
+                if(resp.job_id == null){
+                  i += 1
+
+                  //Reset data order value
+                    $('.user-card[data-user-id='+ resp.user_id+']').data("order", "");
+                    var user_first = $('.user-card[data-user-id='+ resp.user_id+']').data("order", i);
+                   debugger
+                    $(user_first).after($(".user-card[data-order='']")).show()
+                                       
+                }else{                
+                  UserNotFound();
+                }
+                
+              });
+
+
+
               //Reset selected role id first
               $("#most_recent_log_in > a").data("selected-role-id", "")
               $("#most_recent_log_in > a").data("selected-role-id", response[0].role_id)
@@ -103,6 +117,7 @@ $(function(){
         } 
     });
   }
+
 
 
 

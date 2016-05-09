@@ -3,24 +3,25 @@ class UsersController < ApplicationController
   respond_to :html, :json,:js
   def index
     @users = User.all
+    @users = @users.page params[:page]
     # Filter out never login users
     @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
     @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
-  
+
     respond_to do |format|
    
-      if @role.present?
-        
+      if @role.present?        
         @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
         #sort filter users based on their most recent log in         
         @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
         # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        # @users = @most_recent_login_users.page(params[:page] || 1).per(6)
-        format.html {render @most_recent_login_users}
+        # @users = @most_recent_login_users.order(:name).page params[:page] 
+        format.html {render @users}
         format.json {render json: @most_recent_login_users}        
       else
         # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
         # @users =  users.page(params[:page] || 1).per(6)
+        # @users = User.order(:name).page params[:page] 
         format.html{render :index}
         format.json{render json: @sorted_users}
       end

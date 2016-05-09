@@ -25,6 +25,7 @@ class LabelsController < ApplicationController
         # user_ids = @user_labels.map{|l| l.user_id}
         # binding.pry 
         # @users =  @users.page(params[:page]).per(6)
+        # format.html{render @users}
         format.html{render @users}
         format.json{render json: @user_labels} 
       else

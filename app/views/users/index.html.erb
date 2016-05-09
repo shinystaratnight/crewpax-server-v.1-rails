@@ -20,10 +20,15 @@
 </br>
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
+ 
+
+
+
+
   <div class="container">
       <div class="row">
       <% for user in @users %> 
-          <div class="user-card col-md-4" data-user-id = "<%=user.id%>" data-order="">
+          <div class="user-card col-md-4" data-user-id = "<%=user.id%>" data-order="" >
             <div class="instagram-content">          
               <div class="row photos-wrap">
                 <!-- Instafeed target div -->
@@ -88,4 +93,4 @@
   </div>
 
 
-<%#paginate @users %>
+<%=paginate @users%>

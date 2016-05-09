@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   default_scope { order :name }
   
-
+  paginates_per 6
 
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
   validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 
