@@ -39,11 +39,17 @@ class User < ActiveRecord::Base
   end
 
 
-  def self.sort_filter_user(sort_order)
-    binding.pry 
+  # def self.sort_filter_user(sort_order)
+  #   binding.pry 
+  # end
+
+  def self.filter(role_id)
+    if role_id.present?
+      Role.find(role_id).users
+    else
+      User.all
+    end
   end
-
-
 
 
 

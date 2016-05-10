@@ -3,29 +3,45 @@ class UsersController < ApplicationController
   respond_to :html, :json,:js
   def index
     @users = User.all
-    @users = @users.page params[:page]
+    @users = User.page params[:page]
     # Filter out never login users
     @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
     @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
-
+    binding.pry 
+  
     respond_to do |format|
-   
-      if @role.present?        
-        @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
-        #sort filter users based on their most recent log in         
-        @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
-        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        # @users = @most_recent_login_users.order(:name).page params[:page] 
-        format.html {render @users}
-        format.json {render json: @most_recent_login_users}        
-      else
-        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        # @users =  users.page(params[:page] || 1).per(6)
-        # @users = User.order(:name).page params[:page] 
-        format.html{render :index}
-        format.json{render json: @sorted_users}
+      if @role.present?
+        @filter_users = User.filter(params[:role_id])
+        format.js 
       end
     end
+    
+
+    
+    # # if user_params[:roles_ids].present?
+
+    # # else
+    # #   @users = User.all 
+
+     
+    # respond_to do |format|   
+     
+    #   if user_params[:roles_ids].present?        
+    #     # @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
+    #     #sort filter users based on their most recent log in         
+    #     @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
+    #     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
+    #     # @users = @most_recent_login_users.order(:name).page params[:page] 
+    #     format.html {render @users}
+    #     format.json {render json: @most_recent_login_users}        
+    #   else
+    #     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
+    #     # @users =  users.page(params[:page] || 1).per(6)
+    #     # @users = User.order(:name).page params[:page] 
+    #     format.html{render :index}
+    #     format.json{render json: @sorted_users}
+    #   end
+    # end
     
       # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
         # @users =  @users.page(params[:page] || 1).per(6)
@@ -157,11 +173,16 @@ class UsersController < ApplicationController
 
   # To prevent Mass assignments.Require that :user be a key in the params Hash to accept various attributes
   def user_params
-    params.require(:user).permit(:name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
-    :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    :admin, :phone,  { roles_ids:[] }, :addresses_attributes => [:type, :address_input])      
+    # params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
+    # :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
+    # :admin, :phone, {:roles_ids =>[]})      
+    params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
+            :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
+            :admin, :phone,{roles_ids:[]})
+   
   end
-
+# { roles_ids:[]} 
+  
   def label_params
     params.require(:label).permit(:user_id,:job_id,:role_id)
   end
@@ -175,7 +196,7 @@ class UsersController < ApplicationController
     DropboxClient.new(session, "app_folder")
     end
   end
-  
+ 
 
      
 end

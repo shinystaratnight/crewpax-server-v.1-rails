@@ -27,7 +27,8 @@ class LabelsController < ApplicationController
         # @users =  @users.page(params[:page]).per(6)
         # format.html{render @users}
         format.html{render @users}
-        format.json{render json: @user_labels} 
+        format.json{render json: @user_labels}
+     
       else
         format.json{render json: "Labels not found", status: :no_content}     
       end
