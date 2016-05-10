@@ -106,7 +106,8 @@ $(function(){
             $("#delete-union-success").show();
             $("#edit"+union_name).remove();
             $("#button"+union_name).remove();
-            
+            $("#editUnionToggle").children(".caret").toggleClass("rotated");
+
             // for cancel button
             $("#newUnion .union-name").text("");
             $("#newUnion .union-info").data("union-id", "");
@@ -120,6 +121,12 @@ $(function(){
         }
       });
 
+  });
+
+  $("#clear-new-union-form").on("click", function() {
+    $("#newUnion .union-name").text("");
+    $("#newUnion .union-info").data("union-id", "");
+    $("#newUnion .edit-roles").prop("checked", false);
   });
   
 //*********************************************************************************************************
@@ -239,7 +246,9 @@ $(function(){
 //When a mouse leaves the entry div, it will trigger ajax
   $(".certificate-name").on("blur", function(){
     //Check to see if a certificate is already created and decide which url the ajax should send to(create/update) 
-    var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
+    var text_box = $(this)
+
+    var certificate_id = text_box.closest(".certificate-info").data("certificate-id");
     if (certificate_id == "") {
       var url = "admin/certificates";
       var method = "post";
@@ -247,14 +256,14 @@ $(function(){
       var url = "admin/certificates/" + certificate_id;
       var method = "put";
     }
-    var name = $(this).closest(".certificate-name").text().trim();
+    var name = text_box.closest(".certificate-name").text().trim();
 
     if (name == "") {
-      $(this).addClass("invalid").next().show();
+      text_box.addClass("invalid").next().show();
       return false;
     } else {
       $(".certificate-name-error").hide();
-      $(this).addClass("valid");            
+      text_box.addClass("valid");            
 
       $.ajax({
         url: url,
@@ -263,9 +272,13 @@ $(function(){
         data:{certificate: {name: name}},
         success: function(response){
           if (response.id) {
-            $(".certificate-info").data("certificate-id", response.id);
+            text_box
+              .closest(".certificate-info").data("certificate-id", response.id)
+              .next(".certificate-info").data("certificate-id", response.id)
+              .next(".certificate-info").children(".delete-certificate").data("certificate-id", response.id);  
+            $("#newCertificate").data("name", response.name);
             $("#new-certificate-users").show();
-          } else {              
+          } else {               
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
             $(".certificate-name").addClass("invalid");   
@@ -338,6 +351,14 @@ $(function(){
             $("#delete-certificate-success").show();
             $("#edit-cert-"+certificate_id).remove();
             $("#button-cert-"+certificate_id).remove();
+            $("#editCertificateToggle").children(".caret").toggleClass("rotated");
+
+            // for cancel button
+            $("#newCertificate .certificate-name").text("");
+            $("#newCertificate .certificate-info").data("certificate-id", "");
+            $("#newCertificate .edit-users").prop("checked", false);
+            $("#newCertificate").removeClass("in");
+
             setTimeout(function() {
                 $("#delete-certificate-success").fadeOut();
             }, 3000);

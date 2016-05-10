@@ -1,4 +1,4 @@
-class Admin::CertifiablesController < ActionController::Base
+class Admin::CertifiablesController < ApplicationController
 
   before_filter :require_admin
 
