@@ -90,13 +90,19 @@ $(function(){
  $(".delete-union").on("click", function(){ 
 
     var union_id = $(this).data("union-id");
+    var union_name = $(this).closest(".in").data("name");
+    var div_we_want = "#edit"+union_name;
+    
+    console.log(div_we_want)
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
         success: function(response){   
-          console.log('success');
+          console.log('successfully deleted '+union_name);
           if (response.result) {
             $("#delete-union-success").show();
+            $(div_we_want).hide();
+
             setTimeout(function() {
                 $("#delete-union-success").fadeOut();
             }, 2000);

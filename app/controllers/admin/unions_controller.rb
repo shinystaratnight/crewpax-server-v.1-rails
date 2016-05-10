@@ -34,11 +34,9 @@ class Admin::UnionsController < ApplicationController
     union = Union.find(params[:id])
     results = {result: false}
     results[:result] = true if union.destroy
-    
-    # render :nothing => true
+
     results.to_json
     render json: results, status: :ok
-
   end
 
 
