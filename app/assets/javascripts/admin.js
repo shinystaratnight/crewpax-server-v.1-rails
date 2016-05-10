@@ -111,6 +111,7 @@ $(function(){
             $("#newUnion .union-name").text("");
             $("#newUnion .union-info").data("union-id", "");
             $("#newUnion .edit-roles").prop("checked", false);
+            $("#newUnion").removeClass("in");
 
             setTimeout(function() {
                 $("#delete-union-success").fadeOut();
