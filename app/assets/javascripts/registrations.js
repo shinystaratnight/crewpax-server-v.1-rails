@@ -338,8 +338,10 @@ function userCreated() {
   if ($("#password").hasClass("valid") && $("#pw_confirmation").hasClass("valid") && $("#email").hasClass("valid") && $("#name").hasClass("valid"))
   {
     $("#profile-success").fadeIn();
+    setTimeout(function() {
+      $("#profile-success").fadeOut();
+    }, 3000);
     $(".continue-registration").fadeIn();
-    //or create an alert?
   }
 };
 

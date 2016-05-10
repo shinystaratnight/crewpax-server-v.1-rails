@@ -104,7 +104,7 @@ $(function(){
 
             setTimeout(function() {
                 $("#delete-union-success").fadeOut();
-            }, 2000);
+            }, 3000);
           }
         }
       });
@@ -214,7 +214,7 @@ $(function(){
 
             setTimeout(function() {
                 $("#delete-role-success").fadeOut();
-            }, 2000);
+            }, 3000);
           }
         }
       });
@@ -329,7 +329,7 @@ $(function(){
             $("#button-cert-"+certificate_id).remove();
             setTimeout(function() {
                 $("#delete-certificate-success").fadeOut();
-            }, 2000);
+            }, 3000);
           }
         }
       });
@@ -478,24 +478,39 @@ $(function(){
 
 $(".delete-user").on("click", function(){ 
 
-    var user_id = $(this).data("user-id");
-    var user_name = $(this).closest(".in").data("name");
-      $.ajax({
-        url: "/admin/users/" + user_id,
-        method: "delete",
-        success: function(response){   
-          console.log('successfully deleted '+user_name);
-          if (response.result) {
-            $("#delete-user-success").show();
-            $("#edit"+user_name).remove();
-            $("#button"+user_name).remove();
+  var user_id = $(this).data("user-id");
+  var user_name = $(this).closest(".in").data("name");
+    $.ajax({
+      url: "/admin/users/" + user_id,
+      method: "delete",
+      success: function(response){   
+        console.log('successfully deleted '+user_name);
+        if (response.result) {
+          $("#delete-user-success").show();
+          $("#edit"+user_name).remove();
+          $("#button"+user_name).remove();
 
-            setTimeout(function() {
-                $("#delete-user-success").fadeOut();
-            }, 2000);
-          }
+          setTimeout(function() {
+              $("#delete-user-success").fadeOut();
+          }, 3000);
         }
-      });
+      }
+    });
 
   });
+
+
+//*********************************************************************************************************
+// Other Stuff Section
+//********************************************************************************************************
+
+  $("h3.panel-title").on("click", function () {
+    $(this).children("a").children(".caret").toggleClass("rotated");
+  });
+
+  $(".field").on("click", function () {
+    $(this).children("a").children(".caret").toggleClass("rotated");
+  });
+
+
 });
