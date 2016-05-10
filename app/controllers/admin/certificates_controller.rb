@@ -25,17 +25,14 @@ class Admin::CertificatesController < ActionController::Base
     end
   end
 
-
   def destroy
-    @certificate= Certificate.find(params[:id])
-    respond_to do |format|
-      if @certificate.destroy
-        format.html{render @user}
-        format.json{render json: @certificate, status: :no_content}
-      else
-        format.json{render json: @certificate.errors.full_messages}
-      end
-    end
+    certificate = Certificate.find(params[:id])
+
+    results = {result: false}
+    results[:result] = true if certificate.destroy
+
+    results.to_json
+    render json: results, status: :ok
   end
 
   private

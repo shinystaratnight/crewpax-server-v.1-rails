@@ -182,17 +182,17 @@ visual_FX_artists = Role.create(name: "Visual FX Artists")
 os_key = dgc.roles.create(name: "On Set Key") # also none
 os_key.eligibilities.create(union_id: 7) 
 acfc.roles.create(name: "Catering")
-actor = ubcp.roles.create(name:"Actor") # also actra
+actor = ubcp.roles.create(name: "Actor") # also actra
 actor.eligibilities.create(union_id: 6) 
-stand_in = ubcp.roles.create(name:"Stand In") # also actra
+stand_in = ubcp.roles.create(name: "Stand In") # also actra
 stand_in.eligibilities.create(union_id: 6) 
-extra = ubcp.roles.create(name:"Extra") # also actra
+extra = ubcp.roles.create(name:" Extra") # also actra
 extra.eligibilities.create(union_id: 6) 
-security = acfc.roles.create(name:"Security") # also teamsters
+security = acfc.roles.create(name: "Security") # also teamsters
 security.eligibilities.create(union_id: 4) 
-acfc.roles.create(name:"Animals")
-acfc.roles.create(name:"Wranglers")
-acfc.roles.create(name:"Scenic Art")
+acfc.roles.create(name: "Animals")
+acfc.roles.create(name: "Wranglers")
+acfc.roles.create(name: "Scenic Art")
 acfc.roles.create(name: "Publicity")
 acfc.roles.create(name: "Prop Building")
 office = iatse.roles.create(name:"Office") # also acfc
@@ -204,15 +204,15 @@ Certificate.create(name: "WHMIS")
 Certificate.create(name: "TCP")
 Certificate.create(name: "TDG")
 Certificate.create(name: "FORKLIFT TICKET")
-Certificate.create(name:"AERIAL LIFT")
-Certificate.create(name:"SCISSOR LIFT")
-Certificate.create(name:"PAL GUN LICENSE")
+Certificate.create(name: "AERIAL LIFT")
+Certificate.create(name: "SCISSOR LIFT")
+Certificate.create(name: "PAL GUN LICENSE")
 Certificate.create(name: "ACT SAFE")
-Certificate.create(name:"ELECTRICIAN TICKET")
+Certificate.create(name: "ELECTRICIAN TICKET")
 Certificate.create(name: "LIFT TICKET")
-Certificate.create(name:"SE DE EXAM")
-Certificate.create(name:"BOOM LIFT TICKET")
-Certificate.create(name:"FOODSAFE")
-Certificate.create(name:"DRIVERS LICENSE CLASS 1")
-Certificate.create(name:"DRIVERS LICENSE CLASS 2")
-Certificate.create(name:"DRIVERS LICENSE CLASS 3")
+Certificate.create(name: "SE DE EXAM")
+Certificate.create(name: "BOOM LIFT TICKET")
+Certificate.create(name: "FOODSAFE")
+Certificate.create(name: "DRIVERS LICENSE CLASS 1")
+Certificate.create(name: "DRIVERS LICENSE CLASS 2")
+Certificate.create(name: "DRIVERS LICENSE CLASS 3")

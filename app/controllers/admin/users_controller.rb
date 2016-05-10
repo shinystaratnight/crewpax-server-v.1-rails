@@ -30,10 +30,15 @@ class Admin::UsersController < ApplicationController
       end  
   end
 
-  def destroy
-    @user = User.find(params[:id])
 
-    @user.destroy
+  def destroy
+    user = User.find(params[:id])
+
+    results = {result: false}
+    results[:result] = true if user.destroy
+
+    results.to_json
+    render json: results, status: :ok
   end
 
 

@@ -87,7 +87,7 @@ $(function(){
      };
   });
 
- $(".delete-union").on("click", function(){ //doesn't work
+ $(".delete-union").on("click", function(){ 
 
     var union_id = $(this).data("union-id");
       $.ajax({
@@ -98,7 +98,7 @@ $(function(){
           console.log(response);
           if (response.result) {
             $("#delete-union-success").show();
-                        // close accordion
+            
           }
         }
       });
@@ -192,19 +192,23 @@ $(function(){
      };
   });
 
-  $(".delete-role").on("click", function(){ //doesn't work
+  $(".delete-role").on("click", function(){ 
 
-    var role_id = $(this).closest(".role-info").data("role-id");
+    var role_id = $(this).data("role-id");
       $.ajax({
         url: "/admin/roles/" + role_id,
         method: "delete",
         success: function(response){    
           console.log('success');
-          // window.location.reload;
+          if (response.result) {
+            $("#delete-role-success").show();
+            
+          }
         }
       });
 
   });
+
 
 //*********************************************************************************************************
 // Add, Update or Delete Certificate Section
@@ -299,17 +303,21 @@ $(function(){
      };
   });
 
-  $(".delete-certificate").on("click", function(){ //doesn't work
+  $(".delete-certificate").on("click", function(){ 
 
-    var certificate_id = $(this).closest(".certificate-info").data("certificate-id");
+    var certificate_id = $(this).data("certificate-id");
       $.ajax({
         url: "/admin/certificates/" + certificate_id,
         method: "delete",
         success: function(response){    
           console.log('success');
-          // window.location.reload;
+          if (response.result) {
+            $("#delete-certificate-success").show();
+            
+          }
         }
       });
+
   });
 
 
@@ -452,15 +460,18 @@ $(function(){
   });
 
 
- $(".delete-user").on("click", function(){ //doesn't work
+ $(".delete-user").on("click", function(){ 
 
-    var user_id = $(this).closest(".user-info").data("user-id");
+    var user_id = $(this).data("user-id");
       $.ajax({
         url: "/admin/users/" + user_id,
         method: "delete",
         success: function(response){    
           console.log('success');
-          // window.location.reload;
+          if (response.result) {
+            $("#delete-user-success").show();
+            
+          }
         }
       });
 

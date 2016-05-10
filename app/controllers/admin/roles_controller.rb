@@ -5,9 +5,13 @@ class Admin::RolesController < ApplicationController
   end
 
   def destroy
-    @role = Role.find(params[:id])
+    role = Role.find(params[:id])
 
-    @role.destroy
+    results = {result: false}
+    results[:result] = true if role.destroy
+
+    results.to_json
+    render json: results, status: :ok
   end
 
   def update
