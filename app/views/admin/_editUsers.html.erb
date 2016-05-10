@@ -10,7 +10,7 @@
    <div class="list-group">
 
       <%@users.each do |user| %>
-        <div class="list-group-item">
+        <div class="list-group-item" id="button<%=user.name.tr(' ','-')%>">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=user.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=user.name.tr(' ','-')%>">
             <%= user.name %>
           </a>
@@ -22,14 +22,13 @@
 
   <%@users.each do |user| %>
 
-
-    <div id="edit<%=user.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=user.name.tr(' ','-')%>">
+    <div id="edit<%=user.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=user.name.tr(' ','-')%>" data-name="<%=user.name.tr(' ','-')%>" >
 
     <div class="field">
       <a role="button" data-toggle="collapse" href="#editUserInfo" aria-expanded="true" aria-controls="editUserInfo"><span class="caret"></span> Personal Info</a>
     </div>
 
-    <div id="editUserInfo" class="panel panel-collapse collapse in" role="tabpanel" aria-labelledby="editUserInfo">
+    <div id="editUserInfo" class="panel panel-collapse collapse in"  role="tabpanel" aria-labelledby="editUserInfo">
 
       <div class="field user-info" data-user-id="<%=user.id %>">
         <h5> User Name: </h5>

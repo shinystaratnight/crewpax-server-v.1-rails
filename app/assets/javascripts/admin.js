@@ -91,9 +91,7 @@ $(function(){
 
     var union_id = $(this).data("union-id");
     var union_name = $(this).closest(".in").data("name");
-    var div_we_want = "#edit"+union_name;
 
-    console.log(div_we_want)
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
@@ -101,7 +99,8 @@ $(function(){
           console.log('successfully deleted '+union_name);
           if (response.result) {
             $("#delete-union-success").show();
-            $(div_we_want).removeClass("in");
+            $("#edit"+union_name).remove();
+            $("#button"+union_name).remove();
 
             setTimeout(function() {
                 $("#delete-union-success").fadeOut();
@@ -202,6 +201,7 @@ $(function(){
   $(".delete-role").on("click", function(){ 
 
     var role_id = $(this).data("role-id");
+
       $.ajax({
         url: "/admin/roles/" + role_id,
         method: "delete",
@@ -209,6 +209,9 @@ $(function(){
           console.log('success');
           if (response.result) {
             $("#delete-role-success").show();
+            $("#edit-role-"+role_id).remove();
+            $("#button-role-"+role_id).remove();
+
             setTimeout(function() {
                 $("#delete-role-success").fadeOut();
             }, 2000);
@@ -322,6 +325,8 @@ $(function(){
           console.log('success');
           if (response.result) {
             $("#delete-certificate-success").show();
+            $("#edit-cert-"+certificate_id).remove();
+            $("#button-cert-"+certificate_id).remove();
             setTimeout(function() {
                 $("#delete-certificate-success").fadeOut();
             }, 2000);
@@ -471,16 +476,20 @@ $(function(){
   });
 
 
- $(".delete-user").on("click", function(){ 
+$(".delete-user").on("click", function(){ 
 
     var user_id = $(this).data("user-id");
+    var user_name = $(this).closest(".in").data("name");
       $.ajax({
         url: "/admin/users/" + user_id,
         method: "delete",
-        success: function(response){    
-          console.log('success');
+        success: function(response){   
+          console.log('successfully deleted '+user_name);
           if (response.result) {
             $("#delete-user-success").show();
+            $("#edit"+user_name).remove();
+            $("#button"+user_name).remove();
+
             setTimeout(function() {
                 $("#delete-user-success").fadeOut();
             }, 2000);
@@ -489,5 +498,4 @@ $(function(){
       });
 
   });
-
 });

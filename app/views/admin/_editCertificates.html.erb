@@ -10,8 +10,8 @@
    <div class="list-group">
 
       <%@certificates.each do |certificate| %>
-        <div class="list-group-item">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=certificate.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=certificate.name.tr(' ','-')%>">
+        <div class="list-group-item" id="button-cert-<%=certificate.id%>">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit-cert-<%=certificate.id%>" aria-expanded="false" aria-controls="edit<%=certificate.name.tr(' ','-')%>">
             <%= certificate.name %>
           </a>
         </div>
@@ -27,7 +27,7 @@
   </div>
 
   <%@certificates.each do |certificate| %>
-    <div id="edit<%=certificate.name.tr(' ','-')%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
+    <div id="edit-cert-<%=certificate.id%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
       <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
         <h5> Certificate Name: </h5>
         <div class="certificate-name" contenteditable="true"><%=certificate.name %></div>
