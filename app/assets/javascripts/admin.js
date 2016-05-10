@@ -6,7 +6,8 @@ $(function(){
 //When a mouse leaves the entry div, it will trigger ajax
   $(".union-name").on("blur", function(){
     //Check to see if a union is already created and decide which url the ajax should send to(create/update) 
-    var union_id = $(this).closest(".union-info").data("union-id");
+    var text_box = $(this);
+    var union_id = text_box.closest(".union-info").data("union-id");
     if (union_id == "") {
       var url = "admin/unions";
       var method = "post";
@@ -14,14 +15,14 @@ $(function(){
       var url = "admin/unions/" + union_id;
       var method = "put";
     }
-    var name = $(this).closest(".union-name").text().trim();
+    var name = text_box.closest(".union-name").text().trim();
 
     if (name == "") {
-      $(this).addClass("invalid").next().show();
+      text_box.addClass("invalid").next().show();
       return false;
     } else {
       $(".union-name-error").hide();
-      $(this).addClass("valid");            
+      text_box.addClass("valid");            
 
       $.ajax({
         url: url,
@@ -30,7 +31,11 @@ $(function(){
         data:{union: {name: name}},
         success: function(response){
           if (response.id) {
-            $(".union-info").data("union-id", response.id);
+            text_box
+              .closest(".union-info").data("union-id", response.id)
+              .next(".union-info").data("union-id", response.id)
+              .next(".union-info").children(".delete-union").data("union-id", response.id);  
+            $("#newUnion").data("name", response.name);
             $("#new-union-roles").show();
           } else {              
             var errors = response.toString();
@@ -101,6 +106,11 @@ $(function(){
             $("#delete-union-success").show();
             $("#edit"+union_name).remove();
             $("#button"+union_name).remove();
+            
+            // for cancel button
+            $("#newUnion .union-name").text("");
+            $("#newUnion .union-info").data("union-id", "");
+            $("#newUnion .edit-roles").prop("checked", false);
 
             setTimeout(function() {
                 $("#delete-union-success").fadeOut();
@@ -501,7 +511,7 @@ $(".delete-user").on("click", function(){
 
 
 //*********************************************************************************************************
-// Other Stuff Section
+// Other Stuff Section (these are buggy)
 //********************************************************************************************************
 
   $("h3.panel-title").on("click", function () {
