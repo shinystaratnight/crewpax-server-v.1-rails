@@ -95,10 +95,11 @@ $(function(){
         method: "delete",
         success: function(response){   
           console.log('success');
-          console.log(response);
           if (response.result) {
             $("#delete-union-success").show();
-            
+            setTimeout(function() {
+                $("#delete-union-success").fadeOut();
+            }, 2000);
           }
         }
       });
@@ -202,7 +203,9 @@ $(function(){
           console.log('success');
           if (response.result) {
             $("#delete-role-success").show();
-            
+            setTimeout(function() {
+                $("#delete-role-success").fadeOut();
+            }, 2000);
           }
         }
       });
@@ -313,7 +316,9 @@ $(function(){
           console.log('success');
           if (response.result) {
             $("#delete-certificate-success").show();
-            
+            setTimeout(function() {
+                $("#delete-certificate-success").fadeOut();
+            }, 2000);
           }
         }
       });
@@ -470,7 +475,9 @@ $(function(){
           console.log('success');
           if (response.result) {
             $("#delete-user-success").show();
-            
+            setTimeout(function() {
+                $("#delete-user-success").fadeOut();
+            }, 2000);
           }
         }
       });
