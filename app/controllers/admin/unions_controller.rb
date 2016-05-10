@@ -1,5 +1,7 @@
 class Admin::UnionsController < ApplicationController
 
+  before_filter :require_admin
+
   def index
     @unions = Union.all
   end

@@ -1,5 +1,7 @@
 class Admin::EligibilitiesController < ApplicationController
 
+  before_filter :require_admin
+
   def create
     @eligibility = Eligibility.new(eligibility_params)
     respond_to do |format|

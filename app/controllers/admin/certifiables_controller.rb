@@ -1,4 +1,7 @@
 class Admin::CertifiablesController < ActionController::Base
+
+  before_filter :require_admin
+
   def create
     @certifiable= Certifiable.create(certifiable_params)
     respond_to do |format|

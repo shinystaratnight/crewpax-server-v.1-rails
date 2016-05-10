@@ -1,4 +1,7 @@
 class Admin::CertificatesController < ActionController::Base
+
+  before_filter :require_admin
+  
   def create
     @certificate=Certificate.create(certificate_params)
     respond_to do |format|

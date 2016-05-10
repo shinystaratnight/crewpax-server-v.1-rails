@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
     user_path(resource)
   end
   
-   
  
   protected
 
@@ -23,4 +22,22 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+## ashley added the methods below.
+
+  def restrict_access
+    if !user_signed_in?
+      flash[:alert] = "You must log in."
+      redirect_to '/'
+    end
+  end
+
+  def require_admin
+    if !current_user.admin?
+      flash[:alert] = "You don't have that privilege."
+      redirect_to '/'
+    end
+  end
+
+## ashley added the methods above.
 end

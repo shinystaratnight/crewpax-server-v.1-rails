@@ -217,6 +217,6 @@ Certificate.create(name: "DRIVERS LICENSE CLASS 1")
 Certificate.create(name: "DRIVERS LICENSE CLASS 2")
 Certificate.create(name: "DRIVERS LICENSE CLASS 3")
 
-User.create(name: "ashley", email: "ashley@gmail.com", password: "1234")
+User.create(name: "ashley", email: "ashley@gmail.com", password: "1234", admin: true)
 User.create(name: "bashley", email: "bashley@gmail.com", password: "1234")
 User.create(name: "smashley", email: "smashley@gmail.com", password: "1234")
