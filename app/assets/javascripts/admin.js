@@ -72,22 +72,15 @@ $(function(){
       });
 
      } else {
-
-      $.ajax({
         //existing eligibility to be deleted 
 
+      $.ajax({
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
           console.log("successfully deleted eligibility #"+eligibility_id);
-          // if (response.id) {
-          //   $(".union-info").data("union-id", response.id);
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".union-name-error").text("*"+ errors).show();
-          // }
         }
       });
 
@@ -96,13 +89,17 @@ $(function(){
 
  $(".delete-union").on("click", function(){ //doesn't work
 
-    var union_id = $(this).closest(".union-info").data("union-id");
+    var union_id = $(this).data("union-id");
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
-        success: function(response){    
+        success: function(response){   
           console.log('success');
-          // window.location.reload;
+          console.log(response);
+          if (response.result) {
+            $("#delete-union-success").show();
+                        // close accordion
+          }
         }
       });
 
@@ -181,8 +178,8 @@ $(function(){
 
      } else {
         //existing eligibility to be deleted 
+
       $.ajax({
-      
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
@@ -281,10 +278,9 @@ $(function(){
       });
 
      } else {
-
-      $.ajax({
         //existing certifiable to be deleted
 
+      $.ajax({
         url: "/admin/certifiables/" + certifiable_id,
         method:"delete",
         dataType: "json",
@@ -392,10 +388,9 @@ $(function(){
       });
 
      } else {
- 
+         //existing eligibility to be deleted 
+
       $.ajax({
-        //existing eligibility to be deleted 
-   
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
