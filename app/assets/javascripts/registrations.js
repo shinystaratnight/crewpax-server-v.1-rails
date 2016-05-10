@@ -332,11 +332,13 @@ $(function(){
     }
   });
 //===================================================================================
-// this will display an alert that the four necessary fields have been successfully saved and that the user has been created
+// this will display an alert that the four necessary fields have been successfully saved 
+// and that the user has been created, and reveal the rest of the form
 function userCreated() {
   if ($("#password").hasClass("valid") && $("#pw_confirmation").hasClass("valid") && $("#email").hasClass("valid") && $("#name").hasClass("valid"))
   {
-    $("#profile-success").show();
+    $("#profile-success").fadeIn();
+    $(".continue-registration").fadeIn();
     //or create an alert?
   }
 };

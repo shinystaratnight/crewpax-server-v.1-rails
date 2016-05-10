@@ -13,7 +13,7 @@
         <div class="list-group-item">
 <!------------------Render checkboxes ids(roles ids) when page is loaded-------------------->
           <% @unions.each do |union| %>
-            <% if union.name == "DGC" %>
+            
               <div hidden="true"><%=union.id %></div>
             <%end%>
           <%end %>
