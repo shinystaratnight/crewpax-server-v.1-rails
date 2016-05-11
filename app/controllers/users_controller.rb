@@ -1,20 +1,57 @@
 class UsersController < ApplicationController
-  before_filter :set_role, only: :index
-  respond_to :html, :json,:js
+  # before_filter :set_role, only: :index
+  respond_to :html, :json, :js
+  # caches_page :index
   def index
-    @users = User.all
-    @users = User.page params[:page]
-    # Filter out never login users
-    @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
-    @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
-    binding.pry 
-  
+    
     respond_to do |format|
-      if @role.present?
-        @filter_users = User.filter(params[:role_id])
-        format.js 
+      # binding.pry 
+      if params[:page]== "0" || params[:page] == nil
+        @users = User.limit(3)
+        # @paginated_users = @users.page(params[:page]).per(1)
+        format.html
+        # format.js 
+        format.json{render json: @users}
       end
+      # elsif params[:page] % 3 == 2
+      #   @ajax_request_time = (params[:page] + 1) / 3
+      #   @new_request_user_limit = (@ajax_request_time + 1) * 3 
+      #   @users = User.limit(@new_request_user_limit).offset(@ajax_request_time * 3)
+      #   @paginated_users = @users.page(params[:page]).per(1)
+      #   format.html{render :index}
+      #   format.json{render json: @users }
+      # else 
+      #   format.html{render :index} 
+      #   # format.json{render json:@users}
+      # end
     end
+      # if params[:current_page_number]=="0" || params[:current_page_number]== nil
+      #   @users = User.limit(3)
+      #   @paginated_users = @users.page(params[:page]).per(1)
+      #   # format.js 
+      #   format.html{render :index}
+      #   # format.json{render json: @users}
+        
+      #   binding.pry 
+      # elsif params[:current_page_number].present?
+      #   current_page_number = params[:current_page_number].to_i
+      #   @ajax_request_time = (current_page_number + 1) / 3
+      #   @new_request_user_limit = (@ajax_request_time + 1) * 3 
+      #   @users = User.limit(@new_request_user_limit).offset(@ajax_request_time * 3)
+      #   format.html{render :index}
+      #   format.json{render json: @users }
+     
+      # end
+      
+    #second ajax request User.limit(30).offset(30)
+    # Filter out never login users
+    # @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
+    # @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
+    
+  
+      
+    # end
+
     
 
     

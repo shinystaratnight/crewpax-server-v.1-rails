@@ -1,4 +1,35 @@
 $(function(){
+//=============When the page is loaded, Using Ajax to pre load 3 users========================================================================  
+  // When the Page is load, preload first 30 users
+  var current_page_number = $(location).attr("search").match(/\d+/)
+  current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
+  console.log("current_page_number:", current_page_number)
+  // preloadUser();
+  // When a user is on the 2nd, 5th, 7th +++ page, send another ajax request to preload the next 30 users info
+  if (current_page_number == 0){
+    preloadUser(); 
+  } 
+
+  // else if (current_page_number % 3 == 2){
+  //   preloadUser(current_page_number);
+  // }
+
+  $(".next").on("click", function(){
+    alert("button clicked")
+  })
+
+
+  // else if (current_page_number % 3 == 2){
+  //   // var preload_time = (current_page_number + 1) / 3
+  //   debugger
+  //   preloadUser(current_page_number);
+  // }
+  
+
+
+
+
+
 //=============================Search Employees with given roles=========================================  
   // $("#user_role, #select_user_role").on("change",function(){
 
@@ -61,31 +92,31 @@ $(function(){
   //   }
   // });
   
-  $("#user_role").on("change",function(){
-    var role_id = $(this).val();  
-   // when the selection is all  
-    if (role_id == 0){
-      $(".user-card").show();
-      return false;
-    }else{
-      $(this).data("selected-user-role", "clicked")
-      var hiring_board_status = $(this).data("selected-user-role");
-      //User ajax to return user id with scope 
-      console.log("hiring_board status:", hiring_board_status)
-       console.log("roles ids:", role_id)
-      $.ajax({
-        url: "/users",
-        method: "get",
-        dataType: "json",
-        data:{role_id:role_id},
+  // $("#user_role").on("change",function(){
+  //   var role_id = $(this).val();  
+  //  // when the selection is all  
+  //   if (role_id == 0){
+  //     $(".user-card").show();
+  //     return false;
+  //   }else{
+  //     $(this).data("selected-user-role", "clicked")
+  //     var hiring_board_status = $(this).data("selected-user-role");
+  //     //User ajax to return user id with scope 
+  //     console.log("hiring_board status:", hiring_board_status)
+  //      console.log("roles ids:", role_id)
+  //     $.ajax({
+  //       url: "/users",
+  //       method: "get",
+  //       dataType: "json",
+  //       data:{role_id:role_id},
 
-        success: function(response){    
+  //       success: function(response){    
         
-        }
-      });
-    }
+  //       }
+  //     });
+  //   }
 
-  })
+  // })
 
 //==================================Sort Employees by Last Sign in ========================================================
   $("#most_recent_log_in > a").on("click", function(event){
@@ -111,6 +142,28 @@ $(function(){
 });
 
 //======================================Common function====================================================
+  function preloadUser(){
+    $.ajax({
+      url: "/users",
+      method: "get",
+      dataType: "json",
+      // data:{current_page_number:current_page_number},
+      success: function(response){
+        console.log("response:", response)
+        var template = $("#user_card_template").html();
+        var templateScript = Handlebars.compile(template);
+        var context = {"name" : response[0].name,
+          "phone": response[0].phone
+
+        }
+        var html = templateScript(context);
+        $("#user-list").append(html)
+      }
+    });
+
+  }
+
+
   function UserNotFound(){
     $(".user-card").hide();
     $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);

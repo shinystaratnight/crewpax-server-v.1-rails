@@ -17,9 +17,9 @@ class User < ActiveRecord::Base
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
 
-  default_scope { order :name }
+  default_scope { order :last_sign_in_at }
   
-  paginates_per 6
+
 
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
   validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 

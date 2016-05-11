@@ -1,0 +1,69 @@
+<script id="user_card_template" type="text/x-handlebars-template"> 
+  <div class="container">
+    <div class="row" id="paginated_users">
+      <div class="user-card col-md-4" data-user-id = "" data-order="" >
+        <div class="instagram-content">          
+          <div class="row photos-wrap">
+           <!--Instafeed target div -->
+              <div id="instafeed"></div>
+                <!--The following HTML will be our template inside instafeed -->                    
+                  <div class="photo-box">
+                    <div class="image-wrap">
+                      <!--user image -->
+                            
+                    </div>
+                    <div class="description">
+                      <span class="username">{{{name}}}</span>
+                        <span> <i class="fa fa-car" aria-hidden="true" style="font-size: 20px; margin-left: 10px;"></i>
+                        <!-- has a vehicle --> 
+                        </span>
+                     
+                         
+                        <!--<%# if user.appointments.any?{|a| a.date == Date.today} %> -->                        
+                        <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:green; font-size: 15px;">Available Today</i> 
+                            <!--<%# else %>-->
+                        <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>
+                            <!--<%# end %> --> 
+                      <br/>
+                      <span> Union Status:</span>       
+
+                            <!--<%# @user_unions = user.unions %>
+                            <%# if @user_unions.present? %>
+                              <%# @user_unions.group_by(&:id).map do |k, v| %>
+                                Get Rid of Duplicated elements in the array to find the Union Name
+                                To find the eligibility with the union id and find whether a user is a member or has a permit with days 
+                                    <%# membership = user.eligibilities.find_by(union_id: v.first.id).member %>
+                                    <%# permit_days = user.eligibilities.find_by(union_id: v.first.id).permit_days %>                               
+                                    <%# if membership.present? %>
+                                      <div> Member: <%#= v.first.name%></div>
+                                    <%# elsif permit_days.present? %>
+                                      <div> Permit:  <%#= v.first.name%> :<%#=permit_days%>days</div>
+                                    <%# else %>
+                                      <div> Unions Status: <%#=v.first.name %> </div>
+                                    <%# end %>                           
+                              <%# end %>                            
+                            <%# end %> 
+                            -->
+                            <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
+                              {{{phone}}}
+                            </div>
+                          </div>
+                          
+
+                          <div> Last Log In: 
+                          <!-- <%#= user.last_sign_in_at.present? ? (user.last_sign_in_at).strftime("%F") : "Never Log in" %> -->
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                          </div>
+                         
+
+                          <div>
+                            <!-- path to view profile --> 
+                          </div> 
+                        </div>
+                     
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>

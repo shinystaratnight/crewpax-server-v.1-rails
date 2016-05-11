@@ -21,7 +21,7 @@
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
  
-  <div id="user-list"><%= render "user_cards" %></div>
+  <div id="user-list"><%=render "user_cards" %></div>
 
 
 
@@ -58,7 +58,7 @@
                           <%# @user_unions = user.unions %>
                           <%# if @user_unions.present? %>
                             <%# @user_unions.group_by(&:id).map do |k, v| %>
-                              <!--Get Rid of Duplicated elements in the array to find the Union Name -->
+                              <!-- Get Rid of Duplicated elements in the array to find the Union Name  -->
                                 <!--To find the eligibility with the union id and find whether a user is a member or has a permit with days -->
                                   <%# membership = user.eligibilities.find_by(union_id: v.first.id).member %>
                                   <%# permit_days = user.eligibilities.find_by(union_id: v.first.id).permit_days %>                               
@@ -93,4 +93,4 @@
   <!-- </div> -->
 
 
-<%=paginate @users%>
+
