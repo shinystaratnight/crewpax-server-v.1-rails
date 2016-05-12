@@ -154,15 +154,28 @@ $(function(){
         var templateScript = Handlebars.compile(template);
         var users = {
           users: [
-            {"name" : response[0].name,"phone": response[0].phone, "path" : "users/" + response[0].id},
-            {"name" : response[1].name, "phone": response[1].phone,"path" : "users/" + response[1].id },
-            {"name" : response[2].name,"phone": response[2].phone, "path" : "users/" + response[2].id}
+            {"name" : response[0].name,"phone": response[0].phone, "path" : "users/" + response[0].id}
+            // {"name" : response[1].name, "phone": response[1].phone,"path" : "users/" + response[1].id },
+            // {"name" : response[2].name,"phone": response[2].phone, "path" : "users/" + response[2].id}
           ]
         }
         console.log("users content:", users)
         var html = templateScript(users);      
-        $("#user-list").append(html)
         
+        var total_user = 35
+        var per_page = 5
+        
+        $("#user-pagination").twbsPagination({
+          totalPages: Math.ceil(total_user / per_page),
+          visiblePages: 3,
+          href: '?page={{number}}',
+          // onPageClick: function (event, page, html) {
+          //   $('#user-list').text('Page ' + page);
+            
+        
+            
+        // }
+    });
        
 
       }
