@@ -5,24 +5,24 @@
 <span id="role_filter">Show me crews filter by Role: </span><%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role', data:{selected_user_role: ""}, name: 'user_role_id'
   %>
 
-
-  <div class= "btn-group"> 
-    <button class="btn btn-default" id="sort_by_label"> Sort By</button>
-    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-angle-down"></i>
-    </button>
-    <ul class="dropdown-menu">
-     <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
-     
-    </ul>
-  </div>
+<div class= "btn-group"> 
+  <button class="btn btn-default" id="sort_by_label"> Sort By</button>
+  <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-angle-down"></i>
+  </button>
+  <ul class="dropdown-menu">
+   <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
+   
+  </ul>
+</div>
 
 </br>
   
-  <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
+<div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
  
-  <div id="user-list"><%=render "user_cards" %></div>
+<div id="user-list"><%=render "user_cards" %></div>
 
+<div id="user-pagination"><%#=render "user_paging" %></div>
 
 
   <!-- <div class="container">

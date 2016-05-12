@@ -12,8 +12,14 @@ class UsersController < ApplicationController
         format.html
         # format.js 
         format.json{render json: @users}
+      else 
+        @users = User.all 
+        format.html{render :index} 
+        format.json{render json: @users}
+ 
       end
-      # elsif params[:page] % 3 == 2
+     
+      # if params[:page] % 3 == 2
       #   @ajax_request_time = (params[:page] + 1) / 3
       #   @new_request_user_limit = (@ajax_request_time + 1) * 3 
       #   @users = User.limit(@new_request_user_limit).offset(@ajax_request_time * 3)
@@ -22,7 +28,7 @@ class UsersController < ApplicationController
       #   format.json{render json: @users }
       # else 
       #   format.html{render :index} 
-      #   # format.json{render json:@users}
+      #   format.json{render json:@users}
       # end
     end
       # if params[:current_page_number]=="0" || params[:current_page_number]== nil

@@ -152,12 +152,19 @@ $(function(){
         console.log("response:", response)
         var template = $("#user_card_template").html();
         var templateScript = Handlebars.compile(template);
-        var context = {"name" : response[0].name,
-          "phone": response[0].phone
-
+        var users = {
+          users: [
+            {"name" : response[0].name,"phone": response[0].phone, "path" : "users/" + response[0].id},
+            {"name" : response[1].name, "phone": response[1].phone,"path" : "users/" + response[1].id },
+            {"name" : response[2].name,"phone": response[2].phone, "path" : "users/" + response[2].id}
+          ]
         }
-        var html = templateScript(context);
+        console.log("users content:", users)
+        var html = templateScript(users);      
         $("#user-list").append(html)
+        
+       
+
       }
     });
 
@@ -196,9 +203,4 @@ $(function(){
     });
   }
 
-
-
-
-
-
-
+  
