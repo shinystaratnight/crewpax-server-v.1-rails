@@ -149,19 +149,20 @@ $(function(){
       dataType: "json",
       // data:{current_page_number:current_page_number},
       success: function(response){
-        console.log("response:", response)
+        console.log("response:", response.paginated_users)
         var template = $("#user_card_template").html();
         var templateScript = Handlebars.compile(template);
+        debugger
         var users = {
           users: [
-            {"name" : response[0].name,"phone": response[0].phone, "path" : "users/" + response[0].id}
-            // {"name" : response[1].name, "phone": response[1].phone,"path" : "users/" + response[1].id },
+            {"name" : response.paginated_users[0].name,"phone": response.paginated_users[0].phone, "path" : "users/" + response.paginated_users[0].id},
+            {"name" : response.paginated_users[1].name, "phone": response.paginated_users[1].phone,"path" : "users/" + response.paginated_users[1].id }
             // {"name" : response[2].name,"phone": response[2].phone, "path" : "users/" + response[2].id}
           ]
         }
         console.log("users content:", users)
         var html = templateScript(users);      
-        
+        $("#user-list").append(html)
         var total_user = 35
         var per_page = 5
         

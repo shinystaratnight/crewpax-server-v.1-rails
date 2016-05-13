@@ -5,10 +5,26 @@ class UsersController < ApplicationController
   def index
     
     respond_to do |format|
-      # binding.pry 
+      
       if params[:page]== "0" || params[:page] == nil
-        @users = User.limit(3)
-        # @paginated_users = @users.page(params[:page]).per(1)
+        @users = {};
+        @total_user = User.all.length
+        @paginated_users = User.limit(3)
+    
+        @paginated_user_info = @paginated_users.map{|user| 
+          { user_info: user,
+            union_member: user.eligibilities.find_all{|e| e.member == true}
+                             .uniq{|u| u.union_id}
+                             .map{|info| Union.find(info.union_id).name}.join(","),
+            union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
+                              .uniq{|u| u.union_id}
+                              .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
+            availabilities: user.appointments.find_all{|a| a.date > Date.today}.map{|a| a.date}
+          }}
+        # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
+        
+        @users = {total_user: @total_user, paginated_users:  @paginated_user_info}
+        
         format.html
         # format.js 
         format.json{render json: @users}
@@ -215,10 +231,7 @@ class UsersController < ApplicationController
   end
 
   # To prevent Mass assignments.Require that :user be a key in the params Hash to accept various attributes
-  def user_params
-    # params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
-    # :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
-    # :admin, :phone, {:roles_ids =>[]})      
+  def user_params     
     params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
             :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
             :admin, :phone,{roles_ids:[]})
