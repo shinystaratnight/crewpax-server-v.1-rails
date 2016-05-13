@@ -5,8 +5,8 @@ class UsersController < ApplicationController
   def index
     
     respond_to do |format|
-      
-      if params[:page]== "0" || params[:page] == nil
+   
+      if params[:page]== "0" || params[:page] == nil 
         @users = {};
         @total_user = User.all.length
         @paginated_users = User.limit(3)
@@ -28,11 +28,15 @@ class UsersController < ApplicationController
         format.html
         # format.js 
         format.json{render json: @users}
-      else 
-        @users = User.all 
+      elsif params[:page] % 3 == 2
+  
         format.html{render :index} 
         format.json{render json: @users}
- 
+      
+      else 
+
+        format.html{render :index}
+        format.json{render json: @users}
       end
      
       # if params[:page] % 3 == 2

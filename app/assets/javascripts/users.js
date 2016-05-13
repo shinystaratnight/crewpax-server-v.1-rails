@@ -1,29 +1,53 @@
 $(function(){
 //=============When the page is loaded, Using Ajax to pre load 3 users========================================================================  
   // When the Page is load, preload first 30 users
+  var data = [];  
   var current_page_number = $(location).attr("search").match(/\d+/)
   current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
   console.log("current_page_number:", current_page_number)
-  var opts = {
-    pageMax: 2,
-    postsDiv: $('#user-list'),
-  }
-    
 
-
-  // When a user is on the 2nd, 5th, 7th +++ page, send another ajax request to preload the next 30 users info
   if (current_page_number == 0){
-    preloadUser();
+    var opts = {
+    pageMax: 1,
+    postsDiv: $('#user-list'),
+    }
+  
+    firstloadUser(opts,data);
 
   } 
 
-  // else if (current_page_number % 3 == 2){
-  //   preloadUser(current_page_number);
-  // }
+  
+  // When a user is on the 2nd, 5th, 7th +++ page, send another ajax request to preload the next 30 users info
+  // $(document).on("click", ".pagination-page",function(data){
+  //   debugger
+  //   // var current_page_number = $(location).attr("search").match(/\d+/)
+  //   // current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
+  //   // console.log("next page clicked, current_page_number is:", current_page_number)
+  //   var gotoPageNumber = $(this).data("page");
+  //   console.log("clicked page that goes to:", gotoPageNumber)
 
-  $(".next").on("click", function(){
-    alert("button clicked")
-  })
+  //   if (gotoPageNumber % 3 == 2){
+
+  //   }else{
+ 
+      
+  //   }
+    
+  // });
+ 
+
+
+  // $("#user-pagination").on("click", "pagination>li.pagination-page", function(){
+  //   alert("next page clicked")
+  //   console.log("next page clicked ")
+
+  //     // changePage($(this).data("page"), data, opts, user_source)
+  //     // debugger
+  //   });
+  
+  // $(".pagination-page a ").on("click", function(){
+    
+  // })
 
 
   // else if (current_page_number % 3 == 2){
@@ -37,7 +61,197 @@ $(function(){
 
 
 
-//=============================Search Employees with given roles=========================================  
+
+//==================================Sort Employees by Last Sign in ========================================================
+  $("#most_recent_log_in > a").on("click", function(event){
+    event.preventDefault();
+    // var roles_ids = [];
+    // roles_ids.push($(this).data("selected-role-id"));
+    var last_sign_in_at = "most_recent"
+    var role_id = $(this).data("selected-role-id")
+    if(role_id == ""){
+      var user_data = {last_sign_in_at: last_sign_in_at}
+      sortUser(user_data);
+    }else{
+      var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
+      sortUser(user_data);
+    }
+    
+  });
+
+
+//=========================================================================================================
+  
+
+
+
+});
+
+//========================================================================================================
+
+
+//======================================Common function====================================================
+ 
+
+  function firstloadUser(opts,data){
+    $.ajax({
+      url: "/users",
+      method: "get",
+      dataType: "json",
+      success: function(response){
+        var dataCount = response.total_user;
+        var pageCount = Math.ceil(dataCount/opts.pageMax);
+        data.push(response) // Add return response json in an array will return => [object]
+        console.log("response:", response.paginated_users)
+        var user_source = $("#user_card_template").html()
+        if (dataCount > opts.pageMax){
+          paginate(pageCount,opts,data, user_source);
+          posts = response.paginated_users.slice(0, opts.pageMax);
+          // When click on the pagination button:
+          $(".pagination-page").on("click", function(){
+            var gotoPageNumber = $(this).data("page");
+            console.log("clicked page that goes to:", gotoPageNumber)
+            if (gotoPageNumber % 3 == 2){
+              // First, show already render info 
+              changePage(gotoPageNumber, data, opts, user_source) 
+              // Second, send another ajax request to load more data
+
+            }else{
+              changePage(gotoPageNumber, data, opts, user_source)
+            }
+
+          })
+
+
+
+        } else {
+          posts = response.paginated_users;
+        }
+        
+        loadPosts(posts,opts,user_source); //load posts for the current page
+      }
+    });
+
+  }
+
+  function range(i){return i?range(i-1).concat(i):[]}  
+
+  function paginate(pageCount, opts, data, user_source){
+    
+    var source = $("#pagination-template").html();
+    var template = Handlebars.compile(source);
+    var context = {pages: range(pageCount)};
+    var html = template(context);
+    opts.postsDiv.after(html);//add the page bar both on the top and bottom of the page
+
+    // var pageItems = $('.pagination>li.pagination-page');
+
+    // pageItems.on('click', function(){
+    //   debugger
+    //     changePage(this.getAttribute('data-page'));
+    // }).filter('[data-page="1"]').addClass('active');
+    // $('.pagination>li.pagination-page').on("click", function(){
+    //   changePage($(this).data("page"), data, opts, user_source)
+    //   debugger
+    // })
+    // .filter('[data-page="1"]').addClass('active');
+
+    // $('.pagination>li.pagination-prev').on('click', function(){
+       
+    //     gotoPageNumber = parseInt($('.pagination>li.active').data('page')) - 1;
+      
+    //     // if (gotoPageNumber <= 0){gotoPageNumber = pageCount;}
+    //     // changePage(gotoPageNumber, data, opts);
+    //   });
+
+    // $('.pagination>li.pagination-next').on('click', function(){
+    //   debugger
+    //     gotoPageNumber = parseInt($('.pagination>li.active').attr('data-page')) + 1;
+    //     // if (gotoPageNumber > pageCount){gotoPageNumber = 1;}
+    //     // changePage(gotoPageNumber,data, opts);
+    // });
+    
+  }
+
+//====================================================================================================
+  function changePage(pageNumber, data,opts, user_source){
+    debugger
+    $('.pagination>li.pagination-page').removeClass('active');
+    $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
+    loadPosts(data[0].paginated_users.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
+              ,opts, user_source);
+
+    
+  }
+
+//====================================================================================================  
+  function loadPosts(posts, opts,user_source){
+
+        opts.postsDiv.empty(); // Clear the previous posts 
+        $.each(posts, function(){
+            var template = Handlebars.compile(user_source);
+            var context = {
+                name: this.user_info.name, 
+                vehicle : this.user_info.has_vehicle,
+                image: this.user_info.image,
+                phone: this.user_info.phone,
+                union_member: this.user_info.image,
+                union_permit: this.union_permit,                
+                availability: this.availabilities,
+                path: "users/" + this.user_info.id,
+            };
+            
+            var html = template(context);
+            opts.postsDiv.append(html);
+        });
+    }
+
+
+
+
+
+
+
+
+
+//====================================================================================================
+
+  function UserNotFound(){
+    $(".user-card").hide();
+    $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
+  }
+
+//====================================================================================================
+  function sortUser(data){
+    $.ajax({
+        url:"/users",
+        method: "get",
+        dataType: "json",
+        data: data,
+        success: function(response){         
+          if(response == undefined || $.isEmptyObject(response)){
+            UserNotFound();          
+          }else{
+            $('.user-card').hide();
+            var length = response.length;
+            var user_card;
+            for (i = 0; i < length; i++){              
+              // First reset data -index value
+              $('.user-card[data-user-id='+ response[i].id+']').data("order", "");
+              $('.user-card[data-user-id='+ response[i].id+']').data("order", i);
+              console.log("user-card data index",$('.user-card[data-user-id='+ response[i].id+']').data("order" ));              
+              $('.user-card[data-user-id='+ response[i].id+']').show().insertAfter(user_card);
+              var user_card = $('.user-card[data-user-id='+ response[i].id+']');
+            }
+          }
+        } 
+    });
+  }
+
+
+
+
+ //=============================Search Employees with given roles inside $(function)=========================================  
   // $("#user_role, #select_user_role").on("change",function(){
 
   //   var role_id = $(this).val();
@@ -125,52 +339,6 @@ $(function(){
 
   // })
 
-//==================================Sort Employees by Last Sign in ========================================================
-  $("#most_recent_log_in > a").on("click", function(event){
-    event.preventDefault();
-    // var roles_ids = [];
-    // roles_ids.push($(this).data("selected-role-id"));
-    var last_sign_in_at = "most_recent"
-    var role_id = $(this).data("selected-role-id")
-    if(role_id == ""){
-      var user_data = {last_sign_in_at: last_sign_in_at}
-      sortUser(user_data);
-    }else{
-      var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
-      sortUser(user_data);
-    }
-    
-  });
-
-
-//=========================================================================================================
-  
-
-});
-
-//======================================Common function====================================================
-  function preloadUser(){
-    $.ajax({
-      url: "/users",
-      method: "get",
-      dataType: "json",
-      // data:{current_page_number:current_page_number},
-      success: function(response){
-        console.log("response:", response.paginated_users)
-        var template = $("#user_card_template").html();
-        var templateScript = Handlebars.compile(template);
-        debugger
-        var users = {
-          users: [
-            {"name" : response.paginated_users[0].name,"phone": response.paginated_users[0].phone, "path" : "users/" + response.paginated_users[0].id},
-            {"name" : response.paginated_users[1].name, "phone": response.paginated_users[1].phone,"path" : "users/" + response.paginated_users[1].id }
-            // {"name" : response[2].name,"phone": response[2].phone, "path" : "users/" + response[2].id}
-          ]
-        }
-        console.log("users content:", users)
-        var html = templateScript(users);      
-        $("#user-list").append(html)
-
 
 
         //Using a pagination plugin
@@ -189,43 +357,4 @@ $(function(){
         // // }
         // });
        
-
-      }
-    });
-
-  }
-
-
-  function UserNotFound(){
-    $(".user-card").hide();
-    $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
-  }
-
-
-  function sortUser(data){
-    $.ajax({
-        url:"/users",
-        method: "get",
-        dataType: "json",
-        data: data,
-        success: function(response){         
-          if(response == undefined || $.isEmptyObject(response)){
-            UserNotFound();          
-          }else{
-            $('.user-card').hide();
-            var length = response.length;
-            var user_card;
-            for (i = 0; i < length; i++){              
-              // First reset data -index value
-              $('.user-card[data-user-id='+ response[i].id+']').data("order", "");
-              $('.user-card[data-user-id='+ response[i].id+']').data("order", i);
-              console.log("user-card data index",$('.user-card[data-user-id='+ response[i].id+']').data("order" ));              
-              $('.user-card[data-user-id='+ response[i].id+']').show().insertAfter(user_card);
-              var user_card = $('.user-card[data-user-id='+ response[i].id+']');
-            }
-          }
-        } 
-    });
-  }
-
-  
+ 
