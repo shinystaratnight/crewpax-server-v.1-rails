@@ -4,10 +4,17 @@ $(function(){
   var current_page_number = $(location).attr("search").match(/\d+/)
   current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
   console.log("current_page_number:", current_page_number)
-  // preloadUser();
+  var opts = {
+    pageMax: 2,
+    postsDiv: $('#user-list'),
+  }
+    
+
+
   // When a user is on the 2nd, 5th, 7th +++ page, send another ajax request to preload the next 30 users info
   if (current_page_number == 0){
-    preloadUser(); 
+    preloadUser();
+
   } 
 
   // else if (current_page_number % 3 == 2){
@@ -163,20 +170,24 @@ $(function(){
         console.log("users content:", users)
         var html = templateScript(users);      
         $("#user-list").append(html)
-        var total_user = 35
-        var per_page = 5
-        
-        $("#user-pagination").twbsPagination({
-          totalPages: Math.ceil(total_user / per_page),
-          visiblePages: 3,
-          href: '?page={{number}}',
-          // onPageClick: function (event, page, html) {
-          //   $('#user-list').text('Page ' + page);
+
+
+
+        //Using a pagination plugin
+        // var total_user = 35
+        // var per_page = 5
+
+        // $("#user-pagination").twbsPagination({
+        //   totalPages: Math.ceil(total_user / per_page),
+        //   visiblePages: 3,
+        //   href: '?page={{number}}'
+        //   // onPageClick: function (event, page, html) {
+        //   //   $('#user-list').text('Page ' + page);
             
         
             
-        // }
-    });
+        // // }
+        // });
        
 
       }

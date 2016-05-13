@@ -1,6 +1,11 @@
-<script id="user_card_template" type="text/x-handlebars-template"> 
-  <div class="pagination pagination-centered pager">
-    <ul id="page_icon">
-    </ul>
-  </div>
+<script id="pagination-template" type="text/x-handlebars-template"> 
+  <ul class="pagination">
+      <li class="pagination-prev"><a href="#">&laquo;</a></li>
+      
+      {{#each pages}}
+      <li class="pagination-page" data-page="{{this}}"><a href="#">{{this}}</a></li>
+      {{/each}}
+      
+      <li class="pagination-next"><a href="#">&raquo;</a></li>
+  </ul>
 </script>    

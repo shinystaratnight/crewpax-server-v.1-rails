@@ -19,7 +19,7 @@ class UsersController < ApplicationController
             union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
                               .uniq{|u| u.union_id}
                               .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
-            availabilities: user.appointments.find_all{|a| a.date > Date.today}.map{|a| a.date}
+            availabilities: user.appointments.find_all{|a| a.date >= Date.today}.map{|a| a.date}
           }}
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         
