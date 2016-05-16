@@ -42,8 +42,8 @@ class LabelsController < ApplicationController
          
 
         @filter_users = {total_user: @total_user, paginated_users:  @filter_users_info}
-             
-        format.html{render @users}
+
+        format.html{redirect_to(users_path)}
         format.json{render json: @filter_users}
      
       else

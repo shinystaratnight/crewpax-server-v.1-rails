@@ -36,7 +36,7 @@ class UsersController < ApplicationController
         #offset is for pagination, offset increases as page number goes up
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
-        format.html{render :index} 
+        format.html
         format.json{render json: @paginated_user_info}
       end
     end

@@ -10,6 +10,7 @@ $(function(){
     var opts = {
     pageMax: 1,
     postsDiv: $('#user-list'),
+
     }
   
     firstloadUser(opts,data);
@@ -60,6 +61,7 @@ $(function(){
   $("#user_role").on("change",function(){
     var role_id = $(this).val();
     console.log("selected role id:", role_id)
+
   // when the selection is all  
     if (role_id == 0){
       $(".user-card").show();
@@ -72,14 +74,16 @@ $(function(){
       console.log("current page to send to label controller:", current_page)
       var opts = { 
         pageMax: 1,
-        postsDiv: $('#user-list'),
+        postsDiv: $('#user-list')
       }
       var filter_data = [];
+      
+      debugger
      //User ajax to get the user_id 
       firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status)
     }
     
-  })
+  });
 
 
 
@@ -125,7 +129,8 @@ $(function(){
         // data.push(response.paginated_users) // Add return response json in an array will return => [object]
         console.log("response:", response.paginated_users)
         console.log("first load data array:", data)
-        var user_source = $("#user_card_template").html();        
+        var user_source = $("#user_card_template").html();   
+        debugger     
         if (dataCount > opts.pageMax){
           paginate(pageCount,opts,data, user_source);
           posts = response.paginated_users.slice(0, opts.pageMax);
@@ -146,7 +151,8 @@ $(function(){
             if ($(this).data("load")== true){
               changePage(gotoPageNumber, data, opts, user_source)
             } else{
-            // send another ajax request to load more data if this page is never clicked before
+            // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+              changePage(gotoPageNumber, data, opts, user_source)
               preloadUserData(gotoPageNumber,data, opts, user_source);
             }
           }else{
@@ -189,18 +195,21 @@ $(function(){
         var dataCount = response.total_user;
         var pageCount = Math.ceil(dataCount/opts.pageMax);
         $.map(response.paginated_users, function(user){return filter_data.push(user)})
-        var user_source = $("#user_card_template").html();  
         console.log("response:", response.paginated_users)
         console.log("first load filter data array:", filter_data)
         if (dataCount > opts.pageMax){
-          paginate(pageCount,opts, filter_data, user_source);
+          // Remove original pagination
+          $(".pagination").remove();
+          paginate(pageCount,opts, filter_data, filter_user_source);
           posts = response.paginated_users.slice(0, opts.pageMax);
         
         } else {
           posts = response.paginated_users;
         }  
+        debugger
+        var filter_user_source = $("#user_card_template").html()
         //load posts for the current page
-        loadPosts(posts,opts,user_source); 
+        loadPosts(posts,opts,filter_user_source); 
       }
     });
   }
@@ -209,7 +218,6 @@ $(function(){
   function range(i){return i?range(i-1).concat(i):[]}  
 
   function paginate(pageCount, opts, data, user_source){
-    
     var source = $("#pagination-template").html();
     var template = Handlebars.compile(source);
     var context = {pages: range(pageCount)};
@@ -249,7 +257,7 @@ $(function(){
   function changePage(pageNumber, data,opts, user_source){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
-
+    debugger
     // data format = [object, object, object .. object]
     loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
@@ -261,7 +269,7 @@ $(function(){
   function loadPosts(posts, opts,user_source){
     opts.postsDiv.empty(); // Clear the previous posts 
     $.each(posts, function(){
-        var template = Handlebars.compile(user_source);
+        var user_card_template = Handlebars.compile(user_source);
         var context = {
             name: this.user_info.name, 
             vehicle : this.user_info.has_vehicle,
@@ -273,8 +281,13 @@ $(function(){
             path: "users/" + this.user_info.id,
         };
         
-        var html = template(context);
+        var html = user_card_template(context);
+
         opts.postsDiv.append(html);
+
+
+       
+       
     });
   }
 
