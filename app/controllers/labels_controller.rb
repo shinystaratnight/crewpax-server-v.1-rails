@@ -12,24 +12,30 @@ class LabelsController < ApplicationController
     # Note: when a user has the same roles in different unions, a new label is also created, 
     #which result in labels that have the same user id        
     @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
-   
+
     respond_to do |format|
       if @job_labels.present? && label_params[:job_board ] == "clicked"
           format.html{redirect_to jobs_path}
           format.json{render json: @job_labels}
       elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
+
         @filter_users = {};
         @users_with_selected_role = @user_labels.map{|l| User.find(l.user_id)}
         @total_user = @users_with_selected_role.length
         # select the first 30th elements of the array 
 
         if params[:current_page] == "1"
-          @users_with_selected_role[0..30]
+          # @users_with_selected_role = @users_with_selected_role[0..30]
+          @users_with_selected_role = @users_with_selected_role[0..1]
         else
-          @users_with_selected_role[(params[:current_page]- 1 * 30 + 1) ..(params[:current_page] * 30) ]
+          # @users_with_selected_role = @users_with_selected_role[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+          @users_with_selected_role = @users_with_selected_role[2..3]
         end
       
-        @filter_users_info = @users_with_selected_role.map{|user| 
+        if @users_with_selected_role == nil 
+          @filter_users_info = ""        
+        else
+          @filter_users_info = @users_with_selected_role.map{|user| 
           {user_info: user,
           union_member: user.eligibilities.find_all{|e| e.member == true}
                             .uniq{|u| u.union_id}
@@ -39,11 +45,12 @@ class LabelsController < ApplicationController
                               .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
             availabilities: user.appointments.find_all{|a| a.date >= Date.today}.map{|a| a.date}
           }}
-         
 
+        end
+        
         @filter_users = {total_user: @total_user, paginated_users:  @filter_users_info}
 
-        format.html{redirect_to(users_path)}
+        format.html
         format.json{render json: @filter_users}
      
       else
