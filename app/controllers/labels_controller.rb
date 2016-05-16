@@ -12,22 +12,39 @@ class LabelsController < ApplicationController
     # Note: when a user has the same roles in different unions, a new label is also created, 
     #which result in labels that have the same user id        
     @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
-    
+   
     respond_to do |format|
       if @job_labels.present? && label_params[:job_board ] == "clicked"
           format.html{redirect_to jobs_path}
           format.json{render json: @job_labels}
       elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
-        # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20) 
-        # user_ids = @user_labels.map{|l| l.user_id}      
-        # @users = User.where(:id => user_ids).page(params[:page]).per(6)
-        # @users = @user_labels.map{|l| User.find(l.user_id)}
-        # user_ids = @user_labels.map{|l| l.user_id}
-        # binding.pry 
-        # @users =  @users.page(params[:page]).per(6)
-        # format.html{render @users}
+        @filter_users = {};
+        @users_with_selected_role = @user_labels.map{|l| User.find(l.user_id)}
+        @total_user = @users_with_selected_role.length
+        # select the first 30th elements of the array 
+
+        if params[:current_page] == "1"
+          @users_with_selected_role[0..30]
+        else
+          @users_with_selected_role[(params[:current_page]- 1 * 30 + 1) ..(params[:current_page] * 30) ]
+        end
+      
+        @filter_users_info = @users_with_selected_role.map{|user| 
+          {user_info: user,
+          union_member: user.eligibilities.find_all{|e| e.member == true}
+                            .uniq{|u| u.union_id}
+                            .map{|info| Union.find(info.union_id).name}.join(","),
+            union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
+                              .uniq{|u| u.union_id}
+                              .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
+            availabilities: user.appointments.find_all{|a| a.date >= Date.today}.map{|a| a.date}
+          }}
+         
+
+        @filter_users = {total_user: @total_user, paginated_users:  @filter_users_info}
+             
         format.html{render @users}
-        format.json{render json: @user_labels}
+        format.json{render json: @filter_users}
      
       else
         format.json{render json: "Labels not found", status: :no_content}     
@@ -36,7 +53,14 @@ class LabelsController < ApplicationController
   end
 
 
-
+  # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20) 
+        # user_ids = @user_labels.map{|l| l.user_id}      
+        # @users = User.where(:id => user_ids).page(params[:page]).per(6)
+        # @users = @user_labels.map{|l| User.find(l.user_id)}
+        # user_ids = @user_labels.map{|l| l.user_id}
+        # binding.pry 
+        # @users =  @users.page(params[:page]).per(6)
+        # format.html{render @users}
   # respond_to do |format|
     #   if @user_labels.present? && label_params[:hiring_board] == "clicked"
     #     format.html{redirect_to users_path}

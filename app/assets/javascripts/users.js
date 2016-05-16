@@ -56,9 +56,30 @@ $(function(){
   //   preloadUser(current_page_number);
   // }
   
-
-
-
+//=============================Search Employees with given roles inside $(function)=========================================  
+  $("#user_role").on("change",function(){
+    var role_id = $(this).val();
+    console.log("selected role id:", role_id)
+  // when the selection is all  
+    if (role_id == 0){
+      $(".user-card").show();
+      console.log("selected all")
+      return false;
+    }else{
+      $(this).data("selected-user-role", "clicked")
+      var hiring_board_status = $(this).data("selected-user-role");
+      var current_page = $(".pagination-page").data("page")
+      console.log("current page to send to label controller:", current_page)
+      var opts = { 
+        pageMax: 1,
+        postsDiv: $('#user-list'),
+      }
+      var filter_data = [];
+     //User ajax to get the user_id 
+      firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status)
+    }
+    
+  })
 
 
 
@@ -158,7 +179,31 @@ $(function(){
   }
 
 
-
+  function firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status){
+    $.ajax({
+      url: "/roles/" + role_id + "/labels",
+      method: "get",
+      dataType: "json",
+      data:{label:{role_id: role_id, hiring_board: hiring_board_status}, current_page: current_page},
+      success: function(response){    
+        var dataCount = response.total_user;
+        var pageCount = Math.ceil(dataCount/opts.pageMax);
+        $.map(response.paginated_users, function(user){return filter_data.push(user)})
+        var user_source = $("#user_card_template").html();  
+        console.log("response:", response.paginated_users)
+        console.log("first load filter data array:", filter_data)
+        if (dataCount > opts.pageMax){
+          paginate(pageCount,opts, filter_data, user_source);
+          posts = response.paginated_users.slice(0, opts.pageMax);
+        
+        } else {
+          posts = response.paginated_users;
+        }  
+        //load posts for the current page
+        loadPosts(posts,opts,user_source); 
+      }
+    });
+  }
 
 
   function range(i){return i?range(i-1).concat(i):[]}  
@@ -278,7 +323,6 @@ $(function(){
 
 
 
- //=============================Search Employees with given roles inside $(function)=========================================  
   // $("#user_role, #select_user_role").on("change",function(){
 
   //   var role_id = $(this).val();
