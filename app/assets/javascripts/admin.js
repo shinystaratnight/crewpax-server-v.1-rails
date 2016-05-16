@@ -123,10 +123,14 @@ $(function(){
 
   });
 
-  $("#clear-new-union-form").on("click", function() {
-    $("#newUnion .union-name").text("");
-    $("#newUnion .union-info").data("union-id", "");
-    $("#newUnion .edit-roles").prop("checked", false);
+  $("#save-new-union").on("click", function() {
+    $("#newUnion").removeClass("in");
+    $("#create-union-success").show(); // TODO: make this better
+    setTimeout(function() {
+      location.reload(true);
+    }, 2000);
+
+
   });
   
 //*********************************************************************************************************
@@ -135,7 +139,8 @@ $(function(){
 //When a mouse leaves the entry div, it will trigger ajax
   $(".role-name").on("blur", function(){
     //Check to see if a role is already created and decide which url the ajax should send to(create/update) 
-    var role_id = $(this).closest(".role-info").data("role-id");
+    var text_box = $(this);
+    var role_id = text_box.closest(".role-info").data("role-id");
     if (role_id == "") {
       var url = "admin/roles";
       var method = "post";
@@ -143,14 +148,14 @@ $(function(){
       var url = "admin/roles/" + role_id;
       var method = "put";
     }
-    var name = $(this).closest(".role-name").text().trim();
+    var name = text_box.closest(".role-name").text().trim();
 
     if (name == "") {
-      $(this).addClass("invalid").next().show();
+      text_box.addClass("invalid").next().show();
       return false;
     } else {
       $(".role-name-error").hide();
-      $(this).addClass("valid");            
+      text_box.addClass("valid");            
 
       $.ajax({
         url: url,
@@ -159,9 +164,13 @@ $(function(){
         data:{role: {name: name}},
         success: function(response){
           if (response.id) {
-            $(".role-info").data("role-id", response.id);
+            text_box
+              .closest(".role-info").data("role-id", response.id)
+              .next(".role-info").data("role-id", response.id)
+              .next(".role-info").children(".delete-role").data("role-id", response.id);  
+            $("#newrole").data("name", response.name);
             $("#new-role-roles").show();
-          } else {              
+          } else {             
             var errors = response.toString();
             $(".role-name-error").text("*"+ errors).show();
             $(".role-name").addClass("invalid");   
@@ -229,6 +238,13 @@ $(function(){
             $("#delete-role-success").show();
             $("#edit-role-"+role_id).remove();
             $("#button-role-"+role_id).remove();
+            $("#editRoleToggle").children(".caret").toggleClass("rotated");
+
+            // for cancel button
+            $("#newRole .role-name").text("");
+            $("#newRole .role-info").data("role-id", "");
+            $("#newRole .edit-roles").prop("checked", false);
+            $("#newRole").removeClass("in");
 
             setTimeout(function() {
                 $("#delete-role-success").fadeOut();

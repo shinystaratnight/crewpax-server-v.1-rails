@@ -3,7 +3,20 @@ class Admin::RolesController < ApplicationController
   before_filter :require_admin
 
   def index
-    @roles = Role.all
+    @roles = Role.all 
+  end
+
+  def create
+    role = Role.create(role_params)
+    respond_to do |format|
+      if role.save
+        format.html{render @user}
+        format.json{render json: @role}
+      else
+        format.html{render action: "new"}
+        format.json{render json: @role.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
   end
 
   def destroy
