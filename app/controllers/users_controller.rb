@@ -32,13 +32,10 @@ class UsersController < ApplicationController
         @users = {};
         @ajax_request_time = (params[:page].to_i + 1) / 3
         # @new_request_user_limit = (@ajax_request_time + 1) * 3 
-       
-        # @paginated_users = User.limit(params[:page].to_i + 1).offset(3)
         @paginated_users = User.limit(3).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
-         binding.pry 
         format.html{render :index} 
         format.json{render json: @paginated_user_info}
       end

@@ -150,9 +150,8 @@ $(function(){
         
         user_data.push(response)
         console.log("new data array:", user_data)
+        // In order to ensure data is only loaded once, set data attribute load to be true        
         $(".pagination-page[data-page="+ gotoPageNumber +"]").data("load", true)
-        // In order to ensure data is only loaded once, set data attribute load to be true
-        debugger
       }
     })
   
@@ -205,8 +204,15 @@ $(function(){
   function changePage(pageNumber, data,opts, user_source){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
+    var user_data_length = data.length();
+    // $.merge(data[0],data[1].....) => [object, object, object ] format.
+    console.log("user data length:", user_data_length)
     debugger
-    loadPosts(data[0].paginated_users.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
+    for(i = 0; i < user_data_length; i++){
+        $.merge(data[i])
+    }
+    debugger
+    loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
 
     
