@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
 
-  default_scope { order :name }
+  default_scope { order :last_sign_in_at }
   
 
 
@@ -28,6 +28,33 @@ class User < ActiveRecord::Base
   if: "email.present?"
 
   
+  
+  def self.sort_user(sort_order)
+    binding.pry 
+    if sort_order == "most_recent"
+      reorder(last_sign_in_at: :desc)
+    else 
+      reorder(name: :asc)
+    end
+  end
+
+
+  # def self.sort_filter_user(sort_order)
+  #   binding.pry 
+  # end
+
+  def self.filter(role_id)
+    if role_id.present?
+      Role.find(role_id).users
+    else
+      User.all
+    end
+  end
+
+
+
+
+
   #scope :search_by_role, ->(params){ Label.where roles_ids: params}
   # , ->(role) { where {role_ids: include role.id} }
 
@@ -66,14 +93,8 @@ class User < ActiveRecord::Base
     td_class << "prev-month"    if start_date.month != day.month && day < start_date
     td_class << "next-month"    if start_date.month != day.month && day > start_date
     td_class << "current-month" if start_date.month == day.month
-    # appointments.map do |a| 
-
-    #   if day == a
-    #     td_class << "available"  
-
-    #   end
-    
-    # end
+  
+  
     if appointments.include?(day)
       td_class << "available"
     else

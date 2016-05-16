@@ -1,13 +1,13 @@
-= f.input :name
-= f.input :role_id, collection: Role.all
-= f.input :description, as: :text, input_html: { rows: 5 }
-= f.input :company_name
-= f.input :starts_on, as: :string, input_html: { type: :date }, placeholder: 'yyyy-mm-dd'
-= f.input :ends_on, as: :string, input_html: { type: :date }, placeholder: 'yyyy-mm-dd'
-= f.input :location
-= f.input :contact_name
-= f.input :contact_phone
-= f.input :contact_email, as: :email
+/ = f.input :name
+/ = f.input :role_id, collection: Role.all
+/ = f.input :description, as: :text, input_html: { rows: 5 }
+/ = f.input :company_name
+/ = f.input :starts_on, as: :string, input_html: { type: :date }, placeholder: 'yyyy-mm-dd'
+/ = f.input :ends_on, as: :string, input_html: { type: :date }, placeholder: 'yyyy-mm-dd'
+/ = f.input :location
+/ = f.input :contact_name
+/ = f.input :contact_phone
+/ = f.input :contact_email, as: :email
 
-%p
-  = f.button :submit, 'Submit', class: 'btn-block btn-lg btn-success'
+/ %p
+/   = f.button :submit, 'Submit', class: 'btn btn-lg btn-success'

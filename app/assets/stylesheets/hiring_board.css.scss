@@ -1,0 +1,42 @@
+//===============Hiring Board View ============================================================
+
+.instagram-wrap {
+  background: grey;
+}
+ 
+.instagram-content {
+  h3 {
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 0;
+    color: darken(lightgrey, 20%);
+  }
+
+}
+
+.photo-box {
+        margin: 0 0 30 0;
+ 
+        .image-wrap {
+            img {
+                width: 290px;
+            }
+ 
+        }
+        .description {
+            font-family: sub-font;
+            font-size: 12px;
+            background: white;
+            color: mediumgrey;
+            letter-spacing: 1px;
+            padding: 1.5;
+            height: 75px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height:100px;
+        }
+    }

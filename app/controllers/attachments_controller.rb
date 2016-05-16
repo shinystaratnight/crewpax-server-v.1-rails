@@ -65,33 +65,23 @@ class AttachmentsController < ApplicationController
     end
   end
 
-  private
-  def attachment_params
-    params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path)
-  end
-
-  def dropbox_client
-    @dropbox_client ||= begin
-    session = DropboxSession.new(ENV["APP_KEY"], ENV["APP_SECRET"])
-    session.set_access_token( ENV["ACCESS_TOKEN"], ENV["ACCESS_TOKEN_SECRET"])
-    DropboxClient.new(session, "app_folder")
-    end
-  end
   
+  private
+    def attachment_params
+      params.require(:attachment).permit(:id, :name, :type, :file,:user_id,:file_share_link,:client_email,:file_store_path)
+    end
+
+    def dropbox_client
+      @dropbox_client ||= begin
+      session = DropboxSession.new(ENV["APP_KEY"], ENV["APP_SECRET"])
+      session.set_access_token( ENV["ACCESS_TOKEN"], ENV["ACCESS_TOKEN_SECRET"])
+      DropboxClient.new(session, "app_folder")
+      end
+    end
+    
 end
 
 
    
       
-      #send the email after receive dropbox share link
-      # if file_share_link.present?
-      #   AttachmentMailer.email_attachment(@attachment).deliver_now
-      # end
-    
       
-      # respond_to do |format|  
-      #   if file_share_link.present?  
-      #     format.html{render @user}
-      #     format.json{render json: @attachment}        
-      #   end
-      # end

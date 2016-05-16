@@ -243,7 +243,7 @@ $(function(){
       contentType: false,
       processData: false,
       method: 'put',
-      success: function(){
+      success: function(response){
         $("#profile_pic").text("Profile picture saved").show();
        
       }

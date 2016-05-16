@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406040656) do
+ActiveRecord::Schema.define(version: 20160429183823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,14 +87,18 @@ ActiveRecord::Schema.define(version: 20160406040656) do
     t.datetime "updated_at"
     t.boolean  "published",     default: false
     t.integer  "role_id"
+    t.integer  "user_id"
   end
 
   add_index "jobs", ["role_id"], name: "index_jobs_on_role_id", using: :btree
+  add_index "jobs", ["user_id"], name: "index_jobs_on_user_id", using: :btree
 
   create_table "labels", force: :cascade do |t|
     t.integer "user_id"
     t.uuid    "job_id"
     t.integer "role_id"
+    t.string  "job_board"
+    t.string  "hiring_board"
   end
 
   add_index "labels", ["role_id"], name: "index_labels_on_role_id", using: :btree
@@ -143,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160406040656) do
   add_foreign_key "eligibilities", "roles"
   add_foreign_key "eligibilities", "unions"
   add_foreign_key "eligibilities", "users"
+  add_foreign_key "jobs", "users"
   add_foreign_key "labels", "roles"
   add_foreign_key "labels", "users"
 end
