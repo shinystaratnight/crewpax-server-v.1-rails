@@ -3,14 +3,13 @@ class UsersController < ApplicationController
   respond_to :html, :json, :js
   # caches_page :index
   def index
-    
-    respond_to do |format|
-   
+
+    respond_to do |format|       
       if params[:page]== "0" || params[:page] == nil 
         @users = {};
         @total_user = User.all.length
         @paginated_users = User.limit(3)
-    
+
         @paginated_user_info = @paginated_users.map{|user| 
           { user_info: user,
             union_member: user.eligibilities.find_all{|e| e.member == true}
@@ -28,16 +27,27 @@ class UsersController < ApplicationController
         format.html
         # format.js 
         format.json{render json: @users}
-      elsif params[:page] % 3 == 2
-  
-        format.html{render :index} 
-        format.json{render json: @users}
       
-      else 
-
-        format.html{render :index}
-        format.json{render json: @users}
+      elsif params[:page].to_i % 3 == 2
+        @users = {};
+        @ajax_request_time = (params[:page].to_i + 1) / 3
+        # @new_request_user_limit = (@ajax_request_time + 1) * 3 
+       
+        # @paginated_users = User.limit(params[:page].to_i + 1).offset(3)
+        @paginated_users = User.limit(3).offset(@ajax_request_time * 3)
+        #offset is for pagination, offset increases as page number goes up
+        #User.limit(30).offset(@ajax_request_time * 30)
+        @paginated_user_info = convert_user_info_json(@paginated_users)
+         binding.pry 
+        format.html{render :index} 
+        format.json{render json: @paginated_user_info}
       end
+    end
+      # else 
+
+      #   format.html{render :index}
+      #   format.json{render json: @users}
+ 
      
       # if params[:page] % 3 == 2
       #   @ajax_request_time = (params[:page] + 1) / 3
@@ -50,7 +60,7 @@ class UsersController < ApplicationController
       #   format.html{render :index} 
       #   format.json{render json:@users}
       # end
-    end
+
       # if params[:current_page_number]=="0" || params[:current_page_number]== nil
       #   @users = User.limit(3)
       #   @paginated_users = @users.page(params[:page]).per(1)
@@ -228,7 +238,20 @@ class UsersController < ApplicationController
 
   protected
 
- 
+  def convert_user_info_json(user)
+    paginated_user_info = user.map{|user| 
+      { user_info: user,
+        union_member: user.eligibilities.find_all{|e| e.member == true}
+                         .uniq{|u| u.union_id}
+                         .map{|info| Union.find(info.union_id).name}.join(","),
+        union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
+                          .uniq{|u| u.union_id}
+                          .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
+        availabilities: user.appointments.find_all{|a| a.date >= Date.today}.map{|a| a.date}
+      }}
+    # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: 
+
+  end
 
   def set_role
     @role = Role.find params[:role_id] if params[:role_id]

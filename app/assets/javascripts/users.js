@@ -92,7 +92,6 @@ $(function(){
 
 //======================================Common function====================================================
  
-
   function firstloadUser(opts,data){
     $.ajax({
       url: "/users",
@@ -101,38 +100,67 @@ $(function(){
       success: function(response){
         var dataCount = response.total_user;
         var pageCount = Math.ceil(dataCount/opts.pageMax);
-        data.push(response) // Add return response json in an array will return => [object]
+        data.push(response.paginated_users) // Add return response json in an array will return => [object]
         console.log("response:", response.paginated_users)
-        var user_source = $("#user_card_template").html()
+        console.log("first load data array:", data)
+        var user_source = $("#user_card_template").html();        
         if (dataCount > opts.pageMax){
           paginate(pageCount,opts,data, user_source);
           posts = response.paginated_users.slice(0, opts.pageMax);
-          // When click on the pagination button:
-          $(".pagination-page").on("click", function(){
-            var gotoPageNumber = $(this).data("page");
-            console.log("clicked page that goes to:", gotoPageNumber)
-            if (gotoPageNumber % 3 == 2){
-              // First, show already render info 
-              changePage(gotoPageNumber, data, opts, user_source) 
-              // Second, send another ajax request to load more data
-
-            }else{
-              changePage(gotoPageNumber, data, opts, user_source)
-            }
-
-          })
-
-
-
+        
         } else {
           posts = response.paginated_users;
-        }
-        
-        loadPosts(posts,opts,user_source); //load posts for the current page
+        }        
+
+        //load posts for the current page
+        loadPosts(posts,opts,user_source); 
+
+        // When click on the pagination button:
+        $(".pagination-page").on("click", function(){
+          var gotoPageNumber = $(this).data("page");
+          console.log("clicked page that goes to:", gotoPageNumber)
+          if (gotoPageNumber % 3 == 2){
+            // Check if this page is clicked before, if yes, show already render info 
+            if ($(this).data("load")== true){
+              changePage(gotoPageNumber, data, opts, user_source)
+            } else{
+            // send another ajax request to load more data if this page is never clicked before
+              preloadUserData(gotoPageNumber,data, opts, user_source);
+            }
+          }else{
+            debugger
+            changePage(gotoPageNumber, data, opts, user_source)
+          }
+
+        })
       }
     });
 
   }
+
+  
+  function preloadUserData(gotoPageNumber,user_data, opts, user_source){
+ 
+    $.ajax({
+      url: "/users",
+      method: "get",
+      dataType: "json",
+      data:{page: parseInt(gotoPageNumber)},
+      success: function(response){
+        
+        user_data.push(response)
+        console.log("new data array:", user_data)
+        $(".pagination-page[data-page="+ gotoPageNumber +"]").data("load", true)
+        // In order to ensure data is only loaded once, set data attribute load to be true
+        debugger
+      }
+    })
+  
+  }
+
+
+
+
 
   function range(i){return i?range(i-1).concat(i):[]}  
 
@@ -175,9 +203,9 @@ $(function(){
 
 //====================================================================================================
   function changePage(pageNumber, data,opts, user_source){
-    debugger
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
+    debugger
     loadPosts(data[0].paginated_users.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
 
@@ -186,25 +214,24 @@ $(function(){
 
 //====================================================================================================  
   function loadPosts(posts, opts,user_source){
-
-        opts.postsDiv.empty(); // Clear the previous posts 
-        $.each(posts, function(){
-            var template = Handlebars.compile(user_source);
-            var context = {
-                name: this.user_info.name, 
-                vehicle : this.user_info.has_vehicle,
-                image: this.user_info.image,
-                phone: this.user_info.phone,
-                union_member: this.user_info.image,
-                union_permit: this.union_permit,                
-                availability: this.availabilities,
-                path: "users/" + this.user_info.id,
-            };
-            
-            var html = template(context);
-            opts.postsDiv.append(html);
-        });
-    }
+    opts.postsDiv.empty(); // Clear the previous posts 
+    $.each(posts, function(){
+        var template = Handlebars.compile(user_source);
+        var context = {
+            name: this.user_info.name, 
+            vehicle : this.user_info.has_vehicle,
+            image: this.user_info.image,
+            phone: this.user_info.phone,
+            union_member: this.user_info.image,
+            union_permit: this.union_permit,                
+            availability: this.availabilities,
+            path: "users/" + this.user_info.id,
+        };
+        
+        var html = template(context);
+        opts.postsDiv.append(html);
+    });
+  }
 
 
 
