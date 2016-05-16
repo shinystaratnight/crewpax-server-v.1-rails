@@ -100,7 +100,8 @@ $(function(){
       success: function(response){
         var dataCount = response.total_user;
         var pageCount = Math.ceil(dataCount/opts.pageMax);
-        data.push(response.paginated_users) // Add return response json in an array will return => [object]
+        $.map(response.paginated_users, function(user){return data.push(user)})
+        // data.push(response.paginated_users) // Add return response json in an array will return => [object]
         console.log("response:", response.paginated_users)
         console.log("first load data array:", data)
         var user_source = $("#user_card_template").html();        
@@ -128,7 +129,6 @@ $(function(){
               preloadUserData(gotoPageNumber,data, opts, user_source);
             }
           }else{
-            debugger
             changePage(gotoPageNumber, data, opts, user_source)
           }
 
@@ -147,8 +147,8 @@ $(function(){
       dataType: "json",
       data:{page: parseInt(gotoPageNumber)},
       success: function(response){
-        
-        user_data.push(response)
+        $.map(response, function(user){return user_data.push(user)})
+        // user_data.push(response)
         console.log("new data array:", user_data)
         // In order to ensure data is only loaded once, set data attribute load to be true        
         $(".pagination-page[data-page="+ gotoPageNumber +"]").data("load", true)
@@ -204,14 +204,8 @@ $(function(){
   function changePage(pageNumber, data,opts, user_source){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
-    var user_data_length = data.length();
-    // $.merge(data[0],data[1].....) => [object, object, object ] format.
-    console.log("user data length:", user_data_length)
-    debugger
-    for(i = 0; i < user_data_length; i++){
-        $.merge(data[i])
-    }
-    debugger
+
+    // data format = [object, object, object .. object]
     loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
 
