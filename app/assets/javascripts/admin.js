@@ -125,7 +125,7 @@ $(function(){
 
   $("#save-new-union").on("click", function() {
     $("#newUnion").removeClass("in");
-    $("#create-union-success").show(); // TODO: make this better
+    $("#create-success").show(); // TODO: make this better
     setTimeout(function() {
       location.reload(true);
     }, 2000);
@@ -255,7 +255,14 @@ $(function(){
 
   });
 
+  $("#save-new-role").on("click", function() {
+    $("#newRole").removeClass("in");
+    $("#create-success").show(); // TODO: make this better
+    setTimeout(function() {
+      location.reload(true);
+    }, 2000);
 
+  });
 //*********************************************************************************************************
 // Add, Update or Delete Certificate Section
 //********************************************************************************************************
@@ -384,6 +391,14 @@ $(function(){
 
   });
 
+  $("#save-new-certificate").on("click", function() {
+    $("#newCertificate").removeClass("in");
+    $("#create-success").show(); // TODO: make this better
+    setTimeout(function() {
+      location.reload(true);
+    }, 2000);
+
+  });
 
 //*********************************************************************************************************
 // Update or Delete User Section
