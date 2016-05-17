@@ -14,48 +14,12 @@ $(function(){
     }
   
     firstloadUser(opts,data);
-
-  } 
-
   
-  // When a user is on the 2nd, 5th, 7th +++ page, send another ajax request to preload the next 30 users info
-  // $(document).on("click", ".pagination-page",function(data){
-  //   debugger
-  //   // var current_page_number = $(location).attr("search").match(/\d+/)
-  //   // current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
-  //   // console.log("next page clicked, current_page_number is:", current_page_number)
-  //   var gotoPageNumber = $(this).data("page");
-  //   console.log("clicked page that goes to:", gotoPageNumber)
-
-  //   if (gotoPageNumber % 3 == 2){
-
-  //   }else{
- 
-      
-  //   }
-    
-  // });
- 
+  }
 
 
-  // $("#user-pagination").on("click", "pagination>li.pagination-page", function(){
-  //   alert("next page clicked")
-  //   console.log("next page clicked ")
-
-  //     // changePage($(this).data("page"), data, opts, user_source)
-  //     // debugger
-  //   });
-  
-  // $(".pagination-page a ").on("click", function(){
-    
-  // })
 
 
-  // else if (current_page_number % 3 == 2){
-  //   // var preload_time = (current_page_number + 1) / 3
-  //   debugger
-  //   preloadUser(current_page_number);
-  // }
   
 //=============================Search Employees with given roles inside $(function)=========================================  
   $("#user_role").on("change",function(){
@@ -86,22 +50,28 @@ $(function(){
 
 
 
-//==================================Sort Employees by Last Sign in ========================================================
-  $("#most_recent_log_in > a").on("click", function(event){
+//==========================When sorting crew by if having a vehicle ========================================================
+  $("#has_a_vehicle > a").on("click", {data: data }, function(event){
+    alert("sort has a vehicle link click ")
     event.preventDefault();
+   
     // var roles_ids = [];
     // roles_ids.push($(this).data("selected-role-id"));
-    var last_sign_in_at = "most_recent"
+    
+  //   var last_sign_in_at = "most_recent"
     var role_id = $(this).data("selected-role-id")
     if(role_id == ""){
-      var user_data = {last_sign_in_at: last_sign_in_at}
-      sortUser(user_data);
+
+      sortUser(data)
+      // var user_data = {last_sign_in_at: last_sign_in_at}
+      // sortUser(user_data);
     }else{
-      var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
-      sortUser(user_data);
+      // var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
+      // sortUser(user_data);
     }
     
-  });
+  });  
+
 
 
 //=========================================================================================================
@@ -157,7 +127,11 @@ $(function(){
             changePage(gotoPageNumber, data, opts, user_source)
           }
 
-        })
+        });
+
+
+
+
       }
     });
 
@@ -352,32 +326,25 @@ $(function(){
 
 //====================================================================================================
   function sortUser(data){
-    $.ajax({
-        url:"/users",
-        method: "get",
-        dataType: "json",
-        data: data,
-        success: function(response){         
-          if(response == undefined || $.isEmptyObject(response)){
-            UserNotFound();          
-          }else{
-            $('.user-card').hide();
-            var length = response.length;
-            var user_card;
-            for (i = 0; i < length; i++){              
-              // First reset data -index value
-              $('.user-card[data-user-id='+ response[i].id+']').data("order", "");
-              $('.user-card[data-user-id='+ response[i].id+']').data("order", i);
-              console.log("user-card data index",$('.user-card[data-user-id='+ response[i].id+']').data("order" ));              
-              $('.user-card[data-user-id='+ response[i].id+']').show().insertAfter(user_card);
-              var user_card = $('.user-card[data-user-id='+ response[i].id+']');
-            }
-          }
-        } 
-    });
+    console.log("data array in sort user:", data)
+    debugger
+    data.sort(vehicleSort(data))
+  
   }
 
-
+  function vehicleSort(property) {
+    
+    var sortOrder = 1;
+    if(property[0].user_info.has_vehicle === true) {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    debugger
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+  }
 
 
   // $("#user_role, #select_user_role").on("change",function(){

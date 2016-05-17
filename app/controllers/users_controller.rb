@@ -9,19 +9,8 @@ class UsersController < ApplicationController
         @users = {};
         @total_user = User.all.length
         @paginated_users = User.limit(3)
-
-        @paginated_user_info = @paginated_users.map{|user| 
-          { user_info: user,
-            union_member: user.eligibilities.find_all{|e| e.member == true}
-                             .uniq{|u| u.union_id}
-                             .map{|info| Union.find(info.union_id).name}.join(","),
-            union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
-                              .uniq{|u| u.union_id}
-                              .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},
-            availabilities: user.appointments.find_all{|a| a.date >= Date.today}.map{|a| a.date}
-          }}
+        @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
-        
         @users = {total_user: @total_user, paginated_users:  @paginated_user_info}
         
         format.html
@@ -40,6 +29,8 @@ class UsersController < ApplicationController
         format.json{render json: @paginated_user_info}
       end
     end
+  end
+      
       # else 
 
       #   format.html{render :index}
@@ -123,7 +114,7 @@ class UsersController < ApplicationController
     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
     # binding.pry 
     # @users_page = @users.page(params[:page] || 1).per(20)
-  end
+
 
   def show
     @user = User.find params[:id]
@@ -215,6 +206,13 @@ class UsersController < ApplicationController
       end
     end
   end
+
+
+  def search
+    binding.pry 
+
+  end
+
 
 
   # account_update_params = devise_parameter_sanitizer.sanitize(:account_update)

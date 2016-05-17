@@ -3,6 +3,13 @@ Bcpax::Application.routes.draw do
  
   # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
+  #Create a custom route in users controller for search/sort result
+  resources :users do
+    collection do
+      get "search"
+    end
+  end
+
   resources :jobs, shallow: true do
     resources :roles
   end
