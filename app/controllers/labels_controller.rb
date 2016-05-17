@@ -31,7 +31,7 @@ class LabelsController < ApplicationController
           # @users_with_selected_role = @users_with_selected_role[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
           @users_with_selected_role = @users_with_selected_role[2..3]
         end
-      
+
         if @users_with_selected_role == nil 
           @filter_users_info = ""        
         else

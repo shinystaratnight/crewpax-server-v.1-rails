@@ -189,45 +189,51 @@ $(function(){
       method: "get",
       dataType: "json",
       data:{label:{role_id: role_id, hiring_board: hiring_board_status}, current_page: current_page},
-      success: function(response){    
-        var dataCount = response.total_user;
-        var pageCount = Math.ceil(dataCount/opts.pageMax);
-        $.map(response.paginated_users, function(user){return filter_data.push(user)})
-        console.log("response:", response.paginated_users)
-        console.log("first load filter data array:", filter_data)
-        if (dataCount > opts.pageMax){
-          // Remove original pagination
-          $(".pagination").remove();
-          paginate(pageCount,opts, filter_data, filter_user_source);
-          posts = response.paginated_users.slice(0, opts.pageMax);
-        
+      success: function(response){   
+        debugger
+        if (response == undefined || response.paginated_users == "") {
+          UserNotFound()
         } else {
-          posts = response.paginated_users;
-        }  
+          var dataCount = response.total_user;
+          var pageCount = Math.ceil(dataCount/opts.pageMax);
+          $.map(response.paginated_users, function(user){return filter_data.push(user)})
+          console.log("response:", response.paginated_users)
+          console.log("first load filter data array:", filter_data)
+          if (dataCount > opts.pageMax){
+            // Remove original pagination
+            $(".pagination").remove();
+            paginate(pageCount,opts, filter_data, filter_user_source);
+            posts = response.paginated_users.slice(0, opts.pageMax);
+          
+          } else {
+            posts = response.paginated_users;
+            $(".pagination").hide();
+          }  
 
-        var filter_user_source = $("#user_card_template").html()
-        //load posts for the current page 
-        loadPosts(posts,opts,filter_user_source); 
+          var filter_user_source = $("#user_card_template").html()
+          //load posts for the current page 
+          loadPosts(posts,opts,filter_user_source); 
 
-        // When click on the pagination button:
-        $(".pagination-page").on("click", function(){
-          var gotoPageNumber = $(this).data("page");
-          console.log("filter users: clicked page that goes to:", gotoPageNumber)
-          if (gotoPageNumber % 3 == 2){
-            // Check if this page is clicked before, if yes, show already render info 
-            if ($(this).data("load")== true){
+          // When click on the pagination button:
+          $(".pagination-page").on("click", function(){
+            var gotoPageNumber = $(this).data("page");
+            console.log("filter users: clicked page that goes to:", gotoPageNumber)
+            if (gotoPageNumber % 3 == 2){
+              // Check if this page is clicked before, if yes, show already render info 
+              if ($(this).data("load")== true){
+                changePage(gotoPageNumber, filter_data, opts, filter_user_source)
+              } else{
+                // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+                changePage(gotoPageNumber, filter_data, opts, filter_user_source)
+                // Need to preload filter user data 
+                preloadFilterUserData(role_id,gotoPageNumber,filter_data, opts, filter_user_source)
+                
+              }
+            }else{
               changePage(gotoPageNumber, filter_data, opts, filter_user_source)
-            } else{
-              // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-              changePage(gotoPageNumber, filter_data, opts, filter_user_source)
-              // Need to preload filter user data 
-              preloadFilterUserData(role_id,gotoPageNumber,filter_data, opts, filter_user_source)
-              
             }
-          }else{
-            changePage(gotoPageNumber, filter_data, opts, filter_user_source)
-          }
-        });
+          });
+        }
       }
     });
   }
@@ -340,7 +346,7 @@ $(function(){
 //====================================================================================================
 
   function UserNotFound(){
-    $(".user-card").hide();
+    $(".user-card, .pagination").hide();
     $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
   }
 
