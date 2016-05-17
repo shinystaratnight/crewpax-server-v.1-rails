@@ -11,11 +11,14 @@
     <i class="fa fa-angle-down"></i>
   </button>
   <ul class="dropdown-menu">
-   <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
-   
+    <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
+    <li id ="has_a_vehicle"><%=link_to 'Has a Vehicle', users_path(has_vechile: true), data: {selected_role_id: ""}%></li>
+    <li id ="union_member"><%=link_to 'Union Status: Member', users_path(union_member: true), data: {selected_role_id: ""}%></li>
+    <li id ="union_permit"><%=link_to 'Union Status: Permit', users_path(union_permit: true), data: {selected_role_id: ""}%></li>
+    <li id ="available_soon"><%=link_to 'Availability(Most Recent)', users_path(available_soon: true), data: {selected_role_id: ""}%></li>
   </ul>
 </div>
-
+<span><button type="button" class="btn btn-danger"><%=link_to"Reset", users_path%></button>
 </br>
   
 <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
