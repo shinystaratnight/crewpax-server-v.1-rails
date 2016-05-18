@@ -18,10 +18,10 @@ class EligibilitiesController < ActionController::Base
   end
 
   def destroy
-    @eligibility= Eligibility.find(params[:id])
-    respond_to do |format|
-      if @eligibility.destroy
-        format.html{render @user}
+    @eligibility = Eligibility.find(params[:id])
+     respond_to do |format|
+      if @eligibility.destroy 
+        format.html{render @user }
         format.json{render json: @eligibility, status: :no_content}
       else
         format.json{render json: @eligibility.errors.full_messages}

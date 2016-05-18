@@ -495,7 +495,7 @@ function userCreated() {
     var checkbox = $(this);
     console.log(this);
     var union_id = checkbox.data("union-id");
-    var role_id = checkbox.data("roles-id");
+    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id");
     console.log("union: " + union_id);
     console.log("role: " + role_id);
