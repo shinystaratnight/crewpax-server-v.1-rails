@@ -14,7 +14,6 @@ class UsersController < ApplicationController
         @users = {total_user: @total_user, paginated_users:  @paginated_user_info}
         
         format.html
-        # format.js 
         format.json{render json: @users}
       
       elsif params[:page].to_i % 3 == 2
@@ -31,10 +30,7 @@ class UsersController < ApplicationController
     end
   end
       
-      # else 
-
-      #   format.html{render :index}
-      #   format.json{render json: @users}
+     
  
      
       # if params[:page] % 3 == 2
@@ -209,7 +205,51 @@ class UsersController < ApplicationController
 
 
   def search
-    binding.pry 
+ 
+    respond_to do |format|
+      if params[:has_vehicle] == "true" 
+        @users = {}        
+        if params[:role_id] == nil
+          @users_with_vehicle = User.all.find_all{|user| user.has_vehicle == true}
+          @number_users_with_vehicle = @users_with_vehicle.length 
+
+          if params[:current_page_number] == "1"
+            @users_with_vehicle = @users_with_vehicle[0..4]
+            # @users_with_vehicle = @users_with_vehicle[0..30]
+          else
+            @users_with_vehicle = @users_with_vehicle[5..10]
+            #@users_with_vehicle = @users_with_vehicle[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+          end 
+
+          @paginated_user_info =  convert_user_info_json(@users_with_vehicle)         
+          @users = {number_users_have_vehicle: @number_users_with_vehicle, paginated_users: @paginated_user_info } 
+          
+          format.html
+          format.json{render json: @users}
+        else
+
+          @users_with_vehicle = Role.find(params[:role_id]).users.find_all{|user| user.has_vehicle == true }
+          @number_users_with_vehicle = @users_with_vehicle.length 
+          
+          if params[:current_page_number] == "1"
+            @users_with_vehicle = @users_with_vehicle[0..4]
+            # @users_with_vehicle = @users_with_vehicle[0..30]
+          else
+            @users_with_vehicle = @users_with_vehicle[5..10]
+            #@users_with_vehicle = @users_with_vehicle[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+          end 
+          
+          @paginated_user_info =  convert_user_info_json(@users_with_vehicle)         
+          @users = {number_users_have_vehicle: @number_users_with_vehicle, paginated_users: @paginated_user_info } 
+          
+          format.html
+          format.json{render json: @users}
+        end
+      end
+
+
+
+    end
 
   end
 

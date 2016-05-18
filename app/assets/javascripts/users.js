@@ -5,6 +5,12 @@ $(function(){
   var current_page_number = $(location).attr("search").match(/\d+/)
   current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
   console.log("current_page_number:", current_page_number)
+  var opts = {
+    pageMax: 1,
+    postsDiv: $('#user-list'),
+
+  }
+
 
   if (current_page_number == 0){
     var opts = {
@@ -44,6 +50,14 @@ $(function(){
 
      //User ajax to get the user_id 
       firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status)
+    
+      // $("#has_a_vehicle > a").on("click", function(event){
+      //    event.preventDefault();
+      //    var role_id = $("#user_role option:selected").val()
+      //    debugger
+      // });
+
+
     }
     
   });
@@ -51,23 +65,20 @@ $(function(){
 
 
 //==========================When sorting crew by if having a vehicle ========================================================
-  $("#has_a_vehicle > a").on("click", {data: data }, function(event){
-    alert("sort has a vehicle link click ")
+  $("#has_a_vehicle > a").on("click", function(event){
     event.preventDefault();
-   
+    var current_page_number = $(".pagination-page").data("page")
     // var roles_ids = [];
-    // roles_ids.push($(this).data("selected-role-id"));
-    
-  //   var last_sign_in_at = "most_recent"
-    var role_id = $(this).data("selected-role-id")
+    // roles_ids.push($(this).data("selected-role-id"))
+    var role_id = $("#user_role option:selected").val()
+    var vehicle_user_data = [];
+   
     if(role_id == ""){
-
-      sortUser(data)
-      // var user_data = {last_sign_in_at: last_sign_in_at}
-      // sortUser(user_data);
-    }else{
-      // var user_data = {role_id:role_id, last_sign_in_at:last_sign_in_at};
-      // sortUser(user_data);
+      var user_data = {has_vehicle: true, current_page_number: current_page_number}
+      sortUser(user_data, opts, vehicle_user_data);
+    } else{
+      var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
+      sortUser(user_data, opts, vehicle_user_data);
     }
     
   });  
@@ -75,10 +86,24 @@ $(function(){
 
 
 //=========================================================================================================
-  
+  $("#available_soon > a").on("click", function(event){
+    event.preventDefault();
+    var current_page_number = $(".pagination-page").data("page")
+    var role_id = $("#user_role option:selected").val()
+    var user_available_data =[];
+    debugger
+
+  })
 
 
 
+
+
+
+
+
+
+//=========================================================================================================
 });
 
 //========================================================================================================
@@ -121,7 +146,8 @@ $(function(){
             } else{
             // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
               changePage(gotoPageNumber, data, opts, user_source)
-              preloadUserData(gotoPageNumber,data, opts, user_source);
+              var url = "/users"
+              preloadUserData(gotoPageNumber,data, opts, user_source, url, {page: parseInt(gotoPageNumber)});
             }
           }else{
             changePage(gotoPageNumber, data, opts, user_source)
@@ -130,23 +156,25 @@ $(function(){
         });
 
 
-
-
       }
     });
 
   }
 
   
-  function preloadUserData(gotoPageNumber,user_data, opts, user_source){
- 
+  function preloadUserData(gotoPageNumber,user_data, opts, user_source, url, ajax_data){
     $.ajax({
-      url: "/users",
+      url: url,
       method: "get",
       dataType: "json",
-      data:{page: parseInt(gotoPageNumber)},
+      data:ajax_data,
       success: function(response){
-        $.map(response, function(user){return user_data.push(user)})
+        if (response.paginated_users == undefined) {
+          $.map(response, function(user){return user_data.push(user)})
+
+        }else{
+          $.map(response.paginated_users, function(user){return user_data.push(user)})
+        }
         // user_data.push(response)
         console.log("new data array:", user_data)
         // In order to ensure data is only loaded once, set data attribute load to be true        
@@ -164,7 +192,6 @@ $(function(){
       dataType: "json",
       data:{label:{role_id: role_id, hiring_board: hiring_board_status}, current_page: current_page},
       success: function(response){   
-        debugger
         if (response == undefined || response.paginated_users == "") {
           UserNotFound()
         } else {
@@ -231,6 +258,75 @@ $(function(){
       }
     });
   }
+
+
+//====================================================================================================
+  function sortUser(user_data, opts, vehicle_user_data){
+    $.ajax({
+      url:"/users/search",
+      method: "get",
+      dataType: "json",
+      data: user_data,
+      success: function(response){ 
+        console.log("users with vehicle response:", response.paginated_users)
+        if (response == undefined || response.paginated_users == "") {
+          UserNotFound()
+        }else{
+          var dataCount = response.number_users_have_vehicle;
+          debugger
+          var pageCount = Math.ceil(dataCount/opts.pageMax);
+          $.map(response.paginated_users, function(user){return vehicle_user_data.push(user)})
+          debugger
+          var user_source = $("#user_card_template").html();
+          if (dataCount > opts.pageMax){
+            // Remove original pagination
+            $(".pagination").remove();
+            paginate(pageCount,opts, vehicle_user_data, user_source);
+            posts = response.paginated_users.slice(0, opts.pageMax);
+          
+          } else {
+            posts = response.paginated_users;
+            $(".pagination").hide();
+          } 
+
+          //load posts for the current page 
+          loadPosts(posts,opts,user_source); 
+
+          // When click on the pagination button:
+          $(".pagination-page").on("click", function(){
+            var gotoPageNumber = $(this).data("page");
+            console.log("filter users: clicked page that goes to:", gotoPageNumber)
+            if (gotoPageNumber % 3 == 2){
+              // Check if this page is clicked before, if yes, show already render info 
+              if ($(this).data("load")== true){
+                changePage(gotoPageNumber, vehicle_user_data, opts, user_source)
+              } else{
+                // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+                changePage(gotoPageNumber, vehicle_user_data, opts, user_source)
+                // Need to preload filter user data 
+                // preloadFilterUserData(role_id,gotoPageNumber,vehicle_user_data, opts, user_source)
+                var url = "/users/search"
+                //dataCount < 30 search result is less than 30 users, only load once
+                // dataCount > 30 search result is more than 30 users, need to load multiple times
+                // need_to_load_times = Math.cell(dataCount/30)
+                var need_to_load_times = Math.ceil(dataCount / 4)
+                if ((gotoPageNumber + 1)/3 < need_to_load_times){
+                  preloadUserData(gotoPageNumber,vehicle_user_data, opts, user_source, url, {current_page_number:parseInt(gotoPageNumber),has_vehicle: true })
+                }
+              }
+            }else{
+              changePage(gotoPageNumber, vehicle_user_data, opts,user_source)
+            }
+
+          });
+        }
+
+      }
+    });
+  }
+
+
+
 
 
 
@@ -324,27 +420,29 @@ $(function(){
     $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
   }
 
-//====================================================================================================
-  function sortUser(data){
-    console.log("data array in sort user:", data)
-    debugger
-    data.sort(vehicleSort(data))
-  
-  }
 
-  function vehicleSort(property) {
+
+
+  // function sortUser(data){
+  //   console.log("data array in sort user:", data)
+  //   debugger
+  //   data.sort(vehicleSort(data))
+  
+  // }
+
+  // function vehicleSort(property) {
     
-    var sortOrder = 1;
-    if(property[0].user_info.has_vehicle === true) {
-        sortOrder = -1;
-        property = property.substr(1);
-    }
-    debugger
-    return function (a,b) {
-        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-        return result * sortOrder;
-    }
-  }
+  //   var sortOrder = 1;
+  //   if(property[0].user_info.has_vehicle === true) {
+  //       sortOrder = -1;
+  //       property = property.substr(1);
+  //   }
+  //   debugger
+  //   return function (a,b) {
+  //       var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+  //       return result * sortOrder;
+  //   }
+  // }
 
 
   // $("#user_role, #select_user_role").on("change",function(){
