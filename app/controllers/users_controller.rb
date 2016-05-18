@@ -272,12 +272,8 @@ class UsersController < ApplicationController
           @users_info = @users_info[3..7]
           #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
         end         
-
-        
-
-        @users={number_users_available: @number_users_available, paginated_users: @users_info }
-      
-     
+        @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+           
         format.html
         format.json{render json: @users}
       end
@@ -286,18 +282,21 @@ class UsersController < ApplicationController
       if params[:last_log_in]== "most_recent"
         @users = convert_user_info_json(User.all) 
         
+        #Sort users based on most sign in 
+        @users_with_last_log_in = @users.sort_by{|user| user[:user_info].last_sign_in_at}.reverse
+        @number_users = @users_with_last_log_in.length
+        #pagination sorted result
+        
         if params[:current_page_number] == "1"
-            @users_with_last_log_in = @users[0..2]
-            # @users_with_last_log_in = @users[0..30]
+          @users_with_last_log_in = @users_with_last_log_in[0..2]
+          # @users_with_last_log_in = @users_with_last_log_in[0..30]
         else
-            @users_with_last_log_in = @users[3..12]
-            #@users_with_last_log_in = @users[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+          @users_with_last_log_in = @users_with_last_log_in[3..12]
+          #@users_with_last_log_in = @users_with_last_log_in[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
         end   
         
-        #Sort users based on most sign in 
-        @users_with_last_log_in = @users.sort_by!{|user| user[:user_info].last_sign_in_at}.reverse
 
-        @users ={total_user: @total_user, paginated_users: @users_with_last_log_in}
+        @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
         
         format.html
         format.json{render json: @users}

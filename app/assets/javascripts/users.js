@@ -93,7 +93,6 @@ $(function(){
     var current_page_number = $(".pagination-page").data("page")
     var role_id = $("#user_role option:selected").val()
     var user_available_data =[];
-    debugger
 
 
     if(role_id == ""){
@@ -348,10 +347,11 @@ $(function(){
         if (response == undefined || response.paginated_users == "") {
           UserNotFound()
         }else{
-          var dataCount = response.number_users_available;
+          var dataCount = response.number_users;
           var pageCount = Math.ceil(dataCount/opts.pageMax);
           var user_source = $("#user_card_template").html();
           $.map(response.paginated_users, function(user){return sorting_data.push(user)})
+          var sorting_params = response.sorting_params
           if (dataCount > opts.pageMax){
             // Remove original pagination
             $(".pagination").remove();
@@ -367,7 +367,7 @@ $(function(){
           loadPosts(posts,opts,user_source); 
 
           // When click on the pagination button:
-          $(".pagination-page").on("click", function(){
+          $(".pagination-page").on("click", {sorting_params: sorting_params}, function(event){
             var gotoPageNumber = $(this).data("page");
             console.log("sort users : clicked page that goes to:", gotoPageNumber)
             if (gotoPageNumber % 3 == 2){
@@ -383,10 +383,14 @@ $(function(){
                 //dataCount < 30 search result is less than 30 users, only load once
                 // dataCount > 30 search result is more than 30 users, need to load multiple times
                 // need_to_load_times = Math.cell(dataCount/30)
-
                 var need_to_load_times = Math.ceil(dataCount / 4)
+                if (event.data.sorting_params == "last_log_in"){
+                  var ajax_data = {current_page_number:parseInt(gotoPageNumber),last_log_in: "most_recent"}
+                } else if(event.data.sorting_params == "availability"){
+                  var ajax_data = {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"}
+                }                
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"})
+                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, ajax_data )
                 }
               }
             }else{
