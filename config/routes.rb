@@ -8,6 +8,10 @@ Bcpax::Application.routes.draw do
     collection do
       get "search"
     end
+
+    collection do 
+      get "sort"
+    end
   end
 
   resources :jobs, shallow: true do

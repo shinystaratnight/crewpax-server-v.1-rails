@@ -3,19 +3,19 @@ class UsersController < ApplicationController
   respond_to :html, :json, :js
   # caches_page :index
   def index
-
-    respond_to do |format|       
+    respond_to do |format|     
       if params[:page]== "0" || params[:page] == nil 
         @users = {};
-        @total_user = User.all.length
+        @total_user = User.all.length        
         @paginated_users = User.limit(3)
+        
         @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         @users = {total_user: @total_user, paginated_users:  @paginated_user_info}
         
         format.html
         format.json{render json: @users}
-      
+        
       elsif params[:page].to_i % 3 == 2
         @users = {};
         @ajax_request_time = (params[:page].to_i + 1) / 3
@@ -24,6 +24,7 @@ class UsersController < ApplicationController
         #offset is for pagination, offset increases as page number goes up
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
+        
         format.html
         format.json{render json: @paginated_user_info}
       end
@@ -204,8 +205,7 @@ class UsersController < ApplicationController
   end
 
 
-  def search
- 
+  def search 
     respond_to do |format|
       if params[:has_vehicle] == "true" 
         @users = {}        
@@ -246,14 +246,51 @@ class UsersController < ApplicationController
           format.json{render json: @users}
         end
       end
-
-
-
     end
-
   end
 
 
+  def sort
+    respond_to do |format|
+      @users = {}
+      @total_user = User.all.length  
+      if params[:availability] == "most_recent"
+      
+        @users = convert_user_info_json(User.all)
+        # Find users who are available today in dates after today 
+        @users_available = @users.find_all{|user| user[:availabilities] !=[]}
+        @number_users_available = @users_available.length
+        
+        
+        
+        if params[:current_page_number] == "1"
+            @users_available = @users_available[0..2]
+            # @users_available = @users_available[0..30]
+        else
+            @users_available = @users_available[3..7]
+            #@users_available = @users_available[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+        end         
+
+        # sort users based on their most recent availabilities
+        @users_info = @users_available.sort_by{|user| user[:availabilities]}
+
+
+        @users={number_users_available: @number_users_available, paginated_users: @users_info }
+      
+     
+        format.html
+        format.json{render json: @users}
+      end
+
+      if params[:last_sign_in_at]== "most_recent"
+        @users = convert_user_info_json(User.all)
+        #most sign in 
+        @users.sort_by!{|user| user[:user_info].last_sign_in_at}.reverse
+        format.html
+        format.json{render json: "hello world"}
+      end
+    end
+  end
 
   # account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
   

@@ -43,11 +43,11 @@ class User < ActiveRecord::Base
   #   binding.pry 
   # end
 
-  def self.filter(role_id)
-    if role_id.present?
-      Role.find(role_id).users
+  def self.sort_availability(sort_order)
+    if sort_order == "most_recent"
+      binding.pry 
     else
-      User.all
+      reorder(last_sign_in_at: :desc)
     end
   end
 

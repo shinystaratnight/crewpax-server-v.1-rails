@@ -5,6 +5,7 @@ $(function(){
   var current_page_number = $(location).attr("search").match(/\d+/)
   current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
   console.log("current_page_number:", current_page_number)
+  
   var opts = {
     pageMax: 1,
     postsDiv: $('#user-list'),
@@ -49,7 +50,7 @@ $(function(){
       var filter_data = [];
 
      //User ajax to get the user_id 
-      firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status)
+      firstLoadFilterRoleData(opts, filter_data, role_id, current_page, hiring_board_status)
     
       // $("#has_a_vehicle > a").on("click", function(event){
       //    event.preventDefault();
@@ -75,10 +76,10 @@ $(function(){
    
     if(role_id == ""){
       var user_data = {has_vehicle: true, current_page_number: current_page_number}
-      sortUser(user_data, opts, vehicle_user_data);
+      filterUser(user_data, opts, vehicle_user_data);
     } else{
       var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
-      sortUser(user_data, opts, vehicle_user_data);
+      filterUser(user_data, opts, vehicle_user_data);
     }
     
   });  
@@ -92,6 +93,10 @@ $(function(){
     var role_id = $("#user_role option:selected").val()
     var user_available_data =[];
     debugger
+    if(role_id == ""){
+      var user_data = {current_page_number: current_page_number, availability: "most_recent"}
+      sortUser(user_data, opts, user_available_data)
+    }
 
   })
 
@@ -185,7 +190,7 @@ $(function(){
   }
 
 
-  function firstLoadFilterData(opts, filter_data, role_id, current_page, hiring_board_status){
+  function firstLoadFilterRoleData(opts, filter_data, role_id, current_page, hiring_board_status){
     $.ajax({
       url: "/roles/" + role_id + "/labels",
       method: "get",
@@ -227,7 +232,7 @@ $(function(){
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, filter_user_source)
                 // Need to preload filter user data 
-                preloadFilterUserData(role_id,gotoPageNumber,filter_data, opts, filter_user_source)
+                preloadFilterUserRoleData(role_id,gotoPageNumber,filter_data, opts, filter_user_source)
                 
               }
             }else{
@@ -240,7 +245,7 @@ $(function(){
   }
 
 
-  function preloadFilterUserData(role_id,gotoPageNumber,user_data, opts, user_source){
+  function preloadFilterUserRoleData(role_id,gotoPageNumber,user_data, opts, user_source){
     $.ajax({
       url: "/roles/" + role_id + "/labels",
       method: "get",
@@ -261,7 +266,7 @@ $(function(){
 
 
 //====================================================================================================
-  function sortUser(user_data, opts, vehicle_user_data){
+  function filterUser(user_data, opts, vehicle_user_data){
     $.ajax({
       url:"/users/search",
       method: "get",
@@ -273,10 +278,8 @@ $(function(){
           UserNotFound()
         }else{
           var dataCount = response.number_users_have_vehicle;
-          debugger
           var pageCount = Math.ceil(dataCount/opts.pageMax);
           $.map(response.paginated_users, function(user){return vehicle_user_data.push(user)})
-          debugger
           var user_source = $("#user_card_template").html();
           if (dataCount > opts.pageMax){
             // Remove original pagination
@@ -326,7 +329,68 @@ $(function(){
   }
 
 
+  function sortUser(ajax_data,opts,sorting_data){
+    $.ajax({
+      url: "/users/sort",
+      method: "get",
+      dataType: "json",
+      data: ajax_data,
+      success:function(response){
+        console.log("users with most recent availability response:", response.paginated_users)
+        if (response == undefined || response.paginated_users == "") {
+          UserNotFound()
+        }else{
+          var dataCount = response.number_users_available;
+          var pageCount = Math.ceil(dataCount/opts.pageMax);
+          var user_source = $("#user_card_template").html();
+          $.map(response.paginated_users, function(user){return sorting_data.push(user)})
+          if (dataCount > opts.pageMax){
+            // Remove original pagination
+            $(".pagination").remove();
+            paginate(pageCount,opts, sorting_data, user_source);
+            posts = response.paginated_users.slice(0, opts.pageMax);
+          
+          } else {
+            posts = response.paginated_users;
+            $(".pagination").hide();
+          } 
 
+          //load posts for the current page 
+          loadPosts(posts,opts,user_source); 
+
+          // When click on the pagination button:
+          $(".pagination-page").on("click", function(){
+            var gotoPageNumber = $(this).data("page");
+            console.log("sort users : clicked page that goes to:", gotoPageNumber)
+            if (gotoPageNumber % 3 == 2){
+              // Check if this page is clicked before, if yes, show already render info 
+              if ($(this).data("load")== true){
+                changePage(gotoPageNumber, sorting_data, opts, user_source)
+              } else{
+                // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+                changePage(gotoPageNumber, sorting_data, opts, user_source)
+                // Need to preload filter user data 
+                // preloadFilterUserData(role_id,gotoPageNumber,sorting_data, opts, user_source)
+                var url = "/users/sort"
+                //dataCount < 30 search result is less than 30 users, only load once
+                // dataCount > 30 search result is more than 30 users, need to load multiple times
+                // need_to_load_times = Math.cell(dataCount/30)
+                var need_to_load_times = Math.ceil(dataCount / 4)
+                if ((gotoPageNumber + 1)/3 < need_to_load_times){
+                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"})
+                }
+              }
+            }else{
+              changePage(gotoPageNumber, sorting_data, opts,user_source)
+            }
+
+          });
+
+        }
+      }
+    })
+
+  }
 
 
 
