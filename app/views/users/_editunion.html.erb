@@ -67,14 +67,15 @@
                       class="roles" 
                       id="<%=role.name%>" 
                       name="<%=role.name%>" 
+                      data-user-id="<%=@user.id%>"
+                      data-union-id="<%=union.id%>"
                       data-label-id="" 
-                      data-role-id="<%=role.id%>" 
+                      data-roles-id="<%=role.id%>" 
                       data-eligibility-id="<% @user.eligibilities.find_by(role_id: role.id, user_id: @user.id).id%>" 
                       value="<%=role.name%>" 
                       checked/>
                     <span class="label-text">
                     <%=role.name%>
-                    <% @user.eligibilities.find_by(role_id: role.id, user_id: @user.id).id%>
                     </span>
                   </label>
                 <% else %>
@@ -86,8 +87,7 @@
                       name="<%=role.name%>" 
                       data-user-id="<%=@user.id%>"
                       data-union-id="<%=union.id%>"
-                      data-label-id="" 
-                      data-role-id="<%=role.id%>" 
+                      data-roles-id="<%=role.id%>" 
                       data-eligibility-id="" 
                       value="<%=role.name%>"/>
                       <span class="label-text">
