@@ -87,14 +87,22 @@ $(function(){
 
 
 //=========================================================================================================
-  $("#available_soon > a").on("click", function(event){
+  $("#available_soon > a, #most_recent_log_in > a").on("click", function(event){
+    alert("most recent log in clicked")
     event.preventDefault();
     var current_page_number = $(".pagination-page").data("page")
     var role_id = $("#user_role option:selected").val()
     var user_available_data =[];
     debugger
+
+
     if(role_id == ""){
-      var user_data = {current_page_number: current_page_number, availability: "most_recent"}
+      if($(this).data("availability") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, availability: "most_recent"}
+      }else if($(this).data("last-log-in") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, last_log_in: "most_recent"}
+      }
+      
       sortUser(user_data, opts, user_available_data)
     }
 
@@ -103,7 +111,7 @@ $(function(){
 
 
 
-
+//===================================================================================================
 
 
 
@@ -375,6 +383,7 @@ $(function(){
                 //dataCount < 30 search result is less than 30 users, only load once
                 // dataCount > 30 search result is more than 30 users, need to load multiple times
                 // need_to_load_times = Math.cell(dataCount/30)
+
                 var need_to_load_times = Math.ceil(dataCount / 4)
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
                   preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"})

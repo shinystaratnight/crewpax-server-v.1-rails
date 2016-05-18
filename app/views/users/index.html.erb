@@ -23,8 +23,8 @@
   </button>
   </ul>
     <ul class="dropdown-menu">
-    <li id ="available_soon"><%=link_to 'Availability(Most Recent)', users_path(available_soon: true), data: {selected_role_id: ""}%></li>
-    <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: ""}%></li>
+    <li id ="available_soon"><%=link_to 'Availability(Most Recent)', users_path(available_soon: true), data: {selected_role_id: "", availability: "most_recent"}%></li>
+    <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: "", last_log_in: "most_recent"}%></li>
   </ul>
 </div>
 <span><button type="button" class="btn btn-danger"><%=link_to"Reset", users_path%></button>

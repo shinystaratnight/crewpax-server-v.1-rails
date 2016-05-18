@@ -261,19 +261,19 @@ class UsersController < ApplicationController
         @users_available = @users.find_all{|user| user[:availabilities] !=[]}
         @number_users_available = @users_available.length
         
-        
-        
-        if params[:current_page_number] == "1"
-            @users_available = @users_available[0..2]
-            # @users_available = @users_available[0..30]
-        else
-            @users_available = @users_available[3..7]
-            #@users_available = @users_available[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
-        end         
-
         # sort users based on their most recent availabilities
         @users_info = @users_available.sort_by{|user| user[:availabilities]}
 
+        #pagination sorted result
+        if params[:current_page_number] == "1"
+          @users_info = @users_info[0..2]
+          # @users_info = @users_info[0..30]
+        else
+          @users_info = @users_info[3..7]
+          #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+        end         
+
+        
 
         @users={number_users_available: @number_users_available, paginated_users: @users_info }
       
@@ -282,12 +282,25 @@ class UsersController < ApplicationController
         format.json{render json: @users}
       end
 
-      if params[:last_sign_in_at]== "most_recent"
-        @users = convert_user_info_json(User.all)
-        #most sign in 
-        @users.sort_by!{|user| user[:user_info].last_sign_in_at}.reverse
+  
+      if params[:last_log_in]== "most_recent"
+        @users = convert_user_info_json(User.all) 
+        
+        if params[:current_page_number] == "1"
+            @users_with_last_log_in = @users[0..2]
+            # @users_with_last_log_in = @users[0..30]
+        else
+            @users_with_last_log_in = @users[3..12]
+            #@users_with_last_log_in = @users[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+        end   
+        
+        #Sort users based on most sign in 
+        @users_with_last_log_in = @users.sort_by!{|user| user[:user_info].last_sign_in_at}.reverse
+
+        @users ={total_user: @total_user, paginated_users: @users_with_last_log_in}
+        
         format.html
-        format.json{render json: "hello world"}
+        format.json{render json: @users}
       end
     end
   end
