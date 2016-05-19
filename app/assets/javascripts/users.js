@@ -87,8 +87,24 @@ $(function(){
     
   });  
 
+//==========================When sorting crew by if the user is a union member ========================================================
+  $("#union_member > a").on("click", function(event){
+    $(this).parent().data("clickable", "clicked") 
+    alert("union member clicked")
+    event.preventDefault();
+    console.log("filter has been clicked:", $(this).parent().data("clickable"))
 
+  }); 
 
+//==========================When sorting crew by if the user is a union permitee ========================================================
+  $("#union_permit > a").on("click", function(event){
+    $(this).parent().data("clickable", "clicked") 
+    alert("union permit clicked")
+    event.preventDefault();
+    console.log("filter has been clicked:", $(this).parent().data("clickable"))
+
+  });  
+  
 //=========================================================================================================
   $("#available_soon > a, #most_recent_log_in > a").on("click", function(event){
     event.preventDefault();
@@ -105,7 +121,7 @@ $(function(){
       var filter_element = ""
     }
      
-   debugger
+
     if(role_id == ""){
 
       // if(filter_element == ""){
@@ -116,6 +132,7 @@ $(function(){
           var user_data = {current_page_number: current_page_number, last_log_in: "most_recent",filter_element:filter_element}
         }
         sortUser(user_data, opts, user_available_data)
+        
       // }else{
       //   // User has chosen whether users needs to have a vehicle/union member/union permit
       //   if($(this).data("availability") == "most_recent"){

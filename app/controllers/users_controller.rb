@@ -256,18 +256,42 @@ class UsersController < ApplicationController
       @total_user = User.all.length  
       binding.pry 
       if params[:availability] == "most_recent"
-        if params[:filter_element].present? && params[:filter_element][:query] == "has_vehicle"
-          sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
-          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
-             
-      
-          format.html
-          format.json{render json: @users }
-        else
-          sort_and_paginate_available_user(User.all)
+        if params[:filter_element].present? 
+          if params[:filter_element][:query] == "has_vehicle"
+            sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
+            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+                     
+            format.html
+            format.json{render json: @users }
+          elsif params[:filter_element][:query] == "union_member"
+            users = Eligibility.all
+                               .find_all{|e| e.member==true && e.user_id != nil}
+                               .uniq{|u| u.user_id}
+                               .map{|e| User.find(e.user_id)}
+                               
+            sort_and_paginate_available_user(users)
+            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
         
+            format.html
+            format.json{render json: @users }
+
+          elsif params[:filter_element][:query] == "union_permit"
+            users = Eligibility.all
+                               .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+                               .uniq{|u| u.user_id}
+                               .map{|e| User.find(e.user_id)}
+
+            sort_and_paginate_available_user(users)
+            
+            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+
+            format.html
+            format.json{render json: @users }
+          end
+        else
+          sort_and_paginate_available_user(User.all)        
           @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
-          binding.pry   
+                  
           format.html
           format.json{render json: @users}
         end
