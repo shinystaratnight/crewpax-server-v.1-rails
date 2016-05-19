@@ -300,10 +300,32 @@ class UsersController < ApplicationController
   
       if params[:last_log_in]== "most_recent"
         if params[:filter_element].present?
-          if params[:filter_element][:query] == "has_vehicle"
-            # binding.pry 
+          if params[:filter_element][:query] == "has_vehicle"            
+            sort_and_paginate_last_log_in_user(User.all.find_all{|user| user.has_vehicle == true})
+            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+          
+            format.html
+            format.json{render json: @users }
+          elsif params[:filter_element][:query] == "union_member"
+            users = Eligibility.all
+                               .find_all{|e| e.member==true && e.user_id != nil}
+                               .uniq{|u| u.user_id}
+                               .map{|e| User.find(e.user_id)}
 
+            sort_and_paginate_last_log_in_user(users)
+            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+            
+            format.html
+            format.json{render json: @users }
+          elsif params[:filter_element][:query] == "union_permit"
+            users = Eligibility.all
+                               .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+                               .uniq{|u| u.user_id}
+                               .map{|e| User.find(e.user_id)}
 
+            sort_and_paginate_last_log_in_user(users)
+            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              binding.pry
             format.html
             format.json{render json: @users }
           end
