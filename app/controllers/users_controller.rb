@@ -240,9 +240,73 @@ class UsersController < ApplicationController
 
       if params[:union_member] == "true"
         if params[:role_id] == nil || params[:role_id].empty?
+          users = Eligibility.all
+                                 .find_all{|e| e.member==true && e.user_id != nil}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+
+          filter_and_paginate(users)                     
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info ,
+                    sorting_params:"union_member", 
+                    role_id: ""
+                    } 
+
+          format.html
+          format.json{render json: @users}                       
         else
-          
+          users = Eligibility.all
+                             .find_all{|e| e.member == true && e.user_id != nil && e.role_id == params[:role_id].to_i}
+                             .uniq{|u| u.user_id}
+                             .map{|e| User.find(e.user_id)}
+
+          filter_and_paginate(users)                     
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info ,
+                    sorting_params:"union_member", 
+                    role_id: params[:role_id]
+                    } 
+
+          format.html
+          format.json{render json: @users}  
         end
+      end
+
+      if params[:union_permit] == "true"
+        if params[:role_id] == nil || params[:role_id].empty?
+          users = Eligibility.all
+                             .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+                             .uniq{|u| u.user_id}
+                             .map{|e| User.find(e.user_id)}
+
+          filter_and_paginate(users)                     
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info ,
+                    sorting_params:"union_permit", 
+                    role_id: ""
+                    } 
+
+          format.html
+          format.json{render json: @users}                       
+        else
+          users = Eligibility.all
+                             .find_all{|e| e.permit_days != nil && e.user_id != nil && e.role_id == params[:role_id].to_i}
+                             .uniq{|u| u.user_id}
+                             .map{|e| User.find(e.user_id)}
+
+
+          filter_and_paginate(users)                     
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info ,
+                    sorting_params:"union_permit", 
+                    role_id: params[:role_id]
+                    } 
+
+          format.html
+          format.json{render json: @users}  
+        end
+      
+
       end
     end
   end
@@ -374,7 +438,7 @@ class UsersController < ApplicationController
                                  .map{|e| User.find(e.user_id)}
               sort_and_paginate_last_log_in_user(users)
               @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-              binding.pry 
+  
               format.html
               format.json{render json: @users }
 
@@ -472,13 +536,14 @@ class UsersController < ApplicationController
   
   def filter_and_paginate(user)
     @number_users = user.length
-    if params[:current_page_number] == "1"
+    if params[:current_page_number] == "1" || params[:current_page_number]== "0"
       users_result = user[0..4]
       # users_result = user[0..30]
     else
       users_result = user[5..10]
       #users_result = user[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
     end 
+
     @paginated_user_info = convert_user_info_json(users_result)
 
   end
@@ -492,7 +557,7 @@ class UsersController < ApplicationController
     @users_info = @users_available.sort_by{|user| user[:availabilities]}
 
     #pagination sorted result
-    if params[:current_page_number] == "1"
+    if params[:current_page_number] == "1" || params[:current_page_number]== "0"
       @users_info = @users_info[0..2]
       # @users_info = @users_info[0..30]
     else
@@ -508,7 +573,7 @@ class UsersController < ApplicationController
     @users_with_last_log_in = users.sort_by{|user| user[:user_info].last_sign_in_at}.reverse
     @number_users = @users_with_last_log_in.length
     #pagination sorted result
-    if params[:current_page_number] == "1"
+    if params[:current_page_number] == "1" || params[:current_page_number]== "0"
       @users_with_last_log_in = @users_with_last_log_in[0..2]
       # @users_with_last_log_in = @users_with_last_log_in[0..30]
     else

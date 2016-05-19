@@ -79,12 +79,12 @@ $(function(){
        
     if(role_id == ""){
       var user_data = {has_vehicle: true, current_page_number: current_page_number}
-      filterUser(user_data, opts, filter_user_data);
     } else{
       var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
-      filterUser(user_data, opts, filter_user_data);
     }
     
+    filterUser(user_data, opts, filter_user_data);
+
   });  
 
 //==========================When sorting crew by if the user is a union member ========================================================
@@ -95,12 +95,12 @@ $(function(){
     var role_id = $("#user_role option:selected").val()
     var filter_user_data = [];
     if(role_id == ""){
-      var user_data = {union_member: true, current_page_number: current_page_number}
-      filterUser(user_data, opts, filter_user_data);
+      var user_data = {union_member: true, current_page_number: current_page_number}     
     } else{
       var user_data = {role_id:role_id, union_member:true, current_page_number: current_page_number};
-      filterUser(user_data, opts, filter_user_data);
     }
+    
+    filterUser(user_data, opts, filter_user_data);
 
   }); 
 
@@ -109,7 +109,18 @@ $(function(){
     markFilterparams("union_permit")
     event.preventDefault();
     console.log("union permit filter has been clicked:", $(this).parent().data("clickable"))
+    var role_id = $("#user_role option:selected").val()
+    var filter_user_data = [];
+    if(role_id == ""){
+      var user_data = {union_permit: true, current_page_number: current_page_number}
+      // filterUser(user_data, opts, filter_user_data);
+    } else{
+      var user_data = {role_id:role_id, union_permit:true, current_page_number: current_page_number};
+     
+    }
 
+    filterUser(user_data, opts, filter_user_data);
+    
   });  
   
 //=========================================================================================================
