@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # caches_page :index
   def index
     respond_to do |format|     
-      if params[:page]== "0" || params[:page] == nil 
+      if params[:current_page_number]== "0" || params[:current_page_number] == nil 
         @users = {};
         @total_user = User.all.length        
         @paginated_users = User.limit(3)
@@ -16,9 +16,9 @@ class UsersController < ApplicationController
         format.html
         format.json{render json: @users}
         
-      elsif params[:page].to_i % 3 == 2
+      elsif params[:current_page_number].to_i % 3 == 2
         @users = {};
-        @ajax_request_time = (params[:page].to_i + 1) / 3
+        @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
         # @new_request_user_limit = (@ajax_request_time + 1) * 3 
         @paginated_users = User.limit(3).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
