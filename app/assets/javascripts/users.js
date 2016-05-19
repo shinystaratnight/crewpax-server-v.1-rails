@@ -14,11 +14,11 @@ $(function(){
 
 
   if (current_page_number == 0){
-    var opts = {
-    pageMax: 1,
-    postsDiv: $('#user-list'),
+    // var opts = {
+    // pageMax: 1,
+    // postsDiv: $('#user-list'),
 
-    }
+    // }
   
     firstloadUser(opts,data);
   
@@ -70,8 +70,8 @@ $(function(){
     event.preventDefault();
     var current_page_number = $(".pagination-page").data("page")
     // mark link as clicked for furthuer sorting by availability or most recent log in 
-    $(this).parent().data("clickable", "clicked") 
-    console.log("filter has been clicked:", $(this).parent().data("clickable"))
+    markFilterparams("has_a_vehicle"); 
+    console.log("has a vehicle filter has been clicked:", $(this).parent().data("clickable"))
     // var roles_ids = [];
     // roles_ids.push($(this).data("selected-role-id"))
     var role_id = $("#user_role option:selected").val()
@@ -89,19 +89,17 @@ $(function(){
 
 //==========================When sorting crew by if the user is a union member ========================================================
   $("#union_member > a").on("click", function(event){
-    $(this).parent().data("clickable", "clicked") 
-    alert("union member clicked")
+    markFilterparams("union_member")
     event.preventDefault();
-    console.log("filter has been clicked:", $(this).parent().data("clickable"))
+    console.log("union member filter has been clicked:", $(this).parent().data("clickable"))
 
   }); 
 
 //==========================When sorting crew by if the user is a union permitee ========================================================
   $("#union_permit > a").on("click", function(event){
-    $(this).parent().data("clickable", "clicked") 
-    alert("union permit clicked")
+    markFilterparams("union_permit")
     event.preventDefault();
-    console.log("filter has been clicked:", $(this).parent().data("clickable"))
+    console.log("union permit filter has been clicked:", $(this).parent().data("clickable"))
 
   });  
   
@@ -442,7 +440,22 @@ $(function(){
 
   }
 
+  function markFilterparams(params){
+    if (params == "has_a_vehicle"){
+      $("#union_member, #union_permit").data("clickable", "")
+      $("#has_a_vehicle").data("clickable","clicked")     
+    }
 
+    if (params == "union_member"){
+      $("#has_a_vehicle, #union_permit").data("clickable", "")
+      $("#union_member").data("clickable","clicked")     
+    }
+
+    if(params == "union_permit"){
+      $("#has_a_vehicle, #union_member").data("clickable", "")
+      $("#union_permit").data("clickable", "clicked")
+    }
+  }
 
   function range(i){return i?range(i-1).concat(i):[]}  
 
