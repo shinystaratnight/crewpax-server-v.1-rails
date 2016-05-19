@@ -131,6 +131,9 @@
           </div>
 
           <div id="union-<%=union.name%>" class="collapse" data-union-id="">
+
+          <% if (union.name == "DGC") || (union.name == "IATSE") %>
+
             <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
@@ -142,23 +145,47 @@
               <br>
             </div>
 
+          <%end%>
+
             <div id="<%=union.name.downcase%>_roles">
-              <%union.roles.each do |role|%>
-                <label for="<%=role.name%>">
-                  <input 
-                    type="checkbox" 
-                    class="edit-user-roles" 
-                    id="<%=role.name%>" 
-                    name="<%=role.name%>" 
-                    data-label-id="" 
-                    data-role-id="<%=role.id%>" 
-                    data-eligibility-id="" 
-                    value="<%=role.name%>"/>
-                  <span class="label-text">
-                  <%=role.name%> 
-                  </span>
-                </label>
+              <%union.roles.distinct.each do |role|%>
+               <% if Eligibility.find_by(user_id: user.id, role_id: role.id, union_id: union.id) %>
+                  <label for="<%=role.name%>">
+                    <input 
+                      type="checkbox" 
+                      class="roles" 
+                      id="<%=role.name%>" 
+                      name="<%=role.name%>" 
+                      data-user-id="<%=user.id%>"
+                      data-union-id="<%=union.id%>"
+                      data-label-id="" 
+                      data-rolez-id="<%=role.id%>" 
+                      data-eligibility-id="<%=Eligibility.find_by(user_id: user.id, role_id: role.id, union_id: union.id).id %>" 
+                      value="<%=role.name%>" 
+                      checked/>
+                    <span class="label-text">
+                    <%=role.name%>
+                    </span>
+                  </label>
+                <% else %>
+                    <label for="<%=role.name%>">
+                      <input 
+                      type="checkbox" 
+                      class="roles" 
+                      id="<%=role.name%>" 
+                      name="<%=role.name%>" 
+                      data-user-id="<%=user.id%>"
+                      data-union-id="<%=union.id%>"
+                      data-rolez-id="<%=role.id%>" 
+                      data-eligibility-id="" 
+                      value="<%=role.name%>"/>
+                      <span class="label-text">
+                      <%=role.name%> 
+                      </span>
+                    </label>
                 <%end%>
+            
+              <%end%>
             </div>
 
           </div>

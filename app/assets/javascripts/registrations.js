@@ -353,11 +353,11 @@ function userCreated() {
 //********************************************************************************************************  
 //==================Group One DGC ============================================================================================= 
 // Data attributes for union-id 
-  $("#DGC").on("click", function(){
-    var union_id = $(this).prev().text();
-    $(this).data("union-id", union_id);
+  // $("#DGC").on("click", function(){
+  //   var union_id = $(this).prev().text();
+  //   $(this).data("union-id", union_id);
    
-  }); 
+  // }); 
 
   $("#dgc_member").on("click", function(){
     var union_id = $("#DGC").data("union-id");
@@ -374,22 +374,18 @@ function userCreated() {
         $("#dgc_permit").val(data);
       });
     } else {
-      $("#dgc_number_days, #permit_days").hide();
+      $("#dgc_number_days, #dgc_permit_days").hide();
       var union_id = $("#DGC").data("union-id");
       changeDGCStatus($(this), union_id)           
     }
   });
 
-  $(".roles").on("click",function(){
+  $("#dgc_roles").find(".roles").on("click",function(){
     if ($("#dgc_member").is(":checked")) {
-      console.log($(this));
       var data = $("#dgc_member").val();
       var union_id = $("#DGC").data("union-id");
       var role_id = $(this).prev().text();
       $(this).data("role-id", role_id);
-      console.log(data);
-            console.log(union_id);
-      console.log(role_id);
 
       if ($(this).is(":checked")) {
         ajaxMember(data, union_id, role_id, $(this)); 

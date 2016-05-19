@@ -33,7 +33,7 @@
                   <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" checked/>
                   <label for="<%=union.name.downcase%>_permit"> Permit </label>
                   <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                    <div contenteditable="true" hidden="true" id="permit_days"><% @user.eligibilities.find_by(union_id: union.id).permit_days %></div>
+                    <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"><% @user.eligibilities.find_by(union_id: union.id).permit_days %></div>
                   </span>
               <% else %>
                 <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
@@ -60,7 +60,7 @@
 
             <div id="<%=union.name.downcase%>_roles">
               <%union.roles.distinct.each do |role|%>
-               <% if Eligibility.find_by(user_id: @user.id, role_id: role.id, union_id: union.id) %>
+               <% if Eligibility.find_by(user_id: @user.id, role_id: role.id, union_id: union.id) %> <!--fix this-->
                   <label for="<%=role.name%>">
                     <input 
                       type="checkbox" 
@@ -73,7 +73,7 @@
                       data-rolez-id="<%=role.id%>" 
                       data-eligibility-id="<%=Eligibility.find_by(user_id: @user.id, role_id: role.id, union_id: union.id).id %>" 
                       value="<%=role.name%>" 
-                      checked/>
+                      checked/> <!--fix this-->
                     <span class="label-text">
                     <%=role.name%>
                     </span>
@@ -96,9 +96,9 @@
                     </label>
                 <%end%>
 
-
               <%end%>
             </div>
+
 
           </div>
           <%end%>
