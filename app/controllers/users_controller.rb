@@ -231,7 +231,8 @@ class UsersController < ApplicationController
           @users = {number_users: @number_users, 
                     paginated_users: @paginated_user_info,
                     sorting_params:"has_vehicle", 
-                    role_id: params[:role_id] } 
+                    role_id: params[:role_id]
+                  } 
       
           format.html
           format.json{render json: @users}
@@ -326,14 +327,25 @@ class UsersController < ApplicationController
                                                  .uniq{|u| u.id}
                                                  .find_all{|user| user.has_vehicle == true}
               sort_and_paginate_available_user(users)
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              
+              @users = { number_users: @number_users_available,
+                         paginated_users: @users_info, 
+                         sorting_params: "availability",
+                         role_id: params[:role_id],
+                         filter_element: "has_vehicle"
+                        }
              
               format.html
               format.json{render json: @users }
 
             else
               sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              @users= {number_users: @number_users_available, 
+                       paginated_users: @users_info,
+                       sorting_params: "availability",
+                       role_id: "",
+                       filter_element: "has_vehicle" 
+                      }
                        
               format.html
               format.json{render json: @users }
@@ -347,7 +359,12 @@ class UsersController < ApplicationController
                                  .map{|e| User.find(e.user_id)}
 
               sort_and_paginate_available_user(users)
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              @users= { number_users: @number_users_available, 
+                        paginated_users: @users_info,
+                        sorting_params: "availability",
+                        role_id: params[:role_id],
+                        filter_element: "union_member" 
+                      }
 
               format.html
               format.json{render json: @users }
@@ -359,7 +376,12 @@ class UsersController < ApplicationController
                                  .map{|e| User.find(e.user_id)}
 
               sort_and_paginate_available_user(users)
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              @users= {number_users: @number_users_available,
+                       paginated_users: @users_info,
+                       sorting_params: "availability",
+                       role_id: "",
+                       filter_element: "union_member" 
+                      }
           
               format.html
               format.json{render json: @users }
@@ -372,7 +394,12 @@ class UsersController < ApplicationController
                                  .map{|e| User.find(e.user_id)}
 
               sort_and_paginate_available_user(users)
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              @users= {number_users: @number_users_available, 
+                       paginated_users: @users_info,
+                       sorting_params: "availability",
+                       role_id: params[:role_id],
+                       filter_element: "union_permit" 
+                      }
 
               format.html
               format.json{render json: @users }
@@ -384,7 +411,12 @@ class UsersController < ApplicationController
 
               sort_and_paginate_available_user(users)
               
-              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              @users= { number_users: @number_users_available, 
+                       paginated_users: @users_info,
+                       sorting_params: "availability",
+                       role_id: "",
+                       filter_element:"union_permit" 
+                      }
 
               format.html
               format.json{render json: @users }
@@ -395,14 +427,24 @@ class UsersController < ApplicationController
           users = Role.find(params[:role_id].to_i).users.uniq{|u| u.id}
           sort_and_paginate_available_user(users)
 
-          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+          @users= {number_users: @number_users_available, 
+                   paginated_users: @users_info,
+                   sorting_params: "availability",
+                   role_id: params[:role_id],
+                   filter_element: "" }
     
           format.html
           format.json{render json: @users }
           
         else
-          sort_and_paginate_available_user(User.all)        
-          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+          #some users never log in 
+          users =  User.all.find_all{|user| user.last_sign_in_at != nil}
+          sort_and_paginate_available_user(users)        
+          @users= {number_users: @number_users_available, 
+                   paginated_users: @users_info,
+                   sorting_params: "availability",
+                   role_id: "",
+                   filter_element:"" }
                   
           format.html
           format.json{render json: @users}
@@ -417,16 +459,26 @@ class UsersController < ApplicationController
               users = Role.find(params[:role_id].to_i).users
                                                  .uniq{|u| u.id}
                                                  .find_all{|user| user.has_vehicle == true}
-
+                                                 .find_all{|user| user.last_sign_in_at != nil }
               sort_and_paginate_last_log_in_user(users)
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-    
+              @users ={number_users: @number_users, 
+                       paginated_users: @users_with_last_log_in, 
+                       sorting_params: "last_log_in",
+                       role_id: params[:role_id],
+                       filter_element: {query: "has_vehicle"}
+                      }
+             
               format.html
               format.json{render json: @users }
-            else          
-              sort_and_paginate_last_log_in_user(User.all.find_all{|user| user.has_vehicle == true})
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-            
+            else 
+              users =  User.all.find_all{|user| user.has_vehicle == true && user.last_sign_in_at != nil }        
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, 
+                       paginated_users: @users_with_last_log_in, 
+                       sorting_params: "last_log_in",
+                       role_id: "",
+                       filter_element: {query: "has_vehicle"}
+                       }
               format.html
               format.json{render json: @users }
             end
@@ -436,8 +488,15 @@ class UsersController < ApplicationController
                                  .find_all{|e| e.member == true && e.user_id != nil && e.role_id == params[:role_id].to_i}
                                  .uniq{|u| u.user_id}
                                  .map{|e| User.find(e.user_id)}
+                                 .find_all{|user| user.last_sign_in_at != nil }
+
               sort_and_paginate_last_log_in_user(users)
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              @users ={number_users: @number_users, 
+                       paginated_users: @users_with_last_log_in, 
+                       sorting_params: "last_log_in",
+                       role_id: params[:role_id],
+                       filter_element: {query: "union_member"}
+                      }
   
               format.html
               format.json{render json: @users }
@@ -447,9 +506,15 @@ class UsersController < ApplicationController
                                  .find_all{|e| e.member==true && e.user_id != nil}
                                  .uniq{|u| u.user_id}
                                  .map{|e| User.find(e.user_id)}
+                                 .find_all{|user| user.last_sign_in_at != nil }
 
               sort_and_paginate_last_log_in_user(users)
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              @users ={number_users: @number_users, 
+                       paginated_users: @users_with_last_log_in,
+                       sorting_params: "last_log_in",
+                       role_id: "",
+                       filter_element: {query: "union_member"}
+                      }
               
               format.html
               format.json{render json: @users }
@@ -460,9 +525,14 @@ class UsersController < ApplicationController
                                .find_all{|e| e.permit_days != nil && e.user_id != nil && e.role_id == params[:role_id].to_i}
                                .uniq{|u| u.user_id}
                                .map{|e| User.find(e.user_id)}
-
+                               .find_all{|user| user.last_sign_in_at != nil }
               sort_and_paginate_last_log_in_user(users)
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              @users ={number_users: @number_users, 
+                       paginated_users: @users_with_last_log_in, 
+                       sorting_params: "last_log_in",
+                       role_id: params[:role_id],
+                       filter_element: {query: "union_permit"}
+                      }
 
               format.html
               format.json{render json: @users }
@@ -471,27 +541,48 @@ class UsersController < ApplicationController
                                  .find_all{|e| e.permit_days !=nil && e.user_id != nil}
                                  .uniq{|u| u.user_id}
                                  .map{|e| User.find(e.user_id)}
+                                 .find_all{|user| user.last_sign_in_at != nil }
 
               sort_and_paginate_last_log_in_user(users)
-              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              @users ={number_users: @number_users,
+                       paginated_users: @users_with_last_log_in,
+                       sorting_params: "last_log_in",
+                       role_id: "",
+                       filter_element: {query: "union_permit"}
+                     }
 
               format.html
               format.json{render json: @users }
             end
           end
         elsif params[:role_id].present?
-          users = Role.find(params[:role_id]).users.uniq{|u| u.id}
+          users = Role.find(params[:role_id].to_i)
+                      .users
+                      .uniq{|u| u.id}
+                      .find_all{|user| user.last_sign_in_at != nil }
           sort_and_paginate_last_log_in_user(users)
 
-          @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-
+          @users ={number_users: @number_users, 
+                   paginated_users: @users_with_last_log_in, 
+                   sorting_params: "last_log_in",
+                   role_id: params[:role_id],
+                   filter_element: ""
+                  }
+         
           format.html
           format.json{render json: @users}
         else
-          sort_and_paginate_last_log_in_user(User.all)
-         
-          @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
           
+          #some users never log in 
+          users =  User.all.find_all{|user| user.last_sign_in_at != nil}
+          sort_and_paginate_last_log_in_user(users)
+         
+          @users ={number_users: @number_users,
+                   paginated_users: @users_with_last_log_in, 
+                   sorting_params: "last_log_in",
+                   role_id: "",
+                   filter_element:""
+                  }
           format.html
           format.json{render json: @users}
         end
@@ -558,10 +649,10 @@ class UsersController < ApplicationController
 
     #pagination sorted result
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      @users_info = @users_info[0..2]
+      @users_info = @users_info[0..3]
       # @users_info = @users_info[0..30]
     else
-      @users_info = @users_info[3..7]
+      @users_info = @users_info[(params[:current_page_number].to_i - 1) * 3 +1 .. (params[:current_page_number].to_i * 3)]
       #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
     end 
   end
@@ -574,11 +665,13 @@ class UsersController < ApplicationController
     @number_users = @users_with_last_log_in.length
     #pagination sorted result
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      @users_with_last_log_in = @users_with_last_log_in[0..2]
+      @users_with_last_log_in = @users_with_last_log_in[0..3]
       # @users_with_last_log_in = @users_with_last_log_in[0..30]
     else
-      @users_with_last_log_in = @users_with_last_log_in[3..12]
-      #@users_with_last_log_in = @users_with_last_log_in[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+      ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
+      # Page 2 => ajax_preload_request_time = 1
+      @users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      #@users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
     end   
         
   end

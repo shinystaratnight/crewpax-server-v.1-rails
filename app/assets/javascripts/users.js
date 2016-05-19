@@ -120,7 +120,7 @@ $(function(){
     }
 
     filterUser(user_data, opts, filter_user_data);
-    
+
   });  
   
 //=========================================================================================================
@@ -382,6 +382,7 @@ $(function(){
 
                 debugger
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
+
                   preloadUserData(gotoPageNumber,filter_user_data, opts, user_source, url, ajax_data_filter)
                 }
               }
@@ -428,7 +429,9 @@ $(function(){
           loadPosts(posts,opts,user_source); 
 
           // When click on the pagination button:
-          $(".pagination-page").on("click", {sorting_params: sorting_params}, function(event){
+          $(".pagination-page").on("click", { sorting_params: response.sorting_params, 
+                                              filter_element: response.filter_element,
+                                              role: response.role_id}, function(event){
             var gotoPageNumber = $(this).data("page");
             console.log("sort users : clicked page that goes to:", gotoPageNumber)
             if (gotoPageNumber % 3 == 2){
@@ -444,14 +447,24 @@ $(function(){
                 //dataCount < 30 search result is less than 30 users, only load once
                 // dataCount > 30 search result is more than 30 users, need to load multiple times
                 // need_to_load_times = Math.cell(dataCount/30)
-                var need_to_load_times = Math.ceil(dataCount / 4)
-                if (event.data.sorting_params == "last_log_in"){
-                  var ajax_data = {current_page_number:parseInt(gotoPageNumber),last_log_in: "most_recent"}
-                } else if(event.data.sorting_params == "availability"){
-                  var ajax_data = {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"}
-                }                
+                var need_to_load_times = Math.ceil(dataCount / 3)
+
+                // if (event.data.sorting_params == "last_log_in"){
+                //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),last_log_in: "most_recent"}
+                // } else if(event.data.sorting_params == "availability"){
+                //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"}
+                // }      
+             
+                var role_id = event.data.role
+                var filter_element = event.data.filter_element
+                
+                preloadSortParamsAjax(event.data.sorting_params, gotoPageNumber, role_id, filter_element)
+               
+              
+                debugger
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, ajax_data )
+                  debugger
+                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, ajax_sort_data )
                 }
               }
             }else{
@@ -465,6 +478,18 @@ $(function(){
     })
 
   }
+  
+  function preloadSortParamsAjax(event_params, gotoPageNumber, role_id, filter_element){
+    if (event_params == "last_log_in"){
+       ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), last_log_in: "most_recent" ,role_id: role_id, filter_element:filter_element}
+      debugger
+
+    }else if(event_params == "availability"){
+      ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), availability: "most_recent",role_id: role_id, filter_element:filter_element}
+    }
+
+  }
+
 
   function markFilterparams(params){
     if (params == "has_a_vehicle"){
@@ -485,12 +510,12 @@ $(function(){
 
   function preloadFilterDataAjaxParams(event_params, gotoPageNumber, role_id){
     if (event_params == "has_vehicle"){
-      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, has_vehicle:true }
+      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, has_vehicle:true }
     }else if (event_params == "union_member"){
-      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, union_member: true }
+      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_member: true }
 
     }else if(event_params == "union_permit"){
-      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, union_permit: true }
+      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_permit: true }
     }
   }
 
