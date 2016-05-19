@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         
         @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
-        @users = {total_user: @total_user, paginated_users:  @paginated_user_info}
+        @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
         
         format.html
         format.json{render json: @users}

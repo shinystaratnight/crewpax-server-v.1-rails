@@ -45,8 +45,8 @@ $(function(){
       console.log("current page to send to label controller:", current_page)
       var filter_data = [];
       var url = "/roles/" + role_id + "/labels"
-      var ajax_request_data = {label:{role_id: role_id, hiring_board: hiring_board_status}, current_page: current_page}
-      debugger
+      var ajax_request_data = {label:{role_id: role_id, hiring_board: hiring_board_status}, current_page_number: current_page}
+     
      //User ajax to get the user_id 
       // firstLoadFilterRoleData(opts, filter_data, role_id, current_page, hiring_board_status)
       // data:{label:{role_id: role_id, hiring_board: hiring_board_status}, current_page: current_page},
@@ -70,14 +70,17 @@ $(function(){
     // roles_ids.push($(this).data("selected-role-id"))
     var role_id = $("#user_role option:selected").val()
     var filter_user_data = [];
-       
+    var hiring_board_status = ""   
+    var url = "/users/search"
+    
     if(role_id == ""){
       var user_data = {has_vehicle: true, current_page_number: current_page_number}
     } else{
       var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
     }
-    
+    // debugger
     filterUser(user_data, opts, filter_user_data);
+    // ajaxPreLoadUser(opts, filter_user_data, role_id, current_page_number, hiring_board_status, url, user_data)
 
   });  
 
@@ -171,57 +174,6 @@ $(function(){
 
 
 //======================================Common function====================================================
- 
-  // function loadUser(opts,data,url){
-  //   $.ajax({
-  //     url: url,
-  //     method: "get",
-  //     dataType: "json",
-  //     success: function(response){
-  //       var dataCount = response.total_user;
-  //       var pageCount = Math.ceil(dataCount/opts.pageMax);
-  //       $.map(response.paginated_users, function(user){return data.push(user)})
-  //       // data.push(response.paginated_users) // Add return response json in an array will return => [object]
-  //       console.log("response:", response.paginated_users)
-  //       console.log("first load data array:", data)
-  //       var user_source = $("#user_card_template").html();      
-  //       if (dataCount > opts.pageMax){
-  //         paginate(pageCount,opts,data, user_source);
-  //         posts = response.paginated_users.slice(0, opts.pageMax);
-        
-  //       } else {
-  //         posts = response.paginated_users;
-  //       }        
-
-  //       //load posts for the current page
-  //       loadPosts(posts,opts,user_source); 
-
-  //       // When click on the pagination button:
-  //       $(".pagination-page").on("click", function(){
-  //         var gotoPageNumber = $(this).data("page");
-  //         console.log("clicked page that goes to:", gotoPageNumber)
-  //         if (gotoPageNumber % 3 == 2){
-  //           // Check if this page is clicked before, if yes, show already render info 
-  //           if ($(this).data("load")== true){
-  //             changePage(gotoPageNumber, data, opts, user_source)
-  //           } else{
-  //           // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-  //             changePage(gotoPageNumber, data, opts, user_source)
-  //             var url = "/users"
-  //             preloadUserData(gotoPageNumber,data, opts, user_source, url, {page: parseInt(gotoPageNumber)});
-  //           }
-  //         }else{
-  //           changePage(gotoPageNumber, data, opts, user_source)
-  //         }
-
-  //       });
-
-
-  //     }
-  //   });
-
-  // }
-
   function ajaxPreLoadUser(opts, filter_data, role_id, current_page, hiring_board_status, url, ajax_request_data){
     $.ajax({
       url: url,
@@ -232,12 +184,13 @@ $(function(){
         if (response == undefined || response.paginated_users == "") {
           UserNotFound()
         } else {
-          var dataCount = response.total_user;
+          var dataCount = response.number_users;
           var pageCount = Math.ceil(dataCount/opts.pageMax);
           var user_source = $("#user_card_template").html();    
           $.map(response.paginated_users, function(user){return filter_data.push(user)})
           console.log("response:", response.paginated_users)
           console.log("first load filter data array:", filter_data)
+          debugger
           if (dataCount > opts.pageMax){
             // Remove original pagination
             $(".pagination").remove();
@@ -267,16 +220,16 @@ $(function(){
                 // Need to preload filter user data 
                 
                 var need_to_load_times = Math.ceil(dataCount / 3)
-                
+                debugger
                 
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                      debugger 
+
+                  ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
+                  debugger    
                   preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
                 }
                 // Index page preload data again 
                 // Role page need to preload filter data 
-
-                // preloadFilterUserRoleData(role_id,gotoPageNumber,filter_data, opts, filter_user_source)
                 
               }
             }else{
@@ -302,7 +255,7 @@ $(function(){
           $.map(response.paginated_users, function(user){return user_data.push(user)})
         }
         // user_data.push(response)
-        console.log("new data array:", user_data)
+        console.log("pre load new data array:", user_data)
         // In order to ensure data is only loaded once, set data attribute load to be true        
         $(".pagination-page[data-page="+ gotoPageNumber +"]").data("load", true)
       }
@@ -310,32 +263,6 @@ $(function(){
   
   }  
 
-
-
-
-
-
-
-
-
-  // function preloadFilterUserRoleData(role_id,gotoPageNumber,user_data, opts, user_source){
-  //   $.ajax({
-  //     url: "/roles/" + role_id + "/labels",
-  //     method: "get",
-  //     dataType: "json",
-  //     data:{label:{role_id: role_id, hiring_board: "clicked"}, current_page: parseInt(gotoPageNumber)},
-  //     success: function(response){
-  //       if(response.paginated_users == ""){
-  //         return false;
-  //       }else{
-  //         $.map(response.paginated_users, function(user){return user_data.push(user)})
-  //         // In order to ensure data is only loaded once, set data attribute load to be true        
-  //         $(".pagination-page.active").data("load", true)
-  //         console.log("pagination button load:", $(".pagination-page.active").data("load"))
-  //       }
-  //     }
-  //   });
-  // }
 
 
 //====================================================================================================
