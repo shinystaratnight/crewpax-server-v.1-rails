@@ -207,46 +207,41 @@ class UsersController < ApplicationController
 
   def search 
     respond_to do |format|
-      if params[:has_vehicle] == "true" 
-        @users = {}        
-        if params[:role_id] == nil
-          @users_with_vehicle = User.all.find_all{|user| user.has_vehicle == true}
-          @number_users_with_vehicle = @users_with_vehicle.length 
-
-          if params[:current_page_number] == "1"
-            @users_with_vehicle = @users_with_vehicle[0..4]
-            # @users_with_vehicle = @users_with_vehicle[0..30]
-          else
-            @users_with_vehicle = @users_with_vehicle[5..10]
-            #@users_with_vehicle = @users_with_vehicle[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
-          end 
-
-          @paginated_user_info =  convert_user_info_json(@users_with_vehicle)         
-          @users = {number_users_have_vehicle: @number_users_with_vehicle, paginated_users: @paginated_user_info } 
-          
+      @users = {}   
+      if params[:has_vehicle] == "true"              
+        if params[:role_id] == nil || params[:role_id].empty?
+          users_with_vehicle = User.all.find_all{|user| user.has_vehicle == true}
+          filter_and_paginate(users_with_vehicle)
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info ,
+                    sorting_params:"has_vehicle", 
+                    role_id: ""
+                    } 
+       
           format.html
           format.json{render json: @users}
         else
-
-          @users_with_vehicle = Role.find(params[:role_id].to_i)
+          users_with_vehicle = Role.find(params[:role_id].to_i)
                                     .users
                                     .uniq{|u| u.id}
                                     .find_all{|user| user.has_vehicle == true }
-          @number_users_with_vehicle = @users_with_vehicle.length 
-          
-          if params[:current_page_number] == "1"
-            @users_with_vehicle = @users_with_vehicle[0..4]
-            # @users_with_vehicle = @users_with_vehicle[0..30]
-          else
-            @users_with_vehicle = @users_with_vehicle[5..10]
-            #@users_with_vehicle = @users_with_vehicle[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
-          end 
-          
-          @paginated_user_info =  convert_user_info_json(@users_with_vehicle)         
-          @users = {number_users_have_vehicle: @number_users_with_vehicle, paginated_users: @paginated_user_info } 
-          
+
+          filter_and_paginate(users_with_vehicle)                          
+
+          @users = {number_users: @number_users, 
+                    paginated_users: @paginated_user_info,
+                    sorting_params:"has_vehicle", 
+                    role_id: params[:role_id] } 
+      
           format.html
           format.json{render json: @users}
+        end
+      end
+
+      if params[:union_member] == "true"
+        if params[:role_id] == nil || params[:role_id].empty?
+        else
+          
         end
       end
     end
@@ -474,6 +469,20 @@ class UsersController < ApplicationController
 
   end
 
+  
+  def filter_and_paginate(user)
+    @number_users = user.length
+    if params[:current_page_number] == "1"
+      users_result = user[0..4]
+      # users_result = user[0..30]
+    else
+      users_result = user[5..10]
+      #users_result = user[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+    end 
+    @paginated_user_info = convert_user_info_json(users_result)
+
+  end
+
   def sort_and_paginate_available_user(user)
     users = convert_user_info_json(user)
     # Find users who are available today in dates after today 
@@ -508,6 +517,7 @@ class UsersController < ApplicationController
     end   
         
   end
+
 
   def set_role
     @role = Role.find params[:role_id] if params[:role_id]

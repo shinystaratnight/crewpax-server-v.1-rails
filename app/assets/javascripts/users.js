@@ -75,14 +75,14 @@ $(function(){
     // var roles_ids = [];
     // roles_ids.push($(this).data("selected-role-id"))
     var role_id = $("#user_role option:selected").val()
-    var vehicle_user_data = [];
+    var filter_user_data = [];
        
     if(role_id == ""){
       var user_data = {has_vehicle: true, current_page_number: current_page_number}
-      filterUser(user_data, opts, vehicle_user_data);
+      filterUser(user_data, opts, filter_user_data);
     } else{
       var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
-      filterUser(user_data, opts, vehicle_user_data);
+      filterUser(user_data, opts, filter_user_data);
     }
     
   });  
@@ -92,6 +92,15 @@ $(function(){
     markFilterparams("union_member")
     event.preventDefault();
     console.log("union member filter has been clicked:", $(this).parent().data("clickable"))
+    var role_id = $("#user_role option:selected").val()
+    var filter_user_data = [];
+    if(role_id == ""){
+      var user_data = {union_member: true, current_page_number: current_page_number}
+      filterUser(user_data, opts, filter_user_data);
+    } else{
+      var user_data = {role_id:role_id, union_member:true, current_page_number: current_page_number};
+      filterUser(user_data, opts, filter_user_data);
+    }
 
   }); 
 
@@ -129,7 +138,7 @@ $(function(){
       }
       sortUser(user_data, opts, user_available_data)        
     }else{
-      debugger
+  
       if($(this).data("availability") == "most_recent"){
         var user_data = {current_page_number: current_page_number, availability: "most_recent", role_id: role_id, filter_element:filter_element}
       }else if($(this).data("last-log-in") == "most_recent"){
@@ -308,7 +317,7 @@ $(function(){
 
 
 //====================================================================================================
-  function filterUser(user_data, opts, vehicle_user_data){
+  function filterUser(user_data, opts, filter_user_data){
     $.ajax({
       url:"/users/search",
       method: "get",
@@ -319,14 +328,15 @@ $(function(){
         if (response == undefined || response.paginated_users == "") {
           UserNotFound()
         }else{
-          var dataCount = response.number_users_have_vehicle;
+          var dataCount = response.number_users;
           var pageCount = Math.ceil(dataCount/opts.pageMax);
-          $.map(response.paginated_users, function(user){return vehicle_user_data.push(user)})
+          debugger
+          $.map(response.paginated_users, function(user){return filter_user_data.push(user)})
           var user_source = $("#user_card_template").html();
           if (dataCount > opts.pageMax){
             // Remove original pagination
             $(".pagination").remove();
-            paginate(pageCount,opts, vehicle_user_data, user_source);
+            paginate(pageCount,opts, filter_user_data, user_source);
             posts = response.paginated_users.slice(0, opts.pageMax);
           
           } else {
@@ -338,29 +348,34 @@ $(function(){
           loadPosts(posts,opts,user_source); 
 
           // When click on the pagination button:
-          $(".pagination-page").on("click", function(){
+          $(".pagination-page").on("click",{params: response.sorting_params, role: response.role_id},function(event){
             var gotoPageNumber = $(this).data("page");
             console.log("filter users: clicked page that goes to:", gotoPageNumber)
             if (gotoPageNumber % 3 == 2){
               // Check if this page is clicked before, if yes, show already render info 
               if ($(this).data("load")== true){
-                changePage(gotoPageNumber, vehicle_user_data, opts, user_source)
+                changePage(gotoPageNumber, filter_user_data, opts, user_source)
               } else{
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-                changePage(gotoPageNumber, vehicle_user_data, opts, user_source)
+                changePage(gotoPageNumber, filter_user_data, opts, user_source)
                 // Need to preload filter user data 
-                // preloadFilterUserData(role_id,gotoPageNumber,vehicle_user_data, opts, user_source)
+                // preloadFilterUserData(role_id,gotoPageNumber,filter_user_data, opts, user_source)
                 var url = "/users/search"
                 //dataCount < 30 search result is less than 30 users, only load once
                 // dataCount > 30 search result is more than 30 users, need to load multiple times
                 // need_to_load_times = Math.cell(dataCount/30)
                 var need_to_load_times = Math.ceil(dataCount / 4)
+               
+                var role_id = event.data.role 
+                preloadFilterDataAjaxParams(event.data.params, gotoPageNumber, role_id)
+
+                debugger
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                  preloadUserData(gotoPageNumber,vehicle_user_data, opts, user_source, url, {current_page_number:parseInt(gotoPageNumber),has_vehicle: true })
+                  preloadUserData(gotoPageNumber,filter_user_data, opts, user_source, url, ajax_data_filter)
                 }
               }
             }else{
-              changePage(gotoPageNumber, vehicle_user_data, opts,user_source)
+              changePage(gotoPageNumber, filter_user_data, opts,user_source)
             }
 
           });
@@ -456,6 +471,19 @@ $(function(){
       $("#union_permit").data("clickable", "clicked")
     }
   }
+
+  function preloadFilterDataAjaxParams(event_params, gotoPageNumber, role_id){
+    if (event_params == "has_vehicle"){
+      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, has_vehicle:true }
+    }else if (event_params == "union_member"){
+      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, union_member: true }
+
+    }else if(event_params == "union_permit"){
+      ajax_data_filter = {current_page_number:parseInt(gotoPageNumber), role_id:role_id, union_permit: true }
+    }
+  }
+
+
 
   function range(i){return i?range(i-1).concat(i):[]}  
 
