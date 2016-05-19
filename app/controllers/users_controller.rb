@@ -228,7 +228,10 @@ class UsersController < ApplicationController
           format.json{render json: @users}
         else
 
-          @users_with_vehicle = Role.find(params[:role_id]).users.find_all{|user| user.has_vehicle == true }
+          @users_with_vehicle = Role.find(params[:role_id].to_i)
+                                    .users
+                                    .uniq{|u| u.id}
+                                    .find_all{|user| user.has_vehicle == true }
           @number_users_with_vehicle = @users_with_vehicle.length 
           
           if params[:current_page_number] == "1"
@@ -258,36 +261,86 @@ class UsersController < ApplicationController
       if params[:availability] == "most_recent"
         if params[:filter_element].present? 
           if params[:filter_element][:query] == "has_vehicle"
-            sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
-            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
-                     
-            format.html
-            format.json{render json: @users }
+            if params[:role_id].present?
+              
+              users = Role.find(params[:role_id].to_i).users
+                                                 .uniq{|u| u.id}
+                                                 .find_all{|user| user.has_vehicle == true}
+              sort_and_paginate_available_user(users)
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+             
+              format.html
+              format.json{render json: @users }
+
+            else
+              sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+                       
+              format.html
+              format.json{render json: @users }
+            end
           elsif params[:filter_element][:query] == "union_member"
-            users = Eligibility.all
-                               .find_all{|e| e.member==true && e.user_id != nil}
-                               .uniq{|u| u.user_id}
-                               .map{|e| User.find(e.user_id)}
+            if params[:role_id].present?
+    
+              users = Eligibility.all
+                                 .find_all{|e| e.member == true && e.user_id != nil && e.role_id == params[:role_id].to_i}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
 
-            sort_and_paginate_available_user(users)
-            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
-        
-            format.html
-            format.json{render json: @users }
+              sort_and_paginate_available_user(users)
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
 
+              format.html
+              format.json{render json: @users }
+
+            else
+              users = Eligibility.all
+                                 .find_all{|e| e.member==true && e.user_id != nil}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+
+              sort_and_paginate_available_user(users)
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+          
+              format.html
+              format.json{render json: @users }
+            end
           elsif params[:filter_element][:query] == "union_permit"
-            users = Eligibility.all
-                               .find_all{|e| e.permit_days !=nil && e.user_id != nil}
-                               .uniq{|u| u.user_id}
-                               .map{|e| User.find(e.user_id)}
+            if params[:role_id].present?
+              users = Eligibility.all
+                                 .find_all{|e| e.permit_days != nil && e.user_id != nil && e.role_id == params[:role_id].to_i}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
 
-            sort_and_paginate_available_user(users)
-            
-            @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+              sort_and_paginate_available_user(users)
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
 
-            format.html
-            format.json{render json: @users }
+              format.html
+              format.json{render json: @users }
+            else
+              users = Eligibility.all
+                                 .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+
+              sort_and_paginate_available_user(users)
+              
+              @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+
+              format.html
+              format.json{render json: @users }
+            end
           end
+        elsif params[:role_id].present?
+
+          users = Role.find(params[:role_id].to_i).users.uniq{|u| u.id}
+          sort_and_paginate_available_user(users)
+
+          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+    
+          format.html
+          format.json{render json: @users }
+          
         else
           sort_and_paginate_available_user(User.all)        
           @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
@@ -300,35 +353,81 @@ class UsersController < ApplicationController
   
       if params[:last_log_in]== "most_recent"
         if params[:filter_element].present?
-          if params[:filter_element][:query] == "has_vehicle"            
-            sort_and_paginate_last_log_in_user(User.all.find_all{|user| user.has_vehicle == true})
-            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-          
-            format.html
-            format.json{render json: @users }
-          elsif params[:filter_element][:query] == "union_member"
-            users = Eligibility.all
-                               .find_all{|e| e.member==true && e.user_id != nil}
-                               .uniq{|u| u.user_id}
-                               .map{|e| User.find(e.user_id)}
+          if params[:filter_element][:query] == "has_vehicle"
+            if params[:role_id].present?
+              users = Role.find(params[:role_id].to_i).users
+                                                 .uniq{|u| u.id}
+                                                 .find_all{|user| user.has_vehicle == true}
 
-            sort_and_paginate_last_log_in_user(users)
-            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+    
+              format.html
+              format.json{render json: @users }
+            else          
+              sort_and_paginate_last_log_in_user(User.all.find_all{|user| user.has_vehicle == true})
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
             
-            format.html
-            format.json{render json: @users }
+              format.html
+              format.json{render json: @users }
+            end
+          elsif params[:filter_element][:query] == "union_member"
+            if params[:role_id].present?
+              users = Eligibility.all
+                                 .find_all{|e| e.member == true && e.user_id != nil && e.role_id == params[:role_id].to_i}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              binding.pry 
+              format.html
+              format.json{render json: @users }
+
+            else
+              users = Eligibility.all
+                                 .find_all{|e| e.member==true && e.user_id != nil}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+              
+              format.html
+              format.json{render json: @users }
+            end
           elsif params[:filter_element][:query] == "union_permit"
-            users = Eligibility.all
-                               .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+            if params[:role_id].present?
+              users = Eligibility.all
+                               .find_all{|e| e.permit_days != nil && e.user_id != nil && e.role_id == params[:role_id].to_i}
                                .uniq{|u| u.user_id}
                                .map{|e| User.find(e.user_id)}
 
-            sort_and_paginate_last_log_in_user(users)
-            @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-              binding.pry
-            format.html
-            format.json{render json: @users }
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+
+              format.html
+              format.json{render json: @users }
+            else
+              users = Eligibility.all
+                                 .find_all{|e| e.permit_days !=nil && e.user_id != nil}
+                                 .uniq{|u| u.user_id}
+                                 .map{|e| User.find(e.user_id)}
+
+              sort_and_paginate_last_log_in_user(users)
+              @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+
+              format.html
+              format.json{render json: @users }
+            end
           end
+        elsif params[:role_id].present?
+          users = Role.find(params[:role_id]).users.uniq{|u| u.id}
+          sort_and_paginate_last_log_in_user(users)
+
+          @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+
+          format.html
+          format.json{render json: @users}
         else
           sort_and_paginate_last_log_in_user(User.all)
          

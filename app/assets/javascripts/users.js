@@ -123,38 +123,23 @@ $(function(){
      
 
     if(role_id == ""){
-
-      // if(filter_element == ""){
-      // // Nothing is being filtered      
-        if($(this).data("availability") == "most_recent"){
-          var user_data = {current_page_number: current_page_number, availability: "most_recent",filter_element:filter_element}
-        }else if($(this).data("last-log-in") == "most_recent"){
-          var user_data = {current_page_number: current_page_number, last_log_in: "most_recent",filter_element:filter_element}
-        }
-        sortUser(user_data, opts, user_available_data)
-        
-      // }else{
-      //   // User has chosen whether users needs to have a vehicle/union member/union permit
-      //   if($(this).data("availability") == "most_recent"){
-      //     var user_data = {current_page_number: current_page_number, availability: "most_recent", filter_element:filter_element}
-      //   }else if($(this).data("last-log-in") == "most_recent"){
-      //     var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", filter_element: filter_element}
-      //   }
-      //   sortUser(user_data, opts, user_available_data)
-      // }
-    }else{
-
-      if(filter_element == ""){
-        if($(this).data("availability") == "most_recent"){
-          var user_data = {current_page_number: current_page_number, availability: "most_recent", role_id: role_id}
-        }else if($(this).data("last-log-in") == "most_recent"){
-          var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", role_id: role_id}
-        }
-        sortUser(user_data, opts, user_available_data)
-
-      }else{
-
+      // Nothing is being filtered      
+      if($(this).data("availability") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, availability: "most_recent",filter_element:filter_element}
+      }else if($(this).data("last-log-in") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, last_log_in: "most_recent",filter_element:filter_element}
       }
+      sortUser(user_data, opts, user_available_data)        
+    }else{
+      debugger
+      if($(this).data("availability") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, availability: "most_recent", role_id: role_id, filter_element:filter_element}
+      }else if($(this).data("last-log-in") == "most_recent"){
+        var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", role_id: role_id, filter_element:filter_element}
+      }
+      sortUser(user_data, opts, user_available_data)
+
+     
     }
 
   })
