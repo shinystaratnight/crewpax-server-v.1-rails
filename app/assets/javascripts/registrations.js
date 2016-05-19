@@ -359,6 +359,16 @@ function userCreated() {
    
   // }); 
 
+  function changeDGCStatus(checkbox, union_id){    
+    $.each($(".roles:checkbox:checked"), function(index, checkbox){      
+      var role_id = $(checkbox).data("role-id");
+      var eligibility_id = $(checkbox).data("eligibility-id");     
+      ajaxDeleteLabel(role_id);
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      $(checkbox).prop("checked", false)
+    });        
+  };
+
   $("#dgc_member").on("click", function(){
     var union_id = $("#DGC").data("union-id");
     if($(this).is(":checked") == false){
@@ -418,11 +428,22 @@ function userCreated() {
     
   
 //===========================For IATSE========================================================
-  $("#IATSE").on("click", function(){
-    var union_id = $(this).prev().text();
-    $(this).data("union-id", union_id);
+  // $("#IATSE").on("click", function(){
+  //   var union_id = $(this).prev().text();
+  //   $(this).data("union-id", union_id);
    
-  }); 
+  // }); 
+
+  function changeIATSEStatus(checkbox, union_id){   
+    $.each($(".IATSE_roles:checkbox:checked"), function(index, checkbox){      
+      var role_id = $(checkbox).data("role-id");
+      var eligibility_id = $(checkbox).data("eligibility-id");
+      ajaxDeleteLabel(role_id);
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      $(checkbox).prop("checked", false)
+    });  
+   
+  };
 
   $("#iatse_member").on("click", function(){
     if($(this).is(":checked") == false){ 
@@ -899,26 +920,8 @@ function userCreated() {
     });
   }
 
-  function changeIATSEStatus(checkbox, union_id){   
-    $.each($(".IATSE_roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("role-id");
-      var eligibility_id = $(checkbox).data("eligibility-id");
-      ajaxDeleteLabel(role_id);
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-      $(checkbox).prop("checked", false)
-    });  
-   
-  };
 
-  function changeDGCStatus(checkbox, union_id){    
-    $.each($(".roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("role-id");
-      var eligibility_id = $(checkbox).data("eligibility-id");     
-      ajaxDeleteLabel(role_id);
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-      $(checkbox).prop("checked", false)
-    });        
-  };
+
 
   function labelSeletedDocument(user_docs){
     $.each($(user_docs), function(i,element){
