@@ -254,28 +254,23 @@ class UsersController < ApplicationController
     respond_to do |format|
       @users = {}
       @total_user = User.all.length  
+      binding.pry 
       if params[:availability] == "most_recent"
+        if params[:filter_element].present? && params[:filter_element][:query] == "has_vehicle"
+          sort_and_paginate_available_user(User.all.find_all{|user| user.has_vehicle == true})
+          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+             
       
-        @users = convert_user_info_json(User.all)
-        # Find users who are available today in dates after today 
-        @users_available = @users.find_all{|user| user[:availabilities] !=[]}
-        @number_users_available = @users_available.length
-        
-        # sort users based on their most recent availabilities
-        @users_info = @users_available.sort_by{|user| user[:availabilities]}
-
-        #pagination sorted result
-        if params[:current_page_number] == "1"
-          @users_info = @users_info[0..2]
-          # @users_info = @users_info[0..30]
+          format.html
+          format.json{render json: @users }
         else
-          @users_info = @users_info[3..7]
-          #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
-        end         
-        @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
-           
-        format.html
-        format.json{render json: @users}
+          sort_and_paginate_available_user(User.all)
+        
+          @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
+          binding.pry   
+          format.html
+          format.json{render json: @users}
+        end
       end
 
   
@@ -322,6 +317,7 @@ class UsersController < ApplicationController
 
   protected
 
+
   def convert_user_info_json(user)
     paginated_user_info = user.map{|user| 
       { user_info: user,
@@ -335,6 +331,24 @@ class UsersController < ApplicationController
       }}
     # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: 
 
+  end
+
+  def sort_and_paginate_available_user(user)
+    users = convert_user_info_json(user)
+    # Find users who are available today in dates after today 
+    @users_available = users.find_all{|user| user[:availabilities] !=[]}
+    @number_users_available = @users_available.length
+    # sort users based on their most recent availabilities
+    @users_info = @users_available.sort_by{|user| user[:availabilities]}
+
+    #pagination sorted result
+    if params[:current_page_number] == "1"
+      @users_info = @users_info[0..2]
+      # @users_info = @users_info[0..30]
+    else
+      @users_info = @users_info[3..7]
+      #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+    end 
   end
 
   def set_role

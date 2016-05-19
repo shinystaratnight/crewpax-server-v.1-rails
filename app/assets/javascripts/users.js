@@ -69,11 +69,14 @@ $(function(){
   $("#has_a_vehicle > a").on("click", function(event){
     event.preventDefault();
     var current_page_number = $(".pagination-page").data("page")
+    // mark link as clicked for furthuer sorting by availability or most recent log in 
+    $(this).parent().data("clickable", "clicked") 
+    console.log("filter has been clicked:", $(this).parent().data("clickable"))
     // var roles_ids = [];
     // roles_ids.push($(this).data("selected-role-id"))
     var role_id = $("#user_role option:selected").val()
     var vehicle_user_data = [];
-   
+       
     if(role_id == ""){
       var user_data = {has_vehicle: true, current_page_number: current_page_number}
       filterUser(user_data, opts, vehicle_user_data);
@@ -88,21 +91,53 @@ $(function(){
 
 //=========================================================================================================
   $("#available_soon > a, #most_recent_log_in > a").on("click", function(event){
-    alert("most recent log in clicked")
     event.preventDefault();
     var current_page_number = $(".pagination-page").data("page")
     var role_id = $("#user_role option:selected").val()
     var user_available_data =[];
-
-
+    if($("#has_a_vehicle").data("clickable")=="clicked"){
+      var filter_element = {query: "has_vehicle"}
+    }else if($("#union_member").data("clickable")=="clicked"){
+      var filter_element = {query: "union_member"}
+    }else if($("#union_permit").data("clickable")=="clicked"){
+      var filter_element = {query: "union_permit"}
+    }else{
+      var filter_element = ""
+    }
+     
+   debugger
     if(role_id == ""){
-      if($(this).data("availability") == "most_recent"){
-        var user_data = {current_page_number: current_page_number, availability: "most_recent"}
-      }else if($(this).data("last-log-in") == "most_recent"){
-        var user_data = {current_page_number: current_page_number, last_log_in: "most_recent"}
+
+      // if(filter_element == ""){
+      // // Nothing is being filtered      
+        if($(this).data("availability") == "most_recent"){
+          var user_data = {current_page_number: current_page_number, availability: "most_recent",filter_element:filter_element}
+        }else if($(this).data("last-log-in") == "most_recent"){
+          var user_data = {current_page_number: current_page_number, last_log_in: "most_recent",filter_element:filter_element}
+        }
+        sortUser(user_data, opts, user_available_data)
+      // }else{
+      //   // User has chosen whether users needs to have a vehicle/union member/union permit
+      //   if($(this).data("availability") == "most_recent"){
+      //     var user_data = {current_page_number: current_page_number, availability: "most_recent", filter_element:filter_element}
+      //   }else if($(this).data("last-log-in") == "most_recent"){
+      //     var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", filter_element: filter_element}
+      //   }
+      //   sortUser(user_data, opts, user_available_data)
+      // }
+    }else{
+
+      if(filter_element == ""){
+        if($(this).data("availability") == "most_recent"){
+          var user_data = {current_page_number: current_page_number, availability: "most_recent", role_id: role_id}
+        }else if($(this).data("last-log-in") == "most_recent"){
+          var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", role_id: role_id}
+        }
+        sortUser(user_data, opts, user_available_data)
+
+      }else{
+
       }
-      
-      sortUser(user_data, opts, user_available_data)
     }
 
   })

@@ -43,13 +43,6 @@ class User < ActiveRecord::Base
   #   binding.pry 
   # end
 
-  def self.sort_availability(sort_order)
-    if sort_order == "most_recent"
-      binding.pry 
-    else
-      reorder(last_sign_in_at: :desc)
-    end
-  end
 
 
 
