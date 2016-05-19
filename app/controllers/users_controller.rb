@@ -332,7 +332,7 @@ class UsersController < ApplicationController
                          paginated_users: @users_info, 
                          sorting_params: "availability",
                          role_id: params[:role_id],
-                         filter_element: "has_vehicle"
+                         filter_element: {query: "has_vehicle"}
                         }
              
               format.html
@@ -344,7 +344,7 @@ class UsersController < ApplicationController
                        paginated_users: @users_info,
                        sorting_params: "availability",
                        role_id: "",
-                       filter_element: "has_vehicle" 
+                       filter_element: {query: "has_vehicle"}
                       }
                        
               format.html
@@ -363,7 +363,7 @@ class UsersController < ApplicationController
                         paginated_users: @users_info,
                         sorting_params: "availability",
                         role_id: params[:role_id],
-                        filter_element: "union_member" 
+                        filter_element: {query: "union_member"}
                       }
 
               format.html
@@ -380,7 +380,7 @@ class UsersController < ApplicationController
                        paginated_users: @users_info,
                        sorting_params: "availability",
                        role_id: "",
-                       filter_element: "union_member" 
+                       filter_element: {query: "union_member"}
                       }
           
               format.html
@@ -398,7 +398,7 @@ class UsersController < ApplicationController
                        paginated_users: @users_info,
                        sorting_params: "availability",
                        role_id: params[:role_id],
-                       filter_element: "union_permit" 
+                       filter_element: {query: "union_permit"}
                       }
 
               format.html
@@ -415,7 +415,7 @@ class UsersController < ApplicationController
                        paginated_users: @users_info,
                        sorting_params: "availability",
                        role_id: "",
-                       filter_element:"union_permit" 
+                       filter_element: {query:"union_permit" }
                       }
 
               format.html
@@ -628,11 +628,13 @@ class UsersController < ApplicationController
   def filter_and_paginate(user)
     @number_users = user.length
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      users_result = user[0..4]
+      users_result = user[0..3]
       # users_result = user[0..30]
     else
-      users_result = user[5..10]
-      #users_result = user[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+      ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
+      # Page 2 => ajax_preload_request_time = 1
+      users_result = user[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      #users_result = user[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
     end 
 
     @paginated_user_info = convert_user_info_json(users_result)
@@ -652,8 +654,10 @@ class UsersController < ApplicationController
       @users_info = @users_info[0..3]
       # @users_info = @users_info[0..30]
     else
-      @users_info = @users_info[(params[:current_page_number].to_i - 1) * 3 +1 .. (params[:current_page_number].to_i * 3)]
-      #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+      ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
+      # Page 2 => ajax_preload_request_time = 1
+      @users_info = @users_info[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      #@users_info= @users_info[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
     end 
   end
 
