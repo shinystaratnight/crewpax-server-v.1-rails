@@ -254,7 +254,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       @users = {}
       @total_user = User.all.length  
-      binding.pry 
+
       if params[:availability] == "most_recent"
         if params[:filter_element].present? 
           if params[:filter_element][:query] == "has_vehicle"
@@ -268,7 +268,7 @@ class UsersController < ApplicationController
                                .find_all{|e| e.member==true && e.user_id != nil}
                                .uniq{|u| u.user_id}
                                .map{|e| User.find(e.user_id)}
-                               
+
             sort_and_paginate_available_user(users)
             @users= {number_users: @number_users_available, paginated_users: @users_info,sorting_params: "availability" }
         
@@ -299,26 +299,22 @@ class UsersController < ApplicationController
 
   
       if params[:last_log_in]== "most_recent"
-        @users = convert_user_info_json(User.all) 
-        
-        #Sort users based on most sign in 
-        @users_with_last_log_in = @users.sort_by{|user| user[:user_info].last_sign_in_at}.reverse
-        @number_users = @users_with_last_log_in.length
-        #pagination sorted result
-        
-        if params[:current_page_number] == "1"
-          @users_with_last_log_in = @users_with_last_log_in[0..2]
-          # @users_with_last_log_in = @users_with_last_log_in[0..30]
-        else
-          @users_with_last_log_in = @users_with_last_log_in[3..12]
-          #@users_with_last_log_in = @users_with_last_log_in[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
-        end   
-        
+        if params[:filter_element].present?
+          if params[:filter_element][:query] == "has_vehicle"
+            # binding.pry 
 
-        @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
-        
-        format.html
-        format.json{render json: @users}
+
+            format.html
+            format.json{render json: @users }
+          end
+        else
+          sort_and_paginate_last_log_in_user(User.all)
+         
+          @users ={number_users: @number_users, paginated_users: @users_with_last_log_in, sorting_params: "last_log_in"}
+          
+          format.html
+          format.json{render json: @users}
+        end
       end
     end
   end
@@ -373,6 +369,23 @@ class UsersController < ApplicationController
       @users_info = @users_info[3..7]
       #@users_info= @users_info[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
     end 
+  end
+
+
+  def sort_and_paginate_last_log_in_user(user)
+    users = convert_user_info_json(user)
+    #Sort users based on most sign in 
+    @users_with_last_log_in = users.sort_by{|user| user[:user_info].last_sign_in_at}.reverse
+    @number_users = @users_with_last_log_in.length
+    #pagination sorted result
+    if params[:current_page_number] == "1"
+      @users_with_last_log_in = @users_with_last_log_in[0..2]
+      # @users_with_last_log_in = @users_with_last_log_in[0..30]
+    else
+      @users_with_last_log_in = @users_with_last_log_in[3..12]
+      #@users_with_last_log_in = @users_with_last_log_in[(params[:current_page].to_i - 1 * 30 + 1) ..(params[:current_page].to_i * 30) ]
+    end   
+        
   end
 
   def set_role
