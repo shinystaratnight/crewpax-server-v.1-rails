@@ -12,7 +12,6 @@ class EligibilitiesController < ActionController::Base
       end  
   end
 
-
   def update 
     @eligibility = Eligibility.find (params[:id])
   end

@@ -59,7 +59,7 @@
           <%end%>
 
             <div id="<%=union.name.downcase%>_roles">
-              <%union.roles.each do |role|%>
+              <%union.roles.distinct.each do |role|%>
                <% if Eligibility.find_by(user_id: @user.id, role_id: role.id, union_id: union.id) %>
                   <label for="<%=role.name%>">
                     <input 

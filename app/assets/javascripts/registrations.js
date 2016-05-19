@@ -485,119 +485,23 @@ function userCreated() {
   
 
 //=================================For All Unions ============================================================== 
-  // $("#ACFC").on("click", function(){
-  //   var union_id = $(this).prev().text();
-  //   $(this).data("union-id", union_id);
-    
-  // });
   
   $(".roles").on("click", function(){
     var checkbox = $(this);
-    console.log(this);
     var union_id = checkbox.data("union-id");
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id");
-    console.log("union: " + union_id);
-    console.log("role: " + role_id);
-    console.log("user: " + user_id);
 
     if (checkbox.is(":checked")) {
-      ajaxRoles(union_id, role_id, user_id);
+      ajaxRoles(union_id, role_id, user_id, checkbox);
       ajaxCreateLabel(role_id);
     } else {
-      var eligibility_id = $(this).data("eligibility-id");
+      var eligibility_id = checkbox.data("eligibility-id");
       ajaxDeleteLabel(role_id);
       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
     }
   });
   
-
-//=================================For TEAMSTERS===============================================================
-  // $("#TEAMSTERS").on("click", function(){
-  //   var union_id = $(this).prev().text();
-  //   $(this).data("union-id", union_id);
-  // });
-
-  // $(".TEAMSTERS_roles").on("click", function(){
-  //   var union_id = $("#TEAMSTERS").data("union-id");
-  //   var role_id = $(this).prev().text();
-  //   $(this).data("role-id", role_id);
-  //     if ($(this).is(":checked")) {
-  //       ajaxRoles(union_id, role_id, $(this));
-  //       ajaxCreateLabel(role_id);
-  //     } else {
-  //       var eligibility_id = $(this).data("eligibility-id");
-  //       ajaxDeleteLabel(role_id);
-  //       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-  //     }
-  // });
-
-
-//=================================For UBCP ======================================================================
-  // $("#UBCP").on("click", function(){
-  //   var union_id = $(this).prev().text();
-  //   $(this).data("union-id", union_id);
-  // });
-
-
-  // $(".UBCP_roles").on("click", function(){
-  //   var union_id = $("#UBCP").data("union-id");
-  //   var role_id = $(this).prev().text();
-  //   $(this).data("role-id", role_id);
-
-  //   if ($(this).is(":checked")) {
-  //     ajaxRoles(union_id, role_id, $(this));
-  //     ajaxCreateLabel(role_id);
-  //   } else {
-  //     var eligibility_id = $(this).data("eligibility-id");
-  //     ajaxDeleteLabel(role_id);
-  //     ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-  //   }
-  // });
-
-
-//=================================For ACTRA =======================================================================
- // $("#ACTRA").on("click", function(){
- //    var union_id = $(this).prev().text();
- //    $(this).data("union-id", union_id);
- //  });
-
- //  $(".ACTRA_roles").on("click", function(){
- //    var union_id = $("#ACTRA").data("union-id");
- //    var role_id = $(this).prev().text();
- //    $(this).data("role-id", role_id);
-
- //    if ($(this).is(":checked")) {
- //      ajaxRoles(union_id, role_id, $(this));
- //      ajaxCreateLabel(role_id);
- //    } else {
- //      var eligibility_id = $(this).data("eligibility-id");
- //      ajaxDeleteLabel(role_id);
- //      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
- //    }
- //  });
-
-
-
-//==================================For Non Union =====================================================================
-  // $("#NON_UNION").on("click", function(){
-  //   var union_id = $(this).prev().text();
-  //   $(this).data("union-id", union_id);
-  // });
-
-  // $(".NON_UNION_roles").on("click", function(){
-  //   var union_id = $("#NON_UNION").data("union-id");
-  //   var role_id = $(this).prev().text();
-  //   $(this).data("role-id", role_id);
-  //   if ($(this).is(":checked")) {
-  //     ajaxRoles(union_id, role_id, $(this));
-  //     ajaxCreateLabel(role_id);
-  //   } else {
-  //     var eligibility_id = $(this).data("eligibility-id");
-  //     ajaxDeleteLabel(role_id);
-  //     ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-  //   }
-  // });
 
 //*********************************************************************************************************
 // Registration Form Calender Section
@@ -905,7 +809,7 @@ function userCreated() {
       dataType: "json",
       data:{eligibility:{union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
-        // checkbox.data("eligibility-id",response.id);
+        checkbox.data("eligibility-id",response.id);
       }
     });
   }
