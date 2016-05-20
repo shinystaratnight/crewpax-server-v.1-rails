@@ -19,7 +19,6 @@ $(function(){
     var current_page = current_page_number
     var hiring_board_status = ""
     var ajax_request_data = {current_page_number: current_page}
-
     ajaxPreLoadUser(opts, data, role_id, current_page, hiring_board_status, url, ajax_request_data)
   
   }
@@ -195,11 +194,13 @@ $(function(){
           $.map(response.paginated_users, function(user){return filter_data.push(user)})
           console.log("response:", response.paginated_users)
           console.log("first load filter data array:", filter_data)
-          debugger
+          
           if (dataCount > opts.pageMax){
             // Remove original pagination
             $(".pagination").remove();
-            paginate(pageCount,opts, filter_data, filter_user_source);
+         
+            paginate(pageCount ,opts, filter_data, user_source);
+            
             posts = response.paginated_users.slice(0, opts.pageMax);
           
           } else {
@@ -207,30 +208,53 @@ $(function(){
             $(".pagination").hide();
           }  
 
-          var filter_user_source = $("#user_card_template").html()
           //load posts for the current page 
-          loadPosts(posts,opts,filter_user_source); 
+          loadPosts(posts,opts,user_source);
 
+          //When a page is loaded, prev button is set to be disabled
+          $(".pagination-prev").addClass("disabled") 
+        
+         
           // When click on the pagination button:
-          $(".pagination-page").on("click", function(){
-            var gotoPageNumber = $(this).data("page");
-            console.log("filter users: clicked page that goes to:", gotoPageNumber)
+          $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
+            // when a page is clicked, reset prev button and next state 
+            $(".pagination-prev, .pagination-next").removeClass("disabled")
+
+            if ($(this).hasClass("pagination-next")){
+              gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
+              disablePrevNextButton(gotoPageNumber, pageCount)
+              console.log("after clicking next, the new go to page number is:", gotoPageNumber)
+            } else if($(this).hasClass("pagination-prev")){
+              gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
+              disablePrevNextButton(gotoPageNumber, pageCount)
+            }else{
+
+              gotoPageNumber = $(this).data("page");
+              disablePrevNextButton(gotoPageNumber, pageCount)
+              console.log("filter users: clicked page that goes to:", gotoPageNumber)
+            }
+            
+            // if(gotoPageNumber == pageCount){
+            //   $(".pagination-next").addClass("disabled")
+
+            // }        
+            
+
             if (gotoPageNumber % 3 == 2){
               // Check if this page is clicked before, if yes, show already render info 
-              if ($(this).data("load")== true){
-                changePage(gotoPageNumber, filter_data, opts, filter_user_source)
+              debugger
+              if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
+                changePage(gotoPageNumber, filter_data, opts, user_source)
               } else{
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-                changePage(gotoPageNumber, filter_data, opts, filter_user_source)
+                changePage(gotoPageNumber, filter_data, opts, user_source)
                 // Need to preload filter user data 
                 
                 var need_to_load_times = Math.ceil(dataCount / 3)
-                debugger
-                
+                        
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
 
-                  ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
-                  debugger    
+                  ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")    
                   preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
                 }
                 // Index page preload data again 
@@ -238,9 +262,48 @@ $(function(){
                 
               }
             }else{
-              changePage(gotoPageNumber, filter_data, opts, filter_user_source)
+              changePage(gotoPageNumber, filter_data, opts, user_source)
             }
           });
+          
+
+          
+          
+
+          // When click on the next page pagination button:
+          // $('.pagination>li.pagination-next').on('click', function(){            
+          //     var gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
+          //     console.log("after clicking next, the new go to page number is:", gotoPageNumber)
+          //     debugger
+          //     if (gotoPageNumber % 3 == 2){
+          //     // Check if this page is clicked before, if yes, show already render info 
+          //     if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
+          //       changePage(gotoPageNumber, filter_data, opts, user_source)
+          //     } else{
+          //       // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+          //       changePage(gotoPageNumber, filter_data, opts, user_source)
+          //       // Need to preload filter user data 
+                
+          //       var need_to_load_times = Math.ceil(dataCount / 3)
+        
+                
+          //       if ((gotoPageNumber + 1)/3 < need_to_load_times){
+
+          //         ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")    
+          //         preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
+          //       }
+          //       // Index page preload data again 
+          //       // Role page need to preload filter data 
+                
+          //     }
+          //   }else{
+          //     changePage(gotoPageNumber, filter_data, opts, user_source)
+          //   }
+          //     // gotoPageNumber = parseInt($('.pagination>li.active').attr('data-page')) + 1;
+          //       // if (gotoPageNumber > pageCount){gotoPageNumber = 1;}
+          //     // changePage(gotoPageNumber,data, opts);
+          //   });
+
         }
       }
     });
@@ -462,7 +525,14 @@ $(function(){
     }
   }
 
-
+ // If this is the last page or the first page, disable next and prev button
+  function disablePrevNextButton(page_number, pageCount){
+    if(page_number == pageCount){
+      $(".pagination-next").addClass("disabled")
+    }else if(page_number == 0 || page_number == 1){
+      $(".pagination-prev").addClass("disabled")
+    }
+  }
 
   function range(i){return i?range(i-1).concat(i):[]}  
 
@@ -472,18 +542,11 @@ $(function(){
     var context = {pages: range(pageCount)};
     var html = template(context);
     opts.postsDiv.after(html);//add the page bar both on the top and bottom of the page
+    
 
-    // var pageItems = $('.pagination>li.pagination-page');
-
-    // pageItems.on('click', function(){
-    //   debugger
-    //     changePage(this.getAttribute('data-page'));
-    // }).filter('[data-page="1"]').addClass('active');
-    // $('.pagination>li.pagination-page').on("click", function(){
-    //   changePage($(this).data("page"), data, opts, user_source)
-    //   debugger
-    // })
-    // .filter('[data-page="1"]').addClass('active');
+    $('.pagination>li.pagination-page').on("click", function(){
+      changePage($(this).data("page"), data, opts, user_source)
+    }).filter('[data-page="1"]').addClass('active');
 
     // $('.pagination>li.pagination-prev').on('click', function(){
        
@@ -503,10 +566,11 @@ $(function(){
   }
 
 //====================================================================================================
-  function changePage(pageNumber, data,opts, user_source){
+  function changePage(pageNumber, data, opts, user_source){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
     // data format = [object, object, object .. object]
+    debugger
     loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
 
