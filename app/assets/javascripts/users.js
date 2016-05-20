@@ -76,7 +76,7 @@ $(function(){
     } else{
       var user_data = {role_id:role_id, has_vehicle:true, current_page_number: current_page_number};
     }
-    // debugger
+
     // filterUser(user_data, opts, filter_user_data);
     ajaxPreLoadUser(opts, filter_user_data, role_id, current_page_number, hiring_board_status, url, user_data)
 
@@ -130,6 +130,9 @@ $(function(){
     var current_page_number = $(".pagination-page").data("page")
     var role_id = $("#user_role option:selected").val()
     var user_available_data =[];
+    var hiring_board_status = "";
+    var url = "/users/sort";
+    
     if($("#has_a_vehicle").data("clickable")=="clicked"){
       var filter_element = {query: "has_vehicle"}
     }else if($("#union_member").data("clickable")=="clicked"){
@@ -148,18 +151,20 @@ $(function(){
       }else if($(this).data("last-log-in") == "most_recent"){
         var user_data = {current_page_number: current_page_number, last_log_in: "most_recent",filter_element:filter_element}
       }
-      sortUser(user_data, opts, user_available_data)        
-    }else{
-  
+      
+      // sortUser(user_data, opts, user_available_data)        
+    
+    }else{  
       if($(this).data("availability") == "most_recent"){
         var user_data = {current_page_number: current_page_number, availability: "most_recent", role_id: role_id, filter_element:filter_element}
       }else if($(this).data("last-log-in") == "most_recent"){
         var user_data = {current_page_number: current_page_number, last_log_in: "most_recent", role_id: role_id, filter_element:filter_element}
       }
-      sortUser(user_data, opts, user_available_data)
-
      
     }
+    // sortUser(user_data, opts, user_available_data)
+
+    ajaxPreLoadUser(opts, user_available_data, role_id, current_page_number, hiring_board_status, url, user_data)
 
   })
 
@@ -265,45 +270,6 @@ $(function(){
               changePage(gotoPageNumber, filter_data, opts, user_source)
             }
           });
-          
-
-          
-          
-
-          // When click on the next page pagination button:
-          // $('.pagination>li.pagination-next').on('click', function(){            
-          //     var gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
-          //     console.log("after clicking next, the new go to page number is:", gotoPageNumber)
-          //     debugger
-          //     if (gotoPageNumber % 3 == 2){
-          //     // Check if this page is clicked before, if yes, show already render info 
-          //     if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-          //       changePage(gotoPageNumber, filter_data, opts, user_source)
-          //     } else{
-          //       // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-          //       changePage(gotoPageNumber, filter_data, opts, user_source)
-          //       // Need to preload filter user data 
-                
-          //       var need_to_load_times = Math.ceil(dataCount / 3)
-        
-                
-          //       if ((gotoPageNumber + 1)/3 < need_to_load_times){
-
-          //         ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")    
-          //         preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
-          //       }
-          //       // Index page preload data again 
-          //       // Role page need to preload filter data 
-                
-          //     }
-          //   }else{
-          //     changePage(gotoPageNumber, filter_data, opts, user_source)
-          //   }
-          //     // gotoPageNumber = parseInt($('.pagination>li.active').attr('data-page')) + 1;
-          //       // if (gotoPageNumber > pageCount){gotoPageNumber = 1;}
-          //     // changePage(gotoPageNumber,data, opts);
-          //   });
-
         }
       }
     });
@@ -404,97 +370,96 @@ $(function(){
   // }
 
 
-  function sortUser(ajax_data,opts,sorting_data){
-    $.ajax({
-      url: "/users/sort",
-      method: "get",
-      dataType: "json",
-      data: ajax_data,
-      success:function(response){
-        console.log("users with most recent availability response:", response.paginated_users)
-        if (response == undefined || response.paginated_users == "") {
-          UserNotFound()
-        }else{
-          var dataCount = response.number_users;
-          var pageCount = Math.ceil(dataCount/opts.pageMax);
-          var user_source = $("#user_card_template").html();
-          $.map(response.paginated_users, function(user){return sorting_data.push(user)})
-          var sorting_params = response.sorting_params
-          if (dataCount > opts.pageMax){
-            // Remove original pagination
-            $(".pagination").remove();
-            paginate(pageCount,opts, sorting_data, user_source);
-            posts = response.paginated_users.slice(0, opts.pageMax);
+  // function sortUser(ajax_data,opts,sorting_data){
+  //   $.ajax({
+  //     url: "/users/sort",
+  //     method: "get",
+  //     dataType: "json",
+  //     data: ajax_data,
+  //     success:function(response){
+  //       console.log("users with most recent availability response:", response.paginated_users)
+  //       if (response == undefined || response.paginated_users == "") {
+  //         UserNotFound()
+  //       }else{
+  //         var dataCount = response.number_users;
+  //         var pageCount = Math.ceil(dataCount/opts.pageMax);
+  //         var user_source = $("#user_card_template").html();
+  //         $.map(response.paginated_users, function(user){return sorting_data.push(user)})
+  //         var sorting_params = response.sorting_params
+  //         if (dataCount > opts.pageMax){
+  //           // Remove original pagination
+  //           $(".pagination").remove();
+  //           paginate(pageCount,opts, sorting_data, user_source);
+  //           posts = response.paginated_users.slice(0, opts.pageMax);
           
-          } else {
-            posts = response.paginated_users;
-            $(".pagination").hide();
-          } 
+  //         } else {
+  //           posts = response.paginated_users;
+  //           $(".pagination").hide();
+  //         } 
 
-          //load posts for the current page 
-          loadPosts(posts,opts,user_source); 
+  //         //load posts for the current page 
+  //         loadPosts(posts,opts,user_source); 
 
-          // When click on the pagination button:
-          $(".pagination-page").on("click", { sorting_params: response.sorting_params, 
-                                              filter_element: response.filter_element,
-                                              role: response.role_id}, function(event){
-            var gotoPageNumber = $(this).data("page");
-            console.log("sort users : clicked page that goes to:", gotoPageNumber)
-            if (gotoPageNumber % 3 == 2){
-              // Check if this page is clicked before, if yes, show already render info 
-              if ($(this).data("load")== true){
-                changePage(gotoPageNumber, sorting_data, opts, user_source)
-              } else{
-                // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
-                changePage(gotoPageNumber, sorting_data, opts, user_source)
-                // Need to preload filter user data 
-                // preloadFilterUserData(role_id,gotoPageNumber,sorting_data, opts, user_source)
-                var url = "/users/sort"
-                //dataCount < 30 search result is less than 30 users, only load once
-                // dataCount > 30 search result is more than 30 users, need to load multiple times
-                // need_to_load_times = Math.cell(dataCount/30)
-                var need_to_load_times = Math.ceil(dataCount / 3)
+  //         // When click on the pagination button:
+  //         $(".pagination-page").on("click", { sorting_params: response.sorting_params, 
+  //                                             filter_element: response.filter_element,
+  //                                             role: response.role_id}, function(event){
+  //           var gotoPageNumber = $(this).data("page");
+  //           console.log("sort users : clicked page that goes to:", gotoPageNumber)
+  //           if (gotoPageNumber % 3 == 2){
+  //             // Check if this page is clicked before, if yes, show already render info 
+  //             if ($(this).data("load")== true){
+  //               changePage(gotoPageNumber, sorting_data, opts, user_source)
+  //             } else{
+  //               // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
+  //               changePage(gotoPageNumber, sorting_data, opts, user_source)
+  //               // Need to preload filter user data 
+  //               // preloadFilterUserData(role_id,gotoPageNumber,sorting_data, opts, user_source)
+  //               var url = "/users/sort"
+  //               //dataCount < 30 search result is less than 30 users, only load once
+  //               // dataCount > 30 search result is more than 30 users, need to load multiple times
+  //               // need_to_load_times = Math.cell(dataCount/30)
+  //               var need_to_load_times = Math.ceil(dataCount / 3)
 
-                // if (event.data.sorting_params == "last_log_in"){
-                //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),last_log_in: "most_recent"}
-                // } else if(event.data.sorting_params == "availability"){
-                //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"}
-                // }      
+  //               // if (event.data.sorting_params == "last_log_in"){
+  //               //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),last_log_in: "most_recent"}
+  //               // } else if(event.data.sorting_params == "availability"){
+  //               //   var ajax_data = {current_page_number:parseInt(gotoPageNumber),availability: "most_recent"}
+  //               // }      
              
-                var role_id = event.data.role
-                var filter_element = event.data.filter_element
+  //               var role_id = event.data.role
+  //               var filter_element = event.data.filter_element
                 
-                preloadSortParamsAjax(event.data.sorting_params, gotoPageNumber, role_id, filter_element)
+  //               preloadSortParamsAjax(event.data.sorting_params, gotoPageNumber, role_id, filter_element)
                
               
-                debugger
-                if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                  debugger
-                  preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, ajax_sort_data )
-                }
-              }
-            }else{
-              changePage(gotoPageNumber, sorting_data, opts,user_source)
-            }
+  //               debugger
+  //               if ((gotoPageNumber + 1)/3 < need_to_load_times){
+  //                 debugger
+  //                 preloadUserData(gotoPageNumber,sorting_data, opts, user_source, url, ajax_sort_data )
+  //               }
+  //             }
+  //           }else{
+  //             changePage(gotoPageNumber, sorting_data, opts,user_source)
+  //           }
 
-          });
+  //         });
 
-        }
-      }
-    })
+  //       }
+  //     }
+  //   })
 
-  }
+  // }
   
-  function preloadSortParamsAjax(event_params, gotoPageNumber, role_id, filter_element){
-    if (event_params == "last_log_in"){
-       ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), last_log_in: "most_recent" ,role_id: role_id, filter_element:filter_element}
-      debugger
+  // function preloadSortParamsAjax(event_params, gotoPageNumber, role_id, filter_element){
+  //   if (event_params == "last_log_in"){
+  //      ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), last_log_in: "most_recent" ,role_id: role_id, filter_element:filter_element}
 
-    }else if(event_params == "availability"){
-      ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), availability: "most_recent",role_id: role_id, filter_element:filter_element}
-    }
+  //   }else if(event_params == "availability"){
+  //     ajax_sort_data = {current_page_number: parseInt(gotoPageNumber), availability: "most_recent",role_id: role_id, filter_element:filter_element}
+  //   }
 
-  }
+  // }
 
 
   function markFilterparams(params){
@@ -514,16 +479,16 @@ $(function(){
     }
   }
 
-  function preloadFilterDataAjaxParams(event_params, gotoPageNumber, role_id){
-    if (event_params == "has_vehicle"){
-      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, has_vehicle:true }
-    }else if (event_params == "union_member"){
-      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_member: true }
+  // function preloadFilterDataAjaxParams(event_params, gotoPageNumber, role_id){
+  //   if (event_params == "has_vehicle"){
+  //     return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, has_vehicle:true }
+  //   }else if (event_params == "union_member"){
+  //     return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_member: true }
 
-    }else if(event_params == "union_permit"){
-      return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_permit: true }
-    }
-  }
+  //   }else if(event_params == "union_permit"){
+  //     return ajax_data_filter = {current_page_number: parseInt(gotoPageNumber), role_id:role_id, union_permit: true }
+  //   }
+  // }
 
  // If this is the last page or the first page, disable next and prev button
   function disablePrevNextButton(page_number, pageCount){
@@ -570,7 +535,6 @@ $(function(){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
     // data format = [object, object, object .. object]
-    debugger
     loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
 
