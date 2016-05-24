@@ -1,6 +1,8 @@
 <div class="page-header">
   <h1 id="hiring_board_title">Hiring Board</h1>
 </div>
+
+<div class="row" id="filter_bar">
   <span id="role_filter">Select crews by Role: </span><%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role', data:{selected_user_role: ""}, name: 'user_role_id'
   %>
   <div class= "btn-group"> 
@@ -25,11 +27,11 @@
       <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: "", last_log_in: "most_recent"}%></li>
     </ul>
   </div>
-  <span><button type="button" class="btn btn-danger"><%=link_to "Reset", users_path%></button></span>
+  <span><button type="button" class="btn btn-danger"><%=link_to "Reset", users_path, id: "reset_button" %></button></span>
   </br>
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
-
+</div>
   <div class="container">
     <div class="row" id="paginated_users">  
       <span><%=render "user_cards" %></span>
@@ -37,7 +39,7 @@
     </div>
 
   </div>
-
+  </br>
   
   <footer id="user-pagination">
     <%=render "user_paging" %>

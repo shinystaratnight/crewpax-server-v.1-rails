@@ -11,6 +11,10 @@
     margin-left: 20px;
   }
 
+  #reset_button{
+    color: white;
+  }
+
 //========== Medium devices (desktops, 992px and up)==========================================
 
 @media (min-width: 992px) { 
@@ -64,6 +68,15 @@
 
   #user-pagination{
     float: right;
+    margin-right: 100px;
+  }
+
+  #paginated_users{
+    margin-top: 15px;
+  }
+
+  #filter_bar{
+    margin-left: 0px;
   }
 
 //*------------------------User Index User Cards--------------------------------------------
