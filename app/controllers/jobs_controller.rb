@@ -28,7 +28,6 @@ class JobsController < ApplicationController
       # if @role.present?
       #   @jobs = @jobs.by_role @role
       # end
-    # @jobs = @jobs.page(params[:page] || 1).per(20)
   end
 
   def new
@@ -36,7 +35,6 @@ class JobsController < ApplicationController
   end
 
   def create
-    binding.pry 
     @job = Job.new(job_params)
     if current_user.present?
       @job.user_id = current_user.id

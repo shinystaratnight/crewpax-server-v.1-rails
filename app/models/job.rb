@@ -3,7 +3,7 @@ class Job < ActiveRecord::Base
   scope :published, -> { where published: true }
   # scope :by_role, ->(role) { where role_id: role.id }
 
-  validates :name, :role_id, :company_name, :starts_on, :ends_on, :location, :contact_name, :contact_phone, :contact_email, presence: true
+  validates :name, :role_id, :company_name, :starts_on, :location, :contact_name, :contact_phone, :contact_email, presence: true
   validates :contact_email, format: { with: /@/ }
   
   before_create { self.secret = SecureRandom.urlsafe_base64 }
