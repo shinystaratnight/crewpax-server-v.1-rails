@@ -1,55 +1,45 @@
 <script id="user_card_template" type="text/x-handlebars-template"> 
-  <div class="container">
-    <div class="row" id="paginated_users">
-      <div class="user-card col-md-4" data-user-id = "" data-order="" >
-        <div class="instagram-content">          
-          <div class="row photos-wrap">
-           <!--Instafeed target div -->
-            
-              <div id="instafeed"></div>
-                <!--The following HTML will be our template inside instafeed -->                    
-                  <div class="photo-box">
-                    <div class="image-wrap">
-                      <!--user image -->
-                      <img src= {{image}}>     
-                    </div>
-                    <div class="description">
-                      <span class="username">{{{name}}}</span>                          
-                      {{{hasVehicle vehicle}}}
-                      {{{isAvailableToday availability}}}
-                         
- 
-                        <!--<%# if user.appointments.any?{|a| a.date == Date.today} %> -->                        
-                        <!--<i class="fa fa-calendar-check-o" aria-hidden="true" style="color:green; font-size: 15px;">Available Today</i> -->
-                            <!--<%# else %>-->
-                        <!--<i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>-->
-                            <!--<%# end %> --> 
-                      <br/>
-                      <span>{{unionStatus union_member union_permit}}</span>       
-                      <!--<span> Availiblity: {{availability}}</span>-->                    
-                      <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
-                        {{{phone}}}
-                      </div>
-
-                      <span id="index_calendar">{{weekDay}}</span>
-                    
-
-                    
-                    </div>
-
-                    
-                          
-                    <div>
-                      <!-- path to view profile --> 
-                      <i class="fa fa-user" aria-hidden="true"></i>
-                      <a href= {{path}}> View Profile</a>
-                    </div> 
+  <div class="user-card col-md-4" data-user-id = "" data-order="" >
+    <div class="instagram-content">          
+      <div class="row photos-wrap">
+       <!--Instafeed target div -->
+        
+          <div id="instafeed"></div>
+            <!--The following HTML will be our template inside instafeed -->                    
+              <div class="photo-box">
+                <div class="image-wrap">
+                  <!--user image -->
+                  <img src= {{image}}>     
+                </div>
+                <div class="description">
+                  <span class="username">{{{name}}}</span>                          
+                  {{{hasVehicle vehicle}}}
+                  {{{isAvailableToday availability}}}
+                     
+                  <br/>
+                  <span>{{unionStatus union_member union_permit}}</span>       
+                  <!--<span> Availiblity: {{availability}}</span>-->                    
+                  <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
+                    {{{phone}}}
                   </div>
-            
-            
-          </div>
-        </div>
+
+                
+
+                
+                </div>
+
+                
+                      
+                <div>
+                  <!-- path to view profile --> 
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <a href= {{path}}> View Profile</a>
+                </div> 
+              </div>
+        
+        
       </div>
     </div>
   </div>
+
 </script>

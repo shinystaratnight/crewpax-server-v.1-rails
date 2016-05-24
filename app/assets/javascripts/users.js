@@ -156,7 +156,6 @@ $(function(){
   })
 
   Handlebars.registerHelper("isAvailableToday", function(availability){
-
     
     function pad2(number) {   
      return (number < 10 ? '0' : '') + number
@@ -177,10 +176,7 @@ $(function(){
     }
   });
   
-  // Handlebars.registerHelper("weekDay", function(){
-  //  // return week = "Sun  Mon  Tue  Wed  Thur  Fri  Sat " 
-    
-  // })
+  
 
  
 //=========================================================================================================
@@ -332,8 +328,8 @@ $(function(){
     var template = Handlebars.compile(source);
     var context = {pages: range(pageCount)};
     var html = template(context);
-    opts.postsDiv.after(html);//add the page bar both on the top and bottom of the page
-    
+    //add the page bar on the bottom of the page
+    $("#user-pagination").append(html);
 
     $('.pagination>li.pagination-page').on("click", function(){
       changePage($(this).data("page"), data, opts, user_source)
