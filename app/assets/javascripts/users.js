@@ -7,7 +7,7 @@ $(function(){
   console.log("current_page_number:", current_page_number)
   
   var opts = {
-    pageMax: 1,
+    pageMax: 2,
     postsDiv: $('#user-list'),
 
   }
