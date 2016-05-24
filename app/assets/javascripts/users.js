@@ -7,7 +7,7 @@ $(function(){
   console.log("current_page_number:", current_page_number)
   
   var opts = {
-    pageMax: 1,
+    pageMax: 2,
     postsDiv: $('#user-list'),
 
   }
@@ -134,12 +134,31 @@ $(function(){
 
 
 
-//===================================================================================================
+//==============================Handlebars Register Helper method===============================================================
+  Handlebars.registerHelper("hasVehicle", function(vehicle){
+    if(vehicle == true){
+      return "<span><i class='fa fa-car' aria-hidden='true' style='font-size: 20px; margin-left: 10px;'></i> Has a vehicle</span>"
+    }
+  })
 
-
-
+  Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
+    if (union_member.length > 0 && union_permit.length > 0){
+      return "Union Status: " + "member: " + union_member + " ; " + "permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
+    }else if (union_member.length > 0 && union_permit.length == 0){
+      return "Union Status: " + "member: " + union_member 
+    }else if (union_member.length == 0 && union_permit.length > 0){
+      debugger
+      return "Union Status: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
+    }else{
+      return "Non Union"
+    }
+  })
 
 //=========================================================================================================
+
+
 });
 
 //========================================================================================================
@@ -309,18 +328,20 @@ $(function(){
   function loadPosts(posts, opts,user_source){
     opts.postsDiv.empty(); // Clear the previous posts 
     $.each(posts, function(){
+
         var user_card_template = Handlebars.compile(user_source);
+   
         var context = {
             name: this.user_info.name, 
             vehicle : this.user_info.has_vehicle,
-            image: this.user_info.image,
-            phone: this.user_info.phone,
-            union_member: this.user_info.image,
+            image: this.user_info.image.url,
+            phone: this.user_info.phone,         
+            union_member: this.union_member,
             union_permit: this.union_permit,                
             availability: this.availabilities,
             path: "users/" + this.user_info.id,
         };
-        
+ 
         var html = user_card_template(context);
         opts.postsDiv.append(html);
        
