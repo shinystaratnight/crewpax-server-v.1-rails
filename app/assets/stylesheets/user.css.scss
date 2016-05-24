@@ -14,7 +14,8 @@
   #reset_button{
     color: white;
   }
-
+  
+  
 //========== Medium devices (desktops, 992px and up)==========================================
 
 @media (min-width: 992px) { 
@@ -118,7 +119,7 @@
 
 //=======================================User index selection=============================================
     #sort_by_label{
-      display:none;
+      
     }
 
     #user_role{
@@ -129,7 +130,7 @@
     }
 
     .dropdown-menu > li > a{
-      width: 20%;
+      width: 80%;
       padding: 3px 20px;
       display: inline-block;
       font-weight: normal;
@@ -137,6 +138,15 @@
       color: #333333;
       white-space: normal;
       margin-right: 300px;
+    }
+
+    .dropdown-menu {
+      width: 180px;
+    }
+
+    #filter_bar{
+      margin-left: 0px;
+      margin-bottom: 15px;
     }
 
 }
@@ -168,7 +178,7 @@
     }
 
     #sort_by_label{
-      visibility: hidden;
+      
     }
 
 
