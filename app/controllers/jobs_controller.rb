@@ -39,11 +39,13 @@ class JobsController < ApplicationController
     if current_user.present?
       @job.user_id = current_user.id
     end  
+
     if @job.save      
       JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
-      render :new
+      redirect_to new_job_path
+      flash[:danger] = @job.errors.full_messages.to_sentence
     end
   end
 
