@@ -7,7 +7,7 @@ $(function(){
   console.log("current_page_number:", current_page_number)
   
   var opts = {
-    pageMax: 2,
+    pageMax: 1,
     postsDiv: $('#user-list'),
 
   }
@@ -180,7 +180,21 @@ $(function(){
 
  
 //=========================================================================================================
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : ENV["FACEBOOK_APP_ID"],
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
 
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
 
 });
 

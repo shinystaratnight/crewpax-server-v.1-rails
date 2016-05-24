@@ -17,6 +17,7 @@ gem 'pry'
 gem 'carrierwave-dropbox'
 gem 'font-awesome-sass'
 gem "simple_calendar", "~> 2.0"
+gem 'omniauth-facebook'
 # gem 'jquery-datatables-rails', '~> 3.4'
 
 
