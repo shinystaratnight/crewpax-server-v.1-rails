@@ -14,52 +14,37 @@
                       <img src= {{image}}>     
                     </div>
                     <div class="description">
-                      <span class="username">{{{name}}}</span>
-
-                          
+                      <span class="username">{{{name}}}</span>                          
                       {{{hasVehicle vehicle}}}
-                      
+                      {{{isAvailableToday availability}}}
                          
+ 
                         <!--<%# if user.appointments.any?{|a| a.date == Date.today} %> -->                        
                         <!--<i class="fa fa-calendar-check-o" aria-hidden="true" style="color:green; font-size: 15px;">Available Today</i> -->
                             <!--<%# else %>-->
-                        <i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>
+                        <!--<i class="fa fa-calendar-check-o" aria-hidden="true" style="color:red; font-size: 15px;">Unavailable Today</i>-->
                             <!--<%# end %> --> 
                       <br/>
-                       <span>{{unionStatus union_member union_permit}}</span>       
-                          <!--<span> Availiblity: {{availability}}</span>-->
+                      <span>{{unionStatus union_member union_permit}}</span>       
+                      <!--<span> Availiblity: {{availability}}</span>-->                    
+                      <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
+                        {{{phone}}}
+                      </div>
 
+                      <span id="index_calendar">{{weekDay}}</span>
+                    
 
-                            <!--<%# @user_unions = user.unions %>
-                            <%# if @user_unions.present? %>
-                              <%# @user_unions.group_by(&:id).map do |k, v| %>
-                                Get Rid of Duplicated elements in the array to find the Union Name
-                                To find the eligibility with the union id and find whether a user is a member or has a permit with days 
-                                    <%# membership = user.eligibilities.find_by(union_id: v.first.id).member %>
-                                    <%# permit_days = user.eligibilities.find_by(union_id: v.first.id).permit_days %>                               
-                                    <%# if membership.present? %>
-                                      <div> Member: <%#= v.first.name%></div>
-                                    <%# elsif permit_days.present? %>
-                                      <div> Permit:  <%#= v.first.name%> :<%#=permit_days%>days</div>
-                                    <%# else %>
-                                      <div> Unions Status: <%#=v.first.name %> </div>
-                                    <%# end %>                           
-                              <%# end %>                            
-                            <%# end %> 
-                            -->
-                            <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
-                              {{{phone}}}
-                            </div>
-                          </div>
+                    
+                    </div>
+
+                    
                           
-
-
-                          <div>
-                            <!-- path to view profile --> 
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <a href= {{path}}> View Profile</a>
-                          </div> 
-                        </div>
+                    <div>
+                      <!-- path to view profile --> 
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                      <a href= {{path}}> View Profile</a>
+                    </div> 
+                  </div>
             
             
           </div>

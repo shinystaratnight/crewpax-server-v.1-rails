@@ -148,7 +148,6 @@ $(function(){
     }else if (union_member.length > 0 && union_permit.length == 0){
       return "Union Status: " + "member: " + union_member 
     }else if (union_member.length == 0 && union_permit.length > 0){
-      debugger
       return "Union Status: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else{
@@ -156,6 +155,34 @@ $(function(){
     }
   })
 
+  Handlebars.registerHelper("isAvailableToday", function(availability){
+
+    
+    function pad2(number) {   
+     return (number < 10 ? '0' : '') + number
+    }   
+    var d=new Date()
+    var dd=d.getDate();
+    var mm=pad2(d.getMonth()+1);
+    var yyyy=d.getFullYear();
+    var today=yyyy+"-"+mm+"-"+dd;
+ 
+    var result = $.inArray(today, availability)
+    if(result < 0){
+      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable Today</i>"
+
+    }else{
+      return "<i class='fa fa-calendar-check-o' aria-hidden='true'style='color:green; font-size: 15px;'>Available Today</i>"
+
+    }
+  });
+  
+  // Handlebars.registerHelper("weekDay", function(){
+  //  // return week = "Sun  Mon  Tue  Wed  Thur  Fri  Sat " 
+    
+  // })
+
+ 
 //=========================================================================================================
 
 
