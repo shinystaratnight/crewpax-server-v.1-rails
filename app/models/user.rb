@@ -43,13 +43,6 @@ class User < ActiveRecord::Base
   #   binding.pry 
   # end
 
-  def self.filter(role_id)
-    if role_id.present?
-      Role.find(role_id).users
-    else
-      User.all
-    end
-  end
 
 
 

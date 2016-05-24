@@ -1,17 +1,17 @@
-.page-header
-  %h1 Result
+/ .page-header
+/   %h1 Result
 
-= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:id]), prompt: 'All', class: 'form-control', id: 'select_user_role'
+/ = select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:id]), prompt: 'All', class: 'form-control', id: 'select_user_role'
 
 
-%table.table
-  %tr
-    %th Photo
-    %th Name
-    - for user in @users
-      %tr
-        %td= link_to image_tag(user.image.url(:thumb)), user_path(user)
-        %td= link_to user.name, user_path(user)
+/ %table.table
+/   %tr
+/     %th Photo
+/     %th Name
+/     - for user in @users
+/       %tr
+/         %td= link_to image_tag(user.image.url(:thumb)), user_path(user)
+/         %td= link_to user.name, user_path(user)
 
     
 

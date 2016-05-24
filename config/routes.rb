@@ -9,6 +9,17 @@ Bcpax::Application.routes.draw do
 
   resources :admin, only:[:index]
 
+  #Create a custom route in users controller for search/sort result
+  resources :users do
+    collection do
+      get "search"
+    end
+
+    collection do 
+      get "sort"
+    end
+  end
+
   resources :jobs, shallow: true do
     resources :roles
   end

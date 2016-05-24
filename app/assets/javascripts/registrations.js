@@ -359,6 +359,8 @@ function userCreated() {
    
   // }); 
 
+
+//deletes all roles when permit or member fields are un-checked
   function changeDGCStatus(checkbox, union_id){    
     $.each($(".roles:checkbox:checked"), function(index, checkbox){      
       var role_id = $(checkbox).data("role-id");
@@ -369,6 +371,7 @@ function userCreated() {
     });        
   };
 
+//
   $("#dgc_member").on("click", function(){
     var union_id = $("#DGC").data("union-id");
     if($(this).is(":checked") == false){
@@ -376,6 +379,8 @@ function userCreated() {
     }
   });
   
+
+// shows field for number of permit days
   $("#dgc_permit").on("click", function(){
     if ($(this).is(":checked")) {
       $("#dgc_number_days, #dgc_permit_days").show();
@@ -390,39 +395,39 @@ function userCreated() {
     }
   });
 
+// ensures member or permit is checked before saving role (twice though, oops)
   $("#dgc_roles").find(".roles").on("click",function(){
+    var checkbox = $(this);
+    var union_id = checkbox.data("union-id");
+    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
+    var user_id = checkbox.data("user-id");
+
     if ($("#dgc_member").is(":checked")) {
       var data = $("#dgc_member").val();
-      var union_id = $("#DGC").data("union-id");
-      var role_id = $(this).prev().text();
-      $(this).data("role-id", role_id);
 
-      if ($(this).is(":checked")) {
-        ajaxMember(data, union_id, role_id, $(this)); 
-        ajaxCreateLabel(role_id);  
-      } else {  
-        var eligibility_id = $(this).data("eligibility-id");
-        ajaxDeleteEligibility(union_id, role_id,eligibility_id);
+      if (checkbox.is(":checked")) {
+        ajaxMember(union_id, role_id, user_id, checkbox);
+        ajaxCreateLabel(role_id);
+      } else {
+        var eligibility_id = checkbox.data("eligibility-id");
         ajaxDeleteLabel(role_id);
-      }    
-    } 
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
+      } 
+    }
     else if ($("#dgc_permit").is(":checked")) {
       var data = $("#dgc_permit").val()
-      var union_id = $("#DGC").data("union-id");
-      var role_id = $(this).prev().text();
-      $(this).data("role-id", role_id);
+
       if ($(this).is(":checked")) {
-        ajaxPermit(data, union_id, role_id, $(this)); 
+        ajaxPermit(data, union_id, role_id, checkbox); 
         ajaxCreateLabel(role_id);  
       } else {  
-        var eligibility_id = $(this).data("eligibility-id");
+        var eligibility_id = checkbox.data("eligibility-id");
         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
         ajaxDeleteLabel(role_id)
       } 
     } else {
       alert("You must indicate whether you are a member or you have a permit")
     }
-
       
   });
     
