@@ -29,21 +29,30 @@ class User < ActiveRecord::Base
 
   
   
-  def self.sort_user(sort_order)
-    binding.pry 
-    if sort_order == "most_recent"
-      reorder(last_sign_in_at: :desc)
-    else 
-      reorder(name: :asc)
-    end
-  end
-
-
-  # def self.sort_filter_user(sort_order)
-  #   binding.pry 
+  # def self.sort_user(sort_order)
+  #   if sort_order == "most_recent"
+  #     reorder(last_sign_in_at: :desc)
+  #   else 
+  #     reorder(name: :asc)
+  #   end
   # end
 
 
+  def self.from_omniauth(auth)
+    user_credentails = User.find_by(email:auth.info.email)
+    binding.pry 
+    if user_credentails.present?
+      user_credentails.update_attributes(uid: auth.uid)
+      user = user_credentails
+    else
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        # user.password = Devise.friendly_token[0,20]
+        user.name = auth.info.name
+        user.image = auth.info.image
+      end
+    end
+  end
 
 
 

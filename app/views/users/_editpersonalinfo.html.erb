@@ -34,8 +34,7 @@
         
       <div class ="field" data-billing-id="" id="billing_address_info">
         <h5> Billing Address: </h5>
-        <div class="profile_input" id="billing_address" contenteditable="true">
-        
+        <div class="profile_input" id="billing_address" contenteditable="true">        
         <% if @addresses.find_by(type:"Billing").present? %>
           <%=@addresses.find_by(type: "Billing").address_input%>
         <% end %>

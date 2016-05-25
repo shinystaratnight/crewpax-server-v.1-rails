@@ -1,5 +1,5 @@
 Bcpax::Application.routes.draw do
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks"}
  
   # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
