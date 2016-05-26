@@ -613,8 +613,9 @@ class UsersController < ApplicationController
     paginated_user_info = user.map{|user| 
       { user_info: user,
         union_member: user.eligibilities.find_all{|e| e.member == true}
-                         .uniq{|u| u.union_id}
-                         .map{|info| Union.find(info.union_id).name}.join(","),
+                         .uniq{|u| u.union_id},
+                         # .map{|info| Union.find(info.union_id).name}.join(",")
+                         
         union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
                           .uniq{|u| u.union_id}
                           .map{|info| {union_name: Union.find(info.union_id).name, permit_days: info.permit_days}},

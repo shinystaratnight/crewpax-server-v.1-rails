@@ -402,11 +402,24 @@ function userCreated() {
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id");
 
+  // function ajaxMember(data, union_id, role_id, checkbox){
+  //   var user_id = $("#info").data("user-id");
+  //   $.ajax({
+  //     url:"/eligibilities", 
+  //     method:"post",
+  //     dataType:"json",
+  //     data:{eligibility:{member:data, union_id: union_id, user_id: user_id, role_id: role_id}},
+  //     success: function(response){
+  //       checkbox.data("eligibility-id",response.id);
+  //     }          
+  //   });
+  // }
+
     if ($("#dgc_member").is(":checked")) {
       var data = $("#dgc_member").val();
 
       if (checkbox.is(":checked")) {
-        ajaxMember(union_id, role_id, user_id, checkbox);
+        ajaxMember(data, union_id, role_id, checkbox);
         ajaxCreateLabel(role_id);
       } else {
         var eligibility_id = checkbox.data("eligibility-id");
@@ -514,13 +527,15 @@ function userCreated() {
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id");
 
-    if (checkbox.is(":checked")) {
-      ajaxRoles(union_id, role_id, user_id, checkbox);
-      ajaxCreateLabel(role_id);
-    } else {
-      var eligibility_id = checkbox.data("eligibility-id");
-      ajaxDeleteLabel(role_id);
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+    if (union_id > 2) { //that is, if it's not DGC or IATSE
+      if (checkbox.is(":checked")) {
+        ajaxRoles(union_id, role_id, user_id, checkbox);
+        ajaxCreateLabel(role_id);
+      } else {
+        var eligibility_id = checkbox.data("eligibility-id");
+        ajaxDeleteLabel(role_id);
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      }
     }
   });
   
