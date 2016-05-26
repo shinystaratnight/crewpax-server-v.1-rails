@@ -48,7 +48,6 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user_credentials = User.find_by(email:auth.info.email)
-    binding.pry 
     #First time users with credentails log in with facebook 
     if user_credentials.present? && user_credentials.uid == nil 
       user_credentials.update_attributes(uid: auth.uid)
