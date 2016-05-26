@@ -60,7 +60,22 @@
   #sign_in_facebook{
     color:white;
   }
+
+  .reset_password{
+    width: 500px;
+    margin-top: 150px;
+  }
   
+  .reset_info{
+    width: 300px;
+
+  }
+
+  .reset_pw_info{
+    width: 300px;
+    height: 50px;
+    font-size: 16px;
+  }
   
 //========== Medium devices (desktops, 992px and up)==========================================
 
@@ -199,6 +214,18 @@
       margin-left: 0px;
       margin-bottom: 15px;
     }
+
+//=====================User reset password enter email address passwords/new ============================
+    .reset_info{
+      width: 270px;
+
+    }
+
+    .reset_pw_info{
+      width: 270px;
+
+    }
+
 
 }
 

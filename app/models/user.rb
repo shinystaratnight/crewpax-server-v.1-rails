@@ -27,8 +27,16 @@ class User < ActiveRecord::Base
   validates :email,length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
   if: "email.present?"
 
+
+  validates :password, length: {minimum: 4}
   
   
+  # by default, Devise only adds the validates_confirmation_of 
+  #:password on the 'User' model (or any other model you chose as the authentication model) 
+  #in the case of a :create. When updating we are of course editing rather than creating.
+  
+  validates_confirmation_of :password
+
   # def self.sort_user(sort_order)
   #   if sort_order == "most_recent"
   #     reorder(last_sign_in_at: :desc)
