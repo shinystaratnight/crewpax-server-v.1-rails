@@ -80,7 +80,11 @@
   .login_footer_font{
     color: gray;
   } 
-    
+
+//=====================================User Card User Index=================================
+  .instagram-wrap {
+    background: grey;
+  }
 
 //========== Medium devices (desktops, 992px and up)==========================================
 
@@ -159,16 +163,32 @@
     margin-right:10px;
     margin-top:20px;
   }
+  
+  
+ 
+
 
   .image-wrap img{
     padding-top: 15px;
     margin-left: 35px;
     height: 290px;
+    width: 290px;
   }
 
   .description{
     margin-left:30px;
     margin-top: 10px;
+    font-family: sub-font;
+    font-size: 12px;
+    background: white;
+    color: mediumgrey;
+    letter-spacing: 1px;
+    padding: 1.5;
+    height: 75px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height:100px;
   }
 
   #view_profile_btn{
@@ -276,7 +296,32 @@
     margin-left: 10px;
   }
 
-//======================================================================================
+//==========================User Card Index Page================================================
+ .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 290px;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .image-wrap img{
+    padding-top: 15px;
+    width:250px;
+    height: 250px;
+    
+  }
+
+  .description{
+    margin-left:30px;
+    margin-top: 10px;
+  }
+
+  #view_profile_btn{
+    margin-left: 250px;
+  }
 
 
 
