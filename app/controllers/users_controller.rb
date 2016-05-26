@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         @users = {};
         @total_user = User.all.length        
         @paginated_users = User.limit(3)
-        
+        # @paginated_users = User.limit(10)
         @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
         # @new_request_user_limit = (@ajax_request_time + 1) * 3 
         @paginated_users = User.limit(3).offset(@ajax_request_time * 3)
+        #@paginated_users = User.limit(10).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)

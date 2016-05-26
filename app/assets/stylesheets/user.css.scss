@@ -151,6 +151,29 @@
     display: inline-block;   
   }
 
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .image-wrap img{
+    padding-top: 15px;
+    margin-left: 35px;
+    height: 290px;
+  }
+
+  .description{
+    margin-left:30px;
+    margin-top: 10px;
+  }
+
+  #view_profile_btn{
+    margin-left: 250px;
+  }
 
 //*------------------------User Log In Page--------------------------------------------
 

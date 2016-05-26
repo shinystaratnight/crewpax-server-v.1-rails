@@ -246,10 +246,12 @@ $(function(){
             
 
             if (gotoPageNumber % 3 == 2){
+                debugger
               // Check if this page is clicked before, if yes, show already render info 
               if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
                 changePage(gotoPageNumber, filter_data, opts, user_source)
               } else{
+                debugger
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, user_source)
                 // Need to preload filter user data                 
