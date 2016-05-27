@@ -168,7 +168,7 @@ $(function(){
  
     var result = $.inArray(today, availability)
     if(result < 0){
-      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable Today</i>"
+      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable </br>  Today</i>"
 
     }else{
       return "<i class='fa fa-calendar-check-o' aria-hidden='true'style='color:green; font-size: 15px;'>Available Today</i>"
@@ -246,12 +246,10 @@ $(function(){
             
 
             if (gotoPageNumber % 3 == 2){
-                debugger
               // Check if this page is clicked before, if yes, show already render info 
               if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
                 changePage(gotoPageNumber, filter_data, opts, user_source)
               } else{
-                debugger
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, user_source)
                 // Need to preload filter user data                 

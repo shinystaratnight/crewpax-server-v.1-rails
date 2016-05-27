@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
   devise :database_authenticatable, :registerable, :omniauthable, :recoverable, :rememberable,
          :trackable
+
   mount_uploader :image, ImageUploader
   #comment out devise :validatable
   has_many :appointments, dependent: :destroy
@@ -60,10 +61,11 @@ class User < ActiveRecord::Base
     else
       where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = auth.info.email
-        user.name = auth.info.name
-        user.image = auth.info.image
+        user.name = auth.info.name   
+        user.remote_image_url = auth.info.image
       end
     end
+
   end
 
 
