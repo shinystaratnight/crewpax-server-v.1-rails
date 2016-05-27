@@ -7,7 +7,7 @@ $(function(){
   console.log("current_page_number:", current_page_number)
   
   var opts = {
-    pageMax: 3,
+    pageMax: 10,
     postsDiv: $('#user-list'),
 
   }
@@ -246,14 +246,16 @@ $(function(){
             
 
             if (gotoPageNumber % 3 == 2){
+              debugger
               // Check if this page is clicked before, if yes, show already render info 
               if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
                 changePage(gotoPageNumber, filter_data, opts, user_source)
               } else{
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, user_source)
+                debugger
                 // Need to preload filter user data                 
-                var need_to_load_times = Math.ceil(dataCount / 3)
+                var need_to_load_times = Math.ceil(dataCount / 30)
 
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
                   ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")    

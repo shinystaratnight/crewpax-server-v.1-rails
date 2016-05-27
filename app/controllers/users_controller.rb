@@ -7,8 +7,8 @@ class UsersController < ApplicationController
       if params[:current_page_number]== "0" || params[:current_page_number] == nil 
         @users = {};
         @total_user = User.all.length        
-        @paginated_users = User.limit(3)
-        # @paginated_users = User.limit(10)
+        #@paginated_users = User.limit(3)
+        @paginated_users = User.limit(30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
@@ -20,8 +20,8 @@ class UsersController < ApplicationController
         @users = {};
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
         # @new_request_user_limit = (@ajax_request_time + 1) * 3 
-        @paginated_users = User.limit(3).offset(@ajax_request_time * 3)
-        #@paginated_users = User.limit(10).offset(@ajax_request_time * 3)
+        #@paginated_users = User.limit(3).offset(@ajax_request_time * 3)
+        @paginated_users = User.limit(30).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
@@ -629,13 +629,13 @@ class UsersController < ApplicationController
   def filter_and_paginate(user)
     @number_users = user.length
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      users_result = user[0..3]
-      # users_result = user[0..30]
+      #users_result = user[0..3]
+      users_result = user[0..30]
     else
       ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
       # Page 2 => ajax_preload_request_time = 1
-      users_result = user[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
-      #users_result = user[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
+      #users_result = user[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      users_result = user[(ajax_preload_request_time) * 30 + 1 .. (ajax_preload_request_time) * 30 + 30 ]
     end 
 
     @paginated_user_info = convert_user_info_json(users_result)
@@ -652,13 +652,13 @@ class UsersController < ApplicationController
 
     #pagination sorted result
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      @users_info = @users_info[0..3]
-      # @users_info = @users_info[0..30]
+      #@users_info = @users_info[0..3]
+      @users_info = @users_info[0..30]
     else
       ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
       # Page 2 => ajax_preload_request_time = 1
-      @users_info = @users_info[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
-      #@users_info= @users_info[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
+      #@users_info = @users_info[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      @users_info= @users_info[(ajax_preload_request_time) * 30 + 1 .. (ajax_preload_request_time) * 30 + 30 ]
     end 
   end
 
@@ -670,13 +670,13 @@ class UsersController < ApplicationController
     @number_users = @users_with_last_log_in.length
     #pagination sorted result
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      @users_with_last_log_in = @users_with_last_log_in[0..3]
-      # @users_with_last_log_in = @users_with_last_log_in[0..30]
+      #@users_with_last_log_in = @users_with_last_log_in[0..3]
+      @users_with_last_log_in = @users_with_last_log_in[0..30]
     else
       ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
       # Page 2 => ajax_preload_request_time = 1
-      @users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
-      #@users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
+      #@users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+      @users_with_last_log_in = @users_with_last_log_in[(ajax_preload_request_time) * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
     end   
         
   end
