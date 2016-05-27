@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   # before_filter :set_role, only: :index
   respond_to :html, :json, :js
   # caches_page :index
