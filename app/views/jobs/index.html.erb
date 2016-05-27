@@ -1,9 +1,11 @@
 <div class="page-header">
-  <h1 id="job_board">Job Board</h1>
-  <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
-  <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
-  Post Job
-  <% end %>
+  <h1 id="job_board">Job Board</h1> 
+  <% if user_signed_in? %>
+    <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
+    <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
+    Post Job
+    <% end %>
+  <%end%>
 </div>
   <!-- <span> Search by Roles: 
   <% #select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category' %> 
