@@ -64,7 +64,7 @@
     </div>
     
     <%=submit_tag("Submit", class: "btn btn-lg btn-success",id: "post_submit")%>
-    <button class="btn btn-lg btn-danger"><%= link_to"Cancel", jobs_path, id: "cancel_job_post"%></button>
+    <%= link_to "Cancel", jobs_path, id: "cancel_job_post", class: "btn btn-lg btn-danger"%>
 
     
   <% end %>

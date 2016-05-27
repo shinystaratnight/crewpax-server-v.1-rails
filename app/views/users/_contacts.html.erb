@@ -21,18 +21,19 @@
       </dl>   
     </div> 
   </div>
-   <p id="contact_user">
-    <%= mail_to @user.email, 'Contact', class: 'btn btn-block btn-lg btn-success' %>
-  </p>
+   
    
   <% if @user == current_user %>
     <p class="edit_user">
-      <%= link_to 'Edit',  edit_user_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
-      
+      <%= link_to 'Edit',  edit_user_path(@user), class: 'btn btn-block btn-lg btn-primary' %>      
     </p>
     <p class="edit_user">  
       <%= link_to new_job_path, class: 'btn btn-info btn-block btn-lg' do %>
         Post Job
       <% end %>
+    </p>
+  <% else %>
+    <p id="contact_user">
+      <%= mail_to @user.email, 'Contact', class: 'btn btn-block btn-lg btn-success' %>
     </p>
   <% end %>
