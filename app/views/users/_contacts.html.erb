@@ -26,7 +26,13 @@
   </p>
    
   <% if @user == current_user %>
-    <p id="edit_user">
+    <p class="edit_user">
       <%= link_to 'Edit',  edit_user_path(@user), class: 'btn btn-block btn-lg btn-primary' %>
+      
+    </p>
+    <p class="edit_user">  
+      <%= link_to new_job_path, class: 'btn btn-info btn-block btn-lg' do %>
+        Post Job
+      <% end %>
     </p>
   <% end %>
