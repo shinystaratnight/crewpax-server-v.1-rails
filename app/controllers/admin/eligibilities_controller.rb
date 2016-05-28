@@ -31,7 +31,7 @@ class Admin::EligibilitiesController < ApplicationController
   private
 
   def eligibility_params
-    params.require(:eligibility).permit(:union_id, :role_id, :user_id, :id)
+    params.require(:eligibility).permit(:union_id, :role_id, :user_id, :member,:permit_days, :id)
   end
 
 

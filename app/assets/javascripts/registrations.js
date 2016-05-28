@@ -358,7 +358,7 @@ function userCreated() {
     $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
       var role_id = $(checkbox).data("role-id");
       var eligibility_id = $(checkbox).data("eligibility-id"); 
-      ajaxDeleteLabel(role_id);
+      ajaxDeleteLabel(role_id, user_id);
       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
       $(checkbox).prop("checked", false)
     });        
@@ -408,10 +408,10 @@ function userCreated() {
 
       if (checkbox.is(":checked")) {
         ajaxMember(data, union_id, role_id, checkbox);
-        ajaxCreateLabel(role_id);
+        ajaxCreateLabel(role_id, user_id);
       } else {
         var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id);
+        ajaxDeleteLabel(role_id, user_id);
         ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
       } 
     }
@@ -420,11 +420,11 @@ function userCreated() {
 
       if ($(this).is(":checked")) {
         ajaxPermit(data, union_id, role_id, checkbox); 
-        ajaxCreateLabel(role_id);  
+        ajaxCreateLabel(role_id, user_id);  
       } else {  
         var eligibility_id = checkbox.data("eligibility-id");
         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-        ajaxDeleteLabel(role_id)
+        ajaxDeleteLabel(role_id, user_id)
       } 
     } else {
       alert("You must indicate whether you are a member or you have a permit")
@@ -439,7 +439,7 @@ function userCreated() {
     $.each($("#iatse_roles").find(".IATSE_roles:checkbox:checked"), function(index, checkbox){      
       var role_id = $(checkbox).data("role-id");
       var eligibility_id = $(checkbox).data("eligibility-id");
-      ajaxDeleteLabel(role_id);
+      ajaxDeleteLabel(role_id, user_id);
       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
       $(checkbox).prop("checked", false)
     });  
@@ -490,10 +490,10 @@ function userCreated() {
 
       if (checkbox.is(":checked")) {
         ajaxMember(data, union_id, role_id, checkbox);
-        ajaxCreateLabel(role_id);
+        ajaxCreateLabel(role_id, user_id);
       } else {
         var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id);
+        ajaxDeleteLabel(role_id, user_id);
         ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
       } 
     }
@@ -502,11 +502,11 @@ function userCreated() {
 
       if ($(this).is(":checked")) {
         ajaxPermit(data, union_id, role_id, checkbox); 
-        ajaxCreateLabel(role_id);  
+        ajaxCreateLabel(role_id, user_id);  
       } else {  
         var eligibility_id = checkbox.data("eligibility-id");
         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-        ajaxDeleteLabel(role_id)
+        ajaxDeleteLabel(role_id, user_id)
       } 
     } else {
       alert("You must indicate whether you are a member or you have a permit")
@@ -518,18 +518,19 @@ function userCreated() {
 //=================================For All Unions ============================================================== 
   
   $(".roles").on("click", function(){
-    var checkbox = $(this);
-    var union_id = checkbox.data("union-id");
-    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
-    var user_id = checkbox.data("user-id");
+      var checkbox = $(this);
+      var user_id = checkbox.data("user-id");
+      var union_id = checkbox.data("union-id");
+      var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
+      var eligibility_id = checkbox.data("eligibility-id");
 
     if (union_id > 2) { //that is, if it's not DGC or IATSE
       if (checkbox.is(":checked")) {
         ajaxRoles(union_id, role_id, user_id, checkbox);
-        ajaxCreateLabel(role_id);
+        ajaxCreateLabel(role_id, user_id);
       } else {
-        var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id);
+        // var eligibility_id = checkbox.data("eligibility-id");
+        ajaxDeleteLabel(role_id, user_id);
         ajaxDeleteEligibility(union_id, role_id, eligibility_id)
       }
     }
@@ -807,8 +808,8 @@ function userCreated() {
   }
 
 
-  function ajaxDeleteLabel(role_id){
-    var user_id = $("#info").data("user-id");
+  function ajaxDeleteLabel(role_id, user_id){
+    // var user_id = $("#info").data("user-id");
     $.ajax({
       url:"/users/"+ user_id,
       method: "delete",
@@ -820,8 +821,8 @@ function userCreated() {
     });
   }
 
-  function ajaxCreateLabel(role_id){
-    var user_id = $("#info").data("user-id");
+  function ajaxCreateLabel(role_id, user_id){
+    // var user_id = $("#info").data("user-id");
     $.ajax({
       url:"/users/"+ user_id,
       method: "put",

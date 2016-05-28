@@ -111,37 +111,54 @@
 
 <!--add roles within unions-->
   <div class="field">
-      <a role="button" data-toggle="collapse" href="#addUserToUnion" aria-expanded="false" aria-controls="addUserToUnion"><span class="caret rotated"></span> Add to Unions</a>
+      <a role="button" data-toggle="collapse" href="#addUser<%=user.id%>ToUnion" aria-expanded="false" aria-controls="addUserToUnion"><span class="caret rotated"></span> Add to Unions</a>
   </div>
 
-  <div id="addUserToUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserToUnion">
+  <div id="addUser<%=user.id%>ToUnion" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserToUnion">
 
-   <div class="list-group">
-        <!--Render checkboxes ids(roles ids) when page is loaded-->
+         <div class="list-group">
 
+      <!--new code -->
         <% @unions.each do |union| %>
           <div hidden="true">
             <%=union.id %>
           </div>
 
-          <div class="list-group-item field user-info" data-user-id="<%=user.id %>">
-            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
+          <div class="list-group-item">
+            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#user-<%=user.id%>-union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
               <%=union.name%>
             </a>
           </div>
 
-          <div id="union-<%=union.name%>" class="collapse" data-union-id="">
+          <div id="user-<%=user.id%>-union-<%=union.name%>" class="collapse" data-union-id="<%=union.id%>">
 
-          <% if (union.name == "DGC") || (union.name == "IATSE") %>
+         <% if (union.name == "DGC") || (union.name == "IATSE") %>
 
             <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
-              <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
-              <label for="<%=union.name.downcase%>_permit"> Permit </label>
-              <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" id="permit_days"></div>
-              </span>
-              <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" />
+              <% if user.eligibilities.find_by(union_id: union.id) && user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>             
+                  <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" checked/>
+                  <label for="<%=union.name.downcase%>_permit"> Permit </label>
+                  <span id="<%=union.name.downcase%>_number_days"> * Number of Days:
+                    <div contenteditable="true" id="<%=union.name.downcase%>_permit_days"><%= user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
+                  </span>
+              <% else %>
+                <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
+                <label for="<%=union.name.downcase%>_permit"> Permit </label>
+                <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
+                  <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"></div>
+                </span>
+              <% end %> 
+
+              <% if user.eligibilities.find_by(member: true, union_id: union.id) %>
+
+                <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" checked/> 
+              <% else %>              
+                <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" />
+              <% end %>
+
               <label for="<%=union.name.downcase%>_member"> Member </label>
+              
+
               <br>
             </div>
 
@@ -149,7 +166,7 @@
 
             <div id="<%=union.name.downcase%>_roles">
               <%union.roles.distinct.each do |role|%>
-               <% if Eligibility.find_by(user_id: user.id, role_id: role.id, union_id: union.id) %>
+               <% if user.eligibilities.find_by(role_id: role.id, union_id: union.id) %> 
                   <label for="<%=role.name%>">
                     <input 
                       type="checkbox" 
@@ -160,9 +177,9 @@
                       data-union-id="<%=union.id%>"
                       data-label-id="" 
                       data-rolez-id="<%=role.id%>" 
-                      data-eligibility-id="<%=Eligibility.find_by(user_id: user.id, role_id: role.id, union_id: union.id).id %>" 
+                      data-eligibility-id="<%= user.eligibilities.find_by(role_id: role.id, union_id: union.id).id %>" 
                       value="<%=role.name%>" 
-                      checked/>
+                      checked/> 
                     <span class="label-text">
                     <%=role.name%>
                     </span>
@@ -184,23 +201,23 @@
                       </span>
                     </label>
                 <%end%>
-            
+
               <%end%>
             </div>
 
+
           </div>
           <%end%>
-
       </div>
+    </div>
 
-  </div>
 <!--add certificates-->
 
   <div class="field">
-    <a role="button" data-toggle="collapse" href="#addUserCertificates" aria-expanded="false" aria-controls="addUserCertificates"><span class="caret rotated"></span> Add Certificates</a>
+    <a role="button" data-toggle="collapse" href="#addUser<%=user.id%>Certificates" aria-expanded="false" aria-controls="addUserCertificates"><span class="caret rotated"></span> Add Certificates</a>
   </div>
 
-  <div id="addUserCertificates" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserCertificates">
+  <div id="addUser<%=user.id%>Certificates" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="addUserCertificates">
 
     <div class="field user-info" data-user-id="<%=user.id %>">
       <h5> Add certificates: </h5>
@@ -246,11 +263,11 @@
 </div>
 
       <div class="field user-info" data-user-id="<%=user.id %>">
-        <button class="reset-user-password">Reset Password</button>
+        <button class="reset-user-password btn" disabled="true">Reset Password</button>
       </div>
 
       <div class="field user-info">
-        <button class="delete-user" data-user-id="<%=user.id %>">Delete</button>
+        <button class="delete-user btn" data-user-id="<%=user.id %>">Delete</button>
       </div>
 
     </div>
