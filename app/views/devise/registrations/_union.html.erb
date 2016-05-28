@@ -18,12 +18,12 @@
           </div>
 
           <div class="list-group-item">
-            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
+            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
               <%=union.name%>
             </a>
           </div>
 
-          <div id="union-<%=union.name%>" class="collapse" data-union-id="">
+          <div id="union-<%=union.name%>" class="collapse" data-union-id="<%=union.id%>">
             
           <% if (union.name == "DGC") || (union.name == "IATSE") %>
 
@@ -31,7 +31,7 @@
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" id="permit_days"></div>
+                <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"></div>
               </span>
               <input type="checkbox" id="<%=union.name.downcase%>_member" data-name="member" value="true" />
               <label for="<%=union.name.downcase%>_member"> Member </label>
@@ -41,14 +41,23 @@
           <%end%>
 
             <div id="<%=union.name.downcase%>_roles">
-              <%union.roles.each do |role|%>
+              <%union.roles.distinct.each do |role|%>
                 <label for="<%=role.name%>">
-                  <input type="checkbox" class="roles" id="<%=role.name%>" name="<%=role.name%>" data-label-id="" data-role-id="" data-eligibility-id="" value="<%=role.name%>"/>
+                  <input 
+                  type="checkbox" 
+                  class="roles" 
+                  id="<%=role.name%>" 
+                  name="<%=role.name%>" 
+                  data-user-id=""
+                  data-union-id="<%=union.id%>"
+                  data-rolez-id="<%=role.id%>" 
+                  data-eligibility-id="" 
+                  value="<%=role.name%>"/>
                   <span class="label-text">
                   <%=role.name%> 
                   </span>
                 </label>
-                <%end%>
+              <%end%>
             </div>
 
           </div>
