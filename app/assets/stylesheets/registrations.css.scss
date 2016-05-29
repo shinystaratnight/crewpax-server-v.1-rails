@@ -74,7 +74,9 @@ input[type="checkbox"] {
 
 } 
 
-
+input[type="checkbox"].edit-roles, input[type="checkbox"].edit-users {    
+  left: -2px;
+} 
 
 
 input[type="checkbox"]:checked{
