@@ -356,27 +356,28 @@ function userCreated() {
 //deletes all roles when permit or member fields are un-checked
   function changeDGCStatus(checkbox, union_id){    
     $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("role-id");
+      var role_id = $(checkbox).data("rolez-id");
       var eligibility_id = $(checkbox).data("eligibility-id"); 
+      var user_id = $(checkbox).data("user-id");
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id);
       ajaxDeleteLabel(role_id, user_id);
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-      $(checkbox).prop("checked", false)
+      $(checkbox).prop("checked", false);
     });        
   };
 
 // deletes all roles when member status is removed
   $("#dgc_member").on("click", function(){
-    var union_id = $("#DGC").data("union-id");
+    var union_id = $("#dgcstatus").data("union-id");
     // if($(this).is(":checked") == false){
-      changeDGCStatus($(this), union_id)
+      changeDGCStatus($(this), union_id);
     // }
   });
 
 // deletes all roles when permit status is removed
   $("#dgc_permit").on("click", function(){
-    var union_id = $("#DGC").data("union-id");
+    var union_id = $("#dgcstatus").data("union-id");
     // if($(this).is(":checked") == false){
-      changeDGCStatus($(this), union_id)
+      changeDGCStatus($(this), union_id);
     // }
   });
   
@@ -440,7 +441,7 @@ function userCreated() {
       var role_id = $(checkbox).data("role-id");
       var eligibility_id = $(checkbox).data("eligibility-id");
       ajaxDeleteLabel(role_id, user_id);
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id);
       $(checkbox).prop("checked", false)
     });  
    
@@ -836,7 +837,7 @@ function userCreated() {
   }
   
   function ajaxRoles(union_id, role_id, user_id, checkbox){
-    var user_id = $("#info").data("user-id");
+    // var user_id = $(checkbox).data("user-id");
     $.ajax({
       url:"/eligibilities",
       method: "post",
@@ -850,7 +851,7 @@ function userCreated() {
 
 
   function ajaxMember(data, union_id, role_id, checkbox){
-    var user_id = $("#info").data("user-id");
+    var user_id = $(checkbox).data("user-id");
     $.ajax({
       url:"/eligibilities", 
       method:"post",
@@ -863,7 +864,7 @@ function userCreated() {
   }
 
   function ajaxPermit(data, union_id, role_id, checkbox){
-    var user_id = $("#info").data("user-id");
+    var user_id = $(checkbox).data("user-id");
     $.ajax({
       url:"/eligibilities",
       method: "post",

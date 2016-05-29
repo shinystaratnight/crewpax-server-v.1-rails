@@ -27,7 +27,7 @@
             
           <% if (union.name == "DGC") || (union.name == "IATSE") %>
 
-            <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
+            <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:

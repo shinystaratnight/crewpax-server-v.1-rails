@@ -134,7 +134,7 @@
 
          <% if (union.name == "DGC") || (union.name == "IATSE") %>
 
-            <div id="<%=union.name.downcase%>Status" data-union-name="<%=union.name%>">
+            <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
               <% if user.eligibilities.find_by(union_id: union.id) && user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>             
                   <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" checked/>
                   <label for="<%=union.name.downcase%>_permit"> Permit </label>

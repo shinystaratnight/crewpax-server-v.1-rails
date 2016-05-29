@@ -443,55 +443,55 @@ $(function(){
   });
 
 
-// //add union roles to users by creating eligibilities
-//   $(".edit-user-roles").on("click",function(){
+//add union roles to users by creating eligibilities
+  // $(".edit-user-roles").on("click",function(){
 
-      // var checkbox = $(this)
-      // var user_id = checkbox.data("user-id");
-      // var union_id = checkbox.data("union-id");
-      // var role_id = checkbox.data("rolez-id");
-      // var eligibility_id = checkbox.data("eligibility-id")
+  //     var checkbox = $(this)
+  //     var user_id = checkbox.data("user-id");
+  //     var union_id = checkbox.data("union-id");
+  //     var role_id = checkbox.data("rolez-id");
+  //     var eligibility_id = checkbox.data("eligibility-id")
       
-//       if (union_id > 2) { // that is, if it's not DGC or IATSE
+  //     if (union_id > 2) { // that is, if it's not DGC or IATSE
 
-//         if (checkbox.is(":checked")) {
-//           //new eligibility
+  //       if (checkbox.is(":checked")) {
+  //         //new eligibility
 
-//         $.ajax({
-//           url: "/admin/eligibilities",
-//           method:"post",
-//           dataType: "json",
-//           data:{eligibility: {   
-//                   union_id: union_id, 
-//                   role_id: role_id,
-//                   user_id: user_id}},
-//           success: function(response){
-//             console.log(response.id);
-//             if (response.id) {
-//               $(checkbox).data("eligibility-id", response.id);
-//             } else {              
-//               var errors = response.toString();
-//               // $(".certificate-name-error").text("*"+ errors).show();
-//             }
-//           }
-//         });
+  //       $.ajax({
+  //         url: "/admin/eligibilities",
+  //         method:"post",
+  //         dataType: "json",
+  //         data:{eligibility: {   
+  //                 union_id: union_id, 
+  //                 role_id: role_id,
+  //                 user_id: user_id}},
+  //         success: function(response){
+  //           console.log(response.id);
+  //           if (response.id) {
+  //             $(checkbox).data("eligibility-id", response.id);
+  //           } else {              
+  //             var errors = response.toString();
+  //             // $(".certificate-name-error").text("*"+ errors).show();
+  //           }
+  //         }
+  //       });
 
-//        } else {
-//            //existing eligibility to be deleted 
+  //      } else {
+  //          //existing eligibility to be deleted 
 
-//         $.ajax({
-//           url: "/admin/eligibilities/" + eligibility_id,
-//           method:"delete",
-//           dataType: "json",
-//           data:{eligibility_id},
-//           success: function(response){
-//             console.log("successfully deleted eligibility #" + eligibility_id);
-//           }
-//         });
+  //       $.ajax({
+  //         url: "/admin/eligibilities/" + eligibility_id,
+  //         method:"delete",
+  //         dataType: "json",
+  //         data:{eligibility_id},
+  //         success: function(response){
+  //           console.log("successfully deleted eligibility #" + eligibility_id);
+  //         }
+  //       });
 
-//       };
-//      }
-//     });
+  //     };
+  //    }
+  //   });
 
 
 
