@@ -58,6 +58,13 @@ $(function(){
   $("#job_posts_table").DataTable({
       responsive: true,
       "dom": '<"top"f>rt<"bottom"lip><"clear">',
+    //   fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+    //     if (aData[3] == 'true'){
+    //       $(nRow).css('background-color', '#d9534f')
+    //       debugger
+    //       $(iDisplayIndex)
+    //     }
+    // }
 
   });
 

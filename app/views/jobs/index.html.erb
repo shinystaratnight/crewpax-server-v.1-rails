@@ -14,34 +14,42 @@
         <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%> 
         <%= render "search_location" %>
      </span>
+     <span><button class="btn btn-lg btn-danger"></button> Job has filled</span>
+     </br>
     <thead>
       <tr role="row">
         <th>Company</th>
         <th>Title</th>
         <th>Starts</th> 
-        <th>Job Filled? </th>       
       </tr>
     </thead>
     <tbody>
       <% for job in @jobs %>
-        <tr class="job_detail" data-job-id= "<%= job.id %>">
-          <td>
-            <%=link_to job.company_name, job_path(job)  %>
-          </td>
-          <td>
-            <%= link_to job.name, job_path(job) %>
-          </td>
-          <td>
-            <%=job.starts_on.strftime("%b %d, %Y")%>            
-          </td>
-          <td>
-            <% if job.job_filled == true %>
-              <%= "Yes" %>
-            <% else %>
-              <%= "No" %>
-            <% end %>
-          </td>
-        </tr>        
+        <% if job.job_filled == true  %>
+          <tr class="job_detail" data-job-id="<%=job.id %>">
+            <td style="background-color: #d9534f;">
+              <%=link_to job.company_name, job_path(job), class: "job_has_filled"  %>
+            </td>
+            <td class="job_has_filled">
+              <%= link_to job.name, job_path(job), class: "job_has_filled"  %>
+            </td>
+            <td class="job_has_filled">
+              <%=job.starts_on.strftime("%b %d, %Y")%>            
+            </td>
+          </tr>
+        <% else %>
+          <tr class="job_detail" data-job-id="<%= job.id %>">
+            <td>
+              <%=link_to job.company_name, job_path(job)  %>
+            </td>
+            <td>
+              <%= link_to job.name, job_path(job) %>
+            </td>
+            <td>
+              <%=job.starts_on.strftime("%b %d, %Y")%>            
+            </td>
+          </tr>
+        <% end %>        
       <% end %>
     </tbody>
   </table>
