@@ -1,4 +1,5 @@
 $(function(){
+
 //=============================Search Jobs with specific roles=========================================  
   $("#job_category").on("change", function(){
     var role_id = $(this).val();
