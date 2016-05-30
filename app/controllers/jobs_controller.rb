@@ -8,10 +8,13 @@ class JobsController < ApplicationController
   def index
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
-    @jobs = Job.published 
-    @jobs.find_most_recent(params[:updated_at]) 
-    
-      
+    if params[:user_id].present?
+      @user_jobs = User.find(params[:user_id]).jobs
+      render "job_management"
+
+    else
+      @jobs = Job.published 
+      @jobs.find_most_recent(params[:updated_at])        
       if params[:search_content].present? 
         respond_to do |format|        
           if job_params[:role_id].present?
@@ -25,10 +28,8 @@ class JobsController < ApplicationController
           end
         end    
       end
-  
-      # if @role.present?
-      #   @jobs = @jobs.by_role @role
-      # end
+    end
+
   end
 
   def new
@@ -99,7 +100,9 @@ class JobsController < ApplicationController
   end
 
   def authenticate
-    @authenticated = user_signed_in? || @job.secret == params[:secret] # https://www.owasp.org/index.php/Covert_timing_channel
+    #@authenticated = user_signed_in? || @job.secret == params[:secret] 
+    # https://www.owasp.org/index.php/Covert_timing_channel
+    @authenticated = @job.secret == params[:secret] 
   end
 
   def authorize

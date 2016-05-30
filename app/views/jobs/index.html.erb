@@ -1,16 +1,13 @@
-<div class="page-header">
-  <h1 id="job_board">Job Board</h1> 
-  <% if user_signed_in? %>
-    <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
-    <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
-    Post Job
-    <% end %>
-  <%end%>
-</div>
-  <!-- <span> Search by Roles: 
-  <% #select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category' %> 
-   <%# render "search_location" %>
-  </span> -->
+<% if user_signed_in? %>
+  <div class="page-header">
+    <h1 id="job_board">Job Board</h1> 
+
+      <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
+      <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
+      Post Job
+      <% end %>
+  
+  </div>
  
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
   <table id="job_posts_table" cellspacing="0" class="display responsive no-wrap">
@@ -42,8 +39,10 @@
     </tbody>
   </table>
 
-<p>
-  <small class="disclaimer">
-    Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.
-  </small>
-</p>
+  <p>
+    <small class="disclaimer">
+      Job posts do not designate whether it is Union or Non union. It is the responsibility of the employee to find out if this job is a Union signatory show.
+    </small>
+  </p>
+
+<% end %>

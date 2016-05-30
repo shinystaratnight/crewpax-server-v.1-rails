@@ -21,12 +21,13 @@
           <%= link_to 'Crew', users_path %>
         </li>
         <li>
-          <%= link_to "Shopify", "http://paxgear.myshopify.com/collections/all" %>
+          <%= link_to "Store", "http://paxgear.myshopify.com/collections/all" %>
         </li>
 
         <li>
           <%= link_to "Post Job", new_job_path %>
         </li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
@@ -34,8 +35,11 @@
             <%= link_to 'Profile', user_path(current_user) %>
           </li>
           <li>
-            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+            <%= link_to 'Manage My Job Posts', user_jobs_path(current_user) %>
           </li>
+          <li>
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
+          </li>         
         <% else %>
           <li>
             <%= link_to 'Log in', new_session_path(:user) %>

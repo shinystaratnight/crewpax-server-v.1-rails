@@ -55,7 +55,7 @@ $(function(){
 //===========================================Job Post Table Using DataTables Gem========================================================
 
 
-  $("#job_posts_table").DataTable({
+  $("#job_posts_table, #job_management").DataTable({
       responsive: true,
       "dom": '<"top"f>rt<"bottom"lip><"clear">'
     // initComplete: function () {

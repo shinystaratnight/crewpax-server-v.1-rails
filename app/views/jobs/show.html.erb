@@ -45,10 +45,12 @@
         <dd>
           <%= @job.starts_on.to_s :long %>
         </dd>
-        <dt>Ends on</dt>
-        <dd>
-          <%= @job.ends_on.to_s :long %>
-        </dd>
+        <% if @job.ends_on.present? %>
+          <dt>Ends on</dt>
+          <dd>
+            <%= @job.ends_on.to_s :long %>
+          </dd>
+        <% end %>
       </dl>
     </div>
   </div>
