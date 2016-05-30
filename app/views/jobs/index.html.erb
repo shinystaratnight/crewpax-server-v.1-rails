@@ -27,8 +27,8 @@
       <% for job in @jobs %>
         <% if job.job_filled == true  %>
           <tr class="job_detail" data-job-id="<%=job.id %>">
-            <td style="background-color: #d9534f;">
-              <%=link_to job.company_name, job_path(job), class: "job_has_filled"  %>
+            <td class="job_has_filled">
+              <%=link_to job.company_name, job_path(job),class: "job_has_filled"  %>
             </td>
             <td class="job_has_filled">
               <%= link_to job.name, job_path(job), class: "job_has_filled"  %>
