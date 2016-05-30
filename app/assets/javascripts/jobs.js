@@ -55,34 +55,28 @@ $(function(){
 //===========================================Job Post Table Using DataTables Gem========================================================
 
 
-  $("#job_posts_table, #job_management").DataTable({
+  $("#job_posts_table").DataTable({
       responsive: true,
-      "dom": '<"top"f>rt<"bottom"lip><"clear">'
-    // initComplete: function () {
+      "dom": '<"top"f>rt<"bottom"lip><"clear">',
 
-    //   this.api().columns().every(function(){
-    //     var column = this;
-
-    //     var select = $('<select><option value=""></option></select>')
-    //                 .appendTo( $(column.footer()).empty() )
-    //                 .on( 'change', function () {
-    //                     var val = $.fn.dataTable.util.escapeRegex(
-    //                         $(this).val()
-    //                     );
-    //                     column.search( val ? '^'+val+'$' : '', true, false )
-    //                           .draw();
-    //                     } ); 
-    //             column.data().unique().sort().each( function ( d, j ) {
-    //                 select.append( '<option value="'+d+'">'+d+'</option>' )
-    //             } );
-    //     });
-    //   }
   });
 
+  $("#job_management").DataTable({
+   responsive: true,
+    "dom": '<"top"f>rt<"bottom"lip><"clear">',
+    columnDefs: [ { 
+      orderable: false,
+      targets: [2] 
+    } ]
+  })
 
 
 
 //=================================================================================================================================
+
+//=================Job Edit Page Job filled? ============================================================
+   // To trigger Bootstrap Switch 
+  $("[name='job_filled']").bootstrapSwitch();
 
 
 

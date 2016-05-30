@@ -1,7 +1,6 @@
 <% if user_signed_in? %>
   <div class="page-header">
     <h1 id="job_board">Job Board</h1> 
-
       <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
       <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
       Post Job
@@ -17,9 +16,10 @@
      </span>
     <thead>
       <tr role="row">
-        <th>Company Name </th>
+        <th>Company</th>
         <th>Title</th>
-        <th>Starts on</th>    
+        <th>Starts</th> 
+        <th>Job Filled? </th>       
       </tr>
     </thead>
     <tbody>
@@ -34,7 +34,14 @@
           <td>
             <%=job.starts_on.strftime("%b %d, %Y")%>            
           </td>
-        </tr>
+          <td>
+            <% if job.job_filled == true %>
+              <%= "Yes" %>
+            <% else %>
+              <%= "No" %>
+            <% end %>
+          </td>
+        </tr>        
       <% end %>
     </tbody>
   </table>
@@ -46,3 +53,5 @@
   </p>
 
 <% end %>
+
+

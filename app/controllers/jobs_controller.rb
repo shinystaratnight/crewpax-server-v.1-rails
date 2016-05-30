@@ -73,6 +73,7 @@ class JobsController < ApplicationController
   end
 
   def update
+    binding.pry 
     if @job.update_attributes job_params
       redirect_to job_path(@job, secret: params[:secret]), notice: 'Job has been updated.'
     else
@@ -110,7 +111,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updaetd_at,:user_id)
+    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updaetd_at,:user_id, :job_filled)
   end
 
  
