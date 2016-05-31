@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   has_many :certifiables
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
+  has_many :messages
+  
+
 
   default_scope { order :last_sign_in_at }
   
