@@ -179,8 +179,30 @@ $(function(){
   
 
  
-//=========================================================================================================
- 
+//=====================================Send a text to Crew============================================================
+  $(document).on('show.bs.modal','#text_message_modal', function (event) { 
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient_phone = $("#recipient").text();
+    var text_length = $('#message-text').val().length;
+    var text_max = 160 - text_length;
+
+    $('#character_counter').text(text_max + ' characters remaining');
+    
+    $('#message-text').keyup(function() {
+        var text_length = $('#message-text').val().length;
+        var text_remaining = 160 - text_length;
+
+        $('#character_counter').text(text_remaining + ' characters remaining');
+    });
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  // modal.find('.modal-title').text('New message' )
+  // modal.find('.modal-body input').val(recipient)
+})
+
+
+//==========================================================================================================             
 
 });
 
@@ -246,7 +268,6 @@ $(function(){
             
 
             if (gotoPageNumber % 3 == 2){
-              debugger
               // Check if this page is clicked before, if yes, show already render info 
               if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
                 changePage(gotoPageNumber, filter_data, opts, user_source)
