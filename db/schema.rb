@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530041701) do
+ActiveRecord::Schema.define(version: 20160531161821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,13 @@ ActiveRecord::Schema.define(version: 20160530041701) do
   add_index "labels", ["role_id"], name: "index_labels_on_role_id", using: :btree
   add_index "labels", ["user_id"], name: "index_labels_on_user_id", using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.string  "content"
+    t.integer "user_id"
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
   end
@@ -153,4 +160,5 @@ ActiveRecord::Schema.define(version: 20160530041701) do
   add_foreign_key "jobs", "users"
   add_foreign_key "labels", "roles"
   add_foreign_key "labels", "users"
+  add_foreign_key "messages", "users"
 end
