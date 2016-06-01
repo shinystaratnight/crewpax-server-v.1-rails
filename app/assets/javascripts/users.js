@@ -180,23 +180,29 @@ $(function(){
 
  
 //=====================================Send a text to Crew============================================================
-  $(document).on('show.bs.modal','#text_message_modal', function (event) { 
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var recipient_phone = $("#recipient").text();
-    var text_length = $('#message-text').val().length;
-    var text_max = 160 - text_length;
+  $(document).on('click', ".send_text", function (event) { 
+    var button = $(event.relatedTarget) // Button that triggered the modal 
+    //  debugger 
+    // var modal = $(this)
+    // button.next()  
 
-    $('#character_counter').text(text_max + ' characters remaining');
-    
-    $('#message-text').keyup(function() {
-        var text_length = $('#message-text').val().length;
-        var text_remaining = 160 - text_length;
 
-        $('#character_counter').text(text_remaining + ' characters remaining');
+
+
+   
+    var recipient_phone = $("#recipient").text(); 
+    var recipient_id = $("#recipient_id").text();
+    var text_length = 160 - $('#message-text').val().trim().length;       
+    $('#character_counter').text(text_length + ' characters remaining');
+
+        
+    $('#message-text').on("keyup", function() {
+      text_remaining = 160 -  $('#message-text').val().trim().length;
+      $('#character_counter').text(text_remaining + ' characters remaining');
     });
   // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
+  
   // modal.find('.modal-title').text('New message' )
   // modal.find('.modal-body input').val(recipient)
 })
@@ -378,6 +384,7 @@ $(function(){
         var user_card_template = Handlebars.compile(user_source);
    
         var context = {
+            id: this.user_info.id,
             name: this.user_info.name, 
             vehicle : this.user_info.has_vehicle,
             image: this.user_info.image.url,
