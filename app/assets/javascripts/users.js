@@ -1,29 +1,31 @@
 $(function(){
-//=============When the page is loaded, Using Ajax to pre load 3 users========================================================================  
+//=============When the users page is loaded, Using Ajax to pre load 3 users========================================================================  
   // When the Page is load, preload first 30 users
-  var data = [];  
-  var current_page_number = $(location).attr("search").match(/\d+/)
-  current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
-  console.log("current_page_number:", current_page_number)
-  
-  var opts = {
-    pageMax: 10,
-    postsDiv: $('#user-list'),
+ 
+  if (window.location.pathname == "/users"){
+    var data = [];  
+    var current_page_number = $(location).attr("search").match(/\d+/)
+    current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
+    console.log("current_page_number:", current_page_number)
+    
+    var opts = {
+      pageMax: 10,
+      postsDiv: $('#user-list'),
+
+    }
+
+
+    if (current_page_number == 0){
+      var url = "/users"
+      var role_id = "";
+      var current_page = current_page_number
+      var hiring_board_status = ""
+      var ajax_request_data = {current_page_number: current_page}
+      ajaxPreLoadUser(opts, data, role_id, current_page, hiring_board_status, url, ajax_request_data)
+    
+    }
 
   }
-
-
-  if (current_page_number == 0){
-    var url = "/users"
-    var role_id = "";
-    var current_page = current_page_number
-    var hiring_board_status = ""
-    var ajax_request_data = {current_page_number: current_page}
-    ajaxPreLoadUser(opts, data, role_id, current_page, hiring_board_status, url, ajax_request_data)
-  
-  }
-
-
 
 //=============================Search Employees with given roles inside $(function)=========================================  
   $("#user_role").on("change",function(){
@@ -294,7 +296,7 @@ $(function(){
               } else{
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, user_source)
-                debugger
+
                 // Need to preload filter user data                 
                 var need_to_load_times = Math.ceil(dataCount / 30)
 
