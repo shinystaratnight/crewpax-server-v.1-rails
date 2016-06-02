@@ -5,7 +5,6 @@ class AppointmentsController < ApplicationController
     @appointments = @user.appointments
     respond_to do |format|
       if @appointments.empty? 
-
         format.html {render @user}
         format.json {render json: @appointments}
       else 
@@ -21,7 +20,6 @@ class AppointmentsController < ApplicationController
     @appointment= Appointment.new(appointment_params)
     respond_to do |format|
       if @appointment.save
-        format.html{redirect_to @user}
         format.json{render json: @appointment}
       else
         format.html{render action: "new"}
