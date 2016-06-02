@@ -57,7 +57,6 @@ class AttachmentsController < ApplicationController
 
     respond_to do |format|
       if @attachment.destroy      
-        format.html{redirect_to @user}
         format.json{head :no_content}
       else
         format.json{render json: @attachment.errors.full_messages}
