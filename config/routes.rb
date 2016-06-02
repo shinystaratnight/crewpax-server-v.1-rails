@@ -54,7 +54,11 @@ Bcpax::Application.routes.draw do
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
 
+  resources :messages, only:[:new, :create]  
+
   root 'home#index'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

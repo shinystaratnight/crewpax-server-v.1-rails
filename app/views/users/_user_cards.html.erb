@@ -34,21 +34,21 @@
                           <h4 class="modal-title" id="exampleModalLabel">New message to {{name}}</h4>
                         </div>
                         <div class="modal-body">
-                          <form>
+                          <form action="/users" method="post">
                             <div class="form-group">
-                              <span id="recipient" hidden="true ">{{phone}}</span>
+                              <span id="recipient" hidden="true">{{phone}}</span>
                               <span id="recipient_id" hidden ="true">{{id}}</span>
                               <label for="message-text" class="control-label">Message:</label>
-                              <textarea class="form-control" id="message-text" maxlength= "160" >
-                                <%=current_user.name%> from Crewcall: 
+                              <textarea class="message-text form-control" maxlength= "160">
+                                <%=current_user.name%> from Crewcall: <%=root_url%>
                               </textarea>
-                              <div id="character_counter"></div>
+                              <div class="character_counter"></div>
                             </div>
                           </form>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Send message</button>
+                          <button type="submit" class="send_msg btn btn-primary" data-dismiss="modal">Send message</button>
                         </div>
                       </div>
                     </div>

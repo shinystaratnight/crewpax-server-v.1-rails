@@ -181,30 +181,37 @@ $(function(){
  
 //=====================================Send a text to Crew============================================================
   $(document).on('click', ".send_text", function (event) { 
-    var button = $(event.relatedTarget) // Button that triggered the modal 
-    //  debugger 
-    // var modal = $(this)
-    // button.next()  
 
-
-
-
+    var modal = $(this).next()
+    var current_message_text_box = modal.find(".message-text")
+    var current_character_counter = modal.find(".character_counter")
+    // var button = $(event.relatedTarget) // Button that triggered the modal     
+    var text_length = 160 - current_message_text_box.val().trim().length;       
+    current_character_counter.text(text_length + ' characters remaining');
+    var text_message;
    
-    var recipient_phone = $("#recipient").text(); 
-    var recipient_id = $("#recipient_id").text();
-    var text_length = 160 - $('#message-text').val().trim().length;       
-    $('#character_counter').text(text_length + ' characters remaining');
+     $(current_message_text_box).on("keyup", function() {     
+      var text_remaining = 160 -  current_message_text_box.val().trim().length;
+      current_character_counter.text(text_remaining + ' characters remaining');
+      text_message = current_message_text_box.val().trim();
 
-        
-    $('#message-text').on("keyup", function() {
-      text_remaining = 160 -  $('#message-text').val().trim().length;
-      $('#character_counter').text(text_remaining + ' characters remaining');
     });
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+
+    $(".send_msg").on("click", function(event){      
+      var recipient_phone = $("#recipient").text(); 
+      var recipient_id = $("#recipient_id").text();    
+      $.ajax({
+        url: "/messages",
+        method: "post",
+        dataType:"json",
+        data: {message:{content: text_message,recipient_id: recipient_id},recipient_phone: recipient_phone},
+        success: function(resp){
+          alert("Text message has been sent")
+        }
+      });
+      event.preventDefault();
+     });
   
-  // modal.find('.modal-title').text('New message' )
-  // modal.find('.modal-body input').val(recipient)
 })
 
 
