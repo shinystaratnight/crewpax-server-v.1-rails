@@ -12,7 +12,6 @@ class MessagesController < ApplicationController
     @message.user_id = current_user_id
     @twilio_number = "+15005550006"
     @twilio_client = Twilio::REST::Client.new
-    binding.pry
     @sms = @twilio_client.account.messages.create(
       :from => @twilio_number,
       :to => "+1#{number_to_send_to}",
@@ -21,7 +20,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save! && @sms.status == 'queued'
-        format.json{render json: @sms.status}
+        format.json{render json: @sms.status.to_json}
       end
     end
 

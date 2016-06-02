@@ -34,6 +34,9 @@
                           <h4 class="modal-title" id="exampleModalLabel">New message to {{name}}</h4>
                         </div>
                         <div class="modal-body">
+                          <div class="message_status alert alert-info alert-dismissible" hidden="true">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times</a>
+                          </div>                          
                           <form action="/users" method="post">
                             <div class="form-group">
                               <span id="recipient" hidden="true">{{phone}}</span>
@@ -48,7 +51,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="submit" class="send_msg btn btn-primary" data-dismiss="modal">Send message</button>
+                          <button type="submit" class="send_msg btn btn-primary" data-dismiss="">Send message</button>
                         </div>
                       </div>
                     </div>

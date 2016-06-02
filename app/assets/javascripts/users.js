@@ -182,10 +182,9 @@ $(function(){
 //=====================================Send a text to Crew============================================================
   $(document).on('click', ".send_text", function (event) { 
 
-    var modal = $(this).next()
+    var modal = $(this).next();
     var current_message_text_box = modal.find(".message-text")
     var current_character_counter = modal.find(".character_counter")
-    // var button = $(event.relatedTarget) // Button that triggered the modal     
     var text_length = 160 - current_message_text_box.val().trim().length;       
     current_character_counter.text(text_length + ' characters remaining');
     var text_message;
@@ -197,20 +196,27 @@ $(function(){
 
     });
 
-    $(".send_msg").on("click", function(event){      
+    $(".send_msg").on("click", function(event){ 
+      event.preventDefault();   
       var recipient_phone = $("#recipient").text(); 
-      var recipient_id = $("#recipient_id").text();    
+      var recipient_id = $("#recipient_id").text(); 
       $.ajax({
         url: "/messages",
         method: "post",
         dataType:"json",
         data: {message:{content: text_message,recipient_id: recipient_id},recipient_phone: recipient_phone},
         success: function(resp){
-          debugger
+          if (resp == "queued"){
+            modal.find(".message_status").text("Text message has been sent successfully.").show()
+          }else{
+            modal.find(".message_status").text("Failed to send text message.").show()
+
+          }
+          
           
         }
       });
-      event.preventDefault();
+      
      });
   
 })
