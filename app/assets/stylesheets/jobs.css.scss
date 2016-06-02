@@ -54,6 +54,10 @@
   .sorting_1{
     background-color: #d9534f;
   }
+
+  #job_filled_indicator{
+    margin-left: 330px;    
+  }
 }
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
@@ -117,6 +121,10 @@
 
     .job_location_search {
       margin-bottom: 10px;
+    }
+
+    #job_filled_indicator{
+      margin-left: 60px;    
     }
 
   }
