@@ -206,7 +206,8 @@ $(function(){
         dataType:"json",
         data: {message:{content: text_message,recipient_id: recipient_id},recipient_phone: recipient_phone},
         success: function(resp){
-          alert("Text message has been sent")
+          debugger
+          
         }
       });
       event.preventDefault();

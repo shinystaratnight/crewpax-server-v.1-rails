@@ -11,18 +11,16 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.user_id = current_user_id
     @twilio_number = "+15005550006"
-    
+    @twilio_client = Twilio::REST::Client.new
+    binding.pry
+    @sms = @twilio_client.account.messages.create(
+      :from => @twilio_number,
+      :to => "+1#{number_to_send_to}",
+      :body => message_params[:content]
+    )
+
     respond_to do |format|
-      if @message.save!
-        @twilio_client = Twilio::REST::Client.new
-
-        @sms = @twilio_client.account.messages.create(
-          :from => @twilio_number,
-          :to => "+1#{number_to_send_to}",
-          :body => message_params[:content]
-        )
-
-        # format.html{flash[:notice] = "Text message has been successfully sent."}
+      if @message.save! && @sms.status == 'queued'
         format.json{render json: @sms.status}
       end
     end
