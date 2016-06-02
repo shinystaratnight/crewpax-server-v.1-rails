@@ -12,7 +12,7 @@
         <tr>
           <th><%= link_to user_job.name, job_path(user_job) %></th>
           <th><%= user_job.starts_on %>
-          <th><%= link_to "Edit", job_path(user_job) + "/" + user_job.secret, class: "btn  btn-primary" %></th>
+          <th><%= link_to "Edit", job_path(user_job) + "/edit?secret=" + user_job.secret, class: "btn  btn-primary" %></th>
         </tr>
       <% end %>
     </tbody>
