@@ -27,7 +27,7 @@
       <li id ="most_recent_log_in"><%=link_to 'Last Log In (Most Recent)', users_path(last_sign_in_at:'most_recent'), data: {selected_role_id: "", last_log_in: "most_recent"}%></li>
     </ul>
   </div>
-  <span><button type="button" class="btn btn-danger"><%=link_to "Reset", users_path, id: "reset_button" %></button></span>
+  <span><%=link_to "Reset", users_path, id: "reset_button", class: "btn btn-danger"%></span>
   </br>
   
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
