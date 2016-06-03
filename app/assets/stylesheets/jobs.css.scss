@@ -8,6 +8,7 @@
 
   #job_board{
     display:inline;
+    margin-left:20px;
   }
 
 
@@ -28,9 +29,8 @@
   }
 
   .job_location_search{
-    width: 300px;
+    width: 200px;
     display:inline-block;
-    margin-right:10px;
     margin-bottom:-13px;
   }
   
@@ -51,12 +51,14 @@
 
   }
   
-  .sorting_1{
-    background-color: #d9534f;
-  }
+  
 
   #job_filled_indicator{
     margin-left: 330px;    
+  }
+
+  #search_job_posts {
+    margin-left: 20px;
   }
 }
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------

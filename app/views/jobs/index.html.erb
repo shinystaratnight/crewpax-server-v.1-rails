@@ -10,7 +10,7 @@
  
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
   <table id="job_posts_table" cellspacing="0" class="display responsive no-wrap">
-      <span> Search by Roles:
+      <span id="search_job_posts"> Search by Roles:
         <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%>
         <%= render "search_location" %>
       </span>      
@@ -25,7 +25,7 @@
         <th>Title</th>
         <th>Starts</th>
         <th hidden="true">Location</th>
-        <th> Role Id</th>
+        <th hidden="true"> Role Id</th>
       </tr>
     </thead>
     <tbody>
@@ -33,25 +33,25 @@
         <% if job.job_filled == true  %>
           <tr class="job_detail" data-job-id="<%=job.id %>">
             <td class="job_has_filled">
-              <%=link_to job.company_name, job_path(job),class: "job_has_filled"  %>
+              <%=link_to job.company_name, job_path(job), class: "job_has_filled"  %>
             </td>
             <td class="job_has_filled">
               <%= link_to job.name, job_path(job), class: "job_has_filled"  %>
             </td>
             <td class="job_has_filled">
-              <%=job.starts_on.strftime("%b %d, %Y")%>            
+              <%=job.starts_on.strftime("%b %d, %Y") %>            
             </td>
             <td hidden="true">
               <%=job.location %>
             </td>
-            <td>
+            <td hidden="true">
               <%=job.role_id %>
             </td>
           </tr>
         <% else %>
           <tr class="job_detail" data-job-id="<%=job.id %>">
             <td>
-              <%=link_to job.company_name, job_path(job)  %>
+              <%=link_to job.company_name, job_path(job) %>
             </td>
             <td>
               <%= link_to job.name, job_path(job) %>
@@ -62,7 +62,7 @@
             <td hidden="true">
               <%=job.location %>
             </td>
-            <td>
+            <td hidden="true">
               <%=job.role_id %>
             </td>
           </tr>
