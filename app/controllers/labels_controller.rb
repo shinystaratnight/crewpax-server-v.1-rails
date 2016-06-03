@@ -14,10 +14,7 @@ class LabelsController < ApplicationController
     @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
 
     respond_to do |format|
-      if @job_labels.present? && label_params[:job_board ] == "clicked"
-          format.html{redirect_to jobs_path}
-          format.json{render json: @job_labels}
-      elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
+      if @user_labels.present? && label_params[:hiring_board] == "clicked"
 
         @filter_users = {};
         @users_with_selected_role = @user_labels.map{|l| User.find(l.user_id)}
@@ -53,7 +50,6 @@ class LabelsController < ApplicationController
         
         @filter_users = {number_users: @total_user, paginated_users:  @filter_users_info}
 
-        format.html
         format.json{render json: @filter_users}
      
       else

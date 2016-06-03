@@ -23,7 +23,9 @@
       <tr role="row">
         <th>Company</th>
         <th>Title</th>
-        <th>Starts</th> 
+        <th>Starts</th>
+        <th hidden="true">Location</th>
+        <th> Role Id</th>
       </tr>
     </thead>
     <tbody>
@@ -39,9 +41,15 @@
             <td class="job_has_filled">
               <%=job.starts_on.strftime("%b %d, %Y")%>            
             </td>
+            <td hidden="true">
+              <%=job.location %>
+            </td>
+            <td>
+              <%=job.role_id %>
+            </td>
           </tr>
         <% else %>
-          <tr class="job_detail" data-job-id="<%= job.id %>">
+          <tr class="job_detail" data-job-id="<%=job.id %>">
             <td>
               <%=link_to job.company_name, job_path(job)  %>
             </td>
@@ -50,6 +58,12 @@
             </td>
             <td>
               <%=job.starts_on.strftime("%b %d, %Y")%>            
+            </td>
+            <td hidden="true">
+              <%=job.location %>
+            </td>
+            <td>
+              <%=job.role_id %>
             </td>
           </tr>
         <% end %>        
