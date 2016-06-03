@@ -61,8 +61,8 @@
     </br>
 
     <%=submit_tag("Submit", class: "btn btn-lg btn-success",id: "edit_post_submit")%>
-    <button class="btn btn-lg btn-danger"><%= link_to"Cancel", jobs_path, id: "cancel_job_post"%></button>
-    <%= link_to 'Remove', job_path(@job, secret: params[:secret]), method: 'DELETE', class: 'btn btn-danger btn-lg' %>
+    <%= link_to "Cancel", jobs_path, id: "cancel_job_post", class: "btn btn-lg btn-danger " %>
+    <%= link_to "Remove", job_path(@job, secret: params[:secret]), method: "DELETE", class: "btn btn-danger btn-lg", id: "delete_job_post" %>
     
   <% end %>
   

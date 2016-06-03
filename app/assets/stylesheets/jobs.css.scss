@@ -328,15 +328,48 @@
     }
 
 
+    #edit_post_submit{
+      margin-left: -20px;
+    }
+
+    #delete_job_post{
+      display: inline-block;
+      width: 100px;
+    }
 
 
+}
+
+//-------***** iPhone 6 *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #job_edit_form{
+      margin-left: 10px;
+      width: 340px;
+    }
+
+    #edit_post_submit{
+      margin-left: 0px;
+    }
 
 
+}
 
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+
+  #job_edit_form{
+    margin-left: 10px;
+    width: 380px;
+  }
 
 
 
 
 
 }
-
