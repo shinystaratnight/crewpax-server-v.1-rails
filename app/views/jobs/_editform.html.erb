@@ -1,4 +1,4 @@
-<div class="row" id="job_post_form">
+<div class="row" id="job_edit_form">
   <%= form_for @job, url: job_path( @job, secret: params[:secret]), :html => {:multipart => true} do |f| %>
     <div class="form-group">
       <%= f.label(:name, "Job Title:") %> 

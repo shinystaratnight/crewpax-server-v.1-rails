@@ -260,6 +260,7 @@
     margin-left: 40px;
   }
 
+
 }
 
 //-------***** iPhone 6 *****----------------------------------------------------------------
@@ -302,9 +303,40 @@
     margin-left:150px;
   }
 
+  #job_edit_form{
+    margin: auto;
+    width: 600px;
+    }
+
+  #edit_job_title{
+    margin-left: 600px;
+  }
+
+
+}
+
+//-------***** iphone 5 & 5s *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+@media only screen 
+    and (min-device-width: 320px) 
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+    #job_edit_form{
+      margin-left: 10px;
+      width: 280px;
+    }
+
+
+
+
+
+
+
 
 
 
 
 
 }
+
