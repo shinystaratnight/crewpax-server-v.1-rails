@@ -33,87 +33,6 @@ class UsersController < ApplicationController
     end
   end
       
-     
- 
-     
-      # if params[:page] % 3 == 2
-      #   @ajax_request_time = (params[:page] + 1) / 3
-      #   @new_request_user_limit = (@ajax_request_time + 1) * 3 
-      #   @users = User.limit(@new_request_user_limit).offset(@ajax_request_time * 3)
-      #   @paginated_users = @users.page(params[:page]).per(1)
-      #   format.html{render :index}
-      #   format.json{render json: @users }
-      # else 
-      #   format.html{render :index} 
-      #   format.json{render json:@users}
-      # end
-
-      # if params[:current_page_number]=="0" || params[:current_page_number]== nil
-      #   @users = User.limit(3)
-      #   @paginated_users = @users.page(params[:page]).per(1)
-      #   # format.js 
-      #   format.html{render :index}
-      #   # format.json{render json: @users}
-        
-      #   binding.pry 
-      # elsif params[:current_page_number].present?
-      #   current_page_number = params[:current_page_number].to_i
-      #   @ajax_request_time = (current_page_number + 1) / 3
-      #   @new_request_user_limit = (@ajax_request_time + 1) * 3 
-      #   @users = User.limit(@new_request_user_limit).offset(@ajax_request_time * 3)
-      #   format.html{render :index}
-      #   format.json{render json: @users }
-     
-      # end
-      
-    #second ajax request User.limit(30).offset(30)
-    # Filter out never login users
-    # @already_signed_in_users = @users.find_all{|u| u.last_sign_in_at != nil}
-    # @sorted_users = @already_signed_in_users.sort_by{|e| e[:last_sign_in_at]}.reverse 
-    
-  
-      
-    # end
-
-    
-
-    
-    # # if user_params[:roles_ids].present?
-
-    # # else
-    # #   @users = User.all 
-
-     
-    # respond_to do |format|   
-     
-    #   if user_params[:roles_ids].present?        
-    #     # @filter_users = Role.find(@role.id).users.uniq{|u|u.user_id}.find_all{|u|u.last_sign_in_at !=nil}
-    #     #sort filter users based on their most recent log in         
-    #     @most_recent_login_users =  @filter_users.sort_by{|e| e[:last_sign_in_at]}.reverse
-    #     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-    #     # @users = @most_recent_login_users.order(:name).page params[:page] 
-    #     format.html {render @users}
-    #     format.json {render json: @most_recent_login_users}        
-    #   else
-    #     # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-    #     # @users =  users.page(params[:page] || 1).per(6)
-    #     # @users = User.order(:name).page params[:page] 
-    #     format.html{render :index}
-    #     format.json{render json: @sorted_users}
-    #   end
-    # end
-    
-      # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-        # @users =  @users.page(params[:page] || 1).per(6)
-      # @users = User.order(:name).page params[:page]
-
-    # if @role.present?
-    #   @labels= Label.search_by_role(params[:role_id])
-    # end
-    # Kaminari.paginate_array(@users).page(params[:page] || 1).per(20)
-    # binding.pry 
-    # @users_page = @users.page(params[:page] || 1).per(20)
-
 
   def show
     @user = User.find params[:id]
@@ -615,8 +534,8 @@ class UsersController < ApplicationController
     paginated_user_info = user.map{|user| 
       { user_info: user,
         union_member: user.eligibilities.find_all{|e| e.member == true}
-                         .uniq{|u| u.union_id},
-                         # .map{|info| Union.find(info.union_id).name}.join(",")
+                         .uniq{|u| u.union_id}
+                         .map{|info| Union.find(info.union_id).name}.join(" , "),
                          
         union_permit: user.eligibilities.find_all{|e| e.permit_days !=nil}
                           .uniq{|u| u.union_id}

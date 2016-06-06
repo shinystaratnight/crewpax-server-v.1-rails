@@ -148,7 +148,7 @@ $(function(){
       return "Union Status: " + "member: " + union_member + " ; " + "permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else if (union_member.length > 0 && union_permit.length == 0){
-      return "Union Status: " + "member: " + union_member 
+      return "Union Status: " + "member: " + union_member
     }else if (union_member.length == 0 && union_permit.length > 0){
       return "Union Status: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
@@ -398,7 +398,7 @@ $(function(){
     $.each(posts, function(){
 
         var user_card_template = Handlebars.compile(user_source);
-   
+
         var context = {
             id: this.user_info.id,
             name: this.user_info.name, 
