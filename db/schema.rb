@@ -145,9 +145,9 @@ ActiveRecord::Schema.define(version: 20160531212407) do
     t.string   "last_sign_in_ip"
     t.integer  "sign_in_count",              default: 0
     t.integer  "roles_ids",                  default: [],                 array: true
-    t.boolean  "is_iatse_member",            default: false
     t.string   "provider"
     t.string   "uid"
+    t.boolean  "is_iatse_member",            default: false
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
