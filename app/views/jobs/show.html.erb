@@ -1,31 +1,31 @@
 <%= content_tag_for :article, @job do %>
   <header>
-    <div class="page-header">
+    <div class="job_show page-header">
       <h1>
         <%= @job.name %>
-        <br/>
-        
+        <br/>       
       </h1>
     </div>
   </header>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">
-        Job Overview
-      </h3>
+  <% if @job.description.present? %>
+    <div class="job_show panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Job Overview
+        </h3>
+      </div>    
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Job Description</dt>
+          <dd>
+            <%= @job.description %>
+          </dd>
+        </dl>
+      </div>    
     </div>
-    <div class="panel-body">
-      <dl class="dl-horizontal">
-        <dt>Job Description</dt>
-        <dd>
-          <%= @job.description %>
-        </dd>
-      </dl>
-    </div>
-  </div>
-  
+  <% end %>
 
-  <div class="panel panel-default">
+  <div class="job_show panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
         Details
@@ -45,14 +45,16 @@
         <dd>
           <%= @job.starts_on.to_s :long %>
         </dd>
-        <dt>Ends on</dt>
-        <dd>
-          <%= @job.ends_on.to_s :long %>
-        </dd>
+        <% if @job.ends_on.present? %>
+          <dt>Ends on</dt>
+          <dd>
+            <%= @job.ends_on.to_s :long %>
+          </dd>
+        <% end %>
       </dl>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="job_show panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">
         Contact
@@ -76,11 +78,11 @@
     </div>
   </div>
   <p>
-    <%= mail_to @job.contact_email, 'Apply', class: 'btn btn-block btn-lg btn-success', subject: @job.name, body: job_url(@job) %>
+    <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: job_url(@job) %>
   </p>
   <% if @authenticated %>
     <p>
-      <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), class: 'btn btn-block btn-lg btn-primary' %>
+      <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), class: 'btn job_show btn-block btn-lg btn-primary' %>
     </p>
   <% end %>
 <% end %>

@@ -14,10 +14,7 @@ class LabelsController < ApplicationController
     @user_labels = @label.find_all{|l| l.user_id != nil }.uniq{|l|l.user_id}
 
     respond_to do |format|
-      if @job_labels.present? && label_params[:job_board ] == "clicked"
-          format.html{redirect_to jobs_path}
-          format.json{render json: @job_labels}
-      elsif @user_labels.present? && label_params[:hiring_board] == "clicked"
+      if @user_labels.present? && label_params[:hiring_board] == "clicked"
 
         @filter_users = {};
         @users_with_selected_role = @user_labels.map{|l| User.find(l.user_id)}
@@ -25,14 +22,14 @@ class LabelsController < ApplicationController
         # select the first 30th elements of the array 
 
         if params[:current_page_number] == "1" || params[:current_page_number] == "0" 
-          # @users_with_selected_role = @users_with_selected_role[0..30]
-          @users_with_selected_role = @users_with_selected_role[0..3]
+          @users_with_selected_role = @users_with_selected_role[0..30]
+          #@users_with_selected_role = @users_with_selected_role[0..3]
         else
           ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
 
           # Page 2 => ajax_preload_request_time = 1
-          @users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
-          #@users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
+          #@users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
+          @users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time) * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
         end
 
         if @users_with_selected_role == nil 
@@ -53,7 +50,6 @@ class LabelsController < ApplicationController
         
         @filter_users = {number_users: @total_user, paginated_users:  @filter_users_info}
 
-        format.html
         format.json{render json: @filter_users}
      
       else

@@ -1,5 +1,5 @@
 Bcpax::Application.routes.draw do
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks"}
  
   # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
@@ -43,6 +43,12 @@ Bcpax::Application.routes.draw do
     resources :appointments
   end
 
+  
+  resources :users do
+    resources :jobs, only:[:index, :show]
+  end
+  
+
   # resources :roles, shallow: true do
   #   resources :users 
 
@@ -53,6 +59,8 @@ Bcpax::Application.routes.draw do
   
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
+
+  resources :messages, only:[:new, :create]  
 
   root 'home#index'
 

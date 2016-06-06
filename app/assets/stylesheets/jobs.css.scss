@@ -8,6 +8,7 @@
 
   #job_board{
     display:inline;
+    margin-left:20px;
   }
 
 
@@ -28,9 +29,8 @@
   }
 
   .job_location_search{
-    width: 300px;
+    width: 200px;
     display:inline-block;
-    margin-right:10px;
     margin-bottom:-13px;
   }
   
@@ -40,10 +40,26 @@
 
   }
 
+  .job_show{
+    width: 50%;
+    margin-left: 350px;
+  }
 
+  .job_has_filled{
+    background-color: #d9534f;
+    color:white;
 
+  }
+  
+  
 
+  #job_filled_indicator{
+    margin-left: 330px;    
+  }
 
+  #search_job_posts {
+    margin-left: 20px;
+  }
 }
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
@@ -103,6 +119,14 @@
       border-radius: 4px;
       display: block;
       margin-left: -2px;
+    }
+
+    .job_location_search {
+      margin-bottom: 10px;
+    }
+
+    #job_filled_indicator{
+      margin-left: 60px;    
     }
 
   }
@@ -236,6 +260,7 @@
     margin-left: 40px;
   }
 
+
 }
 
 //-------***** iPhone 6 *****----------------------------------------------------------------
@@ -278,6 +303,70 @@
     margin-left:150px;
   }
 
+  #job_edit_form{
+    margin: auto;
+    width: 600px;
+    }
+
+  #edit_job_title{
+    margin-left: 600px;
+  }
+
+
+}
+
+//-------***** iphone 5 & 5s *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+@media only screen 
+    and (min-device-width: 320px) 
+    and (max-device-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+    #job_edit_form{
+      margin-left: 10px;
+      width: 280px;
+    }
+
+
+    #edit_post_submit{
+      margin-left: -20px;
+    }
+
+    #delete_job_post{
+      display: inline-block;
+      width: 100px;
+    }
+
+
+}
+
+//-------***** iPhone 6 *****----------------------------------------------------------------
+//-****Portrait and Landscape *****----------------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #job_edit_form{
+      margin-left: 10px;
+      width: 340px;
+    }
+
+    #edit_post_submit{
+      margin-left: 0px;
+    }
+
+
+}
+
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+
+  #job_edit_form{
+    margin-left: 10px;
+    width: 380px;
+  }
 
 
 

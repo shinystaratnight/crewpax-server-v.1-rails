@@ -1,0 +1,14 @@
+<div class="reset_password container">
+  <h3>Forgot your password?</h3>
+
+  <%= form_for(resource, url: user_password_path(resource_name), html: { method: :post }) do |f| %>
+
+    <%= devise_error_messages! %>
+      <div class="form-group">
+      <%= f.label :email %>     
+      <%= f.email_field :email, autofocus: true,  class: "reset_info form-control"%>  
+      </div>
+      <%= f.submit "Send me reset instructions", class: 'btn reset_pw_info btn-success '
+       %>
+  <% end %>
+</div>

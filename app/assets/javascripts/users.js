@@ -1,29 +1,31 @@
 $(function(){
-//=============When the page is loaded, Using Ajax to pre load 3 users========================================================================  
+//=============When the users page is loaded, Using Ajax to pre load 3 users========================================================================  
   // When the Page is load, preload first 30 users
-  var data = [];  
-  var current_page_number = $(location).attr("search").match(/\d+/)
-  current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
-  console.log("current_page_number:", current_page_number)
-  
-  var opts = {
-    pageMax: 2,
-    postsDiv: $('#user-list'),
+ 
+  if (window.location.pathname == "/users"){
+    var data = [];  
+    var current_page_number = $(location).attr("search").match(/\d+/)
+    current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
+    console.log("current_page_number:", current_page_number)
+    
+    var opts = {
+      pageMax: 10,
+      postsDiv: $('#user-list'),
+
+    }
+
+
+    if (current_page_number == 0){
+      var url = "/users"
+      var role_id = "";
+      var current_page = current_page_number
+      var hiring_board_status = ""
+      var ajax_request_data = {current_page_number: current_page}
+      ajaxPreLoadUser(opts, data, role_id, current_page, hiring_board_status, url, ajax_request_data)
+    
+    }
 
   }
-
-
-  if (current_page_number == 0){
-    var url = "/users"
-    var role_id = "";
-    var current_page = current_page_number
-    var hiring_board_status = ""
-    var ajax_request_data = {current_page_number: current_page}
-    ajaxPreLoadUser(opts, data, role_id, current_page, hiring_board_status, url, ajax_request_data)
-  
-  }
-
-
 
 //=============================Search Employees with given roles inside $(function)=========================================  
   $("#user_role").on("change",function(){
@@ -168,7 +170,7 @@ $(function(){
  
     var result = $.inArray(today, availability)
     if(result < 0){
-      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable Today</i>"
+      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable </br>  Today</i>"
 
     }else{
       return "<i class='fa fa-calendar-check-o' aria-hidden='true'style='color:green; font-size: 15px;'>Available Today</i>"
@@ -179,8 +181,50 @@ $(function(){
   
 
  
-//=========================================================================================================
+//=====================================Send a text to Crew============================================================
+  $(document).on('click', ".send_text", function (event) { 
 
+    var modal = $(this).next();
+    var current_message_text_box = modal.find(".message-text")
+    var current_character_counter = modal.find(".character_counter")
+    var text_length = 160 - current_message_text_box.val().trim().length;       
+    current_character_counter.text(text_length + ' characters remaining');
+    var text_message;
+   
+     $(current_message_text_box).on("keyup", function() {     
+      var text_remaining = 160 -  current_message_text_box.val().trim().length;
+      current_character_counter.text(text_remaining + ' characters remaining');
+      text_message = current_message_text_box.val().trim();
+
+    });
+
+    $(".send_msg").on("click", function(event){ 
+      event.preventDefault();   
+      var recipient_phone = $("#recipient").text(); 
+      var recipient_id = $("#recipient_id").text(); 
+      $.ajax({
+        url: "/messages",
+        method: "post",
+        dataType:"json",
+        data: {message:{content: text_message,recipient_id: recipient_id},recipient_phone: recipient_phone},
+        success: function(resp){
+          if (resp == "queued"){
+            modal.find(".message_status").text("Text message has been sent successfully.").show()
+          }else{
+            modal.find(".message_status").text("Failed to send text message.").show()
+
+          }
+          
+          
+        }
+      });
+      
+     });
+  
+})
+
+
+//==========================================================================================================             
 
 });
 
@@ -252,8 +296,9 @@ $(function(){
               } else{
                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data 
                 changePage(gotoPageNumber, filter_data, opts, user_source)
+
                 // Need to preload filter user data                 
-                var need_to_load_times = Math.ceil(dataCount / 3)
+                var need_to_load_times = Math.ceil(dataCount / 30)
 
                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
                   ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")    
@@ -355,6 +400,7 @@ $(function(){
         var user_card_template = Handlebars.compile(user_source);
    
         var context = {
+            id: this.user_info.id,
             name: this.user_info.name, 
             vehicle : this.user_info.has_vehicle,
             image: this.user_info.image.url,

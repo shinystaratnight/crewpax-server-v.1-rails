@@ -2,8 +2,9 @@ class User < ActiveRecord::Base
   
   #Include default devise modules. Others are available are:
   #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :database_authenticatable, :registerable, :omniauthable, :recoverable, :rememberable,
          :trackable
+
   mount_uploader :image, ImageUploader
   #comment out devise :validatable
   has_many :appointments, dependent: :destroy
@@ -16,6 +17,9 @@ class User < ActiveRecord::Base
   has_many :certifiables, dependent: :destroy
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
+  has_many :messages
+  
+
 
   default_scope { order :last_sign_in_at }
   
@@ -27,23 +31,45 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true, length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, message:" must be a valid email address"},
   if: "email.present?"
 
+
+  validates :password, length: {minimum: 4}, if: "reset_password_token.present?"
   
   
-  def self.sort_user(sort_order)
-    binding.pry 
-    if sort_order == "most_recent"
-      reorder(last_sign_in_at: :desc)
-    else 
-      reorder(name: :asc)
-    end
-  end
+  # by default, Devise only adds the validates_confirmation_of 
+  #:password on the 'User' model (or any other model you chose as the authentication model) 
+  #in the case of a :create. When updating we are of course editing rather than creating.
+  
+  validates_confirmation_of :password, if: "reset_password_token.present?"
 
-
-  # def self.sort_filter_user(sort_order)
-  #   binding.pry 
+  # def self.sort_user(sort_order)
+  #   if sort_order == "most_recent"
+  #     reorder(last_sign_in_at: :desc)
+  #   else 
+  #     reorder(name: :asc)
+  #   end
   # end
 
 
+  def self.from_omniauth(auth)
+    user_credentials = User.find_by(email:auth.info.email)
+    #First time users with credentails log in with facebook 
+    if user_credentials.present? && user_credentials.uid == nil 
+      user_credentials.update_attributes(uid: auth.uid)
+      user = user_credentials
+      # users with credentails have updated their facebook id in their database
+      # and checking the reponse facebook id from fb api is the same as the one in database 
+      if user_credentials.uid.present? && auth.uid == user_credentials.uid
+        user = user_credentials
+      end
+    else
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.name = auth.info.name   
+        user.remote_image_url = auth.info.image
+      end
+    end
+
+  end
 
 
 

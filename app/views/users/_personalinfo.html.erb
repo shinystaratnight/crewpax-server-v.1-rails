@@ -1,5 +1,5 @@
 <div class="field"> 
-  <span id="display_image"><%=image_tag(@user.image.url) %> <%#@user.image.url.display ? image_tag(@user.image.url): image_tag(@user.image.default_url)%> </span> 
+  <span id="display_image"><%#=image_tag(@user.image.url) || image_tag(@user.photo) %> <%=@user.image.url.present? ? image_tag(@user.image.url): image_tag(@user.image.default_url)%> </span> 
 </div>
 
 <% if @user.has_vehicle? %>
