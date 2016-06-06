@@ -6,10 +6,11 @@
       <%= render "editpersonalinfo" %>
     </div>
     <div class= "col-md-8">
-      <%= render "editunion" %>
-      <%= render "editcalendar" %>
-      <%= render "editcertificates" %>
-      <%= render "editdocumentupload" %>
-      
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <%= render "editunion" %>
+        <%= render "editcalendar" %>
+        <%= render "editcertificates" %>
+        <%= render "editdocumentupload" %>
+      </div>
     </div>
   </div>
