@@ -37,9 +37,14 @@
           <li>
             <%= link_to 'Manage My Job Posts', user_jobs_path(current_user) %>
           </li>
+          <% if current_user.admin? %>
+            <li>
+              <%= link_to "Admin Page", admin_index_path %> 
+            </li>
+          <% end %>  
           <li>
             <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-          </li>         
+          </li>              
         <% else %>
           <li>
             <%= link_to 'Log in', new_session_path(:user) %>
