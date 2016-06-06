@@ -1,4 +1,4 @@
-<div class="field"> 
+<div> 
   <span id="display_image"><%#=image_tag(@user.image.url) || image_tag(@user.photo) %> <%=@user.image.url.present? ? image_tag(@user.image.url): image_tag(@user.image.default_url)%> </span> 
 </div>
 
