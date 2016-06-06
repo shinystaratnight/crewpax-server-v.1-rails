@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:update]
   # before_filter :set_role, only: :index
   respond_to :html, :json, :js
   # caches_page :index
@@ -103,10 +103,6 @@ class UsersController < ApplicationController
 
     @attachments = @user.attachments
   end
-
-
-
-
 
 
   def destroy
@@ -511,21 +507,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
-  
-    # if account_update_params[:password].blank?
-    #   account_update_params.delete 'password'
-    #   account_update_params.delete 'password_confirmation'
-    # end
-
-    # if @user.update_attributes(account_update_params)
-    #   update_label_with_user_role(@user)
-    #   # sign_in @user, bypass: true
-    #   set_flash_message :notice, :updated
-    #   redirect_to after_update_path_for(@user)
-    # else
-    #   render :edit
-    # end
 
   protected
 
