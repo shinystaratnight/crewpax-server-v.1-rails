@@ -20,6 +20,7 @@
    }
   }
   
+
   body{
     font-family: raleway, sans-serif;
   }
@@ -39,7 +40,6 @@
     transform: rotate(-90deg);
   }
 
-//========== Medium devices (desktops, 992px and up) 
 
   #reset_button{
     color: white;
@@ -82,10 +82,6 @@
     font-size: 1em;
   }
 
-  #user_remember_me{
-    margin-left: -30px;
-    margin-top: -4px;
-  }
   
   #sign_in_facebook{
     color:white;
@@ -149,7 +145,8 @@
     margin-top: 10px;
     margin-left: 250px;
 
-  }  
+  } 
+
   #display_image img {
     margin-left: 250px;
     width: 400px;
@@ -235,6 +232,11 @@
 
   #login_footer{
     margin-left: 60px;
+  }
+
+  #user_remember_me{
+    margin-left: 100px;
+    margin-top: -4px;
   }
 
 //============================================================================================
@@ -325,6 +327,11 @@
 
   #login_footer{
     margin-left: 10px;
+  }
+
+  #user_remember_me{
+    margin-left: 30px;
+    margin-top: -4px;
   }
 
 //==========================User Card Index Page================================================
