@@ -158,20 +158,19 @@ $(function(){
   })
 
   Handlebars.registerHelper("isAvailableToday", function(availability){
-    
     function pad2(number) {   
      return (number < 10 ? '0' : '') + number
     }   
     var d=new Date()
-    var dd=d.getDate();
+    var dd=pad2(d.getDate());
     var mm=pad2(d.getMonth()+1);
     var yyyy=d.getFullYear();
     var today=yyyy+"-"+mm+"-"+dd;
- 
+  
     var result = $.inArray(today, availability)
+
     if(result < 0){
       return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable </br>  Today</i>"
-
     }else{
       return "<i class='fa fa-calendar-check-o' aria-hidden='true'style='color:green; font-size: 15px;'>Available Today</i>"
 
