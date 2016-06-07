@@ -10,7 +10,7 @@
         <% if eligibility.member == true %>
           <%="User is a member" %>
         <% elsif eligibility.permit_days.to_i >0 %>
-          <%= "Permit days:" + " " + eligibility.permit_days.to_s %>
+          <%= "Permit days:" + " " + eligibility.permit_days.to_s + " days"%>
         <% else %>
         <% end %> 
       </div> 
