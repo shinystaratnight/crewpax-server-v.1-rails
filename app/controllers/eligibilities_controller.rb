@@ -13,7 +13,14 @@ class EligibilitiesController < ActionController::Base
   end
 
   def update 
-    @eligibility = Eligibility.find (params[:id])
+    @eligibility = Eligibility.find (eligibility_params[:id])
+    respond_to do |format| 
+      if @eligibility.update_attributes(eligibility_params)
+        format.json{render json: @eligibility}
+      else
+        format.json{render json: @eligibility.errors.full_messages}
+      end
+    end
   end
 
   def destroy

@@ -29,8 +29,7 @@
             <% if @user.eligibilities.find_by(union_id: union.id) && @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>             
                 <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" checked/>
                 <label for="<%=union.name.downcase%>_permit"> Permit </label>
-                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                  <div contenteditable="true" id="<%=union.name.downcase%>_permit_days"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
+                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
                 </span>
             <% else %>
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
