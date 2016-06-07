@@ -368,7 +368,6 @@ function userCreated() {
 // deletes all roles when member status is removed
   $("#dgc_member").on("click", function(){
     var union_id = $("#dgcStatus").data("union-id");
-    debugger
     if($(this).is(":checked") == false){
       changeDGCStatus($(this), union_id);
     }
@@ -407,7 +406,6 @@ function userCreated() {
 
     if ($("#dgc_member").is(":checked")) {
       var data = $("#dgc_member").val();
-      debugger
       if (checkbox.is(":checked")) {
         ajaxMember(data, union_id, role_id, checkbox);
         ajaxCreateLabel(role_id, user_id);
@@ -438,11 +436,14 @@ function userCreated() {
 //===========================For IATSE========================================================
 
   function changeIATSEStatus(checkbox, union_id){   
-    $.each($("#iatse_roles").find(".IATSE_roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("role-id");
+    $.each($("#iatse_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
+      debugger
+      var role_id = $(checkbox).data("rolez-id");      
       var eligibility_id = $(checkbox).data("eligibility-id");
-      ajaxDeleteLabel(role_id, user_id);
+      var user_id = $(checkbox).data("user-id");
+      debugger
       ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+      ajaxDeleteLabel(role_id, user_id);      
       $(checkbox).prop("checked", false)
     });  
    
@@ -450,10 +451,10 @@ function userCreated() {
 
 // deletes all roles when member status is removed
   $("#iatse_member").on("click", function(){
-    var union_id = $("#IATSE").data("union-id");
-    // if($(this).is(":checked") == false){
+    var union_id = $("#iatseStatus").data("union-id");
+    if($(this).is(":checked") == false){
       changeIATSEStatus($(this), union_id)
-    // }
+    }
   });
 
 // deletes all roles when permit status is removed
@@ -486,7 +487,7 @@ function userCreated() {
     var union_id = checkbox.data("union-id");
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id");
-
+    debugger
     if ($("#iatse_member").is(":checked")) {
       var data = $("#iatse_member").val();
 
