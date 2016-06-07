@@ -139,7 +139,7 @@ $(function(){
 //==============================Handlebars Register Helper method===============================================================
   Handlebars.registerHelper("hasVehicle", function(vehicle){
     if(vehicle == true){
-      return "<span><i class='fa fa-car' aria-hidden='true' style='font-size: 20px; margin-left: 10px;'></i> Has a vehicle</span>"
+      return "<span id='user_has_vehicle'><i class='fa fa-car' aria-hidden='true' style='font-size: 20px; margin-left: 10px;'></i> Has a vehicle</span>"
     }
   })
 

@@ -211,20 +211,34 @@
 
   .image-wrap img{
     padding-top: 15px;
-    margin-left: 35px;
-    height: 290px;
-    width: 290px;
+    margin-left: 70px;
+    height: 210px;
+    width: 210px;
   }
 
   .description{
-    margin-left:30px;
+    margin-left:70px;
     margin-top: 10px;
+    font-family:raleway;
+    height: 120px;
   }
 
   #view_profile_btn{
-    margin-left: 250px;
+    display: inline-block;
+    width: 100px;
+    margin-top: -30px;
+    margin-left: 20px;
   }
 
+  .send_text{
+    margin-left: 70px;
+    margin-top: -30px;
+  }
+  
+  #user_has_vehicle{
+    margin-right: 5px;
+    margin-left: -10px;
+  }
 //*------------------------User Log In Page--------------------------------------------
 
 

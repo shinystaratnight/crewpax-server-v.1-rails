@@ -12,19 +12,22 @@
                   <img src= {{image}}>     
                 </div>
                 <div class="description">
-                  <span class="username">{{{name}}}</span>                          
-                  {{{hasVehicle vehicle}}}
-                  {{{isAvailableToday availability}}}
-                     
-                  <br/>
+                  <span class="username">
+                    <p>{{{name}}}</p>                                                         
+                  </span>       
                   <span>{{unionStatus union_member union_permit}}</span>                
                   <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
                     {{{phone}}}
                   </div>
-
-                                
+                    {{{hasVehicle vehicle}}}
+                    {{{isAvailableToday availability}}}                              
                 </div>
-                  <button class="send_text btn btn-primary" data-toggle="modal" data-target="#{{id}}">Send a text</button>
+                  
+                  <span>
+                    <button class="send_text btn btn-primary" data-toggle="modal" data-target="#{{id}}">Send a text</button>
+                    <!-- path to view profile --> 
+                    <a href= {{path}} class="btn btn-block" id="view_profile_btn"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
+                  </span>                  
                   <div class="modal fade" id="{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-modal-id="{{id}}">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -59,10 +62,9 @@
 
 
 
-                <div>
-                  <!-- path to view profile --> 
-                  <a href= {{path}} class="btn" id="view_profile_btn"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
-                </div> 
+               
+                  
+                
               </div>
         
         
