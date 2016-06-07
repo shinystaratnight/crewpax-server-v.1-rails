@@ -13,8 +13,8 @@
           <%= "Permit days:" + " " + eligibility.permit_days.to_s %>
         <% else %>
         <% end %> 
-      </div>
-        <% @eligibilities.each do |e| %>          
+      </div> 
+        <% @eligibilities.each do |e| %>                
           <% if e.union_id == union.id %> 
            <% role = @roles.find(e.role_id) %>
             <div class="role_font">

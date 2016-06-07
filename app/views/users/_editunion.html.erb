@@ -22,7 +22,7 @@
         </div>
 
         <div id="union-<%=union.name%>" class="collapse" data-union-id="<%=union.id%>">
-
+        
         <% if (union.name == "DGC") || (union.name == "IATSE") %>
 
           <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
@@ -66,6 +66,7 @@
                   name="<%=role.name%>" 
                   data-user-id="<%=@user.id%>"
                   data-union-id="<%=union.id%>"
+                  data-union-name="<%=union.name%>"
                   data-label-id="" 
                   data-rolez-id="<%=role.id%>" 
                   data-eligibility-id="<%= @user.eligibilities.find_by(role_id: role.id, union_id: union.id).id %>" 
@@ -84,6 +85,7 @@
                   name="<%=role.name%>" 
                   data-user-id="<%=@user.id%>"
                   data-union-id="<%=union.id%>"
+                  data-union-name="<%=union.name%>"
                   data-rolez-id="<%=role.id%>" 
                   data-eligibility-id="" 
                   value="<%=role.name%>"/>

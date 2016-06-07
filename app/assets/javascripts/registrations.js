@@ -367,15 +367,16 @@ function userCreated() {
 
 // deletes all roles when member status is removed
   $("#dgc_member").on("click", function(){
-    var union_id = $("#dgcstatus").data("union-id");
-    // if($(this).is(":checked") == false){
+    var union_id = $("#dgcStatus").data("union-id");
+    debugger
+    if($(this).is(":checked") == false){
       changeDGCStatus($(this), union_id);
-    // }
+    }
   });
 
 // deletes all roles when permit status is removed
   $("#dgc_permit").on("click", function(){
-    var union_id = $("#dgcstatus").data("union-id");
+    var union_id = $("#dgcStatus").data("union-id");
     // if($(this).is(":checked") == false){
       changeDGCStatus($(this), union_id);
     // }
@@ -406,7 +407,7 @@ function userCreated() {
 
     if ($("#dgc_member").is(":checked")) {
       var data = $("#dgc_member").val();
-
+      debugger
       if (checkbox.is(":checked")) {
         ajaxMember(data, union_id, role_id, checkbox);
         ajaxCreateLabel(role_id, user_id);
@@ -524,8 +525,11 @@ function userCreated() {
       var union_id = checkbox.data("union-id");
       var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
       var eligibility_id = checkbox.data("eligibility-id");
-
-    if (union_id > 2) { //that is, if it's not DGC or IATSE
+      var union_name = checkbox.data("union-name");  
+      debugger 
+      // if (union_id > 2)   
+     if(union_name !== "DGC" && union_name !== "IATSE") { //that is, if it's not DGC or IATSE. Didn't user union_id b/c union id will change if admin delete and recreate the union
+      // Later can verify if union has_member_status or has_permit_status 
       if (checkbox.is(":checked")) {
         ajaxRoles(union_id, role_id, user_id, checkbox);
         ajaxCreateLabel(role_id, user_id);
