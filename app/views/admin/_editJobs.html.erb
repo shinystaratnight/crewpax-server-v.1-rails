@@ -6,5 +6,22 @@
   </div>
 
   <div id="editJob" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editJob">
-    <p> hello world </p>
+    <table id="admin_job_management" cellspacing="0" class="display responsive no-wrap" style="width: 100%">
+    <thead>
+      <tr role="row">
+      <th> Title </th>
+      <th> Starts </th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for job in @jobs %>
+        <tr>
+          <th><%= link_to job.name, job_path(job) %></th>
+          <th><%= job.starts_on %>
+          <th><%= link_to "Edit", job_path(job) + "/edit?secret=" + job.secret, class: "btn  btn-primary" %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table
   </div>

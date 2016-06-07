@@ -580,4 +580,22 @@ $(".delete-user").on("click", function(){
   });
 
 
+//*********************************************************************************************************
+// Edit Jobs (Job management using datatables)
+//********************************************************************************************************
+  $("#admin_job_management").DataTable({  
+    responsive: true,
+    "dom": '<"top"f>rt<"bottom"lip><"clear">',
+    columnDefs: [ { 
+      orderable: false,
+      targets: [2] 
+    } ]
+  });
+
+
+
+
+
+
+
 });
