@@ -38,7 +38,7 @@
                          checked/>
                   Permit 
                  </label>
-                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
+                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry" data-union-name="<%=union.name.downcase %>"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
                 </span>
             <% else %>
               <label for="<%=union.name.downcase%>_permit">
@@ -51,7 +51,7 @@
                 Permit 
                </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" class="permit_days_entry" id="<%=union.name.downcase%>_permit_days"></div>
+                <div contenteditable="true" hidden="true" class="permit_days_entry" id="<%=union.name.downcase%>_permit_days" data-union-name="<%=union.name.downcase %>"></div>
               </span>
             <% end %> 
 
@@ -111,7 +111,7 @@
                        value="" 
                        checked/>
                 <label for="<%=union.name.downcase%>_permit"> Permit </label>
-                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
+                <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry" data-union-name="<%=union.name.downcase %>"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
                 </span>
             <% else %>
               <input type="checkbox" 
@@ -122,7 +122,7 @@
                      value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"class="permit_days_entry" ></div>
+                <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"class="permit_days_entry" data-union-name="<%=union.name.downcase %>" ></div>
               </span>
             <% end %> 
           </div>

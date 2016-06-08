@@ -383,7 +383,7 @@ function userCreated() {
       $("#"+ union_name +"_number_days").show();
       $("#"+ union_name +"_permit_days").show();
       $("#"+ union_name +"_permit_days").on("blur", function(){
-        var data = $(this).text().trim();
+        var data = $("#"+ union_name +"_permit_days").text().trim();
         $("#"+union_name+"_permit").val(data);
       });
 
@@ -430,93 +430,16 @@ function userCreated() {
     }      
   });
 
-
-
-
-
-
-
-//==================Group One DGC ============================================================================================= 
-
-//deletes all roles when permit or member fields are un-checked
-  function changeDGCStatus(checkbox, union_id){    
-    $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("rolez-id");
-      var eligibility_id = $(checkbox).data("eligibility-id"); 
-      var user_id = $(checkbox).data("user-id");
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-      ajaxDeleteLabel(role_id, user_id);
-      $(checkbox).prop("checked", false);
-    });        
-  };
-
-// deletes all roles when member status is removed
-  $("#dgc_member").on("click", function(){
-    var union_id = $("#dgcStatus").data("union-id");
-    if($(this).is(":checked") == false){
-      changeDGCStatus($(this), union_id);
-    }
-  });
-
-// shows field for number of permit days
-  $("#dgc_permit").on("click", function(){
-    if ($(this).is(":checked")) {
-      $("#dgc_number_days, #dgc_permit_days").show();
-      $("#dgc_permit_days").on("blur", function(){    
-        var data = $("#dgc_permit_days").text().trim();        
-        $("#dgc_permit").val(data);
-      });
-    } else {
-      // deletes all roles when permit status is unchecked and removed
-      $("#dgc_number_days, #dgc_permit_days").hide();
-      var union_id = $("#dgcStatus").data("union-id");
-      changeDGCStatus($(this), union_id)           
-    }
-  });
-
-// ensures member or permit is checked before saving role (twice though, oops)
-  $("#dgc_roles").find(".roles").on("click",function(){
-    var checkbox = $(this);
-    var union_id = checkbox.data("union-id");
-    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
-    var user_id = checkbox.data("user-id");
-
-    if ($("#dgc_member").is(":checked")) {
-      var data = $("#dgc_member").val();
-      if (checkbox.is(":checked")) {
-        ajaxMember(data, union_id, role_id, checkbox);
-        ajaxCreateLabel(role_id, user_id);
-      } else {
-        var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id, user_id);
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
-      } 
-    }
-    else if ($("#dgc_permit").is(":checked")) {
-      var data = $("#dgc_permit").val()
-      debugger
-      if ($(this).is(":checked")) {
-        ajaxPermit(data, union_id, role_id, checkbox); 
-        ajaxCreateLabel(role_id, user_id);  
-      } else {  
-        var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-        ajaxDeleteLabel(role_id, user_id)
-      } 
-    } else {
-      alert("You must indicate whether you are a member or you have a permit")
-    }
-      
-  });
-
 // When users only want to update the permit days    
-  $("#dgc_permit_days").on("blur", function(){
-    if($("#dgc_roles").find(".roles:checkbox:checked")){
-      $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){ 
+  $(".permit_days_entry").on("blur", function(){
+
+    var union_name = $(this).data("union-name");
+    if($("#"+union_name+"_roles").find(".roles:checkbox:checked")){
+      $.each($("#"+union_name+"_roles").find(".roles:checkbox:checked"), function(index, checkbox){ 
         var role_id = $(checkbox).data("rolez-id");
         var eligibility_id = $(checkbox).data("eligibility-id"); 
         var user_id = $(checkbox).data("user-id");
-        var new_data = $("#dgc_permit_days").text().trim();
+        var new_data = $("#"+union_name+"_permit_days").text().trim();
         var union_id = $(checkbox).data("union-id");
         ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
 
@@ -526,93 +449,187 @@ function userCreated() {
     
   })
 
-  
-//===========================For IATSE========================================================
 
-  function changeIATSEStatus(checkbox, union_id){   
-    $.each($("#iatse_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
-      var role_id = $(checkbox).data("rolez-id");      
-      var eligibility_id = $(checkbox).data("eligibility-id");
-      var user_id = $(checkbox).data("user-id");
-      ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-      ajaxDeleteLabel(role_id, user_id);      
-      $(checkbox).prop("checked", false)
-    });  
-   
-  };
 
-// deletes all roles when member status is removed
-  $("#iatse_member").on("click", function(){
-    var union_id = $("#iatseStatus").data("union-id");
-    if($(this).is(":checked") == false){
-      changeIATSEStatus($(this), union_id)
-    }
-  });
-  
 
-// shows field for number of permit days
-  $("#iatse_permit").on("click", function(){
-    if ($(this).is(":checked")) {
-      $("#iatse_number_days, #iatse_permit_days").show();
-      $("#iatse_permit_days").on("blur", function(){    
-        var data = $("#iatse_permit_days").text().trim();        
-        $("#iatse_permit").val(data);
-      });
-    } else {
-      // deletes all roles when permit status is unchecked/removed
-      $("#iatse_number_days, #iatse_permit_days").hide();
-      var union_id = $("#iatseStatus").data("union-id");
-      changeIATSEStatus($(this), union_id)           
-    }
-  });
 
-// ensures member or permit is checked before saving role (twice though, oops)
-  $("#iatse_roles").find(".roles").on("click",function(){
-    var checkbox = $(this);
-    var union_id = checkbox.data("union-id");
-    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
-    var user_id = checkbox.data("user-id");
+//==================Group One DGC ============================================================================================= 
 
-    if ($("#iatse_member").is(":checked")) {
-      var data = $("#iatse_member").val();
-      if (checkbox.is(":checked")) {
-        ajaxMember(data, union_id, role_id, checkbox);
-        ajaxCreateLabel(role_id, user_id);
-      } else {
-        var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id, user_id);
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
-      } 
-    }
-    else if ($("#iatse_permit").is(":checked")) {
-      var data = $("#iatse_permit").val()
-      if ($(this).is(":checked")) {
-        ajaxPermit(data, union_id, role_id, checkbox); 
-        ajaxCreateLabel(role_id, user_id);  
-      } else {  
-        var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id);
-        ajaxDeleteLabel(role_id, user_id)
-      } 
-    } else {
-      alert("You must indicate whether you are a member or you have a permit")
-    }
+//deletes all roles when permit or member fields are un-checked
+//   function changeDGCStatus(checkbox, union_id){    
+//     $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
+//       var role_id = $(checkbox).data("rolez-id");
+//       var eligibility_id = $(checkbox).data("eligibility-id"); 
+//       var user_id = $(checkbox).data("user-id");
+//       ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+//       ajaxDeleteLabel(role_id, user_id);
+//       $(checkbox).prop("checked", false);
+//     });        
+//   };
+
+// // deletes all roles when member status is removed
+//   $("#dgc_member").on("click", function(){
+//     var union_id = $("#dgcStatus").data("union-id");
+//     if($(this).is(":checked") == false){
+//       changeDGCStatus($(this), union_id);
+//     }
+//   });
+
+// // shows field for number of permit days
+//   $("#dgc_permit").on("click", function(){
+//     if ($(this).is(":checked")) {
+//       $("#dgc_number_days, #dgc_permit_days").show();
+//       $("#dgc_permit_days").on("blur", function(){    
+//         var data = $("#dgc_permit_days").text().trim();        
+//         $("#dgc_permit").val(data);
+//       });
+//     } else {
+//       // deletes all roles when permit status is unchecked and removed
+//       $("#dgc_number_days, #dgc_permit_days").hide();
+//       var union_id = $("#dgcStatus").data("union-id");
+//       changeDGCStatus($(this), union_id)           
+//     }
+//   });
+
+// // ensures member or permit is checked before saving role (twice though, oops)
+//   $("#dgc_roles").find(".roles").on("click",function(){
+//     var checkbox = $(this);
+//     var union_id = checkbox.data("union-id");
+//     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
+//     var user_id = checkbox.data("user-id");
+
+//     if ($("#dgc_member").is(":checked")) {
+//       var data = $("#dgc_member").val();
+//       if (checkbox.is(":checked")) {
+//         ajaxMember(data, union_id, role_id, checkbox);
+//         ajaxCreateLabel(role_id, user_id);
+//       } else {
+//         var eligibility_id = checkbox.data("eligibility-id");
+//         ajaxDeleteLabel(role_id, user_id);
+//         ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
+//       } 
+//     }
+//     else if ($("#dgc_permit").is(":checked")) {
+//       var data = $("#dgc_permit").val()
+//       debugger
+//       if ($(this).is(":checked")) {
+//         ajaxPermit(data, union_id, role_id, checkbox); 
+//         ajaxCreateLabel(role_id, user_id);  
+//       } else {  
+//         var eligibility_id = checkbox.data("eligibility-id");
+//         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+//         ajaxDeleteLabel(role_id, user_id)
+//       } 
+//     } else {
+//       alert("You must indicate whether you are a member or you have a permit")
+//     }
       
-  });
-  
-  $("#iatse_permit_days").on("blur", function(){
-    if($("#iatse_roles").find(".roles:checkbox:checked")){
-      $.each($("#iatse_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
-        var role_id = $(checkbox).data("rolez-id");      
-        var eligibility_id = $(checkbox).data("eligibility-id");
-        var user_id = $(checkbox).data("user-id");
-        var union_id = $(checkbox).data("union-id");
-        var new_data = $("#iatse_permit_days").text().trim();
-        ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
+//   });
 
-      });
-    }
-  });
+// // When users only want to update the permit days    
+//   $("#dgc_permit_days").on("blur", function(){
+//     if($("#dgc_roles").find(".roles:checkbox:checked")){
+//       $.each($("#dgc_roles").find(".roles:checkbox:checked"), function(index, checkbox){ 
+//         var role_id = $(checkbox).data("rolez-id");
+//         var eligibility_id = $(checkbox).data("eligibility-id"); 
+//         var user_id = $(checkbox).data("user-id");
+//         var new_data = $("#dgc_permit_days").text().trim();
+//         var union_id = $(checkbox).data("union-id");
+//         ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
+
+//       })
+     
+//     }
+    
+//   })
+
+  
+// //===========================For IATSE========================================================
+
+//   function changeIATSEStatus(checkbox, union_id){   
+//     $.each($("#iatse_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
+//       var role_id = $(checkbox).data("rolez-id");      
+//       var eligibility_id = $(checkbox).data("eligibility-id");
+//       var user_id = $(checkbox).data("user-id");
+//       ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+//       ajaxDeleteLabel(role_id, user_id);      
+//       $(checkbox).prop("checked", false)
+//     });  
+   
+//   };
+
+// // deletes all roles when member status is removed
+//   $("#iatse_member").on("click", function(){
+//     var union_id = $("#iatseStatus").data("union-id");
+//     if($(this).is(":checked") == false){
+//       changeIATSEStatus($(this), union_id)
+//     }
+//   });
+  
+
+// // shows field for number of permit days
+//   $("#iatse_permit").on("click", function(){
+//     if ($(this).is(":checked")) {
+//       $("#iatse_number_days, #iatse_permit_days").show();
+//       $("#iatse_permit_days").on("blur", function(){    
+//         var data = $("#iatse_permit_days").text().trim();        
+//         $("#iatse_permit").val(data);
+//       });
+//     } else {
+//       // deletes all roles when permit status is unchecked/removed
+//       $("#iatse_number_days, #iatse_permit_days").hide();
+//       var union_id = $("#iatseStatus").data("union-id");
+//       changeIATSEStatus($(this), union_id)           
+//     }
+//   });
+
+// // ensures member or permit is checked before saving role (twice though, oops)
+//   $("#iatse_roles").find(".roles").on("click",function(){
+//     var checkbox = $(this);
+//     var union_id = checkbox.data("union-id");
+//     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
+//     var user_id = checkbox.data("user-id");
+
+//     if ($("#iatse_member").is(":checked")) {
+//       var data = $("#iatse_member").val();
+//       if (checkbox.is(":checked")) {
+//         ajaxMember(data, union_id, role_id, checkbox);
+//         ajaxCreateLabel(role_id, user_id);
+//       } else {
+//         var eligibility_id = checkbox.data("eligibility-id");
+//         ajaxDeleteLabel(role_id, user_id);
+//         ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
+//       } 
+//     }
+//     else if ($("#iatse_permit").is(":checked")) {
+//       var data = $("#iatse_permit").val()
+//       if ($(this).is(":checked")) {
+//         ajaxPermit(data, union_id, role_id, checkbox); 
+//         ajaxCreateLabel(role_id, user_id);  
+//       } else {  
+//         var eligibility_id = checkbox.data("eligibility-id");
+//         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+//         ajaxDeleteLabel(role_id, user_id)
+//       } 
+//     } else {
+//       alert("You must indicate whether you are a member or you have a permit")
+//     }
+      
+//   });
+  
+//   $("#iatse_permit_days").on("blur", function(){
+//     if($("#iatse_roles").find(".roles:checkbox:checked")){
+//       $.each($("#iatse_roles").find(".roles:checkbox:checked"), function(index, checkbox){      
+//         var role_id = $(checkbox).data("rolez-id");      
+//         var eligibility_id = $(checkbox).data("eligibility-id");
+//         var user_id = $(checkbox).data("user-id");
+//         var union_id = $(checkbox).data("union-id");
+//         var new_data = $("#iatse_permit_days").text().trim();
+//         ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
+
+//       });
+//     }
+//   });
 
 //=================================For All Unions ============================================================== 
   
