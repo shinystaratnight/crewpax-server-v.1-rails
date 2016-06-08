@@ -8,6 +8,7 @@
       <div class="role_font"> 
         <% eligibility= @eligibilities.find_by(union_id: union.id) %>
         <% if eligibility.member == true %>
+          
           <%="User is a member" %>
         <% elsif eligibility.permit_days.to_i >0 %>
           <%= "Permit days:" + " " + eligibility.permit_days.to_s + " days"%>

@@ -24,8 +24,8 @@
           </div>
 
           <div id="union-<%=union.name%>" class="collapse" data-union-id="<%=union.id%>">
-            
-          <% if (union.name == "DGC") || (union.name == "IATSE") %>
+          <% if union.has_member_status == true && union.has_permit_status == true  %>
+          <%# if (union.name == "DGC") || (union.name == "IATSE") %>
 
             <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />

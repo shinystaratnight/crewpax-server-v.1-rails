@@ -351,6 +351,91 @@ function userCreated() {
 //*********************************************************************************************************
 // Registration Form Department Section
 //********************************************************************************************************  
+// ==============New adding Union with permit and member status ==================================
+//deletes all roles when permit or member fields are un-checked
+  function changeUnionStatus(checkbox, union_id){
+    var union_name = $(checkbox).data("union-name");
+    $.each($("#" + union_name +"_roles").find(".roles:checkbox:checked"),function(index, checkbox){      
+      var role_id = $(checkbox).data("rolez-id");
+      var eligibility_id = $(checkbox).data("eligibility-id"); 
+      var user_id = $(checkbox).data("user-id");
+      ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+      ajaxDeleteLabel(role_id, user_id);
+      $(checkbox).prop("checked", false);
+    });        
+   
+  };
+
+
+
+// deletes all roles when member status is removed  
+  $(".union_member").on("click", function(){
+    var union_id = $(this).parent().data("union-id");
+    if($(this).is(":checked")== false){
+    changeUnionStatus($(this), union_id);
+    }
+  });
+  
+ // shows field for number of permit days
+  $(".union_permit_days").on("click", function(){
+    var union_name = $(this).data("union-name");
+    if ($(this).is(":checked")) {  
+      $("#"+ union_name +"_number_days").show();
+      $("#"+ union_name +"_permit_days").show();
+      $("#"+ union_name +"_permit_days").on("blur", function(){
+        var data = $(this).text().trim();
+        $("#"+union_name+"_permit").val(data);
+      });
+
+    } else {
+      // deletes all roles when permit status is unchecked and removed
+      $("#"+ union_name +"_number_days").hide();
+      $("#"+ union_name +"_permit_days").hide();
+      var union_id = $("#"+union_name+"Status").data("union-id");
+      changeUnionStatus($(this), union_id)           
+    }
+  });
+
+
+  // ensures member or permit is checked before saving role (twice though, oops)
+  $(".union_roles").find(".roles").on("click",function(){
+    var checkbox = $(this);
+    var union_name = checkbox.data("union-name");
+    var union_id = checkbox.data("union-id");
+    var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
+    var user_id = checkbox.data("user-id");
+    if ($("#"+union_name+"_member").is(":checked")) {
+       var data = $("#"+union_name+"_member").val();
+      if (checkbox.is(":checked")) {
+        ajaxMember(data, union_id, role_id, checkbox);
+        ajaxCreateLabel(role_id, user_id);
+      } else {
+        var eligibility_id = checkbox.data("eligibility-id");
+        ajaxDeleteLabel(role_id, user_id);
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
+      } 
+    } else if ($("#"+union_name+"_permit").is(":checked")){
+      var data = $("#"+union_name+"_permit").val();
+      if (checkbox.is(":checked")){
+        ajaxPermit(data, union_id, role_id, checkbox); 
+        ajaxCreateLabel(role_id, user_id);
+      }else{
+        var eligibility_id = checkbox.data("eligibility-id");
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id);
+        ajaxDeleteLabel(role_id, user_id);
+      }
+    }else{
+      alert("You must indicate whether you are a member or you have a permit")
+
+    }      
+  });
+
+
+
+
+
+
+
 //==================Group One DGC ============================================================================================= 
 
 //deletes all roles when permit or member fields are un-checked
@@ -531,26 +616,26 @@ function userCreated() {
 
 //=================================For All Unions ============================================================== 
   
-  $(".roles").on("click", function(){
-      var checkbox = $(this);
-      var user_id = checkbox.data("user-id");
-      var union_id = checkbox.data("union-id");
-      var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
-      var eligibility_id = checkbox.data("eligibility-id");
-      var union_name = checkbox.data("union-name");  
-      // if (union_id > 2)   
-     if(union_name !== "DGC" && union_name !== "IATSE") { //that is, if it's not DGC or IATSE. Didn't user union_id b/c union id will change if admin delete and recreate the union
-      // Later can verify if union has_member_status or has_permit_status 
-      if (checkbox.is(":checked")) {
-        ajaxRoles(union_id, role_id, user_id, checkbox);
-        ajaxCreateLabel(role_id, user_id);
-      } else {
-        // var eligibility_id = checkbox.data("eligibility-id");
-        ajaxDeleteLabel(role_id, user_id);
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id)
-      }
-    }
-  });
+  // $(".roles").on("click", function(){
+  //     var checkbox = $(this);
+  //     var user_id = checkbox.data("user-id");
+  //     var union_id = checkbox.data("union-id");
+  //     var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
+  //     var eligibility_id = checkbox.data("eligibility-id");
+  //     var union_name = checkbox.data("union-name");  
+  //     // if (union_id > 2)   
+  //    if(union_name !== "DGC" && union_name !== "IATSE") { //that is, if it's not DGC or IATSE. Didn't user union_id b/c union id will change if admin delete and recreate the union
+  //     // Later can verify if union has_member_status or has_permit_status 
+  //     if (checkbox.is(":checked")) {
+  //       ajaxRoles(union_id, role_id, user_id, checkbox);
+  //       ajaxCreateLabel(role_id, user_id);
+  //     } else {
+  //       // var eligibility_id = checkbox.data("eligibility-id");
+  //       ajaxDeleteLabel(role_id, user_id);
+  //       ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+  //     }
+  //   }
+  // });
   
 
 //*********************************************************************************************************
