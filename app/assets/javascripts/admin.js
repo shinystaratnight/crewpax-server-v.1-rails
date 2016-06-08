@@ -35,12 +35,11 @@ $(function(){
               .closest(".union-info").data("union-id", response.id)
               .next(".union-info").data("union-id", response.id)
               .next(".union-info").children("#save-new-union").data("union-id", response.id);
-
+            //cancel button stores data union id
             text_box.closest(".union-info")
                     .next(".union-info")
                     .next(".union-info")
                     .next(".union-info").children(".cancel-button").data("union-id", response.id); 
-              debugger 
             $("#newUnion").data("name", response.name);
             $("#new-union-roles").show();
 
@@ -57,16 +56,18 @@ $(function(){
 
 //update new unions whether they have member status or permit status
   $("#has_member, #has_permit").on("click", function(){
-    if ($(this).is(":checked")){      
-      updateUnionStatus($(this))
+    if ($(this).is(":checked")){ 
+      var union_status_value = $(this).val();     
+      updateUnionStatus($(this), union_status_value)
     }else{
-      deleteUnionStatus($(this))
+      var union_status_value = "false"
+      updateUnionStatus($(this), union_status_value)
+      
     }
   })
 
-  function updateUnionStatus(checkbox){
+  function updateUnionStatus(checkbox, union_status_value){
     var union_id = $(checkbox).closest(".union-info").data("union-id")
-    var union_status_value = $(checkbox).val();
     var data;
     if($(checkbox).data("name")== "has_member"){
       data = {union:{id: union_id, has_member_status: union_status_value}}
@@ -88,28 +89,7 @@ $(function(){
 
   }
 
-  function deleteUnionStatus(checkbox){
-    var union_id = $(checkbox).closest(".union-info").data("union-id")
-    var union_status_value = "false";
-    var data;
-    if($(checkbox).data("name")== "has_member"){
-      data = {union:{id: union_id, has_member_status: union_status_value}}
-    }
 
-    if($(checkbox).data("name") == "has_permit"){
-      data = {union:{id: union_id, has_permit_status: union_status_value}}
-    }
-
-    $.ajax({
-      url: "/admin/unions/" + union_id,
-      method: "put",
-      dataType:"json",
-      data:data,
-      success: function(response){
-
-      }
-    });
-  }
 //add roles to union by creating eligibilities
   $(".edit-roles").on("click",function(){
 
