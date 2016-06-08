@@ -37,22 +37,25 @@
         <div class="profile_input" data-profile-entry="phone" id="phone" contenteditable="true"><%=@user.phone %></div>
         <span class="error" hidden="true" id="phone-error"> *Phone number is not valid</span>
       </div>
-
-      <div class ="field" data-address-id="<%=@addresses.find_by(type: "Mailing").id%>" id="mailing_address_info">
+      
+     
+      <div class ="field" data-address-id=" <%if @addresses.find_by(type: "Mailing")%><%=@addresses.find_by(type: "Mailing").id%>" id="mailing_address_info">
         <h5> Mailing Address: </h5>
-        <div class="profile_input" id="mailing_address" contenteditable="true"><%if @addresses.find_by(type: "Mailing")%><%=@addresses.find_by(type: "Mailing").address_input%><% end %></div>
+        <div class="profile_input" id="mailing_address" contenteditable="true"><%=@addresses.find_by(type: "Mailing").address_input%><% end %></div>
         <span class="error" hidden="true" id="mailing-address-error"> *Mailing address is not valid</span>
       </div>
-        
-      <div class ="field" data-billing-id="<%=@addresses.find_by(type: "Billing").id%>" id="billing_address_info">
+      
+       
+      <div class ="field" data-billing-id="<%if @addresses.find_by(type: "Billing")%> <%=@addresses.find_by(type: "Billing").id%>" id="billing_address_info">
         <h5> Billing Address: </h5>
-        <div class="profile_input" id="billing_address" contenteditable="true"><%if @addresses.find_by(type: "Billing")%><%=@addresses.find_by(type: "Billing").address_input%><% end %></div>
+        <div class="profile_input" id="billing_address" contenteditable="true"><%=@addresses.find_by(type: "Billing").address_input%><% end %></div>
         <span class="error" hidden="true" id="billing-address-error"> *Billing address is not valid</span>
       </div>
-        
-      <div class ="field" data-shipping-id="<%=@addresses.find_by(type: "Shipping").id%>" id="shipping_address_info">
+      
+      
+      <div class ="field" data-shipping-id="<%if @addresses.find_by(type: "Shipping")%>  <%=@addresses.find_by(type: "Shipping").id%>" id="shipping_address_info">
         <h5> Shipping Address: </h5>
-        <div class="profile_input" id="shipping_address" contenteditable="true"><%if @addresses.find_by(type: "Shipping")%><%=@addresses.find_by(type: "Shipping").address_input%><% end %></div>
+        <div class="profile_input" id="shipping_address" contenteditable="true"><%=@addresses.find_by(type: "Shipping").address_input%><% end %></div>
         <span class="error" hidden="true" id="shipping-address-error"> *Shipping address is not valid</span>
       </div>
 

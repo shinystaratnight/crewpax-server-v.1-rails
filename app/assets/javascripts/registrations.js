@@ -403,7 +403,8 @@ function userCreated() {
     var union_name = checkbox.data("union-name");
     var union_id = checkbox.data("union-id");
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
-    var user_id = checkbox.data("user-id");
+    var user_id = checkbox.data("user-id") || $("#info").data("user-id");
+    debugger
     if ($("#"+union_name+"_member").is(":checked")) {
        var data = $("#"+union_name+"_member").val();
       if (checkbox.is(":checked")) {
@@ -438,7 +439,7 @@ function userCreated() {
       $.each($("#"+union_name+"_roles").find(".roles:checkbox:checked"), function(index, checkbox){ 
         var role_id = $(checkbox).data("rolez-id");
         var eligibility_id = $(checkbox).data("eligibility-id"); 
-        var user_id = $(checkbox).data("user-id");
+        var user_id = $(checkbox).data("user-id")|| $("#info").data("user-id");
         var new_data = $("#"+union_name+"_permit_days").text().trim();
         var union_id = $(checkbox).data("union-id");
         ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
@@ -455,7 +456,7 @@ function userCreated() {
   
   $(".roles").on("click", function(){
       var checkbox = $(this);
-      var user_id = checkbox.data("user-id");
+      var user_id = checkbox.data("user-id")|| $("#info").data("user-id");
       var union_id = checkbox.data("union-id");
       var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
       var eligibility_id = checkbox.data("eligibility-id");
