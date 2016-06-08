@@ -32,7 +32,24 @@
         <h5> Union Name: </h5>
         <div class="union-name" contenteditable="true"><%=union.name %></div>
         <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
+        <!-- Display if a union has member status or permit status --> 
+        <% if union.has_member_status == true %>
+          <label for ="edit_has_member"> Has Member Status:
+            <input type="checkbox" id="edit_has_member" checked>
+          </label>
+        <% else %>
+          <label for ="edit_has_member"> Has Member Status:
+            <input type="checkbox" id="edit_has_member">
+          </label>
+        <% end %>
+        <% if union.has_permit_status == true %>
+          <label for = "edit_has_permit"> Has Permit Status:
+            <input type="checkbox" checked>
+          </label>
+        <% end %>
       </div>
+
+
 
       <div class="field union-info" data-union-id="<%=union.id %>">
         <h5> Add some roles: </h5>
@@ -70,8 +87,19 @@
       <h5> Union Name: </h5>
       <div class="union-name" contenteditable="true"></div>
       <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
-    </div>
+    
+      <label for="has_member">Has Member Status
+        <input type="checkbox" id="has_member" value="true" data-name="has_member">
+      </label>
 
+      <label for="has_permit">Has Permit Status
+        <input type="checkbox" id="has_permit" value="true" data-name="has_permit">
+      </label>
+
+
+    </div>
+          
+    
     <div class="field union-info" data-union-id="" id="new-union-roles">
       <h5> Add some roles: </h5>
       <%@roles.each do |role| %>              

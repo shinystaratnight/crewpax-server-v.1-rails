@@ -47,6 +47,41 @@ $(function(){
     }
   });
 
+
+//update new unions whether they have member status or permit status
+  $("#has_member, #has_permit").on("click", function(){
+    if ($(this).is(":checked")){      
+      updateUnionStatus($(this))
+    }else{
+
+    }
+  })
+
+  function updateUnionStatus(checkbox){
+    var union_id = $(checkbox).closest(".union-info").data("union-id")
+    var union_status_value = $(checkbox).val();
+    var data;
+    if($(checkbox).data("name")== "has_member"){
+      data = {union:{id: union_id, has_member_status: union_status_value}}
+    }
+
+    if($(checkbox).data("name") == "has_permit"){
+      data = {union:{id: union_id, has_permit_status: union_status_value}}
+    }
+
+    $.ajax({
+      url: "/admin/unions/" + union_id,
+      method: "put",
+      dataType:"json",
+      data:data,
+      success: function(response){
+
+      }
+    });
+
+  }
+
+
 //add roles to union by creating eligibilities
   $(".edit-roles").on("click",function(){
 

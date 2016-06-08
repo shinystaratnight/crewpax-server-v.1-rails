@@ -10,7 +10,6 @@ class Admin::UnionsController < ApplicationController
     @union = Union.find(params[:id])
     respond_to do |format|
       if @union.update_attributes(union_params)
-        format.html{redirect_to @user}
         format.json{render json: @union}
       else
         format.html{render action: "edit"}
@@ -45,7 +44,7 @@ class Admin::UnionsController < ApplicationController
   private
 
   def union_params
-    params.require(:union).permit(:name)
+    params.require(:union).permit(:name, :has_member_status, :has_permit_status, :id)
   end
 
 
