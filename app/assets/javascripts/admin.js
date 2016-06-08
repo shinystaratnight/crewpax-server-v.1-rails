@@ -34,9 +34,16 @@ $(function(){
             text_box
               .closest(".union-info").data("union-id", response.id)
               .next(".union-info").data("union-id", response.id)
-              .next(".union-info").children(".delete-union").data("union-id", response.id);  
+              .next(".union-info").children("#save-new-union").data("union-id", response.id);
+
+            text_box.closest(".union-info")
+                    .next(".union-info")
+                    .next(".union-info")
+                    .next(".union-info").children(".cancel-button").data("union-id", response.id); 
+              debugger 
             $("#newUnion").data("name", response.name);
             $("#new-union-roles").show();
+
           } else {              
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
@@ -53,7 +60,7 @@ $(function(){
     if ($(this).is(":checked")){      
       updateUnionStatus($(this))
     }else{
-
+      deleteUnionStatus($(this))
     }
   })
 
@@ -81,7 +88,28 @@ $(function(){
 
   }
 
+  function deleteUnionStatus(checkbox){
+    var union_id = $(checkbox).closest(".union-info").data("union-id")
+    var union_status_value = "false";
+    var data;
+    if($(checkbox).data("name")== "has_member"){
+      data = {union:{id: union_id, has_member_status: union_status_value}}
+    }
 
+    if($(checkbox).data("name") == "has_permit"){
+      data = {union:{id: union_id, has_permit_status: union_status_value}}
+    }
+
+    $.ajax({
+      url: "/admin/unions/" + union_id,
+      method: "put",
+      dataType:"json",
+      data:data,
+      success: function(response){
+
+      }
+    });
+  }
 //add roles to union by creating eligibilities
   $(".edit-roles").on("click",function(){
 
@@ -127,11 +155,10 @@ $(function(){
      };
   });
 
- $(".delete-union").on("click", function(){ 
+ $(".delete-union, .cancel-button").on("click", function(){ 
 
     var union_id = $(this).data("union-id");
     var union_name = $(this).closest(".in").data("name");
-
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
