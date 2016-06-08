@@ -35,16 +35,20 @@
         <!-- Display if a union has member status or permit status --> 
         <% if union.has_member_status == true %>
           <label for ="edit_has_member"> Has Member Status:
-            <input type="checkbox" id="edit_has_member" checked>
+            <input type="checkbox" id="edit_has_member" value="true" data-name="has_member" checked>
           </label>
         <% else %>
           <label for ="edit_has_member"> Has Member Status:
-            <input type="checkbox" id="edit_has_member">
-          </label>
+            <input type="checkbox" id="edit_has_member" value="true" data-name="has_member" >
+          </label>       
         <% end %>
         <% if union.has_permit_status == true %>
           <label for = "edit_has_permit"> Has Permit Status:
-            <input type="checkbox" checked>
+            <input type="checkbox" id="edit_has_permit" checked value="true" data-name="has_permit">
+          </label>
+        <% else %>
+          <label for = "edit_has_permit"> Has Permit Status:
+            <input type="checkbox" id="edit_has_permit" value="true" data-name="has_permit">
           </label>
         <% end %>
       </div>

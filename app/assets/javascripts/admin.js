@@ -55,7 +55,8 @@ $(function(){
 
 
 //update new unions whether they have member status or permit status
-  $("#has_member, #has_permit").on("click", function(){
+  $("#has_member, #has_permit, #edit_has_member, #edit_has_permit").on("click", function(){
+    debugger
     if ($(this).is(":checked")){ 
       var union_status_value = $(this).val();     
       updateUnionStatus($(this), union_status_value)
