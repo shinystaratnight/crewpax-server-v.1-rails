@@ -147,6 +147,8 @@
                   data-rolez-id="<%=role.id%>" 
                   data-eligibility-id="<%= @user.eligibilities.find_by(role_id: role.id, union_id: union.id).id %>" 
                   value="<%=role.name%>" 
+                  data-union-has-member="<%=union.has_member_status%>"
+                  data-union-has-permit ="<%=union.has_permit_status%>"
                   checked/> 
                 <span class="label-text">
                 <%=role.name%>
@@ -162,6 +164,8 @@
                   data-user-id="<%=@user.id%>"
                   data-union-id="<%=union.id%>"
                   data-union-name="<%=union.name.downcase%>"
+                  data-union-has-member="<%=union.has_member_status%>"
+                  data-union-has-permit ="<%=union.has_permit_status%>"
                   data-rolez-id="<%=role.id%>" 
                   data-eligibility-id="" 
                   value="<%=role.name%>"/>
