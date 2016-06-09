@@ -145,12 +145,12 @@ $(function(){
 
   Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
     if (union_member.length > 0 && union_permit.length > 0){
-      return "Union Status: " + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      return "Union Status: </br>" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else if (union_member.length > 0 && union_permit.length == 0){
-      return "Union Status: " + "member: " + union_member
+      return "Union Status: </br>" + "member: " + union_member
     }else if (union_member.length == 0 && union_permit.length > 0){
-      return "Union Status: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      return "Union Status: </br> " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else{
       return "Non Union"

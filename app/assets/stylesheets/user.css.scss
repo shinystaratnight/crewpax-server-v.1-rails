@@ -115,17 +115,14 @@
   }
 
   .description{
-    font-family: sub-font;
     font-size: 12px;
     background: white;
     color: mediumgrey;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     padding: 1.5;
-    height: 75px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    height:100px;
   }
 
 //========== Medium devices (desktops, 992px and up)==========================================
@@ -220,7 +217,7 @@
     margin-left:70px;
     margin-top: 10px;
     font-family:raleway;
-    height: 120px;
+    height: 155px;
   }
 
   #view_profile_btn{
@@ -238,6 +235,10 @@
   #user_has_vehicle{
     margin-right: 5px;
     margin-left: -10px;
+  }
+
+  .username p {
+    margin: 0 0 5px;
   }
 //*------------------------User Log In Page--------------------------------------------
 
