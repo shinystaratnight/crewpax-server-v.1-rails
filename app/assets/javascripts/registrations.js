@@ -371,7 +371,6 @@ function userCreated() {
 // deletes all roles when member status is removed  
   $(".union_member").on("click", function(){
     var union_id = $(this).parent().data("union-id");
-    debugger
     if($(this).is(":checked")== false){
     changeUnionStatus($(this), union_id);
     }
@@ -405,7 +404,6 @@ function userCreated() {
     var union_id = checkbox.data("union-id");
     var role_id = checkbox.data("rolez-id"); // role-id didn't work for some reason.
     var user_id = checkbox.data("user-id") || $("#info").data("user-id");
-    debugger
     if ($("#"+union_name+"_member").is(":checked")) {
        var data = $("#"+union_name+"_member").val();
       if (checkbox.is(":checked")) {
