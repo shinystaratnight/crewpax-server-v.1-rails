@@ -325,6 +325,9 @@
       margin-bottom: 15px;
     }
 
+   
+
+    
 //=====================User reset password enter email address passwords/new ============================
     .reset_info{
       width: 270px;
@@ -374,21 +377,33 @@
 
   .image-wrap img{
     padding-top: 15px;
-    width:250px;
-    height: 250px;
-    margin-left: 17px;
+    width: 200px;
+    height: 200px;
+    margin-left: 40px;
     
   }
 
   .description{
-    margin-left:10px;
+    margin-left:40px;
     margin-top: 10px;
   }
-
+  
   #view_profile_btn{
-    margin-left: 180px;
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
   }
 
+  .send_text{
+    margin-left:35px;
+  }
+    
+  .username p {
+    margin: 0 0 5px;
+  }
+
+    
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 150px;
@@ -448,7 +463,7 @@
       margin-left: 10px;
     }
 
-//==================================================================================================
+//=================================================================================================
 //*------------------------User Log In Page--------------------------------------------
   #login_footer{
     margin-left: 25px;
@@ -459,8 +474,8 @@
 //==========================User Card Index Page================================================
  .photo-box{
     box-shadow: -1px 1px 30px lightgray;
-    width: 330px;
-    margin-left: 10px;
+    width: 300px;
+    margin-left: 15px;
   }
 
   .photos-wrap{
@@ -470,19 +485,28 @@
 
   .image-wrap img{
     padding-top: 15px;
-    width:250px;
-    height: 250px;
-    margin-left: 35px;
+    width:200px;
+    height: 200px;
+    margin-left: 45px;
     
   }
 
   .description{
-    margin-left:35px;
+    margin-left:45px;
     margin-top: 10px;
   }
 
+  .send_text {
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
   #view_profile_btn{
-    margin-left: 200px;
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
   }
 
 //=================================User Sign Up ==================================================
