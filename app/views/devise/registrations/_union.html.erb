@@ -47,6 +47,31 @@
                      value="true" />
                 <label for="<%=union.name.downcase%>_member"> Member </label>
             </div>
+            <% elsif union.has_member_status == true %>
+              <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">            
+                <input type="checkbox" 
+                     class="union_member" 
+                     id="<%=union.name.downcase%>_member" 
+                     data-name="member" 
+                     data-union-name="<%=union.name.downcase %>"
+                     value="true" />
+                <label for="<%=union.name.downcase%>_member"> Member </label>
+              </div>
+            <% elsif union.has_permit_status == true %>
+              <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">          
+                <input type="checkbox" 
+                     class= "union_permit_days" 
+                     id="<%=union.name.downcase%>_permit" 
+                     data-name="permit" 
+                     data-union-name="<%=union.name.downcase %>"
+                     value="" />
+                <label for="<%=union.name.downcase%>_permit"> Permit </label>
+                <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
+                  <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"class="permit_days_entry" data-union-name="<%=union.name.downcase %>" ></div>
+                </span>
+              </div>
+
+
             <!-- <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
               <input type="checkbox" id="<%=union.name.downcase%>_permit" data-name="permit" value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>

@@ -371,6 +371,7 @@ function userCreated() {
 // deletes all roles when member status is removed  
   $(".union_member").on("click", function(){
     var union_id = $(this).parent().data("union-id");
+    debugger
     if($(this).is(":checked")== false){
     changeUnionStatus($(this), union_id);
     }
@@ -801,7 +802,7 @@ function userCreated() {
 
 
   function ajaxMember(data, union_id, role_id, checkbox){
-    var user_id = $(checkbox).data("user-id");
+    var user_id = $(checkbox).data("user-id") || $("#info").data("user-id");
     $.ajax({
       url:"/eligibilities", 
       method:"post",
@@ -814,7 +815,7 @@ function userCreated() {
   }
 
   function ajaxPermit(data, union_id, role_id, checkbox){
-    var user_id = $(checkbox).data("user-id");
+    var user_id = $(checkbox).data("user-id")||$("#info").data("user-id");
     $.ajax({
       url:"/eligibilities",
       method: "post",
