@@ -6,7 +6,6 @@ class Admin::EligibilitiesController < ApplicationController
     @eligibility = Eligibility.new(eligibility_params)
     respond_to do |format|
       if @eligibility.save
-        format.html{redirect_to @user}
         format.json{render json: @eligibility}
       else
         format.html{render action: "new"}

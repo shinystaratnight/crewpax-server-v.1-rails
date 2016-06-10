@@ -33,7 +33,6 @@ class Admin::RolesController < ApplicationController
     @role = Role.find(params[:id])
     respond_to do |format|
       if @role.update_attributes(role_params)
-        format.html{redirect_to @user}
         format.json{render json: @role}
       else
         format.html{render action: "edit"}
