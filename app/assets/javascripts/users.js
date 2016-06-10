@@ -6,7 +6,6 @@ $(function(){
     var data = [];  
     var current_page_number = $(location).attr("search").match(/\d+/)
     current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
-    console.log("current_page_number:", current_page_number)
     
     var opts = {
       pageMax: 10,
@@ -30,18 +29,15 @@ $(function(){
 //=============================Search Employees with given roles inside $(function)=========================================  
   $("#user_role").on("change",function(){
     var role_id = $(this).val();
-    console.log("selected role id:", role_id)
 
   // when the selection is all  
     if (role_id == 0){
       $(".user-card").show();
-      console.log("selected all")
       return false;
     }else{
       $(this).data("selected-user-role", "clicked")
       var hiring_board_status = $(this).data("selected-user-role");
       var current_page = $(".pagination-page").data("page")
-      console.log("current page to send to label controller:", current_page)
       var filter_data = [];
       var url = "/roles/" + role_id + "/labels"
       var ajax_request_data = {label:{role_id: role_id, hiring_board: hiring_board_status}, current_page_number: current_page}
@@ -245,8 +241,6 @@ $(function(){
           var pageCount = Math.ceil(dataCount/opts.pageMax);
           var user_source = $("#user_card_template").html();    
           $.map(response.paginated_users, function(user){return filter_data.push(user)})
-          console.log("response:", response.paginated_users)
-          console.log("first load filter data array:", filter_data)
           
           if (dataCount > opts.pageMax){
             // Remove original pagination
@@ -276,7 +270,6 @@ $(function(){
             if ($(this).hasClass("pagination-next")){
               gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
               disablePrevNextButton(gotoPageNumber, pageCount)
-              console.log("after clicking next, the new go to page number is:", gotoPageNumber)
             } else if($(this).hasClass("pagination-prev")){
               gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
               disablePrevNextButton(gotoPageNumber, pageCount)
@@ -284,7 +277,6 @@ $(function(){
 
               gotoPageNumber = $(this).data("page");
               disablePrevNextButton(gotoPageNumber, pageCount)
-              console.log("filter users: clicked page that goes to:", gotoPageNumber)
             }
             
 
@@ -326,8 +318,7 @@ $(function(){
         }else{
           $.map(response.paginated_users, function(user){return user_data.push(user)})
         }
-        // user_data.push(response)
-        console.log("pre load new data array:", user_data)
+
         // In order to ensure data is only loaded once, set data attribute load to be true        
         $(".pagination-page[data-page="+ gotoPageNumber +"]").data("load", true)
       }
