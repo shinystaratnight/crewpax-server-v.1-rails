@@ -2,7 +2,7 @@ class AttachmentsController < ApplicationController
  
   protect_from_forgery
   def create
-    @attachment= Attachment.new(attachment_params)
+    @attachment = Attachment.new(attachment_params)
     @user = User.find(attachment_params[:user_id])
     respond_to do |format|
       if @attachment.save
@@ -16,7 +16,7 @@ class AttachmentsController < ApplicationController
   end    
    
   def update
-    @attachment= Attachment.find(params[:id])
+    @attachment = Attachment.find(params[:id])
     if @attachment.file_share_link.present?
       respond_to do |format|
         if @attachment.update_attributes(attachment_params)
@@ -31,8 +31,8 @@ class AttachmentsController < ApplicationController
       client = dropbox_client
       respond_to do |format|  
         if @attachment.update_attributes(attachment_params)         
-          file_store_path=@attachment.file.file["path"]
-          file_share_link=client.shares(file_store_path)["url"]
+          file_store_path = @attachment.file.file["path"]
+          file_share_link = client.shares(file_store_path)["url"]
           @attachment.update(file_store_path: file_store_path, file_share_link: file_share_link)
           #send the email after receive dropbox share link
           if file_share_link.present? 
@@ -44,7 +44,6 @@ class AttachmentsController < ApplicationController
           format.json{render json: @attachment.errors.full_messages}
         end
       end
-      # response= HTTParty.post("https://api.dropboxapi.com/2/files/get_metedata",:query=>{:path=>@dropbox_path},:header=>{"Authorization"=>"Bearer a5EOiD-7NCAAAAAAAAAAIr6OyOLBb4hmsPGXGrw4MUduHZZTRYIjbtYuDstFUSEN"})   
     end
   end
 

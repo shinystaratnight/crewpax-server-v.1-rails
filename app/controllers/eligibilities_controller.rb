@@ -1,6 +1,6 @@
 class EligibilitiesController < ActionController::Base
   def create   
-    @eligibility= Eligibility.new(eligibility_params)
+    @eligibility = Eligibility.new(eligibility_params)
       respond_to do |format|
         if @eligibility.save
           format.html{render @user}

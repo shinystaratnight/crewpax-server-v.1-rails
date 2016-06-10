@@ -17,7 +17,7 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @appointment= Appointment.new(appointment_params)
+    @appointment = Appointment.new(appointment_params)
     respond_to do |format|
       if @appointment.save
         format.json{render json: @appointment}
