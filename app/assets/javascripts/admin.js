@@ -109,7 +109,6 @@ $(function(){
                 union_id: union_id, 
                 role_id: role_id}},
         success: function(response){
-          console.log(response.id);
           if (response.id) {
             $(checkbox).data("eligibility-id", response.id);
           } else {              
@@ -128,7 +127,6 @@ $(function(){
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
-          console.log("successfully deleted eligibility #"+eligibility_id);
         }
       });
 
@@ -143,7 +141,6 @@ $(function(){
         url: "/admin/unions/" + union_id,
         method: "delete",
         success: function(response){   
-          console.log('successfully deleted '+union_name);
           if (response.result) {
             $("#delete-union-success").show();
             $("#edit"+union_name).remove();
@@ -241,7 +238,6 @@ $(function(){
                 role_id: role_id, 
                 union_id: union_id}},
         success: function(response){
-          console.log(response.id);
           if (response.id) {
             checkbox.data("eligibility-id", response.id);
           } else {              
@@ -260,7 +256,6 @@ $(function(){
         dataType: "json",
         data:{eligibility_id},
         success: function(response){
-          console.log("successfully deleted eligibility #" + eligibility_id);
         }
       });
 
@@ -275,7 +270,6 @@ $(function(){
         url: "/admin/roles/" + role_id,
         method: "delete",
         success: function(response){    
-          console.log('success');
           if (response.result) {
             $("#delete-role-success").show();
             $("#edit-role-"+role_id).remove();
@@ -372,7 +366,6 @@ $(function(){
                 certificate_id: certificate_id, 
                 user_id: user_id}},
         success: function(response){
-          console.log(response.id);
           if (response.id) {
             checkbox.data("certifiable-id", response.id);
           } else {              
@@ -391,13 +384,7 @@ $(function(){
         dataType: "json",
         data:{certifiable_id},
         success: function(response){
-          console.log("successfully deleted certifiable #" + certifiable_id);
-          // if (response.id) {
-          //   $(".certificate-info").data("certificate-id", response.id);
-          // } else {              
-          //   var errors = response.toString();
-          //   $(".certificate-name-error").text("*"+ errors).show();
-          // }
+
         }
       });
 
@@ -411,7 +398,6 @@ $(function(){
         url: "/admin/certificates/" + certificate_id,
         method: "delete",
         success: function(response){    
-          console.log('success');
           if (response.result) {
             $("#delete-certificate-success").show();
             $("#edit-cert-"+certificate_id).remove();
@@ -485,59 +471,6 @@ $(function(){
   });
 
 
-//add union roles to users by creating eligibilities
-  // $(".edit-user-roles").on("click",function(){
-
-  //     var checkbox = $(this)
-  //     var user_id = checkbox.data("user-id");
-  //     var union_id = checkbox.data("union-id");
-  //     var role_id = checkbox.data("rolez-id");
-  //     var eligibility_id = checkbox.data("eligibility-id")
-      
-  //     if (union_id > 2) { // that is, if it's not DGC or IATSE
-
-  //       if (checkbox.is(":checked")) {
-  //         //new eligibility
-
-  //       $.ajax({
-  //         url: "/admin/eligibilities",
-  //         method:"post",
-  //         dataType: "json",
-  //         data:{eligibility: {   
-  //                 union_id: union_id, 
-  //                 role_id: role_id,
-  //                 user_id: user_id}},
-  //         success: function(response){
-  //           console.log(response.id);
-  //           if (response.id) {
-  //             $(checkbox).data("eligibility-id", response.id);
-  //           } else {              
-  //             var errors = response.toString();
-  //             // $(".certificate-name-error").text("*"+ errors).show();
-  //           }
-  //         }
-  //       });
-
-  //      } else {
-  //          //existing eligibility to be deleted 
-
-  //       $.ajax({
-  //         url: "/admin/eligibilities/" + eligibility_id,
-  //         method:"delete",
-  //         dataType: "json",
-  //         data:{eligibility_id},
-  //         success: function(response){
-  //           console.log("successfully deleted eligibility #" + eligibility_id);
-  //         }
-  //       });
-
-  //     };
-  //    }
-  //   });
-
-
-
-
 //add certificates to users by creating certifiables
   $(".edit-certificates").on("click",function(){
 
@@ -557,7 +490,6 @@ $(function(){
                 certificate_id: certificate_id, 
                 user_id: user_id}},
         success: function(response){
-          console.log(response.id);
           if (response.id) {
             $(checkbox).data("certifiable-id", response.id);
           } else {              
@@ -577,7 +509,6 @@ $(function(){
         dataType: "json",
         data:{certifiable_id},
         success: function(response){
-          console.log("successfully deleted certifiable #" + certifiable_id);
         }
       });
 
@@ -593,7 +524,6 @@ $(".delete-user").on("click", function(){
       url: "/admin/users/" + user_id,
       method: "delete",
       success: function(response){   
-        console.log('successfully deleted '+user_name);
         if (response.result) {
           $("#delete-user-success").show();
           $("#edit"+user_name).remove();
