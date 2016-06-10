@@ -18,8 +18,10 @@ class UsersController < ApplicationController
       elsif params[:current_page_number].to_i % 3 == 2
         @users = {};
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
-        @paginated_users = User.limit(30).offset(@ajax_request_time * 3)
+        @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
+        # @paginated_users = User.limit(30).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
+        #offset(n) => offset(start)from the nth element of the array
         #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
         
