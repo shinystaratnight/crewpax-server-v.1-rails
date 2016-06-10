@@ -85,7 +85,6 @@ class JobsController < ApplicationController
   end
 
   def authenticate
-    #@authenticated = user_signed_in? || @job.secret == params[:secret] 
     # https://www.owasp.org/index.php/Covert_timing_channel
     @authenticated = @job.secret == params[:secret] 
   end
