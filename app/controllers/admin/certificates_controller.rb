@@ -3,7 +3,7 @@ class Admin::CertificatesController < ApplicationController
   before_filter :require_admin
   
   def create
-    @certificate=Certificate.create(certificate_params)
+    @certificate = Certificate.create(certificate_params)
     respond_to do |format|
       if @certificate.save
         format.html{render @user}
@@ -19,7 +19,6 @@ class Admin::CertificatesController < ApplicationController
     @certificate = Certificate.find(params[:id])
     respond_to do |format|
       if @certificate.update_attributes(certificate_params)
-        format.html{redirect_to @user}
         format.json{render json: @certificate}
       else
         format.html{render action: "edit"}
