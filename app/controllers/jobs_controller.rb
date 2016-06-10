@@ -11,25 +11,10 @@ class JobsController < ApplicationController
     if params[:user_id].present?
       @user_jobs = User.find(params[:user_id]).jobs
       render "job_management"
-
     else
       @jobs = Job.published 
       @jobs.find_most_recent(params[:updated_at])        
-      if params[:search_content].present? 
-        respond_to do |format|        
-          if job_params[:role_id].present?
-            @filter_jobs = Role.find(job_params[:role_id]).jobs.search_location(params[:search_content].titleize)
-            # format.html{render @jobs}
-            format.json{render json: @filter_jobs}
-          else
-            @jobs = Job.published.search_location(params[:search_content].titleize)
-            # format.html{render @jobs}
-            format.json{render json: @jobs}
-          end
-        end    
-      end
     end
-
   end
 
   def new
