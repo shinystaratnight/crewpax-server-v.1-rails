@@ -516,27 +516,29 @@ $(function(){
   });
 
 
-$(".delete-user").on("click", function(){ 
+  $(".delete-user").on("click", function(event){ 
 
-  var user_id = $(this).data("user-id");
-  var user_name = $(this).closest(".in").data("name");
-    $.ajax({
-      url: "/admin/users/" + user_id,
-      method: "delete",
-      success: function(response){   
-        if (response.result) {
-          $("#delete-user-success").show();
-          $("#edit"+user_name).remove();
-          $("#button"+user_name).remove();
+    event.preventDefault();
+    var user_id = $(this).data("user-id");
+    var user_name = $(this).data("user-name")
+      $.ajax({
+        url: "/admin/users/" + user_id,
+        method: "delete",
+        success: function(response){   
+          if (response.result == true) { 
+          
+            $("#delete-user-success").show();
 
-          setTimeout(function() {
+            setTimeout(function() {
               $("#delete-user-success").fadeOut();
-          }, 3000);
+              location.reload();
+            }, 3000);
+          
+          }
         }
-      }
-    });
+      });
 
-  });
+    });
 
 
 //*********************************************************************************************************
@@ -564,7 +566,14 @@ $(".delete-user").on("click", function(){
     } ]
   });
 
-
+  var admin_user_table = $("#admin_edit_user").DataTable({
+    responsive: true,
+    "dom": '<"top"f>rt<"bottom"lip><"clear">',
+    columnDefs: [ { 
+      orderable: false,
+      targets: [1,2] 
+    } ]
+  })
 
 
 

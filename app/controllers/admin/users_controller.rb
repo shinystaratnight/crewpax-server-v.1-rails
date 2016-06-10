@@ -8,9 +8,10 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    binding.pry 
     respond_to do |format|
       if @user.update_attributes(user_params)
-        format.html{redirect_to @user}
+        # format.html{redirect_to @user}
         format.json{render json: @user}
       else
         format.html{render action: "edit"}
@@ -32,22 +33,30 @@ class Admin::UsersController < ApplicationController
       end  
   end
 
+  def edit
+    @user = User.find(params[:id])
+    redirect_to edit_user_path(@user)
+  end
 
   def destroy
     user = User.find(params[:id])
-
     results = {result: false}
-    results[:result] = true if user.destroy
 
-    results.to_json
-    render json: results, status: :ok
+    respond_to do |format|
+      if user.destroy
+        results[:result] = true
+        format.json{render json: results, status: :ok}
+      end
+    end
   end
 
 
   private
 
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
+            :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle, 
+            :admin, :phone,{roles_ids:[]})
   end
 
 
