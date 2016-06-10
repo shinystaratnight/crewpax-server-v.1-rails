@@ -3,10 +3,10 @@ class RegistrationsController < Devise::RegistrationsController
 # When a user is created, it needs to call create_label_of_user_role to create the associated label
   
   def new
-    @roles= Role.all
+    @roles = Role.all
     @eligibilities = Eligibility.all 
-    @unions= Union.all
-    @certificates= Certificate.all
+    @unions = Union.all
+    @certificates = Certificate.all
     @attachment = Attachment.new
   end
 

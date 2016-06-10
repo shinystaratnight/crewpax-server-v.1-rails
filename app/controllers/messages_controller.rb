@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
     )
 
     respond_to do |format|
-      if @message.save! && @sms.status == 'queued'
+      if @message.save && @sms.status == 'queued'
         format.json{render json: @sms.status.to_json}
       end
     end
