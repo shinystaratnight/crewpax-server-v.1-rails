@@ -297,7 +297,7 @@
       width: 290px;
     }
 
-//=======================================User index selection=============================================
+//================================User index selection=============================================
     #user_role{
       width: 70%;
       margin-bottom: 10px;
@@ -571,10 +571,83 @@
 
 
 
+}
 
 
+/* PORTRAIT:
+  Arnova 7 G2
+  BlackBerry Bold 9780
+  HTC Desire Z
+  Nokia N900
+  Samsung Galaxy Grand*/
+//====================================User card================================================
+@media only screen and (max-width: 480px) and (orientation : portrait) {
+  
+  .image-wrap img{
+    padding-top: 15px;
+    width:200px;
+    height: 200px;
+    margin-left: 40px;
+    
+  }
 
 
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 300px;
+    margin-left: 15px;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .description{
+    margin-left:35px;
+    margin-top: 10px;
+  }
+
+  .send_text {
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #view_profile_btn{
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+//================================User index selection=============================================
+    #user_role{
+      width: 70%;
+      margin-bottom: 10px;
+      display: inline-block;
+
+    }
+
+    .dropdown-menu > li > a{
+      width: 80%;
+      padding: 3px 20px;
+      display: inline-block;
+      font-weight: normal;
+      line-height: 1.42857143;
+      color: #333333;
+      white-space: normal;
+      margin-right: 300px;
+    }
+
+    .dropdown-menu {
+      width: 180px;
+    }
+
+    #filter_bar{
+      margin-left: 0px;
+      margin-bottom: 15px;
+    }
 
 
 }
