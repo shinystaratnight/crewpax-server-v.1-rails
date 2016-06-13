@@ -1,8 +1,6 @@
-<%=form_tag jobs_path, id:"search_location_form", method: "get", multipart: true do %>
-  <%=label_tag(:search_location,"Location:") %>
-  <div class="job_location_search ">
-    <div class="input-group">
-      <%=text_field_tag(:search_location, params[:search_location],  class: " form-control" )  %>    
-    </div>
+<%=label_tag(:search_location,"Location:") %>
+<div class="job_location_search ">
+  <div class="input-group">
+    <%=text_field_tag(:search_location, params[:search_location],  class: " form-control" )  %>    
   </div>
-<% end %>
+</div>
