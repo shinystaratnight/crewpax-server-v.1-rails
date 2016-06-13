@@ -18,8 +18,8 @@
         <% for user in @users %>
           <tr>
             <th><%= link_to user.name, user_path(user) %></th>
-            <th><%= link_to "Edit",  edit_admin_user_path(user)%>
-            <th><button class="delete-user btn btn-danger" data-user-id="<%=user.id %>" data-user-name="<%=user.name%>">Delete</button>
+            <th><%= link_to "Edit",  edit_admin_user_path(user)%></th>
+            <th><button class="delete-user btn btn-danger" data-user-id="<%=user.id %>" data-user-name="<%=user.name%>">Delete</button><span hidden="true" class="delete_user_processing"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i></span></th>
            
           </tr>
         <% end %>

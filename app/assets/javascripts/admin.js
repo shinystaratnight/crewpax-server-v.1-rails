@@ -517,7 +517,8 @@ $(function(){
 
 
   $(".delete-user").on("click", function(event){ 
-
+    $(this).hide()
+    $(this).next().show();    
     event.preventDefault();
     var user_id = $(this).data("user-id");
     var user_name = $(this).data("user-name")
