@@ -3,7 +3,7 @@ class Admin::CertifiablesController < ApplicationController
   before_filter :require_admin
 
   def create
-    @certifiable= Certifiable.create(certifiable_params)
+    @certifiable = Certifiable.create(certifiable_params)
     respond_to do |format|
       if @certifiable.save
         format.html{render @user}
@@ -17,7 +17,7 @@ class Admin::CertifiablesController < ApplicationController
 
 
   def destroy
-    @certifiable= Certifiable.find(params[:id])
+    @certifiable = Certifiable.find(params[:id])
     respond_to do |format|
       if @certifiable.destroy
         format.html{render @user}

@@ -8,10 +8,8 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    binding.pry 
     respond_to do |format|
       if @user.update_attributes(user_params)
-        # format.html{redirect_to @user}
         format.json{render json: @user}
       else
         format.html{render action: "edit"}
