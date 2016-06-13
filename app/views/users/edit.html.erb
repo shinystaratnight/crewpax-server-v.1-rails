@@ -11,7 +11,13 @@
         <%= render "editcalendar" %>
         <%= render "editcertificates" %>
         <%= render "editdocumentupload" %>
-      </div>
-      <%= link_to "Continue to Profile Page", user_path(current_user), class: "btn btn-primary", id:"profile_page" %>
+      </div>   
+      <% if current_user.admin? %>
+        <p class="edit_user">
+        <%= link_to "Back to Admin Page",admin_index_path, class: 'profile_page btn btn-primary' %>
+        </p>
+      <% else %>
+        <%= link_to "Continue to Profile Page", user_path(current_user), class: "profile_page btn btn-primary" %>
+      <% end %>      
     </div>
   </div>
