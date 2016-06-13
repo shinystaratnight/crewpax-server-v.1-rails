@@ -199,6 +199,7 @@ $(function(){
     $(".send_msg").on("click", function(event){ 
       event.preventDefault();   
       var recipient_phone = $("#recipient").text(); 
+ 
       var recipient_id = $("#recipient_id").text(); 
       $.ajax({
         url: "/messages",
