@@ -179,14 +179,17 @@ $(function(){
 //=====================================Send a text to Crew============================================================
   $(document).on('click', ".send_text", function (event) { 
 
-    var modal = $(this).next();
+    var modal = $(this).parent().next();
+
     var current_message_text_box = modal.find(".message-text")
+
     var current_character_counter = modal.find(".character_counter")
     var text_length = 160 - current_message_text_box.val().trim().length;       
     current_character_counter.text(text_length + ' characters remaining');
     var text_message;
    
      $(current_message_text_box).on("keyup", function() {     
+
       var text_remaining = 160 -  current_message_text_box.val().trim().length;
       current_character_counter.text(text_remaining + ' characters remaining');
       text_message = current_message_text_box.val().trim();
