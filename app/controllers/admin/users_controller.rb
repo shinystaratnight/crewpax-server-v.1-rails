@@ -35,7 +35,6 @@ class Admin::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    redirect_to edit_user_path(@user)
   end
 
   def destroy
