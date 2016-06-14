@@ -499,7 +499,8 @@ function userCreated() {
     format: "mm/dd/yyyy",
     todayHighlight: true,
     forceParse : false,
-    autoclose:true
+    autoclose:true,
+    disableTouchKeyboard:false
     
   });
 

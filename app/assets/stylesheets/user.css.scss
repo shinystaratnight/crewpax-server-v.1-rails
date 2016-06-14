@@ -48,6 +48,8 @@
   #new_file_upload_form{
     margin-left: 15px;
   }
+
+  
 //*------------------------User Log In Page--------------------------------------------
   .facebook {
     background: rgba(59, 89, 152,1);
@@ -307,7 +309,7 @@
 
     }
 
-    .dropdown-menu > li > a{
+    .user-dropdown > li > a{
       width: 80%;
       padding: 3px 20px;
       display: inline-block;
@@ -318,7 +320,7 @@
       margin-right: 300px;
     }
 
-    .dropdown-menu {
+    .user-dropdown {
       width: 180px;
     }
 
@@ -632,7 +634,7 @@
 
     }
 
-    .dropdown-menu > li > a{
+    .user-dropdown > li > a{
       width: 80%;
       padding: 3px 20px;
       display: inline-block;
@@ -643,7 +645,7 @@
       margin-right: 300px;
     }
 
-    .dropdown-menu {
+    .user-dropdown {
       width: 180px;
     }
 
