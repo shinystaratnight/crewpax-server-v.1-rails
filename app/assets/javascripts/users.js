@@ -195,11 +195,18 @@ $(function(){
       text_message = current_message_text_box.val().trim();
 
     });
-
+     
+    
     $(".send_msg").on("click", function(event){ 
       event.preventDefault();   
       var recipient_phone = modal.find("#recipient").text(); 
       var recipient_id = modal.find("#recipient_id").text(); 
+
+      if(text_message == undefined){
+        modal.find(".message_status").text("Text message can not be blank.").removeClass("alert-info").addClass("alert-danger").show();
+        return false;
+      }
+
       $.ajax({
         url: "/messages",
         method: "post",
@@ -212,9 +219,9 @@ $(function(){
             modal.find(".message_status").text("Failed to send text message.").show()
 
           }
-          
-          
+                    
         }
+
       });
       
      });
