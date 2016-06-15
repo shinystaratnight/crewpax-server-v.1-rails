@@ -80,6 +80,9 @@
   <p>
     <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: job_url(@job) %>
   </p>
+  <p>
+    <%= link_to "Back to Job Board", jobs_path, class: 'btn job_show btn-lg btn-block btn-primary' %>
+  </p>
   <% if @authenticated %>
     <p>
       <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), class: 'btn job_show btn-block btn-lg btn-primary' %>
