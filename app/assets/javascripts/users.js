@@ -203,7 +203,13 @@ $(function(){
       var recipient_id = modal.find("#recipient_id").text(); 
 
       if(text_message == undefined){
-        modal.find(".message_status").text("Text message can not be blank.").removeClass("alert-info").addClass("alert-danger").show();
+        modal.find(".message_status")
+             .text("Text message can not be blank.")
+             .removeClass("alert-info")
+             .addClass("alert-danger")
+             .show()
+             .delay(3000)
+             .fadeOut(1000);
         return false;
       }
 
@@ -214,7 +220,7 @@ $(function(){
         data: {message:{content: text_message,recipient_id: recipient_id},recipient_phone: recipient_phone},
         success: function(resp){
           if (resp == "queued"){
-            modal.find(".message_status").text("Text message has been sent successfully.").show()
+            modal.find(".message_status").text("Text message has been sent successfully.").removeClass("alert-danger").addClass("alert-success").show()
           }else{
             modal.find(".message_status").text("Failed to send text message.").show()
 
