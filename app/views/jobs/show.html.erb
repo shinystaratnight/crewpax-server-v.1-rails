@@ -77,9 +77,15 @@
       </dl>
     </div>
   </div>
-  <p>
-    <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: job_url(@job) %>
-  </p>
+  <% if @job.job_filled == true %>
+    <p>
+      <button class= "btn job_show btn-lg btn-block btn-danger"> Job has been filled </button>
+    </p>
+  <% else %>
+    <p>
+      <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: job_url(@job) %>
+    </p>
+  <% end %>
   <p>
     <%= link_to "Back to Job Board", jobs_path, class: 'btn job_show btn-lg btn-block btn-primary' %>
   </p>
