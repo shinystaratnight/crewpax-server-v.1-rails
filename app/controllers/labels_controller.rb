@@ -17,7 +17,10 @@ class LabelsController < ApplicationController
       if @user_labels.present? && label_params[:hiring_board] == "clicked"
 
         @filter_users = {};
-        @users_with_selected_role = @user_labels.map{|l| User.find(l.user_id)}
+    
+        @users_with_selected_role = @user_labels.find_all{|l| l.job_id == nil}
+                                                .map{|l| User.find(l.user_id)}
+
         @total_user = @users_with_selected_role.length
         # select the first 30th elements of the array 
 
