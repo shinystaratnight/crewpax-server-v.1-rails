@@ -544,8 +544,7 @@ class UsersController < ApplicationController
     @users_available = users.find_all{|user| user[:availabilities] !=[]}
     @number_users_available = @users_available.length
     # sort users based on their most recent availabilities
-    @users_info = @users_available.sort_by{|user| user[:availabilities]}
-
+    @users_info = @users_available.sort_by{|user| user[:availabilities].sort_by{|date| date}}
     #pagination sorted result
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
       @users_info = @users_info[0..30]
