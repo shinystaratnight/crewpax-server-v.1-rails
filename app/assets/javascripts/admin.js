@@ -612,7 +612,17 @@ $(function(){
     
   })
 
-
+//*********************************************************************************************************
+// Sponsors Management Datatables
+//********************************************************************************************************
+   $("#admin_sponsors_management").DataTable({  
+    responsive: true,
+    "dom": '<"top"f>rt<"bottom"lip><"clear">',
+    columnDefs: [ { 
+      orderable: false,
+      targets: [2] 
+    } ]
+  });
 
 
 });

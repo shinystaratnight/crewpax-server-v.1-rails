@@ -1,6 +1,6 @@
 class SponsorsController < ApplicationController
   before_filter :require_admin
-
+ 
   def create
     @sponsor = Sponsor.new(sponsor_params)
     client = dropbox_client 

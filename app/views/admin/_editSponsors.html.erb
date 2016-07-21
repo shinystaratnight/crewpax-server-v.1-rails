@@ -17,5 +17,27 @@
       </form>
       <button type="submit" class="btn btn-primary" data-dismiss="" id="add_sponsor">Submit</button>
     </div>
+
+    <div class="field">
+      <table id="admin_sponsors_management" cellspacing="0" class="display responsive no-wrap" style="width: 100%">
+        <thead>
+          <tr role="row">
+          <th> Sponsor Name</th>
+          <th> Image </th>
+          <th> Website URL </th>
+          <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for sponsor in @sponsors %>
+            <tr>
+              <th><%= sponsor.picture %></th>
+              <th><%= sponsor.website_url %>
+              <th><%#= link_to "Delete", '' %></th>
+            </tr>
+          <% end %>
+        </tbody>
+  </table>
+    </div>
   </div> 
 </div>

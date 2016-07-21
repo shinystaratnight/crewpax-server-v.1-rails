@@ -9,6 +9,7 @@ class AdminController < ApplicationController
     @certificates = Certificate.all
     @users = User.all
     @jobs = Job.all
+    @sponsors = Sponsor.all
   end
 
 end
