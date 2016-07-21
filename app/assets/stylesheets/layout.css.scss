@@ -1,12 +1,54 @@
-.navbar-brand {
-  text-transform: uppercase;
-  color: $brand-warning !important;
+//=========== Desktop and Mobile ===================
+  .navbar-brand {
+    text-transform: uppercase;
+    color: $brand-warning !important;
 
-  span {
-    color: $brand-info;
+    span {
+      color: $brand-info;
+    }
   }
+
+  .logo {
+    width: 290px;
+  }
+
+//========== Medium devices (desktops, 992px and up)==========================================
+
+@media (min-width: 992px) { 
+
+  .footer {
+    margin-left: 500px;
+    color: gray;
+    font-size: 14px;
+  }
+
+
 }
 
-.logo {
-  width: 290px;
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .footer {
+      font-size: 12px;
+      margin-left: 15px;
+      margin-top: 5px;
+      color: gray;
+    }  
+}
+
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+@media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+
+
+
 }
