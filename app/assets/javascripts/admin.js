@@ -576,6 +576,41 @@ $(function(){
     } ]
   })
 
+//*********************************************************************************************************
+// Add Sponsors
+//********************************************************************************************************
+  $("#add_sponsor").on("click", function(event){
+    event.preventDefault();
+    var formData = new FormData();
+    $input=$("#upload_sponsor_picture");    
+    formData.append("sponsor[picture]",$input[0].files[0]);
+    // var sponsor_website = $("#sponsor_webiste").val().trim();
+    $.ajax({
+      url: "/sponsors",
+      method: "post",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success:function(response){
+        if (response.id > 0){
+
+          var sponsor_website = $("#sponsor_webiste").val().trim();
+          var sponsor_id = response.id
+          $.ajax({
+            url: "/sponsors/" + sponsor_id,
+            method: "put",
+            data: {sponsor:{website_url:sponsor_website, id: sponsor_id}},
+            success:function(response){
+              debugger
+            }
+          })
+        }
+        
+      }
+    })
+    
+  })
 
 
 

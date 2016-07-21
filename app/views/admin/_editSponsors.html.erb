@@ -6,18 +6,16 @@
   </div>
 
   <div id="editSponsors" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editSponsors">
-    <!-- <form>
-      <div class="field">
+    <div class="field">
+      <form action="/admin/sponsors" method="post">        
         <h5>Upload Your Sponsor's Image:
           <input type="file" id="upload_sponsor_picture" >
           <input type="hidden" name="image_cache">
-          <div id="sponsor_pic" hidden="true" contenteditable="true"></div>
         </h5>
-      </div>
-
-      <div class="field">
-        <input type="text">Your Sponsor's Website</input>
-      </div>
-    </form> -->
-  </div>
+        <label for="sponsor_website"> Enter Your Sponsor's Website: </label>
+        <input type="text" id="sponsor_webiste"></input>       
+      </form>
+      <button type="submit" class="btn btn-primary" data-dismiss="" id="add_sponsor">Submit</button>
+    </div>
+  </div> 
 </div>
