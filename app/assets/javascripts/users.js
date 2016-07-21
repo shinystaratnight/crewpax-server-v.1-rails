@@ -141,12 +141,12 @@ $(function(){
 
   Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
     if (union_member.length > 0 && union_permit.length > 0){
-      return "Union Status: </br>" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      return "Union:" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else if (union_member.length > 0 && union_permit.length == 0){
-      return "Union Status: </br>" + "member: " + union_member
+      return "Union:" + "member: " + union_member
     }else if (union_member.length == 0 && union_permit.length > 0){
-      return "Union Status: </br> " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
+      return "Union:" + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",") 
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else{
       return "Non Union"
@@ -166,9 +166,9 @@ $(function(){
     var result = $.inArray(today, availability)
 
     if(result < 0){
-      return "<i class='fa fa-calendar-check-o' aria-hidden='true' style='color:red; font-size: 15px;'>Unavailable </br>  Today</i>"
+      return "<button class='btn btn-danger' style='font-size: 12px;'>Unavailable </br>Today</button>";
     }else{
-      return "<i class='fa fa-calendar-check-o' aria-hidden='true'style='color:green; font-size: 15px;'>Available Today</i>"
+      return "<button class='btn btn-success' style='font-size: 12px;'>Available </br>Today</button>";
 
     }
   });
