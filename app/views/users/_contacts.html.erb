@@ -12,7 +12,7 @@
         </dd>
         <dt>Phone:</dt>
         <dd>
-          <%="tel: #{@user.phone}" %>
+          tel: <a href="tel:<%="#{@user.phone}"%>"><%="#{@user.phone}" %></a>
         </dd>
         <dt>Email:</dt>
         <dd>
