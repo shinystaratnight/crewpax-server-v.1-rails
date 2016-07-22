@@ -6,8 +6,14 @@
   </div>
 
   <div id="editSponsors" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editSponsors">
-    <div class="field">
-      <form action="/admin/sponsors" method="post">        
+    <div class="panel">
+      <a role ="button" data-toggle="collapse" data-parent="#accordion" href="#addSponsor" aria-expanded="false" aria-controls="addSponsor" class="btn btn-primary"><span class="caret rotated"></span> Add a new sponsor</a>
+    </div>
+    <div class="field panel-collapse collapse" role="tabpanel" aria-labelledby=
+    "addSponsor" id="addSponsor">
+      <form action="/admin/sponsors" method="post">
+        <label for="sponsor_name">Enter Your Sponsor's Name: </label>
+        <input type="text" id="sponsor_name"></input>        
         <h5>Upload Your Sponsor's Image:
           <input type="file" id="upload_sponsor_picture" >
           <input type="hidden" name="image_cache">
