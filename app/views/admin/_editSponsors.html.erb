@@ -26,6 +26,7 @@
           <th> Image </th>
           <th> Website</th>
           <th></th>
+          <th></th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +35,8 @@
               <th><%= sponsor.name %></th>
               <th><%= sponsor.picture %></th>
               <th><%= sponsor.website_url %>
-              <th><%#= link_to "Delete", '' %></th>
+              <th><button class="btn btn-primary" id="edit_sponsor">Edit</button></th>
+              <th><button class="btn btn-danger" id="delete_sponsor" data-sponsorID="<%=sponsor.id%>"> Delete </button></th>
             </tr>
           <% end %>
         </tbody>

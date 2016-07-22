@@ -4,14 +4,12 @@ class SponsorsController < ApplicationController
   def create
     @sponsor = Sponsor.new(sponsor_params)
     client = dropbox_client 
-    respond_to do |format|
-      
+    respond_to do |format|      
       if @sponsor.save
         format.json { render json: @sponsor, status: :created, location: @sponsor }
       else
         format.json {render json: @sponsor.errors.full_messages }
       end
-
     end
   end
 
@@ -24,6 +22,10 @@ class SponsorsController < ApplicationController
         format.json {render json: @sponsor.errors.full_messages }
       end
     end
+  end
+
+  def destroy
+
   end
 
   private
