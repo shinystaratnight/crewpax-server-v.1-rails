@@ -580,11 +580,12 @@ $(function(){
 // Add Sponsors
 //********************************************************************************************************
   $("#add_sponsor").on("click", function(event){
+    $("#add_sponsor").hide();
+    $("#submit_sponsor").show();
     event.preventDefault();
     var formData = new FormData();
     $input=$("#upload_sponsor_picture");    
     formData.append("sponsor[picture]",$input[0].files[0]);
-    // var sponsor_website = $("#sponsor_webiste").val().trim();
     $.ajax({
       url: "/sponsors",
       method: "post",
@@ -594,17 +595,31 @@ $(function(){
       processData: false,
       success:function(response){
         if (response.id > 0){
-
+          var sponsor_name = $("#sponsor_name").val().trim();
           var sponsor_website = $("#sponsor_webiste").val().trim();
           var sponsor_id = response.id
           $.ajax({
             url: "/sponsors/" + sponsor_id,
             method: "put",
-            data: {sponsor:{website_url:sponsor_website, id: sponsor_id}},
+            data: {sponsor:{website_url:sponsor_website, id: sponsor_id, name: sponsor_name}},
             success:function(response){
-              debugger
+              if(response.id > 0){
+                $("#add-sponsor-success").show();
+                setTimeout(function() {
+                location.reload(true);
+                }, 2000); 
+              } else{
+                alert(response);          
+                $("#submit_sponsor").hide();
+                $("#add_sponsor").show();
+              }
+             
             }
           })
+        }else{
+          alert(response);          
+          $("#submit_sponsor").hide();
+          $("#add_sponsor").show();
         }
         
       }
@@ -620,7 +635,7 @@ $(function(){
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
     columnDefs: [ { 
       orderable: false,
-      targets: [2] 
+      
     } ]
   });
 

@@ -11,17 +11,11 @@
     </div>
     <div class="field panel-collapse collapse" role="tabpanel" aria-labelledby=
     "addSponsor" id="addSponsor">
-      <form action="/admin/sponsors" method="post">
-        <label for="sponsor_name">Enter Your Sponsor's Name: </label>
-        <input type="text" id="sponsor_name"></input>        
-        <h5>Upload Your Sponsor's Image:
-          <input type="file" id="upload_sponsor_picture" >
-          <input type="hidden" name="image_cache">
-        </h5>
-        <label for="sponsor_website"> Enter Your Sponsor's Website: </label>
-        <input type="text" id="sponsor_webiste"></input>       
-      </form>
-      <button type="submit" class="btn btn-primary" data-dismiss="" id="add_sponsor">Submit</button>
+      <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="add-sponsor-success"> 
+        <button class="close" type="button" data-dismiss="alert"> &times;</button>
+          Sponsor is Successfully added, refreshing page.
+      </div>
+      <%= render "sponsorForm"%>
     </div>
 
     <div class="field">
@@ -30,13 +24,14 @@
           <tr role="row">
           <th> Sponsor Name</th>
           <th> Image </th>
-          <th> Website URL </th>
+          <th> Website</th>
           <th></th>
           </tr>
         </thead>
         <tbody>
           <% for sponsor in @sponsors %>
             <tr>
+              <th><%= sponsor.name %></th>
               <th><%= sponsor.picture %></th>
               <th><%= sponsor.website_url %>
               <th><%#= link_to "Delete", '' %></th>

@@ -1,0 +1,14 @@
+<form action="/admin/sponsors" method="post">
+  <label for="sponsor_name">Enter Your Sponsor's Name: </label>
+  <input type="text" id="sponsor_name"></input>        
+  <h5>Upload Your Sponsor's Image:
+    <input type="file" id="upload_sponsor_picture" >
+    <input type="hidden" name="image_cache">
+  </h5>
+  <label for="sponsor_website"> Enter Your Sponsor's Website: </label>
+  <input type="text" id="sponsor_webiste"></input>       
+</form>
+<button type="submit" class="btn btn-primary" data-dismiss="" id="add_sponsor">Submit</button>
+<span id="submit_sponsor" hidden="true">
+  <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i>
+</span>  

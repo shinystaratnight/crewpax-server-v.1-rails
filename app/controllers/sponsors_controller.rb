@@ -16,7 +16,6 @@ class SponsorsController < ApplicationController
   end
 
   def update
-    binding.pry
     @sponsor = Sponsor.find(sponsor_params[:id])
     respond_to do |format|
       if @sponsor.update_attributes(sponsor_params)
@@ -29,7 +28,7 @@ class SponsorsController < ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:id, :picture, :website_url)
+    params.require(:sponsor).permit(:id, :picture, :website_url,:name)
   end
 
   def dropbox_client
