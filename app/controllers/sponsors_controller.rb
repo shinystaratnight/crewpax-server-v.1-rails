@@ -24,6 +24,10 @@ class SponsorsController < ApplicationController
     end
   end
 
+  def edit
+    @sponsor = Sponsor.find(sponsor_params[:id])    
+  end
+
   def destroy
     @sponsor = Sponsor.find(sponsor_params[:id])
     respond_to do |format|
