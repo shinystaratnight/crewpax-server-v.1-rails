@@ -583,47 +583,64 @@ $(function(){
     $("#add_sponsor").hide();
     $("#submit_sponsor").show();
     event.preventDefault();
-    var formData = new FormData();
-    $input=$("#upload_sponsor_picture");    
-    formData.append("sponsor[picture]",$input[0].files[0]);
-    $.ajax({
-      url: "/sponsors",
-      method: "post",
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false,
-      success:function(response){
-        if (response.id > 0){
-          var sponsor_name = $("#sponsor_name").val().trim();
-          var sponsor_website = $("#sponsor_webiste").val().trim();
-          var sponsor_id = response.id
-          $.ajax({
-            url: "/sponsors/" + sponsor_id,
-            method: "put",
-            data: {sponsor:{website_url:sponsor_website, id: sponsor_id, name: sponsor_name}},
-            success:function(response){
-              if(response.id > 0){
-                $("#add-sponsor-success").show();
-                setTimeout(function() {
-                location.reload(true);
-                }, 2000); 
-              } else{
-                alert(response);          
-                $("#submit_sponsor").hide();
-                $("#add_sponsor").show();
+    var sponsor_name = $("#sponsor_name").val().trim();
+    var sponsor_website = $("#sponsor_webiste").val().trim();
+    if(sponsor_name == ""){
+      alert("Name can't be blank")
+      $("#add_sponsor").show();
+      $("#submit_sponsor").hide();
+      return false
+    }else if (sponsor_website == ""){
+      alert("Sponsor Website can't be blank")
+      $("#add_sponsor").show();
+      $("#submit_sponsor").hide();
+      return false
+    }else if (sponsor_name == "" && sponsor_website == ""){
+      alert("Sponsor Name and Website can't be blank")
+      $("#add_sponsor").show();
+      $("#submit_sponsor").hide();
+      return false
+    }else{
+      var formData = new FormData();
+      $input=$("#upload_sponsor_picture");    
+      formData.append("sponsor[picture]",$input[0].files[0]);
+      $.ajax({
+        url: "/sponsors",
+        method: "post",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success:function(response){
+          if (response.id > 0){         
+            var sponsor_id = response.id
+            $.ajax({
+              url: "/sponsors/" + sponsor_id,
+              method: "put",
+              data: {sponsor:{website_url:sponsor_website, id: sponsor_id, name: sponsor_name}},
+              success:function(response){
+                if(response.id > 0){
+                  $("#add-sponsor-success").show();
+                  setTimeout(function() {
+                  location.reload(true);
+                  }, 2000); 
+                }                
               }
-             
-            }
-          })
-        }else{
-          alert(response);          
-          $("#submit_sponsor").hide();
-          $("#add_sponsor").show();
+            })
+          }else{
+            alert(response);          
+            $("#submit_sponsor").hide();
+            $("#add_sponsor").show();
+          }
+          
         }
-        
-      }
-    })
+      })
+
+
+    }
+
+    
+    
     
   })
 //*********************************************************************************************************

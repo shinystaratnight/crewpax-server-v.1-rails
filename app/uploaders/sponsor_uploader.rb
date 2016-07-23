@@ -1,6 +1,6 @@
 class SponsorUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  
+
   storage :dropbox
   
   def store_dir
@@ -9,6 +9,10 @@ class SponsorUploader < CarrierWave::Uploader::Base
 
   def extension_white_list
     %w(jpg jpeg gif png)
+  end
+
+  version :thumb do
+     process :resize_to_fit => [90, 90]
   end
 
 end

@@ -37,7 +37,7 @@
           <% for sponsor in @sponsors %>
             <tr>
               <th><%= sponsor.name %></th>
-              <th><%= sponsor.picture %></th>
+              <th><%=image_tag(sponsor.picture.url(:thumb)) %></th>
               <th><%= sponsor.website_url %>
               <th><button class="btn btn-primary" id="edit_sponsor">Edit</button></th>
               <th><button class="btn btn-danger" id="delete_sponsor" data-sponsorID="<%=sponsor.id%>"> Delete </button></th>
