@@ -25,7 +25,14 @@ class SponsorsController < ApplicationController
   end
 
   def destroy
-
+    @sponsor = Sponsor.find(sponsor_params[:id])
+    respond_to do |format|
+      if @sponsor.destroy
+        format.json{render json: "Sponsor has been deleted successfully"}
+      else
+        format.json {render json: @sponsor.errors.full_messages }
+      end
+    end
   end
 
   private

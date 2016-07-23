@@ -631,6 +631,23 @@ $(function(){
 //********************************************************************************************************
   $("#delete_sponsor").on("click", function(event){
     event.preventDefault();
+    var confirmation = prompt("Are you Sure to delete this sponsor?(Yes/No)")
+    if (confirmation == "Yes"){
+      var sponsor_id = $("#delete_sponsor").data("sponsorid")
+      console.log("sponsor id:", sponsor_id)
+      $.ajax({
+        url: "/sponsors/" + sponsor_id,
+        method: "delete",
+        data:{sponsor:{id: sponsor_id}},
+        complete: function(response){
+          $("#delete-sponsor-success").show();
+          setTimeout(function() {
+            location.reload(true);
+          }, 2000);
+         
+        }
+      })
+    }
   });
 
 //*********************************************************************************************************
