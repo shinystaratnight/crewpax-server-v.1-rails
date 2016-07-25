@@ -17,7 +17,7 @@ class SponsorsController < ApplicationController
     @sponsor = Sponsor.find(sponsor_params[:id])
     respond_to do |format|
       if @sponsor.update_attributes(sponsor_params)
-        format.json{render json: @sponsor}
+        format.json{render json: @sponsor, status: :ok}
       else
         format.json {render json: @sponsor.errors.full_messages }
       end

@@ -651,7 +651,6 @@ $(function(){
     var confirmation = prompt("Are you Sure to delete this sponsor?(Yes/No)")
     if (confirmation == "Yes"){
       var sponsor_id = $("#delete_sponsor").data("sponsorid")
-      console.log("sponsor id:", sponsor_id)
       $.ajax({
         url: "/sponsors/" + sponsor_id,
         method: "delete",
@@ -666,7 +665,21 @@ $(function(){
       })
     }
   });
+//*********************************************************************************************************
+// Update Sponsors
+//********************************************************************************************************
+  $("#update_existing_sponsor").on("click", function(event){
+    event.preventDefault();
+    var sponsor_name = $("#update_sponsor_name").val().trim();
+    var sponsor_website = $("#update_sponsor_webiste").val().trim();
+    var sponsor_id = $("#update_existing_sponsor").data("sponsorid");
+    if($("#update_sponsor_picture").val().trim().length == 0){
+      updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id)
+    }else{
+      
+    }
 
+  });
 //*********************************************************************************************************
 // Sponsors Management Datatables
 //********************************************************************************************************
@@ -682,3 +695,28 @@ $(function(){
 
 
 });
+
+//*********************************************************************************************************
+// common functions
+//********************************************************************************************************
+ 
+  function updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id){  
+    if(sponsor_name == ""|| sponsor_website == ""){
+      $("#update-sponsor-error").text("Name or Website can't be blank").show().delay(3000).fadeOut(1000);
+      return false;
+    }else{
+      $.ajax({
+        url:"/sponsors/" + sponsor_id,
+        method: "put",
+        data: {sponsor:{id: sponsor_id, name: sponsor_name, website_url: sponsor_website}},
+        success: function(response){
+          $("#update-sponsor-success").show();
+          setTimeout(function() {
+            location.reload(true);
+          }, 2000); 
+        }
+      });
+    }
+ 
+
+  }

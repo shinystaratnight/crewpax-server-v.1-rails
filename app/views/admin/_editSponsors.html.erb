@@ -46,6 +46,9 @@
                   <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="update-sponsor-success"> 
                   <button class="close" type="button" data-dismiss="alert"> &times;</button>
                   Sponsor is Successfully updated, refreshing page.
+                  </div>
+                  <div class="alert alert-danger alert-dismissible" hidden="true" role="alert" id="update-sponsor-error"> 
+                  <button class="close" type="button" data-dismiss="alert"> &times;</button>
                   </div>     
                     <form action="/sponsors/<%=sponsor.id%>" method="put">
                       <label for="sponsor_name">Enter Your Sponsor's Name:</label>
@@ -58,7 +61,7 @@
                       <label for="sponsor_website"> Enter Your Sponsor's Website:</label>
                       <input type="text" id="update_sponsor_webiste" value="<%=sponsor.website_url%>"/>
                     </form>
-                    <button type="submit" class="btn btn-primary" data-dismiss="" id="update_existing_sponsor">Update</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="" id="update_existing_sponsor" data-sponsorid="<%=sponsor.id%>">Update</button>
                     <span id="update_sponsor" hidden="true">
                       <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i>
                     </span>
