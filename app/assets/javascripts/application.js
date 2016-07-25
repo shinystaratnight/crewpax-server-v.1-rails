@@ -6,3 +6,4 @@
 //= require bootstrap-datepicker.min
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap.min
+//= require jquery.bxslider.min
