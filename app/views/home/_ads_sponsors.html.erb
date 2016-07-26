@@ -5,10 +5,12 @@
 </script>
 <%= image_tag 'logo.png', class: 'logo' %>
 
-<p> Sponsors: </p> 
-  <ul class="bxslider">
-    <% for sponsor in Sponsor.all do %>
-      <li><a href="http://<%=sponsor.website_url%>"><%=image_tag sponsor.picture_url(:thumb)%></a></li>
-    <% end %>
-  </ul>
- 
+<% if Sponsor.all.length > 0 %>
+  <p> Sponsors: </p> 
+    <ul class="bxslider">
+      <% for sponsor in Sponsor.all do %>
+        <li class="sponsor_landingpage_image"><a href="http://<%=sponsor.website_url%>">
+          <%=image_tag sponsor.picture %></a></li>
+      <% end %>
+    </ul>
+<% end %>
