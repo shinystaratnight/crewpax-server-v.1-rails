@@ -646,23 +646,29 @@ $(function(){
 //*********************************************************************************************************
 // Delete Sponsors
 //********************************************************************************************************
-  $("#delete_sponsor").on("click", function(event){
+  $(".delete_sponsor").on("click", function(event){
     event.preventDefault();
+    $(this).hide();
     var confirmation = prompt("Are you Sure to delete this sponsor?(Yes/No)")
     if (confirmation == "Yes"){
-      var sponsor_id = $("#delete_sponsor").data("sponsorid")
+      var sponsor_id = $(this).data("sponsorid")
+      $(this).next().show();
+      var delete_button = $(this);
       $.ajax({
         url: "/sponsors/" + sponsor_id,
         method: "delete",
         data:{sponsor:{id: sponsor_id}},
         complete: function(response){
-          $("#delete-sponsor-success").show();
+          $(".delete-sponsor-success").show();
           setTimeout(function() {
             location.reload(true);
           }, 2000);
          
         }
       })
+    }else{
+      $(this).show();
+      return false;
     }
   });
 //*********************************************************************************************************
@@ -682,7 +688,7 @@ $(function(){
       $input=$(this).prev().find("#update_sponsor_picture");    
       formData.append("sponsor[picture]",$input[0].files[0])
       formData.append("sponsor[id]", sponsor_id)// To include sponsor id in the sponsor_params
-
+      var update_button = $(this);
       $.ajax({
         url: "/sponsors/"+ sponsor_id,
         method: "put",
@@ -691,7 +697,7 @@ $(function(){
         contentType: false,
         processData: false,
         success:function(response){
-          updateSponsorNameImage(sponsor_name, sponsor_website,response.id)
+          updateSponsorNameImage(sponsor_name, sponsor_website,response.id, update_button)
         }
       });
     }

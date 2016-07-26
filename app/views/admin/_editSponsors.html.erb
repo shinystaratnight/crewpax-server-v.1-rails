@@ -19,7 +19,7 @@
     </div>
 
     <div class="field">
-      <div class="alert alert-danger alert-dismissible" hidden="true" role="alert" id="delete-sponsor-success"> 
+      <div class="alert alert-danger alert-dismissible delete-sponsor-success" hidden="true" role="alert"> 
         <button class="close" type="button" data-dismiss="alert"> &times;</button>
           Sponsor is successfully deleted, refreshing page.
       </div>
@@ -68,7 +68,12 @@
                 </div>
               </th>
 
-              <th><button class="btn btn-danger" id="delete_sponsor" data-sponsorID="<%=sponsor.id%>"> Delete </button></th>
+              <th>
+                <button class="btn btn-danger delete_sponsor"  data-sponsorID="<%=sponsor.id%>"> Delete </button>
+                <span class="deleting_sponsor" hidden="true">
+                  <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i>
+                </span>
+              </th>
             </tr>
           <% end %>
         </tbody>
