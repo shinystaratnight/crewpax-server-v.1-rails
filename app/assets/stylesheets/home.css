@@ -1,0 +1,73 @@
+/* Medium devices (desktops, 992px and up)==================================*/
+@media (min-width: 992px) { 
+  .bx-wrapper{
+    width: 350px;
+    margin-left: 10px;
+  }
+  
+  .sponsor_landingpage_image{
+    margin-left: 50px;
+  }
+
+}
+
+
+
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .sponsor_landingpage_image{
+      margin-left: 20px;
+    }
+
+}
+
+
+
+/* ----------- iPhone 6 ---------------------------------------------------------------------------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+    .sponsor_landingpage_image{
+      margin-left: 40px;
+    }
+
+
+}
+
+
+/* ----------- iPhone 6 plus----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+    .sponsor_landingpage_image{
+      margin-left: 60px;
+    }
+
+}
+
+
+/* PORTRAIT:
+  Arnova 7 G2
+  BlackBerry Bold 9780
+  HTC Desire Z
+  Nokia N900
+  Samsung Galaxy Grand*/
+//====================================User card================================================
+@media only screen 
+  and (max-width: 480px) and (orientation : portrait) {
+    .sponsor_landingpage_image{
+      margin-left: 40px;
+    }
+
+}
