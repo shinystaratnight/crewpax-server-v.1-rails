@@ -40,14 +40,14 @@
               <th><%= image_tag(sponsor.picture_url(:thumb)) %></th>
               <th><%= sponsor.website_url %>
               <th>
-                <a role= "button" class="btn btn-primary" data-toggle="collapse" data-parent="#accordion" href="#editSponsor" aria-expanded="false" aria-controls="editSponsor" id="edit_sponsor_button" data-sponsorid="<%=sponsor.id%>"><span class="caret rotated"></span>Edit</a>
+                <a role= "button" class="btn btn-primary" data-toggle="collapse" data-parent="#accordion" href="#editSponsor_<%=sponsor.id%>" aria-expanded="false" aria-controls="editSponsor" id="edit_sponsor_button" data-sponsorid="<%=sponsor.id%>"><span class="caret rotated"></span>Edit</a>
                 <div class="field panel-collapse collapse" role="tabpanel" aria-labelledby=
-                  "editSponsor" id="editSponsor">
-                  <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="update-sponsor-success"> 
+                  "editSponsor" id="editSponsor_<%=sponsor.id%>">
+                  <div class="alert alert-success alert-dismissible update-sponsor-success" hidden="true" role="alert"> 
                   <button class="close" type="button" data-dismiss="alert"> &times;</button>
                   Sponsor is Successfully updated, refreshing page.
                   </div>
-                  <div class="alert alert-danger alert-dismissible" hidden="true" role="alert" id="update-sponsor-error"> 
+                  <div class="alert alert-danger alert-dismissible update-sponsor-error" hidden="true" role="alert" > 
                   <button class="close" type="button" data-dismiss="alert"> &times;</button>
                   </div>     
                     <form action="/sponsors/<%=sponsor.id%>" method="put">
@@ -61,8 +61,8 @@
                       <label for="sponsor_website"> Enter Your Sponsor's Website:</label>
                       <input type="text" id="update_sponsor_webiste" value="<%=sponsor.website_url%>"/>
                     </form>
-                    <button type="submit" class="btn btn-primary" data-dismiss="" id="update_existing_sponsor" data-sponsorid="<%=sponsor.id%>">Update</button>
-                    <span id="update_sponsor" hidden="true">
+                    <button type="submit" class="btn btn-primary update_existing_sponsor" data-dismiss="" data-sponsorid="<%=sponsor.id%>">Update</button>
+                    <span class="update_sponsor" hidden="true">
                       <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i>
                     </span>
                 </div>

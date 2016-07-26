@@ -668,18 +668,18 @@ $(function(){
 //*********************************************************************************************************
 // Update Sponsors
 //********************************************************************************************************
-  $("#update_existing_sponsor").on("click", function(event){
+  $(".update_existing_sponsor").on("click", function(event){
     event.preventDefault();
-    $("#update_existing_sponsor").hide();
-    $("#update_sponsor").show();
-    var sponsor_name = $("#update_sponsor_name").val().trim();
-    var sponsor_website = $("#update_sponsor_webiste").val().trim();
-    var sponsor_id = $("#update_existing_sponsor").data("sponsorid");
-    if($("#update_sponsor_picture").val().trim().length == 0){
-      updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id)
+    $(this).hide();// Update button disappeareas 
+    $(this).next().show();// Spinning button shows up
+    var sponsor_name = $(this).prev().find("#update_sponsor_name").val().trim()
+    var sponsor_website = $(this).prev().find("#update_sponsor_webiste").val().trim();
+    var sponsor_id = $(this).data("sponsorid");
+    if($(this).prev().find("#update_sponsor_picture").val().trim().length == 0){
+      updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id, $(this))
     }else{
       var formData = new FormData();
-      $input=$("#update_sponsor_picture");    
+      $input=$(this).prev().find("#update_sponsor_picture");    
       formData.append("sponsor[picture]",$input[0].files[0])
       formData.append("sponsor[id]", sponsor_id)// To include sponsor id in the sponsor_params
 
@@ -717,11 +717,12 @@ $(function(){
 // common functions
 //********************************************************************************************************
  
-  function updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id){  
+  function updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id, update_button){
+    var error_message= $(update_button).prev().prev()
     if(sponsor_name == ""|| sponsor_website == ""){
-      $("#update-sponsor-error").text("Name or Website can't be blank").show().delay(3000).fadeOut(1000);
-      $("#update_existing_sponsor").show();
-      $("#update_sponsor").hide();
+      $(error_message).text("Name or Website can't be blank").show().delay(3000).fadeOut(1000);
+      $(update_button).show();
+      $(update_button).next().hide();
       return false;
     }else{
       $.ajax({
@@ -729,9 +730,9 @@ $(function(){
         method: "put",
         data: {sponsor:{id: sponsor_id, name: sponsor_name, website_url: sponsor_website}},
         success: function(response){
-          $("#update_existing_sponsor").show();
-          $("#update_sponsor").hide();
-          $("#update-sponsor-success").show();          
+          $(update_button).show();
+          $(update_button).next().hide();
+          $(error_message).prev().show(); // Success message         
           setTimeout(function() {
             location.reload(true);
           }, 2000); 
