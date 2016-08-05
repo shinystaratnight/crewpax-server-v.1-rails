@@ -10,8 +10,8 @@ class MessagesController < ApplicationController
     number_to_send_to = params[:recipient_phone]
     @message = Message.new(message_params)
     @message.user_id = current_user_id
-    @twilio_number = "+15005550006"
-    # @twilio_number = ENV["TWILIO_PHONE_NUMBER"] ## In Production
+    @twilio_number = ENV["TWILIO_PHONE_NUMBER"] ## In Production
+    binding.pry 
     @twilio_client = Twilio::REST::Client.new
     @sms = @twilio_client.account.messages.create(
       :from => @twilio_number,
