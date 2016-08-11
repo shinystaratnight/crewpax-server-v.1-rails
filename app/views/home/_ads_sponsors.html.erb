@@ -10,7 +10,8 @@
     <ul class="bxslider">
       <% for sponsor in Sponsor.all do %>
         <li class="sponsor_landingpage_image"><a href="http://<%=sponsor.website_url%>">
-          <%=image_tag sponsor.picture %></a></li>
+          <%=image_tag sponsor.picture.url %>
+          </a></li>
       <% end %>
     </ul>
 <% end %>

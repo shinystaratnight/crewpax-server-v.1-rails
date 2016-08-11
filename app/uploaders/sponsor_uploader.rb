@@ -18,7 +18,8 @@ class SponsorUploader < CarrierWave::Uploader::Base
     end
   end
 
-  process :resize_to_fit =>[240, 200]
+  #process :resize_to_fit =>[240, 200]
+  process :resize_to_fit =>[300, 250]
 
   version :thumb do
      process :resize_to_fit => [90, 90]

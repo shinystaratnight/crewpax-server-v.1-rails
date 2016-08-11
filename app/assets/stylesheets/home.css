@@ -6,8 +6,9 @@
   }
   
   .sponsor_landingpage_image{
-    margin-left: 50px;
+    margin-left: 20px;
   }
+  
 
 }
 
@@ -20,7 +21,9 @@
   and (min-device-width: 320px) 
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
-    .sponsor_landingpage_image{
+    .sponsor_landingpage_image img {
+      width:240px;
+      height:200px;
       margin-left: 20px;
     }
 
@@ -35,10 +38,14 @@
   and (min-device-width: 375px) 
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
-    .sponsor_landingpage_image{
-      margin-left: 40px;
-    }
+  
+  .sponsor_landingpage_image{
+    margin-left: 30px;
+  }
 
+  .sponsor_landingpage_image img {
+    margin-left: -10px;
+  }
 
 }
 
@@ -50,24 +57,10 @@
   and (min-device-width: 414px) 
   and (max-device-width: 736px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
-    .sponsor_landingpage_image{
-      margin-left: 60px;
-    }
+  .sponsor_landingpage_image{
+    margin-left: 30px;
+  }
 
 }
 
 
-/* PORTRAIT:
-  Arnova 7 G2
-  BlackBerry Bold 9780
-  HTC Desire Z
-  Nokia N900
-  Samsung Galaxy Grand*/
-//====================================User card================================================
-@media only screen 
-  and (max-width: 480px) and (orientation : portrait) {
-    .sponsor_landingpage_image{
-      margin-left: 40px;
-    }
-
-}
