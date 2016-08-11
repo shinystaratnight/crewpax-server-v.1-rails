@@ -23,19 +23,16 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    # "profile_picture_"+ "user_id_"+ "#{model.id}" + "#{File.extname(original_filename).downcase}" if original_filename
     "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
   end
 
-  # version :desktop do 
-    process :resize_to_fit => [400, 400]
-  # end
+
+  process :resize_to_fit => [400, 400]
+  
 
   version :thumb do
     process :resize_to_fit => [90, 90]
   end
 
-  # version :mobile do 
-  #   process :resize_to_fit => [290, 290]
-  # end
+
 end

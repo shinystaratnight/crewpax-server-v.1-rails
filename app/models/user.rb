@@ -19,36 +19,20 @@ class User < ActiveRecord::Base
   has_many :attachments, dependent: :destroy
   has_many :messages
   
-
-
   default_scope { order :last_sign_in_at }
-  
-
 
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
   validates :phone, format:{with:/\d{10}/, message:" must be a 10 digit number"}, 
   length: {maximum: 10}, if: "phone.present?"
   validates :email, uniqueness: true, length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, message:" must be a valid email address"},
   if: "email.present?"
-
-
   validates :password, length: {minimum: 4}, if: "reset_password_token.present?"
-  
-  
+    
   # by default, Devise only adds the validates_confirmation_of 
   #:password on the 'User' model (or any other model you chose as the authentication model) 
   #in the case of a :create. When updating we are of course editing rather than creating.
   
   validates_confirmation_of :password, if: "reset_password_token.present?"
-
-  # def self.sort_user(sort_order)
-  #   if sort_order == "most_recent"
-  #     reorder(last_sign_in_at: :desc)
-  #   else 
-  #     reorder(name: :asc)
-  #   end
-  # end
-
 
   def self.from_omniauth(auth)
     user_credentials = User.find_by(email:auth.info.email)
@@ -72,25 +56,6 @@ class User < ActiveRecord::Base
   end
 
 
-
-
-  #scope :search_by_role, ->(params){ Label.where roles_ids: params}
-  # , ->(role) { where {role_ids: include role.id} }
-
-  # def self.search_by_role(params)
-  #   #selected_role_ids = params.split().map(&:to_i)
-  #     User.all.map do |user| 
-  #       user.labels.all.map do |l|
-            
-  #         if l.role_id==params
-            
-  #           @user = User.find(l.user_id) 
-  #           @users =[]
-  #           @users << @user
-  #         end
-  #       end
-  #     end 
-  # end
   def start_date   
     Date.today
   end

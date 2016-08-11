@@ -13,11 +13,6 @@ class Job < ActiveRecord::Base
   has_many :labels
   belongs_to :user
 
-  # #Search Job Post Location
- 
-  # scope :search_location, ->(search){Job.where('location like ?',"%#{search}%" )}
-
-
   def role
     Role.find role_id
   end
