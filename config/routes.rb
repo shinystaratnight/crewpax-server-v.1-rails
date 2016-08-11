@@ -28,13 +28,6 @@ Bcpax::Application.routes.draw do
     resources :labels, only:[:index]
   end 
   
-  # resources :jobs do
-  #   resources :roles 
-  # end
-
-  # resources :roles, shallow: true do 
-  #   resources :jobs
-  # end
   
   resources :roles, only:[:index]
   resources :attachments, only:[:create,:update, :index, :destroy]

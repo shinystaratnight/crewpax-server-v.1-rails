@@ -526,7 +526,6 @@ class UsersController < ApplicationController
   def filter_and_paginate(user)
     @number_users = user.length
     if params[:current_page_number] == "1" || params[:current_page_number]== "0"
-      #users_result = user[0..3]
       users_result = user[0..30]
     else
       ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
@@ -584,7 +583,7 @@ class UsersController < ApplicationController
             :admin, :phone,{roles_ids:[]})
    
   end
-# { roles_ids:[]} 
+
   
   def label_params
     params.require(:label).permit(:user_id,:job_id,:role_id)

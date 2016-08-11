@@ -26,12 +26,10 @@ class LabelsController < ApplicationController
 
         if params[:current_page_number] == "1" || params[:current_page_number] == "0" 
           @users_with_selected_role = @users_with_selected_role[0..30]
-          #@users_with_selected_role = @users_with_selected_role[0..3]
         else
           ajax_preload_request_time = (params[:current_page_number].to_i + 1) / 3
 
           # Page 2 => ajax_preload_request_time = 1
-          #@users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time) * 3 +1 .. (ajax_preload_request_time) * 3 +3]
           @users_with_selected_role = @users_with_selected_role[(ajax_preload_request_time) * 30 + 1 .. ajax_preload_request_time * 30 + 30 ]
         end
 
