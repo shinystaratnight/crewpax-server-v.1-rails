@@ -2,49 +2,60 @@ class User < ActiveRecord::Base
   
   #Include default devise modules. Others are available are:
   #:token_authenticatable, :lockable, :trackable :timeoutable and :activatable
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :database_authenticatable, :registerable, :omniauthable, :recoverable, :rememberable,
          :trackable
+
   mount_uploader :image, ImageUploader
   #comment out devise :validatable
   has_many :appointments, dependent: :destroy
-  has_many :labels
+  has_many :labels, dependent: :destroy
   has_many :jobs
   has_many :roles, through: :labels
-  has_many :eligibilities
+  has_many :eligibilities, dependent: :destroy
   has_many :unions, through: :eligibilities
   has_many :addresses, dependent: :destroy
-  has_many :certifiables
+  has_many :certifiables, dependent: :destroy
   has_many :certificates, through: :certifiables
   has_many :attachments, dependent: :destroy
-
-  default_scope { order :name }
+  has_many :messages
   
-
+  default_scope { order :last_sign_in_at }
 
   validates :name, uniqueness: true, presence: true, length: {maximum: 64}
-  validates :phone, format:{with:/\d{10}/, message:"It must be a valid phone number"}, 
+  validates :phone, format:{with:/\d{10}/, message:" must be a 10 digit number"}, 
   length: {maximum: 10}, if: "phone.present?"
-  validates :email,length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/},
+  validates :email, uniqueness: true, length: {maximum: 64}, format:{with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, message:" must be a valid email address"},
   if: "email.present?"
-
+  validates :password, length: {minimum: 4}, if: "reset_password_token.present?"
+    
+  # by default, Devise only adds the validates_confirmation_of 
+  #:password on the 'User' model (or any other model you chose as the authentication model) 
+  #in the case of a :create. When updating we are of course editing rather than creating.
   
-  #scope :search_by_role, ->(params){ Label.where roles_ids: params}
-  # , ->(role) { where {role_ids: include role.id} }
+  validates_confirmation_of :password, if: "reset_password_token.present?"
 
-  # def self.search_by_role(params)
-  #   #selected_role_ids = params.split().map(&:to_i)
-  #     User.all.map do |user| 
-  #       user.labels.all.map do |l|
-            
-  #         if l.role_id==params
-            
-  #           @user = User.find(l.user_id) 
-  #           @users =[]
-  #           @users << @user
-  #         end
-  #       end
-  #     end 
-  # end
+  def self.from_omniauth(auth)
+    user_credentials = User.find_by(email:auth.info.email)
+    #First time users with credentails log in with facebook 
+    if user_credentials.present? && user_credentials.uid == nil 
+      user_credentials.update_attributes(uid: auth.uid)
+      user = user_credentials
+      # users with credentails have updated their facebook id in their database
+      # and checking the reponse facebook id from fb api is the same as the one in database 
+      if user_credentials.uid.present? && auth.uid == user_credentials.uid
+        user = user_credentials
+      end
+    else
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.name = auth.info.name   
+        user.remote_image_url = auth.info.image
+      end
+    end
+
+  end
+
+
   def start_date   
     Date.today
   end
@@ -66,14 +77,8 @@ class User < ActiveRecord::Base
     td_class << "prev-month"    if start_date.month != day.month && day < start_date
     td_class << "next-month"    if start_date.month != day.month && day > start_date
     td_class << "current-month" if start_date.month == day.month
-    # appointments.map do |a| 
-
-    #   if day == a
-    #     td_class << "available"  
-
-    #   end
-    
-    # end
+  
+  
     if appointments.include?(day)
       td_class << "available"
     else

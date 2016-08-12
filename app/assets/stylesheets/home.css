@@ -1,0 +1,66 @@
+/* Medium devices (desktops, 992px and up)==================================*/
+@media (min-width: 992px) { 
+  .bx-wrapper{
+    width: 350px;
+    margin-left: 10px;
+  }
+  
+  .sponsor_landingpage_image{
+    margin-left: 20px;
+  }
+  
+
+}
+
+
+
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .sponsor_landingpage_image img {
+      width:240px;
+      height:200px;
+      margin-left: 20px;
+    }
+
+}
+
+
+
+/* ----------- iPhone 6 ---------------------------------------------------------------------------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+  
+  .sponsor_landingpage_image{
+    margin-left: 30px;
+  }
+
+  .sponsor_landingpage_image img {
+    margin-left: -10px;
+  }
+
+}
+
+
+/* ----------- iPhone 6 plus----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+  .sponsor_landingpage_image{
+    margin-left: 30px;
+  }
+
+}
+
+

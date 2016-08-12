@@ -4,7 +4,6 @@ class AddressesController < ActionController::Base
     @address = Address.new(address_params)
     respond_to do |format|
       if @address.save
-        format.html{redirect_to @user}
         format.json{render json: @address}
       else
         format.html{render action: "new"}
@@ -18,7 +17,6 @@ class AddressesController < ActionController::Base
     @address= Address.find(params[:id])
     respond_to do |format|
       if @address.update_attributes(address_params)
-        format.html{redirect_to @user}
         format.json{render json: @address}
       else
         format.html{render action: "edit"}

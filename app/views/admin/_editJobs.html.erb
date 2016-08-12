@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#editJob" aria-expanded="false" aria-controls="editJob"><span class="caret rotated"></span> Jobs</a>
+    </h3>
+  </div>
+
+  <div id="editJob" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editJob">
+    <table id="admin_job_management" cellspacing="0" class="display responsive no-wrap" style="width: 100%">
+    <thead>
+      <tr role="row">
+      <th> Title </th>
+      <th> Starts </th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for job in @jobs %>
+        <tr>
+          <th><%= link_to job.name, job_path(job) %></th>
+          <th><%= job.starts_on %>
+          <th><%= link_to "Edit", job_path(job) + "/edit?secret=" + job.secret, class: "btn  btn-primary" %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>

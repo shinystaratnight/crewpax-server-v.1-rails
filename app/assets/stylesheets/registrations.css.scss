@@ -6,22 +6,24 @@
 
 .profile_input {
   background-color: white;
+  border-radius: 2px;
+  padding: 0 5px;
 
 }
 
-.profile_input.invalid {
+.invalid {
   border-color:red;
   border-style:solid;
   border-width: 2px;
 }
 
-.profile_input.valid {
+.valid {
   border-color:green;
   border-style:solid;
   border-width:2px;
 }
 
-.error{
+.error, .union-name-error {
   color:red;
 }
 
@@ -45,9 +47,10 @@
 
 //=== They are for departments roles checkboxes/radio buttons===============================
 
-label{
-  cursor:pointer;
-  font-size:14px;
+label {
+  cursor: pointer;
+  font-size:  14px;
+  padding: 0 8px 0 0;
 }
 
 input[type="checkbox"] {    
@@ -60,18 +63,25 @@ input[type="checkbox"] {
   box-sizing: border-box;
   position: relative;
   box-sizing: content-box ;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-width: 0;
   transition: all .1s linear;
-  
+  border-radius: 50%;
+  top: 5px;
+  left: 2px;
+  position: relative;
+
 } 
 
-
+input[type="checkbox"].edit-roles, input[type="checkbox"].edit-users {    
+  left: -2px;
+} 
 
 
 input[type="checkbox"]:checked{
   background-color: #2ECC71;
+ 
 }
 
 
@@ -84,12 +94,13 @@ input[type="checkbox"]:focus{
 
 
 
-#iatse_permit_days, #permit_days{
+#iatse_permit_days, #permit_days, #dgc_permit_days, .permit_days_entry{
   border-bottom-style: solid;
   border-bottom-width: 1px;
   width: 150px;
   display: inline-block;
 }
+
 
 //=======For Calender ===============================================================
 #available{
@@ -205,4 +216,27 @@ input[type="checkbox"]:focus{
 
 .selected_document{
   color: #5cb85c;
+}
+
+
+
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+//=======For Calender ===============================================================
+  
+
+
+
+
+
+
+
+
+
 }

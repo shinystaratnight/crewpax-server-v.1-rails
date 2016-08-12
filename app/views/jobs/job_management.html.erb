@@ -1,0 +1,19 @@
+<h2>Manage My Job Posts</h2>
+  <table id= "job_management" cellspacing="0" class="display responsive no-wrap">
+    <thead>
+      <tr role="row">
+      <th> Job Posts</th>
+      <th> Starts On </th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for user_job in @user_jobs %>
+        <tr>
+          <th><%= link_to user_job.name, job_path(user_job) %></th>
+          <th><%= user_job.starts_on %>
+          <th><%= link_to "Edit", job_path(user_job) + "/edit?secret=" + user_job.secret, class: "btn  btn-primary" %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

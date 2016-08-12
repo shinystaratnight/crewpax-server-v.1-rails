@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#editUser" aria-expanded="false" aria-controls="editUser"><span class="caret rotated"></span> Users</a>
+    </h3>
+  </div>
+  <div id="editUser" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editUser">
+    <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="delete-user-success"> 
+      <button class="close" type="button" data-dismiss="alert"> &times;</button>
+      User was deleted successfully. Refreshing page
+    </div>
+    <table id="admin_edit_user" cellspacing="0" class="display responsive no-wrap" style="width: 100%">      
+      <thead>
+        <tr role="row">
+        <th> Name</th>
+        <th></th>
+        <th></th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <% for user in @users %>
+          <tr>
+            <th><%= link_to user.name, user_path(user) %></th>
+            <th><%= link_to "Edit",  edit_admin_user_path(user)%></th>
+            <th><button class="delete-user btn btn-danger" data-user-id="<%=user.id %>" data-user-name="<%=user.name%>">Delete</button><span hidden="true" class="delete_user_processing"><i class="fa fa-spinner fa-spin" style="font-size: 40px; color: gray;" ></i></span></th>
+           
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

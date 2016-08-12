@@ -12,14 +12,14 @@ gem 'devise'
 gem 'mini_magick'
 gem 'carrierwave'
 gem 'fog'
-gem 'kaminari'
 gem 'simple_form'
 gem 'pry'
 gem 'carrierwave-dropbox'
 gem 'font-awesome-sass'
 gem "simple_calendar", "~> 2.0"
-
-
+gem 'omniauth-facebook'
+gem 'twilio-ruby'
+# gem 'jquery-datatables-rails', '~> 3.4'
 
 
 

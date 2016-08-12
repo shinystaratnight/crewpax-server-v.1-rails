@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406040656) do
+ActiveRecord::Schema.define(version: 20160721233709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,27 +87,48 @@ ActiveRecord::Schema.define(version: 20160406040656) do
     t.datetime "updated_at"
     t.boolean  "published",     default: false
     t.integer  "role_id"
+    t.integer  "user_id"
+    t.boolean  "job_filled",    default: false
   end
 
   add_index "jobs", ["role_id"], name: "index_jobs_on_role_id", using: :btree
+  add_index "jobs", ["user_id"], name: "index_jobs_on_user_id", using: :btree
 
   create_table "labels", force: :cascade do |t|
     t.integer "user_id"
     t.uuid    "job_id"
     t.integer "role_id"
+    t.string  "job_board"
+    t.string  "hiring_board"
   end
 
   add_index "labels", ["role_id"], name: "index_labels_on_role_id", using: :btree
   add_index "labels", ["user_id"], name: "index_labels_on_user_id", using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.string  "content"
+    t.integer "user_id"
+    t.integer "recipient_id"
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "sponsors", force: :cascade do |t|
+    t.string "picture"
+    t.string "website_url"
     t.string "name"
   end
 
   create_table "unions", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "has_member_status", default: false
+    t.boolean  "has_permit_status", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -132,6 +153,9 @@ ActiveRecord::Schema.define(version: 20160406040656) do
     t.string   "last_sign_in_ip"
     t.integer  "sign_in_count",              default: 0
     t.integer  "roles_ids",                  default: [],                 array: true
+    t.string   "provider"
+    t.string   "uid"
+    t.boolean  "is_iatse_member",            default: false
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
@@ -143,6 +167,8 @@ ActiveRecord::Schema.define(version: 20160406040656) do
   add_foreign_key "eligibilities", "roles"
   add_foreign_key "eligibilities", "unions"
   add_foreign_key "eligibilities", "users"
+  add_foreign_key "jobs", "users"
   add_foreign_key "labels", "roles"
   add_foreign_key "labels", "users"
+  add_foreign_key "messages", "users"
 end

@@ -140,7 +140,7 @@ $(function(){
     ajaxDeleteNewDocument(attachment_id, $("#other_deleting"),$(this))
   })
 
-//=============email existing uploaded files to mutliple users==================================================================
+//=============email existing uploaded files to multiple users==================================================================
 
   $(".uploaded_file").on("click",function(){
     // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
@@ -164,8 +164,8 @@ $(function(){
 
 
   $("#new_uploaded_file").on("click",".uploaded_file",function(){
-    // for sending multiple emails for the same files. Scenerio one a user clicks a file, and send multiple emails.
-    //First reset every data-clickable attribute to none
+    // for sending multiple emails for the same files. Scenario one a user clicks a file, and send multiple emails.
+    // First reset every data-clickable attribute to none
     resetDocumentDataAttr($("#new_uploaded_file .uploaded_file"))
     resetDocumentDataAttr($('.uploaded_file'))      
     // add a data attribute indicates which existing_file is click

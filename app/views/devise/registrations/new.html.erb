@@ -2,13 +2,15 @@
   <h1>Create profile</h1>
 </div>
   <div class = "row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <%= render 'personalinfo' %>
     </div>
-    <div class= "col-md-9">
+   
+    <div class= "col-md-8 continue-registration" hidden="true" >
       <%= render 'union' %>
       <%= render 'availability' %>
       <%= render 'certificates' %>
       <%= render 'filesUpload' %>
+      <%= link_to "Continue to Login", new_user_session_path, class: "btn btn-primary", id: "login_page" %>
     </div>
   </div>

@@ -1,0 +1,17 @@
+<script>
+  $(function(){
+    $('.bxslider').bxSlider();
+  });
+</script>
+<p>Ads Banner: </p><%= image_tag 'logo.png', class: 'logo' %>
+
+<% if Sponsor.all.length > 0 %>
+  <p> Sponsors: </p> 
+    <ul class="bxslider">
+      <% for sponsor in Sponsor.all do %>
+        <li class="sponsor_landingpage_image"><a href="http://<%=sponsor.website_url%>">
+          <%=image_tag sponsor.picture.url %>
+          </a></li>
+      <% end %>
+    </ul>
+<% end %>

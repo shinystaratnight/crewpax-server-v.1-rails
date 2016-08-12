@@ -1,17 +1,20 @@
 class JobsController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
   before_filter :set_role, only: :index
-  
+  respond_to :html, :js, :json
   
   def index
     #scope will return false b/c in jobs table, :published filed is set default 
     #to be false
-    @jobs = Job.published 
-      # if @role.present?
-      #   @jobs = @jobs.by_role @role
-      # end
-    @jobs = @jobs.page(params[:page] || 1).per(20)
+    if params[:user_id].present?
+      @user_jobs = User.find(params[:user_id]).jobs
+      render "job_management"
+    else
+      @jobs = Job.published 
+      @jobs.find_most_recent(params[:updated_at])        
+    end
   end
 
   def new
@@ -20,19 +23,31 @@ class JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    if @job.save
+    if current_user.present?
+      @job.user_id = current_user.id
+    end  
+
+    if @job.save      
       JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
-      render :new
+      redirect_to new_job_path
+      flash[:danger] = @job.errors.full_messages.to_sentence
     end
   end
 
   def show # GET method, can be triggered by anything, gmail, bots, etc...
     unless @job.published
       if @authenticated
-        @job.update_attribute :published, true
-        flash.now[:success] = 'Job has been published.'
+        if current_user.present?
+          @job.labels.create(role_id: @job.role_id, user_id: current_user.id)
+          @job.update_attribute :published, true
+          flash.now[:success] = 'Job has been published.'
+        else
+          @job.labels.create(role_id: @job.role_id)
+          @job.update_attribute :published, true
+          flash.now[:success] = 'Job has been published.'
+        end
       else
         raise ActionController::RoutingError.new 'Not Found'
       end
@@ -51,14 +66,18 @@ class JobsController < ApplicationController
   end
 
   def destroy
-    @job.destroy
-    redirect_to jobs_path, notice: 'Job has been removed.'
+    if @job.destroy
+      @job.labels.find_by(job_id: @job.id).destroy   
+      redirect_to jobs_path, notice: 'Job has been removed.'
+    end
   end
 
   protected
 
+
+
   def set_role
-    @role = Category.find params[:role_id] if params[:role_id]
+    @role = Role.find params[:role_id] if params[:role_id]
   end
 
   def set_job
@@ -66,7 +85,8 @@ class JobsController < ApplicationController
   end
 
   def authenticate
-    @authenticated = user_signed_in? || @job.secret == params[:secret] # https://www.owasp.org/index.php/Covert_timing_channel
+    # https://www.owasp.org/index.php/Covert_timing_channel
+    @authenticated = @job.secret == params[:secret] 
   end
 
   def authorize
@@ -74,7 +94,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit :id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email
+    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updaetd_at,:user_id, :job_filled)
   end
 
  

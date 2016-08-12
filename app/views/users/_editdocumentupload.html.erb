@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-  <div class="panel-heading" role="tab" id="headingThree">
+<div class="panel panel-default" id="nested">  
+  <div class="panel-heading" role="tab" id="heading_document_board"> 
     <h3 class="panel-title" id="upload_file_title">
-      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">Email Documents</a>
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#document_board" aria-expanded="false" aria-controls="document_board">Documents</a>
     </h3>
   </div>
-  <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+  <div id="document_board" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_document_board">
     <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="success_msg"></div>
     <div class="alert alert-danger alert-dismissible"  role="alert" hidden="true" id="fail_msg"></div>
     <div class="alert alert-success alert-dismissible" hidden="true" role="alert" id="success_new_client_msg"></div>
@@ -18,7 +18,7 @@
       <% resume_attachments.map{|resume| %> 
         <span id="edit_resume">
           <div class="uploaded_file" data-file-type="Resume" data-clickable="">          
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">  
+            <a data-toggle="collapse" data-parent="#nested" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix" class="multiple_email">  
               <label class="file_info" class="file_info" data-file-id="<%=resume.id%>">
                 <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
                 </br>
@@ -39,7 +39,7 @@
       <% noa_attachments.map{|noa| %>
         <span id="edit_noa"> 
           <div class="uploaded_file" data-file-type="NOA" data-clickable="">         
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">   
+            <a data-toggle="collapse" data-parent="#nested" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix" class="multiple_email">   
               <label for="file_pdf" class="file_info" data-file-id="<%=noa.id%>">
                 <i class="fa fa-file-pdf-o" id="file_pdf" style="font-size: 50px; color:black;"></i>
                 </br> 
@@ -59,7 +59,7 @@
       <% driver_attachments.map {|driver| %>
         <span id="edit_driver">          
           <div class="uploaded_file" data-file-type="Drivers_License" data-clickable=""> 
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">
+            <a data-toggle="collapse" data-parent="#nested" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix" class="multiple_email">
             <label class="file_info" data-file-id="<%=driver.id%>">
               <i class="fa fa-file-pdf-o" style="font-size: 50px; margin-left: 25px; color:black;"></i>
               </br>
@@ -79,7 +79,7 @@
       <% other_attachments.map {|other| %>
         <span id="edit_other">      
           <div class="uploaded_file" data-file-type="other" data-clickable="">       
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">  
+            <a data-toggle="collapse" data-parent="#nested" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix" class="multiple_email">  
             <label class="file_info" data-file-id="<%=other.id%>">
               <i class="fa fa-file-pdf-o" style="font-size: 50px;color:black;"></i>
               </br>
@@ -94,13 +94,12 @@
         <span id="other_delete_completed" hidden="true"><i class="fa fa-check-circle" style="font-size: 40px; color:green"></i></span> 
       <% } %>
     <% end %>
-
-
       
-<!--User doesn't have any uploaded files, and user edit(add/delete) files on the edit page using ajax  -->    <span id="new_uploaded_file"></span> 
+<!--User doesn't have any uploaded files, and user edit(add/delete) files on the edit page using ajax  -->    
+  <span id="new_uploaded_file"></span> 
     <span id="document_template" hidden="true">
       <div class="uploaded_file" data-file-type="" data-clickable="">          
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">  
+        <a data-toggle="collapse" data-parent="#nested" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree" class="multiple_email">  
           <label class="file_info" id="document_info" data-file-id="">
             <i class="fa fa-file-pdf-o" style="font-size: 50px; color:black;"></i>
             </br>
@@ -116,13 +115,19 @@
      
     
 
-    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <%= render 'emailForm' %>
     </div>
 
     </br>
-    <a role="button" class="btn btn-primary" id="upload_new_documents_button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">Upload new documents</a>
-    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+   
+      <a role="button" class="btn btn-primary" id="upload_new_documents_button" data-toggle="collapse" data-parent="#nested" href="#upload_new_documents" aria-expanded="false" aria-controls="upload_new_documents">Upload new documents</a>
+
+
+    
+
+
+    <div id="upload_new_documents" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_upload_new_documents">
       <form id="new_file_upload_form" class="form-inline" method="post" action="/attachments" nctype="multipart/form-data" data-attachment-id="">
         <div class="form-group" class="file_upload">
           <label for="client_email" class="document_email"> Recipient's email address:</label>

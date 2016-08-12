@@ -2,14 +2,22 @@
   <h1>Edit profile</h1>
 </div>
   <div class = "row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <%= render "editpersonalinfo" %>
     </div>
-    <div class= "col-md-9">
-      <%= render "editunion" %>
-      <%= render "editcalendar" %>
-      <%= render "editcertificates" %>
-      <%= render "editdocumentupload" %>
-      
+    <div class= "col-md-8">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <%= render "editunion" %>
+        <%= render "editcalendar" %>
+        <%= render "editcertificates" %>
+        <%= render "editdocumentupload" %>
+      </div>   
+      <% if current_user.admin? %>
+        <p class="edit_user">
+        <%= link_to "Back to Admin Page",admin_index_path, class: 'profile_page btn btn-primary' %>
+        </p>
+      <% else %>
+        <%= link_to "Continue to Profile Page", user_path(current_user), class: "profile_page btn btn-primary" %>
+      <% end %>      
     </div>
   </div>

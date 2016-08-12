@@ -1,0 +1,74 @@
+<script id="user_card_template" type="text/x-handlebars-template"> 
+  <div class="user-card col-md-4" data-user-id = "" data-order="" >
+    <div class="instagram-content">          
+      <div class="row photos-wrap">
+       <!--Instafeed target div -->
+        
+          <div id="instafeed"></div>
+            <!--The following HTML will be our template inside instafeed -->                    
+              <div class="photo-box">
+                <div class="image-wrap">
+                  <!--user image -->
+                  <a href ={{path}}><img src= {{image}}></a> 
+                </div>
+                <div class="description">
+                  <span class="username">
+                    <p>{{{name}}}</p>                                                         
+                  </span>       
+                  <span>{{{unionStatus union_member union_permit}}}</span>                
+                  <div><i class="fa fa-phone" aria-hidden="true" style="font-size: 14px;"></i>:
+                    <a href="tel:{{{phone}}}">{{{phone}}}</a>
+                  </div>
+                    {{{hasVehicle vehicle}}}
+                    {{{isAvailableToday availability}}}                              
+                </div>
+                  
+                  <span>
+                    <button class="send_text btn btn-primary" data-toggle="modal" data-target="#{{id}}">Send a text</button>
+                    <!-- path to view profile --> 
+                    <a href= {{path}} class="btn btn-block" id="view_profile_btn"><i class="fa fa-user" aria-hidden="true"></i> View Profile</a>
+                  </span>                  
+                  <div class="modal fade" id="{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-modal-id="{{id}}">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="exampleModalLabel">New message to {{name}}</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="message_status alert alert-info alert-dismissible" hidden="true">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times</a>
+                          </div>                          
+                          <form action="/users" method="post">
+                            <div class="form-group">
+                              <span id="recipient" hidden="true">{{phone}}</span>
+                              <span id="recipient_id" hidden="true">{{id}}</span>
+                              <label for="message-text" class="control-label">Message: (Please include your contact info in the below message)</label>
+                              <textarea class="message-text form-control" maxlength= "160">
+                                <%=current_user.name%> from Crewcall: <%=root_url%> **Don't reply to this number** </textarea>
+                              <div class="character_counter"></div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="submit" class="send_msg btn btn-primary" data-dismiss="">Send message</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+
+
+
+               
+                  
+                
+              </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+</script>

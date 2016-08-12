@@ -1,5 +1,29 @@
 //==========In General==========================
   
+  .field {
+    border: 1px solid #ddd;
+    margin: 5px 2px;
+    padding: 2px;
+    border-radius: 4px;
+    h5 {
+      margin: 2px 0;
+      padding: 0 5px;
+    }
+  }
+   
+  .required-fields {
+   @extend .field;
+   background-color: #dbf1f7;
+   .field {
+    margin: 5px 2px 0 10px;
+    background-color: #f5f5f5;
+   }
+  }
+  
+
+  body{
+    font-family: raleway, sans-serif;
+  }
 
   .union_font {
     font-size: 16px;
@@ -11,7 +35,99 @@
     margin-left: 20px;
   }
 
-//========== Medium devices (desktops, 992px and up) 
+
+  .rotated {
+    transform: rotate(-90deg);
+  }
+
+
+  #reset_button{
+    color: white;
+  }
+ 
+  #new_file_upload_form{
+    margin-left: 15px;
+  }
+
+  
+//*------------------------User Log In Page--------------------------------------------
+  .facebook {
+    background: rgba(59, 89, 152,1);
+    height: 55px;
+    line-height: 50px;
+    text-align: center;
+    letter-spacing: 1.2px;
+    color: rgba(255,255,255,1);
+  }
+
+  .login {
+    padding: 20px;
+    text-align: center;
+    background: rgba(255,255,255,1); 
+    color: rgba(51,51,51,1);
+    margin-bottom: -25px;
+  }
+  
+  #login_header{
+    padding: 20px;
+   
+    
+    font-size: 1.2em;
+  }
+
+  .login_button{
+    display: block;
+    margin: 1em auto;
+    width: 80%;
+    height: 50px;
+    background: #5cb85c;
+    color: rgba(255,255,255,1);
+    border: 0;   
+    font-size: 1em;
+  }
+
+  
+  #sign_in_facebook{
+    color:white;
+  }
+
+  .reset_password{
+    width: 500px;
+    margin-top: 150px;
+  }
+  
+  .reset_info{
+    width: 300px;
+
+  }
+
+  .reset_pw_info{
+    width: 300px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .login_footer_font{
+    color: gray;
+  } 
+
+//=====================================User Card User Index=================================
+  .instagram-wrap {
+    background: grey;
+  }
+
+  .description{
+    font-size: 12px;
+    background: white;
+    color: mediumgrey;
+    letter-spacing: 0.5px;
+    padding: 1.5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+//========== Medium devices (desktops, 992px and up)==========================================
 
 @media (min-width: 992px) { 
 
@@ -30,36 +146,146 @@
     margin-top: 10px;
     margin-left: 250px;
 
-  }  
+  } 
+
   #display_image img {
     margin-left: 250px;
-    width: 400px;
+    width: 250px;
+    height: 250px;
   }
 
-//================Contacts========================================================
+//================User show Contacts========================================================
   .col-md-5 {
     margin-left: -75px;
   }
 
 
-  #contact_user {
+  .contact_user {
     width: 400px;
   }
 
-  #edit_user {
+  .edit_user {
     width: 400px;
   }
+
+//==================User index =============================================================
+  #user_role{
+    width: 25%;
+    display: inline-block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  #hiring_board_title, #role_filter{
+    margin-left: 120px;
+  }
+
+  #user-pagination{
+    float: right;
+    margin-right: 100px;
+  }
+
+  #paginated_users{
+    margin-top: 15px;
+  }
+
+  #filter_bar{
+    margin-left: 0px;
+  }
+
+//*------------------------User Index User Cards--------------------------------------------
+  .user-card{
+    display: inline-block;   
+  }
+
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+  
+  
+
+  .image-wrap img{
+    padding-top: 15px;
+    margin-left: 70px;
+    height: 210px;
+    width: 210px;
+  }
+
+  .description{
+    margin-left:70px;
+    margin-top: 10px;
+    font-family:raleway;
+    height: 155px;
+  }
+
+  #view_profile_btn{
+    display: inline-block;
+    width: 100px;
+    margin-top: -30px;
+    margin-left: 20px;
+  }
+
+  .send_text{
+    margin-left: 70px;
+    margin-top: -30px;
+  }
+  
+  #user_has_vehicle{
+    margin-right: 5px;
+    margin-left: -10px;
+  }
+
+  .username p {
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+//*------------------------User Log In Page--------------------------------------------
+
+
+  #user_login{
+    width: 450px;
+  }
+
+  #login_footer{
+    margin-left: 60px;
+  }
+
+  #user_remember_me{
+    margin-left: 100px;
+    margin-top: -4px;
+  }
+
+//=================================User Sign Up ==================================================
+  #login_page{
+    margin-left: 700px;
+  }
+
+//=============================User Edit Profile==================================================
+  .profile_page{
+    margin-left: 700px;
+  }
+
+//============================================================================================
 
 }
 
-/* ----------- iPhone 5 and 5S ----------- */
+/* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
 @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
-    #contact_user {
+ 
+//=================================User Show Page=======================================================
+
+    .contact_user {
       width: 290px;
     }
 
@@ -68,24 +294,155 @@
       width:290px;
     }
  
-    #edit_user {
+    .edit_user {
       width: 290px;
     }
 
     #display_image img{
-      width: 290px;
+      width: 250px;
+      height: 250px;
     }
+
+//================================User index selection=============================================
+    #user_role{
+      width: 70%;
+      margin-bottom: 10px;
+      display: inline-block;
+
+    }
+
+    .user-dropdown > li > a{
+      width: 80%;
+      padding: 3px 20px;
+      display: inline-block;
+      font-weight: normal;
+      line-height: 1.42857143;
+      color: #333333;
+      white-space: normal;
+      margin-right: 300px;
+    }
+
+    .user-dropdown {
+      width: 180px;
+    }
+
+    #filter_bar{
+      margin-left: 0px;
+      margin-bottom: 15px;
+    }
+
+   
+
+    
+//=====================User reset password enter email address passwords/new ============================
+    .reset_info{
+      width: 270px;
+
+    }
+
+    .reset_pw_info{
+      width: 270px;
+
+    }
+//*------------------------User Log In Page--------------------------------------------
+  .string.email.optional{
+    width:100%;
+  } 
+  .password.optional{
+    width:100%;
+  }
+
+  #sign_up_now_btn{
+    width: 100px;
+  }
+
+  #forgot_password_btn{
+    width: 150px;
+    padding-left: 5px;
+  }
+
+  #login_footer{
+    margin-left: 10px;
+  }
+
+  #user_remember_me{
+    margin-left: 30px;
+    margin-top: -4px;
+  }
+
+//==========================User Card Index Page================================================
+ .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 290px;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .image-wrap img{
+    padding-top: 15px;
+    width: 200px;
+    height: 200px;
+    margin-left: 40px;
+    
+  }
+
+  .description{
+    margin-left:40px;
+    margin-top: 10px;
+  }
+  
+  #view_profile_btn{
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+  .send_text{
+    margin-left:35px;
+  }
+    
+  .username p {
+    margin: 0 0 5px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+    
+//=================================User Sign Up ==================================================
+  #login_page{
+    margin-left: 150px;
+  
+  }
+
+//=============================User Edit Profile==================================================
+  .profile_page{
+    margin-left: 100px;
+  }
+
+
+
+//==========================================================================================
+
+
 
 }
 
-/* ----------- iPhone 6 ----------- */
+
+
+/* ----------- iPhone 6 ---------------------------------------------------------------------------- */
 
 /* Portrait and Landscape */
 @media only screen 
   and (min-device-width: 375px) 
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
-    #contact_user {
+//============================User Show Page=======================================================
+  
+    .contact_user {
       width: 340px;
     }
 
@@ -94,15 +451,216 @@
       width:340px;
     }
  
-    #edit_user {
+    .edit_user {
       width: 340px;
     }
 
     #display_image img{
-      width: 340px;
+      width: 250px;
+      height: 250px;
     }
+
+
+   
+
+//===================================User Index===========================================
+    #filter_by{
+      display:block;
+    }
+
+    #sort_by{
+      margin-left: 10px;
+    }
+
+//=================================================================================================
+//*------------------------User Log In Page--------------------------------------------
+  #login_footer{
+    margin-left: 25px;
+  }
+
+
+
+//==========================User Card Index Page================================================
+ .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 300px;
+    margin-left: 15px;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .image-wrap img{
+    padding-top: 15px;
+    width:200px;
+    height: 200px;
+    margin-left: 45px;
+    
+  }
+
+  .description{
+    margin-left:45px;
+    margin-top: 10px;
+  }
+
+  .send_text {
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  #view_profile_btn{
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+//=================================User Sign Up ==================================================
+  #login_page{
+    margin-left: 200px;
+  
+  }
+
+//=============================User Edit Profile==================================================
+  .profile_page{
+    margin-left: 150px;
+  }
+
+
+//==========================================================================================
+
+  
+}
+
+//-------***** iPhone 6 plus *****----------------------------------------------------------------
+  @media only screen 
+  and (min-device-width: 414px)
+  and (max-device-width: 736px) { 
+  //==========================User Card Index Page================================================
+  
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 300px;
+    margin-left: 30px;
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .image-wrap img{
+    padding-top: 15px;
+    width:200px;
+    height: 200px;
+    margin-left: 40px;
+    
+  }
+
+  .description{
+    margin-left:35px;
+    margin-top: 10px;
+  }
+
+
+
+//=================================User Sign Up ==================================================
+  #login_page{
+    margin-left: 230px;
+  
+  }
+
+//=============================User Edit Profile==================================================
+  .profile_page{
+    margin-left: 200px;
+  }
+
+
 
 }
 
 
+/* PORTRAIT:
+  Arnova 7 G2
+  BlackBerry Bold 9780
+  HTC Desire Z
+  Nokia N900
+  Samsung Galaxy Grand*/
+//====================================User card================================================
+@media only screen and (max-width: 480px) and (orientation : portrait) {
+  
+  .image-wrap img{
+    padding-top: 15px;
+    width:200px;
+    height: 200px;
+    margin-left: 40px;
+    
+  }
 
+
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    width: 290px;
+   
+  }
+
+  .photos-wrap{
+    margin-right:10px;
+    margin-top:20px;
+  }
+
+  .description{
+    margin-left:35px;
+    margin-top: 10px;
+  }
+
+  .send_text {
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #view_profile_btn{
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+//================================User index selection=============================================
+    #user_role{
+      width: 70%;
+      margin-bottom: 10px;
+      display: inline-block;
+
+    }
+
+    .user-dropdown > li > a{
+      width: 80%;
+      padding: 3px 20px;
+      display: inline-block;
+      font-weight: normal;
+      line-height: 1.42857143;
+      color: #333333;
+      white-space: normal;
+      margin-right: 300px;
+    }
+
+    .user-dropdown {
+      width: 180px;
+    }
+
+    #filter_bar{
+      margin-left: 0px;
+      margin-bottom: 15px;
+    }
+
+    #display_image img {
+      width: 250px;
+      height: 250px;
+    }
+
+}

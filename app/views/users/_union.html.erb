@@ -8,13 +8,14 @@
       <div class="role_font"> 
         <% eligibility= @eligibilities.find_by(union_id: union.id) %>
         <% if eligibility.member == true %>
+          
           <%="User is a member" %>
         <% elsif eligibility.permit_days.to_i >0 %>
-          <%= "Permit days:" + " " + eligibility.permit_days.to_s %>
+          <%= "Permit days:" + " " + eligibility.permit_days.to_s + " days"%>
         <% else %>
         <% end %> 
-      </div>
-        <% @eligibilities.each do |e| %>          
+      </div> 
+        <% @eligibilities.each do |e| %>                
           <% if e.union_id == union.id %> 
            <% role = @roles.find(e.role_id) %>
             <div class="role_font">

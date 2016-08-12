@@ -1,0 +1,97 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#editCertificate" aria-expanded="false" aria-controls="editCertificate" id="editCertificateToggle"><span class="caret rotated"></span> Certificates</a>
+    </h3>
+  </div>
+
+  <div id="editCertificate" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editCertificate">
+
+   <div class="list-group">
+
+      <%@certificates.each do |certificate| %>
+        <div class="list-group-item" id="button-cert-<%=certificate.id%>">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit-cert-<%=certificate.id%>" aria-expanded="false" aria-controls="edit<%=certificate.name.tr(' ','-')%>">
+            <%= certificate.name %>
+          </a>
+        </div>
+      <% end %>
+
+      <div class="list-group-item">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#newCertificate" aria-expanded="false" aria-controls="newCertificate">
+          Create New
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <%@certificates.each do |certificate| %>
+    <div id="edit-cert-<%=certificate.id%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit<%=certificate.name.tr(' ','-')%>">
+      <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
+        <h5> Certificate Name: </h5>
+        <div class="certificate-name" contenteditable="true"><%=certificate.name %></div>
+        <span class="error" hidden="true" class="certificate-name-error"> *Name is not valid</span>
+      </div>
+
+      <div class="field certificate-info" data-certificate-id="<%=certificate.id %>">
+        <h5> Add some users: </h5>
+        <%@users.each do |user| %>
+          <label>            
+            <div hidden="true"><%=user.id%></div>
+              <% if user.certificates.include? certificate %>
+                
+                <% if user.certifiables.find_by(certificate_id: certificate.id) %>
+                <input 
+                  type="checkbox" 
+                  class="edit-users" 
+                  id="<%=certificate.id%>-<%=user.id%>" 
+                  name="<%=certificate.id%>-<%=user.id%>" 
+                  value="<%=user.name%>" 
+                  data-user-id="" 
+                  data-label-id="" 
+                  data-certifiable-id="<%=user.certifiables.find_by(certificate_id: certificate.id).id%>" 
+                  checked/><%end%>
+                  <%=user.name%>
+              <%else%>
+                <input type="checkbox" class="edit-users" id="<%=certificate.id%>-<%=user.id%>" name="<%=certificate.id%>-<%=user.id%>" value="<%=user.name%>" data-user-id="" data-label-id="" data-certifiable-id=""/><%=user.name%>
+              <%end%>
+          </label>
+        <%end%>
+      </div>
+
+        <div class="field certificate-info">
+          <button class="delete-certificate" data-certificate-id="<%=certificate.id %>">Delete</button>
+        </div>
+
+    </div>
+
+  <%end%>
+
+  <div id="newCertificate" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newCertificate">
+
+    <div class="field certificate-info" data-certificate-id="">
+      <h5> Certificate Name: </h5>
+      <div class="certificate-name" contenteditable="true"></div>
+        <span class="error" hidden="true" class="certificate-name-error"> *Name is not valid</span>
+    </div>
+
+    <div class="field certificate-info" data-certificate-id="" id="new-certificate-users">
+      <h5> Add some users: </h5>
+      <%@users.each do |user| %>
+        <label>            
+          <div hidden="true"><%=user.id%></div>
+            <input type="checkbox" class="edit-users" id="" name="" value="<%=user.name%>" data-user-id="" data-label-id="" data-eligibility-id=""/><%=user.name%>
+        </label>
+      <%end%>
+    </div>
+
+    <div class="field role-info" >
+      <button id="save-new-certificate">Save</button>
+    </div>
+
+    <div class="field certificate-info">
+      <button class="delete-certificate" data-certificate-id="">Cancel</button>
+    </div>
+  </div>
+</div>

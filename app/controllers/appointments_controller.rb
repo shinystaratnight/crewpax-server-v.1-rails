@@ -5,7 +5,6 @@ class AppointmentsController < ApplicationController
     @appointments = @user.appointments
     respond_to do |format|
       if @appointments.empty? 
-
         format.html {render @user}
         format.json {render json: @appointments}
       else 
@@ -18,10 +17,9 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    @appointment= Appointment.new(appointment_params)
+    @appointment = Appointment.new(appointment_params)
     respond_to do |format|
       if @appointment.save
-        format.html{redirect_to @user}
         format.json{render json: @appointment}
       else
         format.html{render action: "new"}
@@ -42,19 +40,7 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  # before_filter :authenticate_user!
 
-  # def toggle
-  #   appointment = current_user.appointments.where date: params[:date]
-
-  #   if appointment.exists?
-  #     appointment.first.destroy
-  #   else
-  #     current_user.appointments.create date: params[:date]
-  #   end
-
-  #   render nothing: true
-  # end
   private
 
   def appointment_params
