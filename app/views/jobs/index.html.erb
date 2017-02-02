@@ -1,19 +1,19 @@
 <% if user_signed_in? %>
   <div class="page-header">
-    <h1 id="job_board">Job Board</h1> 
+    <h1 id="job_board">Job Board</h1>
       <%= link_to new_job_path, class: 'btn btn-primary btn-lg', id:'post_job_button' do %>
       <i class="fa fa-paper-plane-o" aria-hidden="true" style="font-weight: bold;"></i>
       Post Job
       <% end %>
-  
+
   </div>
- 
+
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
   <table id="job_posts_table" cellspacing="0" class="display responsive no-wrap">
       <span id="search_job_posts"> Search by Roles:
         <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%>
         <%= render "search_location" %>
-      </span>      
+      </span>
         <%=link_to "Reset", jobs_path, id: "job_reset_button", class: "btn btn-danger" %>
         <span id="job_filled_indicator">
           <button class="btn btn-lg btn-danger"></button> Job has been filled
@@ -21,7 +21,7 @@
       </br>
     <thead>
       <tr role="row">
-        <th>Company</th>
+        <th>Location</th>
         <th>Title</th>
         <th>Starts</th>
         <th hidden="true">Location</th>
@@ -33,13 +33,13 @@
         <% if job.job_filled == true  %>
           <tr class="job_detail" data-job-id="<%=job.id %>">
             <td class="job_has_filled">
-              <%=link_to job.company_name, job_path(job), class: "job_has_filled"  %>
+              <%=link_to job.location, job_path(job), class: "job_has_filled"  %>
             </td>
             <td class="job_has_filled">
               <%= link_to job.name, job_path(job), class: "job_has_filled"  %>
             </td>
             <td class="job_has_filled">
-              <%=job.starts_on.strftime("%b %d, %Y") %>            
+              <%=job.starts_on.strftime("%b %d, %Y") %>
             </td>
             <td hidden="true">
               <%=job.location %>
@@ -51,13 +51,13 @@
         <% else %>
           <tr class="job_detail" data-job-id="<%=job.id %>">
             <td>
-              <%=link_to job.company_name, job_path(job) %>
+              <%=link_to job.location, job_path(job) %>
             </td>
             <td>
               <%= link_to job.name, job_path(job) %>
             </td>
             <td>
-              <%=job.starts_on.strftime("%b %d, %Y")%>            
+              <%=job.starts_on.strftime("%b %d, %Y")%>
             </td>
             <td hidden="true">
               <%=job.location %>
@@ -66,7 +66,7 @@
               <%=job.role_id %>
             </td>
           </tr>
-        <% end %>        
+        <% end %>
       <% end %>
     </tbody>
   </table>

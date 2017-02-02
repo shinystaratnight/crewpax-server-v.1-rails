@@ -2,14 +2,18 @@ development:
   adapter: postgresql
   database: bcpax-development
   host: localhost
+  user: development
+  password: development
 test:
   adapter: postgresql
   database: bcpax-test
   host: localhost
+  user: development
+  password: development
 
 production:
   adapter: postgresql
-  host: localhost 
+  host: localhost
   user: rails
   password: 7l0uvHN2aD
 
