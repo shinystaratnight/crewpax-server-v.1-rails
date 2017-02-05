@@ -1,15 +1,15 @@
 <div class= "container" id="user_login">
   <header id="login_header"> Log in to Crew Call</header>
     <div class="login">
-    
-        <%= link_to "Log in with Facebook", user_omniauth_authorize_path(:facebook), id: "sign_in_facebook", class: "facebook btn btn-block btn-primary"  %>
-    
+
+        <%= link_to "Log in with Facebook", user_facebook_omniauth_authorize_path(:facebook), id: "sign_in_facebook", class: "facebook btn btn-block btn-primary"  %>
+
       </br>
       <%= simple_form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
         <%= f.input :email, placeholder: "Email", label:false, input_html: { autofocus: true } %>
         <%= f.input :password, placeholder: "Password", label:false, input_html: { autocomplete: 'off' } %>
-        <%= f.input :remember_me, as: :boolean %>        
-        <%= f.button :submit, 'Log in', class: 'btn-block login_button' %>    
+        <%= f.input :remember_me, as: :boolean %>
+        <%= f.button :submit, 'Log in', class: 'btn-block login_button' %>
       <%end %>
     </div>
         <span id="login_footer">
@@ -17,6 +17,6 @@
           "sign_up_now_btn"  %>
           <%= link_to 'Forgot your password?', new_password_path(resource_name), class: 'btn login_footer_font', id: "forgot_password_btn" %>
         </span>
-</div> 
+</div>
 
 

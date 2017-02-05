@@ -5,18 +5,18 @@
 <div class="row" id="filter_bar">
   <span id="role_filter">Select crews by Role: </span><%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'user_role', data:{selected_user_role: ""}, name: 'user_role_id'
   %>
-  <div class= "btn-group" id="filter_by"> 
+  <div class= "btn-group" id="filter_by">
     <button class="btn btn-default" id="sort_by_label"> Filter By</button>
     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-angle-down"></i>
     </button>
-    <ul class="user-dropdown dropdown-menu" >    
-      <li class="query" id ="has_a_vehicle" data-clickable=""><%=link_to 'Has a Vehicle', users_path(has_vechile: true), data: {selected_role_id: ""}%></li>
+    <ul class="user-dropdown dropdown-menu" >
+      <li class="query" id ="has_a_vehicle" data-clickable=""><%=link_to 'Has a Vehicle', users_path(has_vehicle: true), data: {selected_role_id: ""}%></li>
       <li class="query" id ="union_member" data-clickable=""><%=link_to 'Union Status: Member', users_path(union_member: true), data: {selected_role_id: ""}%></li>
       <li class="query" id ="union_permit" data-clickable=""><%=link_to 'Union Status: Permit', users_path(union_permit: true), data: {selected_role_id: ""}%></li>
   </div>
 
-  <div class= "btn-group" id="sort_by"> 
+  <div class= "btn-group" id="sort_by">
     <button class="btn btn-default" id="sort_by_label"> Sort By</button>
     <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-angle-down"></i>
@@ -29,26 +29,26 @@
   </div>
   <span><%=link_to "Reset", users_path, id: "reset_button", class: "btn btn-danger"%></span>
   </br>
-  
+
   <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
-  
+
 </div>
   <div class="container">
-    <div class="row" id="paginated_users">  
+    <div class="row" id="paginated_users">
       <span><%=render "user_cards" %></span>
       <div id="user-list"></div>
     </div>
 
   </div>
   </br>
-  
+
   <footer id="user-pagination">
     <%=render "user_paging" %>
   </footer>
 
 
 
- 
+
 
 
 

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '~> 4.2.5'
 gem 'pg'
 gem 'sass-rails'
 gem 'bootstrap-sass'
@@ -19,7 +19,10 @@ gem 'font-awesome-sass'
 gem "simple_calendar", "~> 2.0"
 gem 'omniauth-facebook'
 gem 'twilio-ruby'
-# gem 'jquery-datatables-rails', '~> 3.4'
+gem 'jquery-datatables-rails', '~> 3.4'
+
+#added to try to get a handle on handlebars js. (not sorry :))
+# gem 'handlebars_assets'
 
 
 
