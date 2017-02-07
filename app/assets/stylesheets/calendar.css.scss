@@ -59,16 +59,40 @@
 
   }
 
+
+
+  #availability_header {
+    margin-left: 250px;
+
+  }
+
+  #links_to_other_month{
+    font-size: 18px;
+    margin-left: 95px;
+    padding-right: 10px;
+  }
+
+
   .small-calendar {
-    margin-left: 125px;
-    width: 140px;
+    margin-left: 60px;
+    padding: 25px 0 20px 0;
+    width: 280px;
       .day {
-        margin: 1px;
-        width: 18px;
-        height: 15px;
-        padding-left: 5px;
+        margin: 2px;
+        width: 36px;
+        height: 30px;
+        padding-left: 10px;
 
       }
+    // margin-left: 125px;
+    // width: 140px;
+    //   .day {
+    //     margin: 1px;
+    //     width: 18px;
+    //     height: 15px;
+    //     padding-left: 5px;
+
+    //   }
 
       .wday-0 {}
       .wday-1 {}
@@ -101,17 +125,11 @@
 
   }
 
-  #availability_header {
-    margin-left: 250px;
-
-  }
-
-  #links_to_other_month{
+  #links_to_other_weeks{
     font-size: 18px;
-    margin-left: 95px;
+    margin-left: 42px;
     padding-right: 10px;
   }
-
 
 }
 
