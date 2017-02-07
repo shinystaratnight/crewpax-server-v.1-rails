@@ -1,33 +1,33 @@
-//======= In general 
+//======= In general
 
 .available{
   border: 5px solid white;
   background-color: #5cb85c;
-   
+
 }
 
 .today {
   border-bottom: 5px #ffff00  solid;
-  
+
 }
 
 
 
-//========== Medium devices (desktops, 992px and up) 
+//========== Medium devices (desktops, 992px and up)
 
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
 
   .simple-calendar {
     margin-left: 250px;
     width: 280px;
       .day {
         margin: 2px;
-        width: 36px; 
+        width: 36px;
         height: 30px;
         padding-left: 10px;
 
       }
-      
+
       .wday-0 {}
       .wday-1 {}
       .wday-2 {}
@@ -36,7 +36,7 @@
       .wday-5 {}
       .wday-6 {}
 
-      
+
       .past {}
       .future {}
 
@@ -56,14 +56,54 @@
         width: 400px;
         height: 200px;
       }
-      
+
   }
 
- 
+  .small-calendar {
+    margin-left: 125px;
+    width: 140px;
+      .day {
+        margin: 1px;
+        width: 18px;
+        height: 15px;
+        padding-left: 5px;
+
+      }
+
+      .wday-0 {}
+      .wday-1 {}
+      .wday-2 {}
+      .wday-3 {}
+      .wday-4 {}
+      .wday-5 {}
+      .wday-6 {}
+
+
+      .past {}
+      .future {}
+
+      .start-date {}
+
+      .prev-month {}
+      .next-month { }
+      .current-month {}
+
+      .has-events {}
+      .th{
+        padding-left:5px;
+        padding-right:5px;
+      }
+
+      table{
+        width: 200px;
+        height: 100px;
+      }
+
+  }
 
   #availability_header {
     margin-left: 250px;
-  
+
   }
 
   #links_to_other_month{
@@ -78,8 +118,8 @@
 /* ----------- iPhone 5 and 5S ----------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
+@media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
@@ -96,7 +136,7 @@
   #links_to_other_month{
     font-size: 16px;
     margin-left: 80px;
-   
+
   }
 
 }
@@ -105,10 +145,10 @@
 /* ----------- iPhone 6 ----------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
       table {
         width: 320px;
@@ -126,10 +166,10 @@
 /* ----------- iPhone 6 plus----------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
       table {
         width: 375px;
@@ -140,10 +180,10 @@
         padding-left: 10px;
       }
     }
-    
+
     #links_to_other_month{
       font-size: 20px;
       margin-left: 110px;
-   
+
   }
 }

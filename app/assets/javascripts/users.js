@@ -422,6 +422,10 @@ $(function(){
             union_permit: this.union_permit,
             availability: this.availabilities,
             path: "users/" + this.user_info.id,
+            // adding new variables for two week calendar
+            // appointments: this.appointments.map(function(a) {
+            //   return a.date;
+            // }),
         };
 
         var html = user_card_template(context);

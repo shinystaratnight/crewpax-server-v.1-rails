@@ -421,7 +421,7 @@ DEPENDENCIES
   omniauth-facebook
   pg
   pry
-  rails (~> 4.2.5)
+  rails (~> 4.2.6)
   rspec-rails
   sass-rails
   simple_calendar (~> 2.0)

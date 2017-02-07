@@ -4,14 +4,25 @@ class UsersController < ApplicationController
   respond_to :html, :json, :js
   # caches_page :index
   def index
+
     respond_to do |format|
       if params[:current_page_number] == "0" || params[:current_page_number] == nil
         @users = {};
         @total_user = User.all.length
         @paginated_users = User.limit(30)
+
+        # added for two week calendar
+        # @paginated_users.each do |user|
+        #   if !user.cal_start_date.present?
+        #     user.cal_start_date = user.start_date
+        #   end
+        #   # user.@cal_date_range = user.date_range(user.cal_start_date)
+        # end
+
         @paginated_user_info = convert_user_info_json(@paginated_users)
         # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
+
         format.html
         format.json{render json: @users}
 
@@ -19,6 +30,15 @@ class UsersController < ApplicationController
         @users = {};
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
         @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
+
+        # added for two week calendar
+        # @paginated_users.each do |user|
+        #   if !user.cal_start_date.present?
+        #     user.cal_start_date = user.start_date
+        #   end
+        #   # user.@cal_date_range = user.date_range(user.cal_start_date)
+        # end
+
         # @paginated_users = User.limit(30).offset(@ajax_request_time * 3)
         #offset is for pagination, offset increases as page number goes up
         #offset(n) => offset(start)from the nth element of the array
@@ -28,6 +48,7 @@ class UsersController < ApplicationController
         format.html
         format.json{render json: @paginated_user_info}
       end
+
     end
   end
 
@@ -46,10 +67,14 @@ class UsersController < ApplicationController
       if params[:start_date].present?
         @start_date = params[:start_date]
         @date_range = @user.date_range(@start_date)
+        # @date_range_two = @user.date_range_two(@start_date)
+
         format.js
       else
         @start_date = @user.start_date
         @date_range = @user.date_range(@start_date)
+        # @date_range_two = @user.date_range_two(@start_date)
+
         format.html{render :show}
       end
     end
