@@ -1,4 +1,4 @@
-<div class="small-calendar">
+<div class="small-calendar"> <!-- small calendar -->
   <div id="links_to_other_month">
     <%= link_to "<<", url_for(params.merge(start_date: @tw_date_range.first - 1.day)), remote: true %>
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
