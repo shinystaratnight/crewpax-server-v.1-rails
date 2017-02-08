@@ -180,6 +180,56 @@ $(function(){
     }
   });
 
+  // fix this soon
+
+  Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
+    function pad2(number) {
+     return (number < 10 ? '0' : '') + number;
+    }
+    var d=new Date();
+    var dd=pad2(d.getDate());
+    var mm=pad2(d.getMonth()+1);
+    var yyyy=d.getFullYear();
+    var today=yyyy+mm+dd;
+
+    day = day.toString();
+    dashedDay = day.substring(0,4)+"-"+day.substring(4,6)+"-"+day.substring(6,8)
+    var wday = ((new Date(dashedDay).getDay() + 1) % 7).toString();
+    var td_class = "day ";
+    td_class += "wday-" + wday;
+
+    if (day == today){
+      td_class += " today ";
+    } else if (day < today) {
+      td_class += " past ";
+    } else {
+      td_class += " future ";
+    }
+
+    if (day == start_date.toString()) {
+      td_class += "start-date ";
+    }
+    if (day.substring(4,6) != start_date.toString().substring(4,6)) {
+      if (day < start_date) {
+        td_class += "prev-month ";
+      } else {
+        td_class += "next-month ";
+      }
+    } else {
+      td_class += "current-month ";
+    }
+
+    if ($.inArray(dashedDay, availability)) {
+      td_class += "available";
+    } else {
+      td_class += "unavailable";
+    }
+
+    // td_class = start_date + ", " + date;
+    console.log(td_class);
+    return td_class;
+  });
+
 
 
 
@@ -412,6 +462,25 @@ $(function(){
 
         var user_card_template = Handlebars.compile(user_source);
 
+        //===== stuff to be altered a lot ======//
+        // var appt_selection = $('.appointments').text().trim().split(';');
+        // var appointments = [];
+        // // console.log(appt_selection);
+        // // console.log(this.user_info.id)
+        // for (var i = 0; i < appt_selection.length; i += 2) {
+        //   if (appt_selection[i] == this.user_info.id && appt_selection[i+1]) {
+        //     appointments.push([appt_selection[i], appt_selection[i+1]]);
+        //   }
+        // }
+        // console.log(appointments);
+        //======================================//
+
+        //===== new td appointments function ===//
+
+                        //here//
+
+        //======================================//
+
         var context = {
             id: this.user_info.id,
             name: this.user_info.name,
@@ -423,9 +492,7 @@ $(function(){
             availability: this.availabilities,
             path: "users/" + this.user_info.id,
             // adding new variables for two week calendar
-            // appointments: this.appointments.map(function(a) {
-            //   return a.date;
-            // }),
+            // appointments: this.user_info.appointments
         };
 
         var html = user_card_template(context);

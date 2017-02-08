@@ -13,10 +13,12 @@ class UsersController < ApplicationController
 
         # added for two week calendar
         # @paginated_users.each do |user|
-        #   if !user.cal_start_date.present?
-        #     user.cal_start_date = user.start_date
+        #   user.appointments = []
+        #   Appointment.where(user_id: user.id).each do |appt|
+        #     if appt.date
+        #       user.appointments.push(appt.date)
+        #     end
         #   end
-        #   # user.@cal_date_range = user.date_range(user.cal_start_date)
         # end
 
         @paginated_user_info = convert_user_info_json(@paginated_users)
@@ -32,11 +34,14 @@ class UsersController < ApplicationController
         @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
 
         # added for two week calendar
+
         # @paginated_users.each do |user|
-        #   if !user.cal_start_date.present?
-        #     user.cal_start_date = user.start_date
+        #   user.appointments = []
+        #   Appointment.where(user_id: user.id).each do |appt|
+        #     if appt.date
+        #       user.appointments.push(appt.date)
+        #     end
         #   end
-        #   # user.@cal_date_range = user.date_range(user.cal_start_date)
         # end
 
         # @paginated_users = User.limit(30).offset(@ajax_request_time * 3)

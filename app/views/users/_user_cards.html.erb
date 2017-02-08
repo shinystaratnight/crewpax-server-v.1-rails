@@ -13,11 +13,12 @@
                   <!-- < % = @user = User.find(2) %> -->
                   <p hidden>
                     <%= @tw_start_date = Time.zone.now.to_date %>
-                  </p>
-                  <p hidden>
+
                     <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
                   </p>
-                 <%= render "calendartwoweek" %>
+                  <div class="small-calendar"> <!-- small calendar -->
+                    <%= render "calendartwoweek" %>
+                  </div>
                 </div>
                 <div class="description">
                   <span class="username">

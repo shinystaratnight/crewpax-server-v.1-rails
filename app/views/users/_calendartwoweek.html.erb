@@ -1,9 +1,8 @@
-<div class="small-calendar"> <!-- small calendar -->
-  <div id="links_to_other_weeks">
+<div id="links_to_other_weeks">
     <%= link_to "<<", url_for(params.merge(start_date: @tw_date_range.first - 1.day)), remote: true %>
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
     <%= link_to ">>", url_for(params.merge(start_date: @tw_date_range.last + 1.day)), remote: true %>
-</div>
+  </div>
   <table>
     <thead>
       <tr>
@@ -17,15 +16,16 @@
       <% @tw_date_range.each_slice(7).each do |week| %>
         <tr>
           <% week.each do |day| %>
-              <%= content_tag :td, class: "day wday-1 today current-month available" do %>
-                <%= Date.parse(day.to_s).mday %>
-              <% end %>
+            <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
+              <%= Date.parse(day.to_s).mday %>
+              <p hidden class="twoWeekCalDay"><%= day.to_s %></p>
+              <p hidden class="startDate"><%= @tw_start_date %></p>
+            <% end %>
           <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
-</div>
 
 
 
