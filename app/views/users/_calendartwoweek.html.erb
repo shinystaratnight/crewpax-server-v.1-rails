@@ -18,8 +18,6 @@
           <% week.each do |day| %>
             <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
               <%= Date.parse(day.to_s).mday %>
-              <p hidden class="twoWeekCalDay"><%= day.to_s %></p>
-              <p hidden class="startDate"><%= @tw_start_date %></p>
             <% end %>
           <% end %>
         </tr>
