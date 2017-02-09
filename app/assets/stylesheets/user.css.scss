@@ -1,5 +1,5 @@
 //==========In General==========================
-  
+
   .field {
     border: 1px solid #ddd;
     margin: 5px 2px;
@@ -10,7 +10,7 @@
       padding: 0 5px;
     }
   }
-   
+
   .required-fields {
    @extend .field;
    background-color: #dbf1f7;
@@ -19,7 +19,7 @@
     background-color: #f5f5f5;
    }
   }
-  
+
 
   body{
     font-family: raleway, sans-serif;
@@ -44,12 +44,12 @@
   #reset_button{
     color: white;
   }
- 
+
   #new_file_upload_form{
     margin-left: 15px;
   }
 
-  
+
 //*------------------------User Log In Page--------------------------------------------
   .facebook {
     background: rgba(59, 89, 152,1);
@@ -63,15 +63,15 @@
   .login {
     padding: 20px;
     text-align: center;
-    background: rgba(255,255,255,1); 
+    background: rgba(255,255,255,1);
     color: rgba(51,51,51,1);
     margin-bottom: -25px;
   }
-  
+
   #login_header{
     padding: 20px;
-   
-    
+
+
     font-size: 1.2em;
   }
 
@@ -82,11 +82,11 @@
     height: 50px;
     background: #5cb85c;
     color: rgba(255,255,255,1);
-    border: 0;   
+    border: 0;
     font-size: 1em;
   }
 
-  
+
   #sign_in_facebook{
     color:white;
   }
@@ -95,7 +95,7 @@
     width: 500px;
     margin-top: 150px;
   }
-  
+
   .reset_info{
     width: 300px;
 
@@ -109,15 +109,15 @@
 
   .login_footer_font{
     color: gray;
-  } 
+  }
 
 //=====================================User Card User Index=================================
   .instagram-wrap {
     background: grey;
   }
 
-  .description{
-    font-size: 12px;
+  .description {
+    font-size: 13px;
     background: white;
     color: mediumgrey;
     letter-spacing: 0.5px;
@@ -127,15 +127,16 @@
     text-overflow: ellipsis;
   }
 
+
 //========== Medium devices (desktops, 992px and up)==========================================
 
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
 
 //=================These are for User show view page========================
   #user_display_name {
     margin-left: 250px;
   }
-  
+
   #user_info {
     margin-top: 20px;
     width:400px;
@@ -146,7 +147,7 @@
     margin-top: 10px;
     margin-left: 250px;
 
-  } 
+  }
 
   #display_image img {
     margin-left: 250px;
@@ -195,19 +196,26 @@
 
 //*------------------------User Index User Cards--------------------------------------------
   .user-card{
-    display: inline-block;   
+    display: inline-block;
+    width: 31.0%;
+  }
+
+  .user-card .col-md-4 {
+
   }
 
   .photo-box{
     box-shadow: -1px 1px 30px lightgray;
+    padding-bottom: 22px;
+    width: 341px;
   }
 
   .photos-wrap{
     margin-right:10px;
     margin-top:20px;
   }
-  
-  
+
+
 
   .image-wrap img{
     padding-top: 15px;
@@ -217,7 +225,7 @@
   }
 
   .description{
-    margin-left:70px;
+    margin-left: 60px;
     margin-top: 10px;
     font-family:raleway;
     height: 155px;
@@ -227,23 +235,31 @@
     display: inline-block;
     width: 100px;
     margin-top: -30px;
-    margin-left: 20px;
+    margin-left: 16px;
   }
 
   .send_text{
-    margin-left: 70px;
-    margin-top: -30px;
+    margin-left: 60px;
+    margin-top: -15px;
+    font-size: 13px;
+    width: 94px;
   }
-  
+
   #user_has_vehicle{
     margin-right: 5px;
-    margin-left: -10px;
+    margin-left: 13px;
+    font-size: 90%;
+    width: 80px;
   }
 
   .username p {
     margin: 0 0 5px;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
+  }
+
+  .phone-div {
+    padding: 4px 0 11px 0;
   }
 //*------------------------User Log In Page--------------------------------------------
 
@@ -278,11 +294,11 @@
 /* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
+@media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
- 
+
 //=================================User Show Page=======================================================
 
     .contact_user {
@@ -293,7 +309,7 @@
       margin-top: 20px;
       width:290px;
     }
- 
+
     .edit_user {
       width: 290px;
     }
@@ -331,9 +347,9 @@
       margin-bottom: 15px;
     }
 
-   
 
-    
+
+
 //=====================User reset password enter email address passwords/new ============================
     .reset_info{
       width: 270px;
@@ -347,7 +363,7 @@
 //*------------------------User Log In Page--------------------------------------------
   .string.email.optional{
     width:100%;
-  } 
+  }
   .password.optional{
     width:100%;
   }
@@ -372,7 +388,7 @@
 
 //==========================User Card Index Page================================================
  .photo-box{
-    box-shadow: -1px 1px 30px lightgray;
+    box-shadow: -1px 1px 24px lightgray;
     width: 290px;
   }
 
@@ -386,14 +402,14 @@
     width: 200px;
     height: 200px;
     margin-left: 40px;
-    
+
   }
 
   .description{
     margin-left:40px;
     margin-top: 10px;
   }
-  
+
   #view_profile_btn{
     width: 50px;
     display: inline-block;
@@ -404,18 +420,18 @@
   .send_text{
     margin-left:35px;
   }
-    
+
   .username p {
     margin: 0 0 5px;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
   }
 
-    
+
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 150px;
-  
+
   }
 
 //=============================User Edit Profile==================================================
@@ -436,12 +452,12 @@
 /* ----------- iPhone 6 ---------------------------------------------------------------------------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
 //============================User Show Page=======================================================
-  
+
     .contact_user {
       width: 340px;
     }
@@ -450,7 +466,7 @@
       margin-top: 20px;
       width:340px;
     }
- 
+
     .edit_user {
       width: 340px;
     }
@@ -461,7 +477,7 @@
     }
 
 
-   
+
 
 //===================================User Index===========================================
     #filter_by{
@@ -497,7 +513,7 @@
     width:200px;
     height: 200px;
     margin-left: 45px;
-    
+
   }
 
   .description{
@@ -510,7 +526,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  
+
   #view_profile_btn{
     width: 50px;
     display: inline-block;
@@ -521,7 +537,7 @@
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 200px;
-  
+
   }
 
 //=============================User Edit Profile==================================================
@@ -532,15 +548,15 @@
 
 //==========================================================================================
 
-  
+
 }
 
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
-  @media only screen 
+  @media only screen
   and (min-device-width: 414px)
-  and (max-device-width: 736px) { 
+  and (max-device-width: 736px) {
   //==========================User Card Index Page================================================
-  
+
   .photo-box{
     box-shadow: -1px 1px 30px lightgray;
     width: 300px;
@@ -557,7 +573,7 @@
     width:200px;
     height: 200px;
     margin-left: 40px;
-    
+
   }
 
   .description{
@@ -570,7 +586,7 @@
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 230px;
-  
+
   }
 
 //=============================User Edit Profile==================================================
@@ -591,20 +607,20 @@
   Samsung Galaxy Grand*/
 //====================================User card================================================
 @media only screen and (max-width: 480px) and (orientation : portrait) {
-  
+
   .image-wrap img{
     padding-top: 15px;
     width:200px;
     height: 200px;
     margin-left: 40px;
-    
+
   }
 
 
   .photo-box{
     box-shadow: -1px 1px 30px lightgray;
     width: 290px;
-   
+
   }
 
   .photos-wrap{
