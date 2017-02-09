@@ -180,8 +180,6 @@ $(function(){
     }
   });
 
-  // fix this soon
-
   Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
     function pad2(number) {
      return (number < 10 ? '0' : '') + number;
@@ -225,8 +223,6 @@ $(function(){
       td_class += "unavailable";
     }
 
-    // td_class = start_date + ", " + date;
-    console.log(td_class);
     return td_class;
   });
 

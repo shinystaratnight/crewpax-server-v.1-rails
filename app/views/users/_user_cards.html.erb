@@ -16,7 +16,7 @@
 
                     <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
                   </p>
-                  <div class="small-calendar"> <!-- small calendar -->
+                  <div class="small-calendar"> <!-- wrapper div for two-week calendar-specific CSS -->
                     <%= render "calendartwoweek" %>
                   </div>
                 </div>
