@@ -15,6 +15,7 @@
     <tbody>
       <% @tw_date_range.each_slice(7).each do |week| %>
         <tr>
+          <p>{{availability}}</p>
           <% week.each do |day| %>
             <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
               <%= Date.parse(day.to_s).mday %>

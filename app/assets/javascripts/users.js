@@ -219,7 +219,7 @@ $(function(){
       td_class += "current-month ";
     }
 
-    if ($.inArray(dashedDay, availability)) {
+    if (availability.indexOf(dashedDay) != -1) {
       td_class += "available";
     } else {
       td_class += "unavailable";
