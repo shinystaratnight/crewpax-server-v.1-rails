@@ -1,10 +1,10 @@
 //======= In general
 
-.available{
-  border: 5px solid white;
-  background-color: #5cb85c;
+// .available{
+//   border: 5px solid white;
+//   background-color: #5cb85c;
 
-}
+// }
 
 
 .today {
@@ -12,6 +12,39 @@
 
 }
 
+td.available .dot {
+  width: 7px;
+  height: 7px;
+  // border: 1px solid #aaa; /*To show the boundaries of the element*/
+}
+td.available .dot:before {
+  position: absolute;
+  content: '';
+  background-color:#22aa22;
+  border-color:#008800;
+  border-radius:50%;
+  opacity:0.5;
+  width: 7px;
+  height: 7px;
+  pointer-events: none;
+}
+
+td.unavailable .dot {
+  width: 7px;
+  height: 7px;
+  // border: 1px solid #aaa; /*To show the boundaries of the element*/
+}
+td.unavailable .dot:before {
+  position: absolute;
+  content: '';
+  background-color:#aa2222;   //previous setting: #c9302c
+  border-color:#880000;
+  border-radius:50%;
+  opacity:0.5;
+  width: 7px;
+  height: 7px;
+  pointer-events: none;
+}
 
 
 //========== Medium devices (desktops, 992px and up)
