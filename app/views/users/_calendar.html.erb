@@ -21,6 +21,7 @@
           <% week.each do |day| %>
               <%= content_tag :td, class: @user.td_classes_for(day,@appointments) do %>
                 <%= Date.parse(day.to_s).mday %>
+                <div class="dot"></div>
               <% end %>
           <% end %>
         </tr>
