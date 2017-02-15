@@ -1,12 +1,12 @@
 $(function(){
 
 //*********************************************************************************************************
-// Registration Form Personal Information Section 
+// Registration Form Personal Information Section
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $("#name").on("blur", function(){
     //Retrieve the info from user's entries and turn data into a nicely structured object (nesting included!)
-    //Check to see if a user is already created and decide which url the ajax should send to(create/update) 
+    //Check to see if a user is already created and decide which url the ajax should send to(create/update)
     var user_id = $("#info").data("user-id");
     if (user_id == "") {
       var url = "/users";
@@ -31,10 +31,10 @@ $(function(){
           if (response.id) {
             $("#info").data("user-id", response.id);
             $("#name").addClass("valid");
-          } else {              
+          } else {
             var errors = response.toString();
             $("#name-error").text("*"+ errors).show();
-            $("#name").addClass("invalid");   
+            $("#name").addClass("invalid");
           }
         }
       });
@@ -52,9 +52,9 @@ $(function(){
         return false;
       } else {
         $("#phone-error").hide();
-         
+
         $.ajax({
-          url:"/users/" + user_id, 
+          url:"/users/" + user_id,
           method:"put",
           dataType:"json",
           data:{user:{phone: phone}},
@@ -62,7 +62,7 @@ $(function(){
             $("#phone").addClass("valid");
             userCreated();
           },
-          error: function(xhr){  
+          error: function(xhr){
             var errors = $.parseJSON(xhr.responseText).toString();
             $("#phone").addClass("invalid");
             $("#phone-error").text("*"+ errors).show();
@@ -82,21 +82,21 @@ $(function(){
         return false;
     } else {
       $("#email-error").hide();
-      
+
       $.ajax({
-        url:"/users/" + user_id, 
+        url:"/users/" + user_id,
         method:"put",
         dataType:"json",
         data:{user:{email: email}},
         success: function(response){
-          $("#email").addClass("valid"); 
-          userCreated(); 
+          $("#email").addClass("valid");
+          userCreated();
         },
         error: function(xhr){
           var errors = $.parseJSON(xhr.responseText).error || $.parseJSON(xhr.responseText).toString();
           $("#email").addClass("invalid");
           $("#email-error").text("*"+ errors).show();
-  
+
         }
 
       });
@@ -109,19 +109,19 @@ $(function(){
   $("#mailing_address").on("blur", function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#mailing_address_info").data("address-id");
-    
-    if (address_id == "") { 
+
+    if (address_id == "") {
       var url = "/addresses";
       var method = "post";
     } else {
       var url = "/addresses/" + address_id;
       var method = "put";
     }
-    
+
     var mailing_address = $("#mailing_address").text().trim();
     var type = "Mailing";
     var user_id = $("#info").data("user-id");
-    
+
     if (mailing_address == "") {
         $(this).addClass("invalid");
         $(this).next().show();
@@ -129,7 +129,7 @@ $(function(){
     } else {
         $("#mailing-address-error").hide();
         $.ajax({
-          url:url, 
+          url:url,
           method:method,
           dataType:"json",
           data:{address:{type:type, address_input:mailing_address, user_id:user_id}},
@@ -145,7 +145,7 @@ $(function(){
 //============================================================================================
 
   $("#billing_address").on("blur", function(){
-    
+
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#billing_address_info").data("billing-id");
     if (address_id == "") {
@@ -155,7 +155,7 @@ $(function(){
       var url = "/addresses/" + address_id;
       var method = "put";
     }
-     
+
     var billing_address = $("#billing_address").text().trim();
     var type = "Billing";
     var user_id = $("#info").data("user-id");
@@ -165,17 +165,17 @@ $(function(){
         $(this).next().show();
         return false;
     } else {
-      $("#billing-address-error").hide();         
+      $("#billing-address-error").hide();
       $.ajax({
-        url:url, 
+        url:url,
         method:method,
         dataType:"json",
         data:{address:{type:type, address_input:billing_address, user_id:user_id}},
         success: function(response){
           if(response.id){
             $("#billing_address_info").data("billing-id", response.id)
-            $("#billing_address").addClass("valid"); 
-          }         
+            $("#billing_address").addClass("valid");
+          }
         }
       });
     }
@@ -186,7 +186,7 @@ $(function(){
   $("#shipping_address").on("blur", function(){
     // Need to check if the address.id exists, if yes -> post, no-> put
     var address_id = $("#shipping_address_info").data("shipping-id");
-    
+
     if (address_id == "") {
       var url = "/addresses";
       var method = "post";
@@ -194,7 +194,7 @@ $(function(){
       var url = "/addresses/" + address_id;
       var method = "put";
     }
-    
+
     var shipping_address = $("#shipping_address").text().trim();
     var type = "Shipping";
     var user_id = $("#info").data("user-id");
@@ -206,36 +206,36 @@ $(function(){
     } else {
       $("#shipping-address-error").hide();
       $.ajax({
-        url:url, 
+        url:url,
         method:method,
         dataType:"json",
         data:{address:{type:type, address_input:shipping_address, user_id:user_id}},
         success: function(response){
-          if(response.id){  
+          if(response.id){
             $("#shipping_address_info").data("shipping-id", response.id);
-            $("#shipping_address").addClass("valid"); 
+            $("#shipping_address").addClass("valid");
           }
         }
       });
-    }   
+    }
   });
 //===================================================================================
-  // To trigger Bootstrap Switch 
+  // To trigger Bootstrap Switch
   $("[name='my-checkbox']").bootstrapSwitch();
 
-//=====================Has a traffic control ticket? =========================================================  
+//=====================Has a traffic control ticket? =========================================================
   stateSwitch($('#traffic_control'))
 
 //=================Has a vehicle?============================================================
-  
+
   stateSwitch($('#vehicle'))
 //===================================================================================
   $("#upload_picture").on("change", function(){
     var formData = new FormData();
     var user_id = $("#info").data("user-id");
-    $input=$("#upload_picture");    
+    $input=$("#upload_picture");
     formData.append("user[image]",$input[0].files[0]);
-    
+
     $.ajax({
       url: "/users/"+ user_id,
       data: formData,
@@ -245,9 +245,9 @@ $(function(){
       method: 'put',
       success: function(response){
         $("#profile_pic").text("Profile picture saved").show();
-       
+
       }
-    });    
+    });
   });
 
 
@@ -265,8 +265,8 @@ $(function(){
       userCreated();
       $("#password-error").hide();
     }
-  });    
-      
+  });
+
     $("#password").pStrength({
       bind: 'keyup change',
       changeBackground: false,
@@ -278,8 +278,8 @@ $(function(){
         }
       }
     });
-    
- 
+
+
 
 
 //===================================================================================
@@ -294,14 +294,14 @@ $(function(){
       return false;
     } else if(password == password_confirmation) {
       $("#pw-confirmation-error").hide();
-         
+
         $.ajax({
-          url:"/users/" + user_id, 
+          url:"/users/" + user_id,
           method:"put",
           dataType:"json",
           data:{user:{password: password_confirmation}},
           success: function(response){
-          $("#pw_confirmation").addClass("valid"); 
+          $("#pw_confirmation").addClass("valid");
           userCreated();
           }
         });
@@ -309,9 +309,9 @@ $(function(){
     } else {
       $("#pw-confirmation-error").show();
       return false;
-      
-    }  
-  }); 
+
+    }
+  });
 
   $("#pw_confirmation").pStrength({
     bind: 'keyup change',
@@ -319,7 +319,7 @@ $(function(){
     onPasswordStrengthChanged: function(passwordStrength, strengthPercentage) {
       if($(this).text()){
         $.fn.pStrength('changeBackground',$(this), passwordStrength);
-        $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')    
+        $('#pw_confirmation_strength_precentage').text('Your password strength is ' + strengthPercentage + '%.')
       } else {
         $.fn.pStrength('resetStyle', $(this));
       }
@@ -332,7 +332,7 @@ $(function(){
     }
   });
 //===================================================================================
-// this will display an alert that the four necessary fields have been successfully saved 
+// this will display an alert that the four necessary fields have been successfully saved
 // and that the user has been created, and reveal the rest of the form
 function userCreated() {
   if ($("#password").hasClass("valid") && $("#pw_confirmation").hasClass("valid") && $("#email").hasClass("valid") && $("#name").hasClass("valid"))
@@ -350,36 +350,36 @@ function userCreated() {
 //==========================================================================================================
 //*********************************************************************************************************
 // Registration Form Department Section
-//********************************************************************************************************  
+//********************************************************************************************************
 // ==============New adding Union with permit and member status ==================================
 //deletes all roles when permit or member fields are un-checked
   function changeUnionStatus(checkbox, union_id){
     var union_name = $(checkbox).data("union-name");
-    $.each($("#" + union_name +"_roles").find(".roles:checkbox:checked"),function(index, checkbox){      
+    $.each($("#" + union_name +"_roles").find(".roles:checkbox:checked"),function(index, checkbox){
       var role_id = $(checkbox).data("rolez-id");
-      var eligibility_id = $(checkbox).data("eligibility-id"); 
+      var eligibility_id = $(checkbox).data("eligibility-id");
       var user_id = $(checkbox).data("user-id");
       ajaxDeleteEligibility(union_id, role_id, eligibility_id);
       ajaxDeleteLabel(role_id, user_id);
       $(checkbox).prop("checked", false);
-    });        
-   
+    });
+
   };
 
 
 
-// deletes all roles when member status is removed  
+// deletes all roles when member status is removed
   $(".union_member").on("click", function(){
     var union_id = $(this).parent().data("union-id");
     if($(this).is(":checked")== false){
     changeUnionStatus($(this), union_id);
     }
   });
-  
+
  // shows field for number of permit days
   $(".union_permit_days").on("click", function(){
     var union_name = $(this).data("union-name");
-    if ($(this).is(":checked")) {  
+    if ($(this).is(":checked")) {
       $("#"+ union_name +"_number_days").show();
       $("#"+ union_name +"_permit_days").show();
       $("#"+ union_name +"_permit_days").on("blur", function(){
@@ -392,7 +392,7 @@ function userCreated() {
       $("#"+ union_name +"_number_days").hide();
       $("#"+ union_name +"_permit_days").hide();
       var union_id = $("#"+union_name+"Status").data("union-id");
-      changeUnionStatus($(this), union_id)           
+      changeUnionStatus($(this), union_id)
     }
   });
 
@@ -412,12 +412,12 @@ function userCreated() {
       } else {
         var eligibility_id = checkbox.data("eligibility-id");
         ajaxDeleteLabel(role_id, user_id);
-        ajaxDeleteEligibility(union_id, role_id, eligibility_id)   
-      } 
+        ajaxDeleteEligibility(union_id, role_id, eligibility_id)
+      }
     } else if ($("#"+union_name+"_permit").is(":checked")){
       var data = $("#"+union_name+"_permit").val();
       if (checkbox.is(":checked")){
-        ajaxPermit(data, union_id, role_id, checkbox); 
+        ajaxPermit(data, union_id, role_id, checkbox);
         ajaxCreateLabel(role_id, user_id);
       }else{
         var eligibility_id = checkbox.data("eligibility-id");
@@ -427,42 +427,42 @@ function userCreated() {
     }else if($(checkbox).data("union-has-member")== true || $(checkbox).data("union-has-permit")==true){
       alert("You must indicate whether you are a member or you have a permit")
 
-    }      
+    }
   });
 
-// When users only want to update the permit days    
+// When users only want to update the permit days
   $(".permit_days_entry").on("blur", function(){
 
     var union_name = $(this).data("union-name");
     if($("#"+union_name+"_roles").find(".roles:checkbox:checked")){
-      $.each($("#"+union_name+"_roles").find(".roles:checkbox:checked"), function(index, checkbox){ 
+      $.each($("#"+union_name+"_roles").find(".roles:checkbox:checked"), function(index, checkbox){
         var role_id = $(checkbox).data("rolez-id");
-        var eligibility_id = $(checkbox).data("eligibility-id"); 
+        var eligibility_id = $(checkbox).data("eligibility-id");
         var user_id = $(checkbox).data("user-id")|| $("#info").data("user-id");
         var new_data = $("#"+union_name+"_permit_days").text().trim();
         var union_id = $(checkbox).data("union-id");
         ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id)
 
       })
-     
+
     }
-    
+
   })
 
 
 
-//=================================For All Unions ============================================================== 
-  
+//=================================For All Unions ==============================================================
+
   $(".roles").on("click", function(){
       var checkbox = $(this);
       var user_id = checkbox.data("user-id")|| $("#info").data("user-id");
       var union_id = checkbox.data("union-id");
       var role_id = checkbox.data("rolez-id"); // role didn't work but rolez does?
       var eligibility_id = checkbox.data("eligibility-id");
-      var union_name = checkbox.data("union-name");  
+      var union_name = checkbox.data("union-name");
 
       //if union does not have member status or permit status
-    
+
       if($(checkbox).data("union-has-member")== false && $(checkbox).data("union-has-permit")==false){
         if (checkbox.is(":checked")) {
           ajaxRoles(union_id, role_id, user_id, checkbox);
@@ -472,27 +472,59 @@ function userCreated() {
           ajaxDeleteLabel(role_id, user_id);
           ajaxDeleteEligibility(union_id, role_id, eligibility_id)
         }
-      }  
+      }
   });
-  
+
 
 //*********************************************************************************************************
 // Registration Form Calender Section
-//********************************************************************************************************  
+//********************************************************************************************************
+
+  // $('td').on('click', function (event) {
+  //   // alert( $(this).find('.today-date').text() );
+  //   var day = getDay($(this).find('.today-date').text());
+  //   var date = $(this).find('.today-date').text();
+  //   var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
+  //   if ($(this).hasClass('unavailable')) {
+  //     $(this).removeClass('unavailable');
+  //     $(this).addClass('available');
+  //     $(this).find('.dot').css("background-color", "#22aa22");
+  //     ajaxAddAvailability(day,date,week,$(this));
+  //   } else {
+  //     $(this).removeClass('available');
+  //     $(this).addClass('unavailable');
+  //     $(this).find('.dot').css("background-color", "#aa2222");
+  //     ajaxDeleteAvailability(day,date,week,availability_id, $(this))
+  //   }
+    // if ($(this).find('.today-date')) {
+    //   alert( "Handler for .click() called." );
+    // }
+    // var url = '/users/4';
+    // $.ajax({
+    //   url: url,
+    //   method: "POST"
+    // }).done(function(data) {
+    //   // alert( "Handler for .click() called!!" );
+    //   // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
+    //   // deleteMilestone(data);
+    //   })
+  // });
+
+
   $("#day .btn").on("click", function(){
     var availability_id = $(this).data("availability-id")
     if (availability_id == 0) {
       var day = $(this).data("day");
       var date = $(this).data("date");
       var week = $("#weeklyDatePicker").val();
-      ajaxAddAvailability(day,date,week,$(this));     
+      ajaxAddAvailability(day,date,week,$(this));
     } else if (availability_id > 0) {
-      var day = $(this).data("day"); 
+      var day = $(this).data("day");
       var date = $(this).data("date");
       var week = $("#weeklyDatePicker").val();
       ajaxDeleteAvailability(day,date,week,availability_id, $(this))
     }
-   
+
   });
 
   $("#weeklyDatePicker").datepicker({
@@ -500,12 +532,16 @@ function userCreated() {
     todayHighlight: true,
     forceParse : false,
     autoclose:true,
-    disableTouchKeyboard:false
-    
+    disableTouchKeyboard:false//,
+    // useCurrent: true
+
   });
 
   //Get the value of Start and End of Week in the calendar
-  $("#weeklyDatePicker").on("change.dp",function(){
+  $("#weeklyDatePicker").on("change.dp",tdp);
+  // $(".avail-collapse-toggle").on('click', tdp);
+
+  function tdp (){
     var value = $("#weeklyDatePicker").val();
     var sunday = moment(value, "MM/DD/YYYY").day(0).format("YYYY-MM-DD")
     var saturday = moment(value, "MM/DD/YYYY").day(6).format("YYYY-MM-DD");
@@ -520,37 +556,37 @@ function userCreated() {
     $("#thursday").data("date", moment(value, "MM/DD/YYYY").day(4).format("YYYY-MM-DD"));
     $("#friday").data("date",moment(value, "MM/DD/YYYY").day(5).format("YYYY-MM-DD") );
     $("#saturday").data("date",saturday );
-    
-      // Using ajax to get user's apppointment info
+
+      // Using ajax to get user's appointment info
       $.ajax({
         url: "/users/"+ user_id +"/appointments",
         method: "get",
         dataType: "json",
         data: {appointment: {user_id: user_id}},
         success: function(response){
-          //if a user does not have any availabilities, all the buttons are red 
+          //if a user does not have any availabilities, all the buttons are red
           if (response.length == 0) {
-            $.each($("#day .btn"), function(i, b){ 
+            $.each($("#day .btn"), function(i, b){
               var button = $(this);
-              button.removeClass("btn-success").addClass("btn-danger");                             
-            });            
+              button.removeClass("btn-success").addClass("btn-danger");
+            });
           } else {
               var appointment_dates = [];
               var appointments_info = [];
-              $.grep(response, function(e){              
-                appointment_dates.push(e.date) 
+              $.grep(response, function(e){
+                appointment_dates.push(e.date)
                 appointments_info.push({date: e.date, availability_id: e.id})
-              });            
+              });
               $.each($("#day .btn"), function(i,b){
                 //check each buttons to see if their data-date attributes are the same as the availiabilities from database
                 //If not the same, will return -1, and avaialability-id will remain empty.
-                if ($.inArray($(b).data("date"), appointment_dates) == -1){                  
+                if ($.inArray($(b).data("date"), appointment_dates) == -1){
                   $(b).removeClass("btn-success").addClass("btn-danger");
                   $(b).data("availability-id", "")
                 }else{
                   $(b).removeClass("btn-danger").addClass("btn-success")
-                  // Need to add the availability id to the availability-id data attributes         
-                  $.map(appointments_info,function(info){                    
+                  // Need to add the availability id to the availability-id data attributes
+                  $.map(appointments_info,function(info){
                     if (info.date == $(b).data("date")){
                       $(b).data("availability-id", info.availability_id)
                     }
@@ -562,24 +598,24 @@ function userCreated() {
       });
 
 
-     
 
 
 
 
 
-   
-  });
+
+
+  };
 
 //*********************************************************************************************************
 // Registration Form Certificate Section
-//********************************************************************************************************  
+//********************************************************************************************************
   $(".chosen-select").chosen({width: "100%"});
-  $("#create-certificate").on("change", function(evt, params){  
+  $("#create-certificate").on("change", function(evt, params){
     var selected = params.selected
-    var deselected = params.deselected 
+    var deselected = params.deselected
       if (selected >0 ) {
-        ajaxCreateCertifiable(selected,$(".search-choice-close"))  
+        ajaxCreateCertifiable(selected,$(".search-choice-close"))
       } else if (deselected > 0) {
         ajaxdeleteCertifiable(deselected, $(".search-choice-close"))
       }
@@ -589,34 +625,34 @@ function userCreated() {
 
 //*********************************************************************************************************
 // Registration Files Upload Section
-//********************************************************************************************************  
-//==============================Upload New File============================================================== 
+//********************************************************************************************************
+//==============================Upload New File==============================================================
   $("#file_upload_form").on("submit", function(event){
-    var client_email = $("#recipient_email").val().trim(); 
+    var client_email = $("#recipient_email").val().trim();
     var user_id = $("#info").data("user-id");
     var file_type = $("#selected_file :selected").val()
     var formData = new FormData();
     $input = $("#upload_file");
-  
+
     if ($input[0].files.length == 0) {
       $("#fail_msg").text("Attachment can't be blank, please choose your file").show().delay(3000).fadeOut(1000)
-      return false;      
+      return false;
     }
     else if (client_email == "") {
       $("#fail_msg").text("Recipient email can't be blank").show().delay(3000).fadeOut(1000)
       return false;
-    } else {    
+    } else {
       var file_name = $input[0].files[0].name
       var name = user_id + "_" + file_type + "_" + file_name;
-      formData.append("attachment[file]", $input[0].files[0]);   
+      formData.append("attachment[file]", $input[0].files[0]);
       $("#fail_msg").hide();
       event.preventDefault();
       $("#submit_button").hide();
-      $("#uploading").show();       
+      $("#uploading").show();
         $.ajax({
           url:"/attachments",
           method: "post",
-          dataType: "json",    
+          dataType: "json",
           data:{attachment:{user_id:user_id, type:file_type, name: name,file: "null", client_email:client_email}},
           success: function(response){
             $("#selected_file :selected").data("attachment-id",response.id)
@@ -641,13 +677,13 @@ function userCreated() {
                       $("#submit_button").show();
                       var $docs_upload = $("#file_template").clone();
                         $docs_upload.find("#document_info").data("file-id", response.id);
-                        $docs_upload.find("#document_name").text(response.type)                        
+                        $docs_upload.find("#document_name").text(response.type)
                         $docs_upload.find(".ajax_document_delete").data("attachment-id", response.id);
                         $docs_upload.find(".document_share_link").attr("href", response.file_share_link);
                         $("#new_file").append($docs_upload.show());
-                        $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);                                                                  
-                    }                                                        
-                  }               
+                        $("#success_msg").text(response.type + " " +"has been sent to" + " " +response.client_email + ".").show().delay(3000).fadeOut(1000);
+                    }
+                  }
                 });
               } else {
                 $("#fail_msg").text(response).show().delay(3000).fadeOut(1000)
@@ -658,13 +694,13 @@ function userCreated() {
 
         });
     }
-    
+
   });
 
 //=========================== Delete already uploaded file ========================================================================
   $("#new_file").on("click", ".ajax_document_delete",function(){
     $(this).parentsUntil("#file_template").hide()
-    $("#ajax_document_deleting").show(); 
+    $("#ajax_document_deleting").show();
     var attachment_id = $(this).data("attachment-id")
     ajaxDeleteNewDocument(attachment_id, $("#ajax_document_deleting"), $(this))
   });
@@ -679,11 +715,11 @@ function userCreated() {
     resetDocumentDataAttr($("#new_file .uploaded_file"))
     // add a data attribute indicates which existing_file is click
     $(this).data("clickable", "true")
-    // Use color to indicate which file is selected by the user   
-    labelSeletedDocument($(this))    
-      
+    // Use color to indicate which file is selected by the user
+    labelSeletedDocument($(this))
+
   });
-  
+
   $("#email_form").on("submit", function(event){
     var new_client_email = $("#new_client_email").val().trim();
     if (new_client_email == "") {
@@ -693,7 +729,7 @@ function userCreated() {
     event.preventDefault();
     $("#email_sent").hide();
     $("#sending").show();
-  
+
     $.each($('.uploaded_file'), function(i,element){
       if ($(this).data("clickable") == "true") {
         var attachment_id = $(this).find(".file_info").data("file-id");
@@ -720,18 +756,18 @@ function userCreated() {
       }
 
     });
-  
-   
-  }); 
-//======================================================================================================      
-   
+
+
+  });
+//======================================================================================================
+
 
 
 
 });
 
 
-   
+
 //============================Common ajax call for sending data ================================================
   function ajaxUpdatePermit(new_data, role_id, eligibility_id, user_id, union_id){
     $.ajax({
@@ -742,8 +778,8 @@ function userCreated() {
       success:function(response){
       }
     });
-  } 
-  
+  }
+
 
   function ajaxDeleteEligibility(union_id, role_id,eligibility_id){
     var user_id = $("#info").data("user-id");
@@ -780,12 +816,12 @@ function userCreated() {
       dataType:"json",
       data:{user:{roles_ids:[role_id]}},
       success: function(response){
-        
+
 
       }
     });
   }
-  
+
   function ajaxRoles(union_id, role_id, user_id, checkbox){
     // var user_id = $(checkbox).data("user-id");
     $.ajax({
@@ -803,13 +839,13 @@ function userCreated() {
   function ajaxMember(data, union_id, role_id, checkbox){
     var user_id = $(checkbox).data("user-id") || $("#info").data("user-id");
     $.ajax({
-      url:"/eligibilities", 
+      url:"/eligibilities",
       method:"post",
       dataType:"json",
       data:{eligibility:{member:data, union_id: union_id, user_id: user_id, role_id: role_id}},
       success: function(response){
         checkbox.data("eligibility-id",response.id);
-      }          
+      }
     });
   }
 
@@ -821,12 +857,12 @@ function userCreated() {
       dataType:"json",
       data: {eligibility:{permit_days: data, union_id: union_id, user_id:user_id,role_id: role_id}},
       success: function(response){
-        checkbox.data("eligibility-id",response.id);  
-        
+        checkbox.data("eligibility-id",response.id);
+
       }
     });
   }
- 
+
   function ajaxAddAvailability(day,date,week,checkbox){
     var user_id = $("#info").data("user-id");
     $.ajax({
@@ -851,7 +887,7 @@ function userCreated() {
       success: function(response){
         checkbox.data("availability-id", "")
         checkbox.removeClass("btn-success").addClass("btn-danger");
-        
+
       }
     });
 
@@ -864,7 +900,7 @@ function userCreated() {
       method: "post",
       dataType: "json",
       data:{certifiable:{user_id: user_id, certificate_id: selected_certificate}},
-      success: function(response){      
+      success: function(response){
         selected_option.data("certifiable-id", response.id)
 
       }
@@ -875,7 +911,7 @@ function userCreated() {
   function ajaxdeleteCertifiable(deselected,deselected_option){
     var user_id = $("#info").data("user-id");
     var certifiable_id = $(".search-choice-close").data("certifiable-id");
-  
+
     $.ajax({
       url:"/certifiables/"+ certifiable_id,
       method: "delete",
@@ -899,7 +935,7 @@ function userCreated() {
       }
     });
   }
- 
+
   function resetDocumentDataAttr(user_documents){
       $.each($(user_documents), function(i,element){
         $(element).data("clickable", "")
@@ -910,14 +946,14 @@ function userCreated() {
   }
 
 
-  function stateSwitch(section){    
-    $(section).on('switchChange.bootstrapSwitch', 
-    function(event, state) { 
+  function stateSwitch(section){
+    $(section).on('switchChange.bootstrapSwitch',
+    function(event, state) {
       if ($(section).data("section") == "traffic_control") {
         var data = {user: {has_traffic_control_ticket: state}}
       } else {
         var data = {user: {has_vehicle: state}}
-      }  
+      }
       var user_id = $("#info").data("user-id");
       $.ajax({
         url:"/users/"+ user_id,

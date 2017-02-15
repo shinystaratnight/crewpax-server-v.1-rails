@@ -178,7 +178,7 @@ $(function(){
       return "<button class='btn btn-success' style='font-size: 12px;'>Available </br>Today</button>";
 
     }
-  });
+  })
 
   Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
     function pad2(number) {
@@ -285,7 +285,58 @@ $(function(){
 
      });
 
-})
+  });
+
+
+//=====================================Change Availiability status============================================================
+  $('td').on('click', function (event) {
+    alert( $(this).find('.today-date').text() );
+    var day = getDay($(this).find('.today-date').text());
+    var date = $(this).find('.today-date').text();
+    var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
+    if ($(this).hasClass('unavailable')) {
+      // $(this).removeClass('unavailable');
+      // $(this).addClass('available');
+      $(this).find('.dot').css("background-color", "#22aa22");
+      ajaxAddAvailability(day,date,week,$(this));
+    } else {
+      $(this).removeClass('available');
+      $(this).addClass('unavailable');
+      $(this).find('.dot').css("background-color", "#aa2222");
+      ajaxDeleteAvailability(day,date,week,availability_id, $(this))
+    }
+  });
+
+
+
+
+  // $('td').on('click', function (event) {
+  //   // alert( $(this).find('.today-date').text() );
+  //   if ($(this).hasClass('unavailable')) {
+  //     $(this).removeClass('unavailable');
+  //     $(this).addClass('available');
+  //     $(this).find('.dot').css("background-color", "#22aa22");
+  //   } else {
+  //     $(this).removeClass('available');
+  //     $(this).addClass('unavailable');
+  //     $(this).find('.dot').css("background-color", "#aa2222");
+  //   }
+  //   // if ($(this).find('.today-date')) {
+  //   //   alert( "Handler for .click() called." );
+  //   // }
+  //   var url = '/users/4';
+  //   $.ajax({
+  //     url: url,
+  //     method: "POST"
+  //   }).done(function(data) {
+  //     // alert( "Handler for .click() called!!" );
+  //     // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
+  //     // deleteMilestone(data);
+  //     })
+  //   });
+
+
+  // });
 
 
 //==========================================================================================================
@@ -395,8 +446,43 @@ $(function(){
 
   }
 
+//====================================================================================================
 
 
+  function ajaxAddAvailability(day,date,week,checkbox){
+    var user_id = $(".td").data("user-id");
+    $.ajax({
+      url:"/users/" + user_id + "/appointments",
+      method: "post",
+      dataType:"json",
+      data:{appointment:{day: day, user_id: user_id, date: date, week:week}},
+      success: function(response){
+        checkbox.removeClass("unavailable").addClass("available").find('.dot').css("background-color", "#22aa22");
+        checkbox.data("availability-id", response.id);
+      }
+    }).done(function(data) {
+      alert( "Handler for .click() called!!" );
+      // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
+      // deleteMilestone(data);
+    });
+  }
+
+  function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
+    $.ajax({
+      url: "/appointments/" + availability_id,
+      method: "delete",
+      dataType: "json",
+      data:{appointment:{day: day, id: availability_id, date:date, week:week}},
+      success: function(response){
+        checkbox.data("availability-id", "");
+        checkbox.removeClass("available").addClass("unavailable").find('.dot').css("background-color", "#aa2222");;
+      }
+    }).done(function(data) {
+      alert( "Handler for .click() called!!" );
+      // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
+      // deleteMilestone(data);
+    });
+  }
 //====================================================================================================
   function markFilterparams(params){
     if (params == "has_a_vehicle"){
@@ -458,25 +544,6 @@ $(function(){
 
         var user_card_template = Handlebars.compile(user_source);
 
-        //===== stuff to be altered a lot ======//
-        // var appt_selection = $('.appointments').text().trim().split(';');
-        // var appointments = [];
-        // // console.log(appt_selection);
-        // // console.log(this.user_info.id)
-        // for (var i = 0; i < appt_selection.length; i += 2) {
-        //   if (appt_selection[i] == this.user_info.id && appt_selection[i+1]) {
-        //     appointments.push([appt_selection[i], appt_selection[i+1]]);
-        //   }
-        // }
-        // console.log(appointments);
-        //======================================//
-
-        //===== new td appointments function ===//
-
-                        //here//
-
-        //======================================//
-
         var context = {
             id: this.user_info.id,
             name: this.user_info.name,
@@ -487,8 +554,6 @@ $(function(){
             union_permit: this.union_permit,
             availability: this.availabilities,
             path: "users/" + this.user_info.id,
-            // adding new variables for two week calendar
-            // appointments: this.user_info.appointments
         };
 
         var html = user_card_template(context);

@@ -19,7 +19,8 @@
       <% @date_range.each_slice(7).each do |week| %>
         <tr>
           <% week.each do |day| %>
-              <%= content_tag :td, class: @user.td_classes_for(day,@appointments) do %>
+              <%= content_tag :td, class: @user.td_classes_for(day,@appointments), "data-user-id" => @user.id, "data-availability-id=" => "" do %>
+                <div hidden class="today-date"><%= day.to_s %></div>
                 <%= Date.parse(day.to_s).mday %>
                 <div class="dot"></div>
               <% end %>
