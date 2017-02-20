@@ -289,21 +289,26 @@ $(function(){
 
 
 //=====================================Change Availiability status============================================================
-  $('td').on('click', function (event) {
-    alert( $(this).find('.today-date').text() );
-    var day = getDay($(this).find('.today-date').text());
-    var date = $(this).find('.today-date').text();
+  $('.profile-day').on('click', function (event) {
+    function convertDateToUTC(date) {
+      return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+    var date = new Date($(this).find('.today-date').text());
+    date = convertDateToUTC(date);
+    var day = date.getDay();
     var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
     if ($(this).hasClass('unavailable')) {
       // $(this).removeClass('unavailable');
       // $(this).addClass('available');
-      $(this).find('.dot').css("background-color", "#22aa22");
-      ajaxAddAvailability(day,date,week,$(this));
+      // $(this).find('.dot').css("background-color", "#22aa22");
+      ajaxAddAvailabilityProfile(day,date,week,$(this));
     } else {
-      $(this).removeClass('available');
-      $(this).addClass('unavailable');
-      $(this).find('.dot').css("background-color", "#aa2222");
-      ajaxDeleteAvailability(day,date,week,availability_id, $(this))
+      var availability_id = $(this).data("availability-id")
+      // console.log($(this).data("availability-id"));
+      // $(this).removeClass('available');
+      // $(this).addClass('unavailable');
+      // $(this).find('.dot').css("background-color", "#aa2222");
+      ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
     }
   });
 
@@ -446,11 +451,12 @@ $(function(){
 
   }
 
-//====================================================================================================
+//==============================Profile Page Availability Change Functions==========================================
 
 
-  function ajaxAddAvailability(day,date,week,checkbox){
-    var user_id = $(".td").data("user-id");
+  function ajaxAddAvailabilityProfile(day,date,week,checkbox){
+    var user_id = checkbox.data("user-id");
+    // alert( $(this).find('.today-date').text() );
     $.ajax({
       url:"/users/" + user_id + "/appointments",
       method: "post",
@@ -458,16 +464,17 @@ $(function(){
       data:{appointment:{day: day, user_id: user_id, date: date, week:week}},
       success: function(response){
         checkbox.removeClass("unavailable").addClass("available").find('.dot').css("background-color", "#22aa22");
+        checkbox.attr( 'data-availability-id', response.id );
         checkbox.data("availability-id", response.id);
       }
-    }).done(function(data) {
-      alert( "Handler for .click() called!!" );
+    // }).done(function(data) {
+      // alert( "Availability added?" );
       // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
       // deleteMilestone(data);
     });
   }
 
-  function ajaxDeleteAvailability(day,date,week,availability_id,checkbox){
+  function ajaxDeleteAvailabilityProfile(day,date,week,availability_id,checkbox){
     $.ajax({
       url: "/appointments/" + availability_id,
       method: "delete",
@@ -475,10 +482,11 @@ $(function(){
       data:{appointment:{day: day, id: availability_id, date:date, week:week}},
       success: function(response){
         checkbox.data("availability-id", "");
+        checkbox.attr( 'data-availability-id', "" );
         checkbox.removeClass("available").addClass("unavailable").find('.dot').css("background-color", "#aa2222");;
       }
-    }).done(function(data) {
-      alert( "Handler for .click() called!!" );
+    // }).done(function(data) {
+      // alert( "Availability deleted?" );
       // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
       // deleteMilestone(data);
     });

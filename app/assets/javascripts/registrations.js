@@ -532,9 +532,7 @@ function userCreated() {
     todayHighlight: true,
     forceParse : false,
     autoclose:true,
-    disableTouchKeyboard:false//,
-    // useCurrent: true
-
+    disableTouchKeyboard:false
   });
 
   //Get the value of Start and End of Week in the calendar
