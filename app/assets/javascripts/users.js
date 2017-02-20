@@ -289,7 +289,7 @@ $(function(){
 
 
 //=====================================Change Availiability status============================================================
-  $('.profile-day').on('click', function (event) {
+  $('.profile-day.future').on('click', function (event) {
     function convertDateToUTC(date) {
       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
@@ -298,50 +298,12 @@ $(function(){
     var day = date.getDay();
     var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
     if ($(this).hasClass('unavailable')) {
-      // $(this).removeClass('unavailable');
-      // $(this).addClass('available');
-      // $(this).find('.dot').css("background-color", "#22aa22");
       ajaxAddAvailabilityProfile(day,date,week,$(this));
     } else {
-      var availability_id = $(this).data("availability-id")
-      // console.log($(this).data("availability-id"));
-      // $(this).removeClass('available');
-      // $(this).addClass('unavailable');
-      // $(this).find('.dot').css("background-color", "#aa2222");
+      var availability_id = $(this).data("availability-id");
       ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
     }
   });
-
-
-
-
-  // $('td').on('click', function (event) {
-  //   // alert( $(this).find('.today-date').text() );
-  //   if ($(this).hasClass('unavailable')) {
-  //     $(this).removeClass('unavailable');
-  //     $(this).addClass('available');
-  //     $(this).find('.dot').css("background-color", "#22aa22");
-  //   } else {
-  //     $(this).removeClass('available');
-  //     $(this).addClass('unavailable');
-  //     $(this).find('.dot').css("background-color", "#aa2222");
-  //   }
-  //   // if ($(this).find('.today-date')) {
-  //   //   alert( "Handler for .click() called." );
-  //   // }
-  //   var url = '/users/4';
-  //   $.ajax({
-  //     url: url,
-  //     method: "POST"
-  //   }).done(function(data) {
-  //     // alert( "Handler for .click() called!!" );
-  //     // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
-  //     // deleteMilestone(data);
-  //     })
-  //   });
-
-
-  // });
 
 
 //==========================================================================================================
@@ -456,7 +418,6 @@ $(function(){
 
   function ajaxAddAvailabilityProfile(day,date,week,checkbox){
     var user_id = checkbox.data("user-id");
-    // alert( $(this).find('.today-date').text() );
     $.ajax({
       url:"/users/" + user_id + "/appointments",
       method: "post",

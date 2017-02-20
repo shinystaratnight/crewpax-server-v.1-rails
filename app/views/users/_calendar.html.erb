@@ -18,16 +18,16 @@
       <% @date_range.each_slice(7).each do |week| %>
         <tr>
           <% week.each do |day| %>
-              <% if Appointment.exists?(date: day, user_id: @user.id) %>
-                <div hidden><%= @availability_id = Appointment.where(date: day, user_id: @user.id).ids[0] %></div>
-              <% else %>
-                <div hidden><%= @availability_id = "" %></div>
-              <% end %>
-              <%= content_tag :td, class: @user.td_classes_for(day,@appointments), "data-user-id" => @user.id, "data-availability-id" => @availability_id do %>
-                <div hidden class="today-date"><%= day.to_s %></div>
-                <%= Date.parse(day.to_s).mday %>
-                <div class="dot"></div>
-              <% end %>
+            <% if Appointment.exists?(date: day, user_id: @user.id) %>
+              <span hidden><%= @availability_id = Appointment.where(date: day, user_id: @user.id).ids[0] %></span>
+            <% else %>
+              <span hidden><%= @availability_id = "" %></span>
+            <% end %>
+            <%= content_tag :td, class: @user.td_classes_for(day,@appointments), "data-user-id" => @user.id, "data-availability-id" => @availability_id do %>
+              <div hidden class="today-date"><%= day.to_s %></div>
+              <%= Date.parse(day.to_s).mday %>
+              <div class="dot"></div>
+            <% end %>
           <% end %>
         </tr>
       <% end %>

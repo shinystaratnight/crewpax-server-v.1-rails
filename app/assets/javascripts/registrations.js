@@ -480,35 +480,6 @@ function userCreated() {
 // Registration Form Calender Section
 //********************************************************************************************************
 
-  // $('td').on('click', function (event) {
-  //   // alert( $(this).find('.today-date').text() );
-  //   var day = getDay($(this).find('.today-date').text());
-  //   var date = $(this).find('.today-date').text();
-  //   var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
-  //   if ($(this).hasClass('unavailable')) {
-  //     $(this).removeClass('unavailable');
-  //     $(this).addClass('available');
-  //     $(this).find('.dot').css("background-color", "#22aa22");
-  //     ajaxAddAvailability(day,date,week,$(this));
-  //   } else {
-  //     $(this).removeClass('available');
-  //     $(this).addClass('unavailable');
-  //     $(this).find('.dot').css("background-color", "#aa2222");
-  //     ajaxDeleteAvailability(day,date,week,availability_id, $(this))
-  //   }
-    // if ($(this).find('.today-date')) {
-    //   alert( "Handler for .click() called." );
-    // }
-    // var url = '/users/4';
-    // $.ajax({
-    //   url: url,
-    //   method: "POST"
-    // }).done(function(data) {
-    //   // alert( "Handler for .click() called!!" );
-    //   // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
-    //   // deleteMilestone(data);
-    //   })
-  // });
 
 
   $("#day .btn").on("click", function(){
@@ -604,6 +575,8 @@ function userCreated() {
 
 
   };
+
+
 
 //*********************************************************************************************************
 // Registration Form Certificate Section
@@ -890,6 +863,7 @@ function userCreated() {
     });
 
   }
+
 
   function ajaxCreateCertifiable(selected_certificate,selected_option){
     var user_id = $("#info").data("user-id");

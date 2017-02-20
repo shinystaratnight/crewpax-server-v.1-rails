@@ -1,1 +1,22 @@
 $(".simple-calendar").html('<%= j render("calendarmonthtwo.html.erb")%>');
+
+
+// separated, non-DRY way to get Availability functionality
+// to work after rendering an alternate month,
+// copying Change Availability Status in users.js.
+
+  $('.profile-day.future').on('click', function (event) {
+    function convertDateToUTC(date) {
+      return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    }
+    var date = new Date($(this).find('.today-date').text());
+    date = convertDateToUTC(date);
+    var day = date.getDay();
+    var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
+    if ($(this).hasClass('unavailable')) {
+      ajaxAddAvailabilityProfile(day,date,week,$(this));
+    } else {
+      var availability_id = $(this).data("availability-id");
+      ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
+    }
+  });
