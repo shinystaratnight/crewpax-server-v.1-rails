@@ -55,6 +55,26 @@ class UsersController < ApplicationController
       end
 
     end
+
+    # ported over from show function
+    @user = User.find(4)     #doesn't matter which?
+    respond_to do |format|
+    # start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
+    # button to view the other month
+      if params[:tw_start_date].present?
+        @tw_start_date = params[:tw_start_date]
+        @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a
+
+
+        format.js
+      else
+        @start_date = @user.start_date
+        @date_range = (@start_date.to_date.beginning_of_week..@start_date.to_date.end_of_week + 7.day).to_a
+
+        format.html{render_to_string :index}
+      end
+    end
+
   end
 
 
@@ -72,13 +92,11 @@ class UsersController < ApplicationController
       if params[:start_date].present?
         @start_date = params[:start_date]
         @date_range = @user.date_range(@start_date)
-        # @date_range_two = @user.date_range_two(@start_date)
 
         format.js
       else
         @start_date = @user.start_date
         @date_range = @user.date_range(@start_date)
-        # @date_range_two = @user.date_range_two(@start_date)
 
         format.html{render :show}
       end

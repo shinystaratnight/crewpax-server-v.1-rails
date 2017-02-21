@@ -1,28 +1,33 @@
-<div id="links_to_other_weeks">
-  <%= I18n.t("date.month_names")[@tw_date_range.first.to_date.month] %> <%= @tw_start_date.to_date.year %>
-</div>
-<table>
-  <thead>
-    <tr>
-      <% @tw_date_range.slice(0,7).each do |day| %>
-        <th class="th"><%=t('date.abbr_day_names')[day.wday]%></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tw_date_range.each_slice(7).each do |week| %>
+<div class="small-calendar {{id}}"> <!-- wrapper div for two-week calendar-specific CSS -->
+  <div id="links_to_other_weeks">
+    <!-- < % if @tw_start_date > Date.today %> -->
+      <%= link_to "<<", url_for(params.merge(start_date: @tw_date_range.first - 8.day)), remote: true %>
+    <!-- < % end %> -->
+    <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
+    <%= link_to ">>", url_for(params.merge(start_date: @tw_date_range.last + 1.day)), remote: true %>
+  </div>
+  <table>
+    <thead>
       <tr>
-        <% week.each do |day| %>
-          <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
-            <%= Date.parse(day.to_s).mday %>
-            <div class="dot"></div>
-          <% end %>
+        <% @tw_date_range.slice(0,7).each do |day| %>
+          <th class="th"><%=t('date.abbr_day_names')[day.wday]%></th>
         <% end %>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @tw_date_range.each_slice(7).each do |week| %>
+        <tr>
+          <% week.each do |day| %>
+            <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
+              <%= Date.parse(day.to_s).mday %>
+              <div class="dot"></div>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
 
 

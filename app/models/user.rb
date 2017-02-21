@@ -68,13 +68,13 @@ class User < ActiveRecord::Base
     (start_date.to_date.beginning_of_week..start_date.to_date.end_of_week + 7.day).to_a
   end
 
-  def cal_start_date
-    Date.today
-  end
+  # def cal_start_date
+  #   Date.today
+  # end
 
-  def cal_date_range(cal_start_date)
-    (cal_start_date.to_date.beginning_of_week..cal_start_date.to_date.end_of_week + 7.day).to_a
-  end
+  # def cal_date_range(cal_start_date)
+  #   (cal_start_date.to_date.beginning_of_week..cal_start_date.to_date.end_of_week + 7.day).to_a
+  # end
 
   def td_classes_for(day, appointments)
 

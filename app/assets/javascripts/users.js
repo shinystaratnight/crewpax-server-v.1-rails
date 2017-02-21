@@ -304,6 +304,17 @@ $(function(){
       ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
     }
   });
+//==========================================================================================================
+
+
+//==================================Crewpage Calendars - forward and backward===============================
+
+
+  // $('.tw-arrows').on('click', function (event) {
+  //   var parent = $(this).parent;
+  //   var start_date = parent.find('.tw-start-date').text();
+  //   var month-name = parent.find('.month-name').text();
+  // });
 
 
 //==========================================================================================================

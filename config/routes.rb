@@ -1,6 +1,6 @@
 Bcpax::Application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations', omniauth_callbacks: "users/omniauth_callbacks"}
- 
+
   # patch 'appointments/:date' => 'appointments#toggle', as: :toggle_appointment
 
   namespace :admin do
@@ -15,7 +15,7 @@ Bcpax::Application.routes.draw do
       get "search"
     end
 
-    collection do 
+    collection do
       get "sort"
     end
   end
@@ -23,12 +23,12 @@ Bcpax::Application.routes.draw do
   resources :jobs, shallow: true do
     resources :roles
   end
-  
-  resources :roles do 
+
+  resources :roles do
     resources :labels, only:[:index]
-  end 
-  
-  
+  end
+
+
   resources :roles, only:[:index]
   resources :attachments, only:[:create,:update, :index, :destroy]
   resources :certifiables, only:[:create, :destroy]
@@ -36,20 +36,21 @@ Bcpax::Application.routes.draw do
     resources :appointments
   end
 
-  
+
   resources :users do
     resources :jobs, only:[:index, :show]
   end
-  
-  resources :sponsors 
-  
+
+
+  resources :sponsors
+
   resources :addresses
   resources :eligibilities
-  
+
   resources :jobs
   get 'jobs/:id/:secret' => 'jobs#show', as: :secret_job
 
-  resources :messages, only:[:new, :create]  
+  resources :messages, only:[:new, :create]
 
   root 'home#index'
 
