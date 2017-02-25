@@ -1,10 +1,10 @@
-<div class="small-calendar {{id}}"> <!-- wrapper div for two-week calendar-specific CSS -->
+<div class="small-calendar"> <!-- wrapper div for two-week calendar-specific CSS -->
   <div id="links_to_other_weeks">
     <!-- < % if @tw_start_date > Date.today %> -->
-      <%= link_to "<<", url_for(params.merge(start_date: @tw_date_range.first - 8.day)), remote: true %>
+     <%= link_to "<<", url_for(params.merge(tw_start_date: @tw_date_range.first - 8.day)), remote: true %>
     <!-- < % end %> -->
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
-    <%= link_to ">>", url_for(params.merge(start_date: @tw_date_range.last + 1.day)), remote: true %>
+    <%= link_to ">>", url_for(params.merge(tw_start_date: @tw_date_range.last + 1.day)), remote: true %>
   </div>
   <table>
     <thead>

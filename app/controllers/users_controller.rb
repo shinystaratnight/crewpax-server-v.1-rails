@@ -2,27 +2,34 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, :except => [:update]
   # before_filter :set_role, only: :index
   respond_to :html, :json, :js
+
   # caches_page :index
   def index
+    @user = User.find(4)     #doesn't matter which?
 
     respond_to do |format|
+
+      # Adapted from show:
+      # tw_start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
+      # button to view two weeks forward or back.
+      if params[:tw_start_date].present?
+        @tw_start_date = params[:tw_start_date].to_date
+        @tw_date_range = @user.tw_date_range(@tw_start_date)
+
+        format.js
+      elsif
+        @tw_start_date = @user.tw_start_date
+        @tw_date_range = @user.tw_date_range(@tw_start_date)
+
+        format.html{render :index}
+      end
+
+
       if params[:current_page_number] == "0" || params[:current_page_number] == nil
         @users = {};
         @total_user = User.all.length
         @paginated_users = User.limit(30)
-
-        # added for two week calendar
-        # @paginated_users.each do |user|
-        #   user.appointments = []
-        #   Appointment.where(user_id: user.id).each do |appt|
-        #     if appt.date
-        #       user.appointments.push(appt.date)
-        #     end
-        #   end
-        # end
-
         @paginated_user_info = convert_user_info_json(@paginated_users)
-        # => e.g [:user_info =>{name: }, :union_member => "DGC", :union_permit =>{union_name:  , permit_days:}, availabilities: []]
         @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
 
         format.html
@@ -32,47 +39,14 @@ class UsersController < ApplicationController
         @users = {};
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
         @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
-
-        # added for two week calendar
-
-        # @paginated_users.each do |user|
-        #   user.appointments = []
-        #   Appointment.where(user_id: user.id).each do |appt|
-        #     if appt.date
-        #       user.appointments.push(appt.date)
-        #     end
-        #   end
-        # end
-
-        # @paginated_users = User.limit(30).offset(@ajax_request_time * 3)
-        #offset is for pagination, offset increases as page number goes up
-        #offset(n) => offset(start)from the nth element of the array
-        #User.limit(30).offset(@ajax_request_time * 30)
         @paginated_user_info = convert_user_info_json(@paginated_users)
 
         format.html
         format.json{render json: @paginated_user_info}
       end
 
-    end
-
-    # ported over from show function
-    @user = User.find(4)     #doesn't matter which?
-    respond_to do |format|
-    # start_date, a param will be changed if the user clicks on the 'previous'/ 'next'
-    # button to view the other month
-      if params[:tw_start_date].present?
-        @tw_start_date = params[:tw_start_date]
-        @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a
 
 
-        format.js
-      else
-        @start_date = @user.start_date
-        @date_range = (@start_date.to_date.beginning_of_week..@start_date.to_date.end_of_week + 7.day).to_a
-
-        format.html{render_to_string :index}
-      end
     end
 
   end
