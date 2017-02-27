@@ -108,7 +108,7 @@
       <div class="field">
         <h5>
           Upload Your Profile Picture
-          <div> <%=image_tag(@user.image.url(:thumb))%></div>
+          <div> <%=image_tag(@user.image.url(:thumb), :class => "profile-pic-default")%></div>
           <input type="file" id="upload_picture" >
           <input type="hidden" name="image_cache">
           <div id="profile_pic" hidden="true" contenteditable="true">
@@ -116,35 +116,37 @@
         </h5>
       </div>
 
-      <div class="field">
-        <h5> IMDb Profile:</h5>
-        <div class="profile_input" data-profile-entry="imdb" id="imdb" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
-        <span class="error" hidden="true" id="imdb-error"> *Phone number is not valid</span>
-      </div>
+      <div class="link-fields">
+      <h5>Links:</h5>
+        <div class="field">
+          <h5> IMDb Profile:</h5>
+          <div class="profile_input" data-profile-entry="imdb" id="imdb" contenteditable="true"><%= @user.imdb %></div>
+          <span class="error" hidden="true" id="imdb-error"> *Url is not valid</span>
+        </div>
 
-      <div class="field">
-        <h5> YouTube Page:</h5>
-        <div class="profile_input" data-profile-entry="youtube" id="youtube" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
-        <span class="error" hidden="true" id="youtube-error"> *Phone number is not valid</span>
-      </div>
+        <div class="field">
+          <h5> YouTube Page:</h5>
+          <div class="profile_input" data-profile-entry="youtube" id="youtube" contenteditable="true"><%= @user.youtube %></div>
+          <span class="error" hidden="true" id="youtube-error"> *Url is not valid</span>
+        </div>
 
-      <div class="field">
-        <h5> Vimeo Page:</h5>
-        <div class="profile_input" data-profile-entry="vimeo" id="vimeo" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
-        <span class="error" hidden="true" id="vimeo-error"> *Phone number is not valid</span>
-      </div>
+        <div class="field">
+          <h5> Vimeo Page:</h5>
+          <div class="profile_input" data-profile-entry="vimeo" id="vimeo" contenteditable="true"><%= @user.vimeo %></div>
+          <span class="error" hidden="true" id="vimeo-error"> *Url is not valid</span>
+        </div>
 
-      <div class="field">
-        <h5> LinkedIn:</h5>
-        <div class="profile_input" data-profile-entry="linkedin" id="linkedin" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
-        <span class="error" hidden="true" id="linkedin-error"> *Phone number is not valid</span>
-      </div>
+        <div class="field">
+          <h5> LinkedIn:</h5>
+          <div class="profile_input" data-profile-entry="linkedin" id="linkedin" contenteditable="true"><%= @user.linkedin %></div>
+          <span class="error" hidden="true" id="linkedin-error"> *Url is not valid</span>
+        </div>
 
-      <div class="field">
-        <h5> Facebook:</h5>
-        <div class="profile_input" data-profile-entry="facebook" id="facebook" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
-        <span class="error" hidden="true" id="facebook-error"> *Phone number is not valid</span>
+        <div class="field">
+          <h5> Facebook:</h5>
+          <div class="profile_input" data-profile-entry="facebook" id="facebook" contenteditable="true"><%= @user.facebook %></div>
+          <span class="error" hidden="true" id="facebook-error"> *Url is not valid</span>
+        </div>
       </div>
-
     </div>
   </div>

@@ -20,6 +20,15 @@
    }
   }
 
+  .link-fields {
+   @extend .field;
+   background-color: #dbe1e7;
+   .field {
+    margin: 5px 2px 0 10px;
+    background-color: #f5f5f5;
+   }
+  }
+
 
   body{
     font-family: raleway, sans-serif;
@@ -703,4 +712,10 @@
 .linkset {
   margin: 50px 0 0 248px;
   width: 380px;
+}
+
+
+//==============more edit stuff (integrate better later)============//
+.profile-pic-default {
+  background-image:url('default_user_avatar.png');
 }
