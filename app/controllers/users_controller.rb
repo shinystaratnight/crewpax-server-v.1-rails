@@ -17,7 +17,7 @@ class UsersController < ApplicationController
         @tw_date_range = @user.tw_date_range(@tw_start_date)
 
         format.js
-      elsif
+      else
         @tw_start_date = @user.tw_start_date
         @tw_date_range = @user.tw_date_range(@tw_start_date)
 

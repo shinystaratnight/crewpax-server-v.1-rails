@@ -1,10 +1,15 @@
+<p hidden>
+  <%= @tw_start_date = params[:tw_start_date].to_date %>
+
+  <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
+</p>
 <div id="links_to_other_weeks">
-    <!-- < % if @tw_start_date > Date.today %> -->
-     <%= link_to "<<", url_for(params.merge(tw_start_date: @tw_date_range.first - 8.day)), remote: true %>
-    <!-- < % end %> -->
-    <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
-    <%= link_to ">>", url_for(params.merge(tw_start_date: @tw_date_range.last + 1.day)), remote: true %>
-  </div>
+  <!-- < % if @tw_start_date > Date.today %> -->
+  <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse l-arrow', remote: true %>
+  <!-- < % end %> -->
+  <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
+  <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse r-arrow', remote: true %>
+</div>
 <table>
   <thead>
     <tr>
@@ -18,7 +23,6 @@
     <% @tw_date_range.each_slice(7).each do |week| %>
       <tr>
         <% week.each do |day| %>
-          <p><%= day %></p>
           <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
             <%= Date.parse(day.to_s).mday %>
             <div class="dot"></div>

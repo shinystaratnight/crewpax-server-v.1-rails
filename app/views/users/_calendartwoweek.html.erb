@@ -1,10 +1,17 @@
 <div class="small-calendar"> <!-- wrapper div for two-week calendar-specific CSS -->
+  <p hidden>
+    <%= @tw_start_date = Time.zone.now.to_date %>
+
+    <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
+  </p>
   <div id="links_to_other_weeks">
     <!-- < % if @tw_start_date > Date.today %> -->
-     <%= link_to "<<", url_for(params.merge(tw_start_date: @tw_date_range.first - 8.day)), remote: true %>
+    <!-- <a class="small-cal-outer l-arrow"><<</a> -->
+    <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse l-arrow', remote: true %>
     <!-- < % end %> -->
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
-    <%= link_to ">>", url_for(params.merge(tw_start_date: @tw_date_range.last + 1.day)), remote: true %>
+    <!-- <a class="small-cal-outer r-arrow">>></a> -->
+    <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse r-arrow', remote: true %>
   </div>
   <table>
     <thead>
@@ -20,7 +27,7 @@
         <tr>
           <% week.each do |day| %>
             <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
-              <%= Date.parse(day.to_s).mday %>
+              <span class="two-week-day"><%= Date.parse(day.to_s).mday %></span>
               <div class="dot"></div>
             <% end %>
           <% end %>

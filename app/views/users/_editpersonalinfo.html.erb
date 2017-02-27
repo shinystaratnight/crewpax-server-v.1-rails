@@ -2,7 +2,7 @@
   <div class="panel-heading">
 
     <h3> Personal Information </h3>
-      
+
       <div class="required-fields">
       <h5>Required:</h5>
         <div class="field" id ="info" data-user-id="<%=@user.id %>">
@@ -10,7 +10,7 @@
           <div class="profile_input" data-profile-entry="name" id="name" contenteditable="true"><%=@user.name %></div>
           <span class="error" hidden="true" id="name-error"> *Name is not valid</span>
         </div>
-        
+
         <div class="field">
           <h5> Email: </h5>
           <div class="profile_input" data-profile-entry="email" id="email" contenteditable="true"><%=@user.email %></div>
@@ -37,7 +37,7 @@
         <div class="profile_input" data-profile-entry="phone" id="phone" contenteditable="true"><%=@user.phone %></div>
         <span class="error" hidden="true" id="phone-error"> *Phone number is not valid</span>
       </div>
-      
+
       <%if @mailing_address = @addresses.find_by(type:"Mailing") %>
         <div class ="field" data-address-id="<%=@mailing_address.id%>" id="mailing_address_info">
         <h5> Mailing Address: </h5>
@@ -49,9 +49,9 @@
           <h5> Mailing Address: </h5>
           <div class="profile_input" id="mailing_address" contenteditable="true"></div>
           <span class="error" hidden="true" id="mailing-address-error"> *Mailing address is not valid</span>
-        </div>      
-      <% end %> 
-      
+        </div>
+      <% end %>
+
       <% if @billing_address = @addresses.find_by(type:"Billing") %>
         <div class ="field" data-billing-id="<%=@billing_address.id %>" id="billing_address_info">
           <h5> Billing Address: </h5>
@@ -64,9 +64,9 @@
           <div class="profile_input" id="billing_address" contenteditable="true"></div>
           <span class="error" hidden="true" id="billing-address-error"> *Billing address is not valid</span>
         </div>
-      <% end %>    
+      <% end %>
 
-      <% if @shipping_address = @addresses.find_by(type:"Shipping") %>  
+      <% if @shipping_address = @addresses.find_by(type:"Shipping") %>
         <div class ="field" data-shipping-id="<%=@shipping_address.id%>" id="shipping_address_info">
           <h5> Shipping Address: </h5>
           <div class="profile_input" id="shipping_address" contenteditable="true"><%=@shipping_address.address_input%></div>
@@ -81,39 +81,70 @@
       <% end %>
 
       <div class="field">
-        <h5> Do you have a traffic control ticket? </h5>           
-          <% if @user.has_traffic_control_ticket == true %>           
-            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
-            data-off-text= "No" data-on-color="success" data-off-color="danger" checked="true" id="traffic_control" data-section="traffic_control"> 
+        <h5> Do you have a traffic control ticket? </h5>
+          <% if @user.has_traffic_control_ticket == true %>
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes"
+            data-off-text= "No" data-on-color="success" data-off-color="danger" checked="true" id="traffic_control" data-section="traffic_control">
           <% else %>
-            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
-            data-off-text= "No" data-on-color="success" data-off-color="danger" 
-            id="traffic_control" data-section="traffic_control">  
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes"
+            data-off-text= "No" data-on-color="success" data-off-color="danger"
+            id="traffic_control" data-section="traffic_control">
           <% end %>
       </div>
-      
+
       <div class= "field">
-        <h5>Do you have access to a vehicle? </h5> 
+        <h5>Do you have access to a vehicle? </h5>
           <% if @user.has_vehicle %>
-            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
-            data-off-text= "No" data-on-color="success" data-off-color="danger" 
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes"
+            data-off-text= "No" data-on-color="success" data-off-color="danger"
             id="vehicle" checked="true" data-section="vehicle">
           <% else %>
-            <input type="checkbox" name="my-checkbox" data-on-text="Yes" 
-            data-off-text= "No" data-on-color="success" data-off-color="danger" 
+            <input type="checkbox" name="my-checkbox" data-on-text="Yes"
+            data-off-text= "No" data-on-color="success" data-off-color="danger"
             id="vehicle" data-section="vehicle" >
           <% end %>
-      </div> 
-      
+      </div>
+
       <div class="field">
         <h5>
           Upload Your Profile Picture
           <div> <%=image_tag(@user.image.url(:thumb))%></div>
           <input type="file" id="upload_picture" >
           <input type="hidden" name="image_cache">
-          <div id="profile_pic" hidden="true" contenteditable="true">            
+          <div id="profile_pic" hidden="true" contenteditable="true">
           </div>
         </h5>
       </div>
+
+      <div class="field">
+        <h5> IMDb Profile:</h5>
+        <div class="profile_input" data-profile-entry="imdb" id="imdb" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
+        <span class="error" hidden="true" id="imdb-error"> *Phone number is not valid</span>
+      </div>
+
+      <div class="field">
+        <h5> YouTube Page:</h5>
+        <div class="profile_input" data-profile-entry="youtube" id="youtube" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
+        <span class="error" hidden="true" id="youtube-error"> *Phone number is not valid</span>
+      </div>
+
+      <div class="field">
+        <h5> Vimeo Page:</h5>
+        <div class="profile_input" data-profile-entry="vimeo" id="vimeo" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
+        <span class="error" hidden="true" id="vimeo-error"> *Phone number is not valid</span>
+      </div>
+
+      <div class="field">
+        <h5> LinkedIn:</h5>
+        <div class="profile_input" data-profile-entry="linkedin" id="linkedin" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
+        <span class="error" hidden="true" id="linkedin-error"> *Phone number is not valid</span>
+      </div>
+
+      <div class="field">
+        <h5> Facebook:</h5>
+        <div class="profile_input" data-profile-entry="facebook" id="facebook" contenteditable="true"><!-- < % =#@user.FIXTHIS % > --></div>
+        <span class="error" hidden="true" id="facebook-error"> *Phone number is not valid</span>
+      </div>
+
     </div>
-  </div>     
+  </div>

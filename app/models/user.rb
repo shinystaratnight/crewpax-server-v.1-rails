@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   end
 
   def tw_date_range(tw_start_date)
-    (tw_start_date.to_date.beginning_of_week..tw_start_date.to_date.end_of_week + 7.day).to_a
+    (tw_start_date.beginning_of_week..tw_start_date.end_of_week + 7.day).to_a
   end
 
   def td_classes_for(day, appointments)

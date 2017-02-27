@@ -1,1 +1,57 @@
-$(".small-calendar").html('<%= j render("calendartwoweeknext.html.erb")%>');
+$(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
+
+$(".small-cal-browse").on('click', function(e) {
+  $(this).parent().parent().addClass('browsing');
+});
+
+// $(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
+
+
+// $(function(){
+//   Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
+//     function pad2(number) {
+//      return (number < 10 ? '0' : '') + number;
+//     }
+//     var d=new Date();
+//     var dd=pad2(d.getDate());
+//     var mm=pad2(d.getMonth()+1);
+//     var yyyy=d.getFullYear();
+//     var today=yyyy+mm+dd;
+
+//     day = day.toString();
+//     dashedDay = day.substring(0,4)+"-"+day.substring(4,6)+"-"+day.substring(6,8)
+//     var wday = ((new Date(dashedDay).getDay() + 1) % 7).toString();
+//     var td_class = "day ";
+//     td_class += "wday-" + wday;
+
+//     if (day == today){
+//       td_class += " today ";
+//     } else if (day < today) {
+//       td_class += " past ";
+//     } else {
+//       td_class += " future ";
+//     }
+
+//     if (day == start_date.toString()) {
+//       td_class += "start-date ";
+//     }
+//     if (day.substring(4,6) != start_date.toString().substring(4,6)) {
+//       if (day < start_date) {
+//         td_class += "prev-month ";
+//       } else {
+//         td_class += "next-month ";
+//       }
+//     } else {
+//       td_class += "current-month ";
+//     }
+
+//     if (availability.indexOf(dashedDay) != -1) {
+//       td_class += "available";
+//     } else {
+//       td_class += "unavailable";
+//     }
+
+//     return td_class;
+//   });
+// });
+

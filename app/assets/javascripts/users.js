@@ -178,7 +178,7 @@ $(function(){
       return "<button class='btn btn-success' style='font-size: 12px;'>Available </br>Today</button>";
 
     }
-  })
+  });
 
   Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
     function pad2(number) {
@@ -226,7 +226,11 @@ $(function(){
     return td_class;
   });
 
-
+  Handlebars.registerHelper("idReturn", function(id){
+    newId = Number(id);
+    console.log(newId);
+    return newId;
+  });
 
 
 //=====================================Send a text to Crew============================================================
@@ -306,15 +310,19 @@ $(function(){
   });
 //==========================================================================================================
 
-
-//==================================Crewpage Calendars - forward and backward===============================
-
-
-  // $('.tw-arrows').on('click', function (event) {
-  //   var parent = $(this).parent;
-  //   var start_date = parent.find('.tw-start-date').text();
-  //   var month-name = parent.find('.month-name').text();
+  // $('.small-cal-outer').on('click', function (event) {
+  //   $.ajax({
+  //     url: "/users",
+  //     method: "get",
+  //     dataType: "json",
+  //     // data: ajax_request_data,
+  //     success: function(response){
+  //       $(this).parent().parent().addClass('browsing');
+  //       $(this).next().trigger('click');
+  //     }
+  //   });
   // });
+
 
 
 //==========================================================================================================

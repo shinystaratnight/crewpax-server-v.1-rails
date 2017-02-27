@@ -11,11 +11,6 @@
                   <!-- <a href ={{path}}><img src= {{image}}></a> -->
                   <!-- <h3>< %  = id = "{{{id}}}" %></h3> -->
                   <!-- < % = @user = User.find(2) %> -->
-                  <p hidden>
-                    <%= @tw_start_date = Time.zone.now.to_date %>
-
-                    <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
-                  </p>
 
                     <%= render "calendartwoweek" %>
                   </div>
