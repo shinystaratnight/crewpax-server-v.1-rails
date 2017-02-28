@@ -3,10 +3,10 @@
     $('.bxslider').bxSlider();
   });
 </script>
-<p>Ads Banner: </p><%= image_tag 'logo.png', class: 'logo' %>
+<p>Sponsor: </p><%= image_tag 'gak_shak.JPG', class: 'sponsor-image' %>
 
 <% if Sponsor.all.length > 0 %>
-  <p> Sponsors: </p> 
+  <p> Sponsors: </p>
     <ul class="bxslider">
       <% for sponsor in Sponsor.all do %>
         <li class="sponsor_landingpage_image"><a href="http://<%=sponsor.website_url%>">

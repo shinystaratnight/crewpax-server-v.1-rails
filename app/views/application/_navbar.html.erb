@@ -39,12 +39,12 @@
           </li>
           <% if current_user.admin? %>
             <li>
-              <%= link_to "Admin Page", admin_index_path %> 
+              <%= link_to "Admin Page", admin_index_path %>
             </li>
-          <% end %>  
+          <% end %>
           <li>
             <%= link_to 'Log out', destroy_user_session_path, method: :delete %>
-          </li>              
+          </li>
         <% else %>
           <li>
             <%= link_to 'Log in', new_session_path(:user) %>
@@ -53,7 +53,17 @@
             <%= link_to 'Sign up',new_user_registration_path %>
           </li>
         <% end %>
+        <!-- <div id="navbar-lower-right"> -->
+
+        <!-- </div> -->
       </ul>
+
+    </div>
+    <span id="deliveries">For deliveries: 1 (888) 904-CREW</span>
+    <div class="ad-banner">
+      <%= image_tag 'bannerAdSample.gif', class: 'banner-ad' %>
     </div>
   </div>
+
+
 </nav>
