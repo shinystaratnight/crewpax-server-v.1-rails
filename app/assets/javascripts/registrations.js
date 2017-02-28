@@ -346,6 +346,149 @@ function userCreated() {
 };
 
 
+//============================forms for links==========================================
+
+
+$("#imdb").on("blur", function(){
+    var user_id = $("#info").data("user-id");
+    var imdb = $("#imdb").text().trim();
+    alert(imdb);
+      if (imdb == "") {
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } else {
+        $("#imdb-error").hide();
+
+        $.ajax({
+          url:"/users/" + user_id,
+          method:"put",
+          dataType:"json",
+          data:{user:{imdb: imdb}},
+          success: function(response){
+            $("#imdb").addClass("valid");
+            userCreated();
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            $("#imdb").addClass("invalid");
+            $("#imdb-error").text("*"+ errors).show();
+          }
+        });
+      };
+  });
+
+$("#youtube").on("blur", function(){
+    var user_id = $("#info").data("user-id");
+    var youtube = $("#youtube").text().trim();
+      if (youtube == "") {
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } else {
+        $("#youtube-error").hide();
+
+        $.ajax({
+          url:"/users/" + user_id,
+          method:"put",
+          dataType:"json",
+          data:{user:{youtube: youtube}},
+          success: function(response){
+            $("#youtube").addClass("valid");
+            userCreated();
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            $("#youtube").addClass("invalid");
+            $("#youtube-error").text("*"+ errors).show();
+          }
+        });
+      };
+  });
+
+$("#vimeo").on("blur", function(){
+    var user_id = $("#info").data("user-id");
+    var vimeo = $("#vimeo").text().trim().val();
+      if (vimeo == "") {
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } else {
+        $("#vimeo-error").hide();
+
+        $.ajax({
+          url:"/users/" + user_id,
+          method:"put",
+          dataType:"json",
+          data:{user:{vimeo: vimeo}},
+          success: function(response){
+            $("#vimeo").addClass("valid");
+            userCreated();
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            $("#vimeo").addClass("invalid");
+            $("#vimeo-error").text("*"+ errors).show();
+          }
+        });
+      };
+  });
+
+$("#linkedin").on("blur", function(){
+    var user_id = $("#info").data("user-id");
+    var linkedin = $("#linkedin").text().trim();
+      if (linkedin == "") {
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } else {
+        $("#linkedin-error").hide();
+
+        $.ajax({
+          url:"/users/" + user_id,
+          method:"put",
+          dataType:"json",
+          data:{user:{linkedin: linkedin}},
+          success: function(response){
+            $("#linkedin").addClass("valid");
+            userCreated();
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            $("#linkedin").addClass("invalid");
+            $("#linkedin-error").text("*"+ errors).show();
+          }
+        });
+      };
+  });
+
+$("#facebook").on("blur", function(){
+    var user_id = $("#info").data("user-id");
+    var facebook = $("#facebook").text().trim();
+      if (facebook == "") {
+        $(this).addClass("invalid");
+        $(this).next().show();
+        return false;
+      } else {
+        $("#facebook-error").hide();
+
+        $.ajax({
+          url:"/users/" + user_id,
+          method:"put",
+          dataType:"json",
+          data:{user:{facebook: facebook}},
+          success: function(response){
+            $("#facebook").addClass("valid");
+            userCreated();
+          },
+          error: function(xhr){
+            var errors = $.parseJSON(xhr.responseText).toString();
+            $("#facebook").addClass("invalid");
+            $("#facebook-error").text("*"+ errors).show();
+          }
+        });
+      };
+  });
 
 //==========================================================================================================
 //*********************************************************************************************************
