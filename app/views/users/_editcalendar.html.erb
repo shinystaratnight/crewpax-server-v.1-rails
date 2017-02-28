@@ -14,9 +14,7 @@
 
       <h5 id="available_days">Please choose your available days for the week of:
       <div class="input-group" id="DateDemo" >
-        <p hidden> <%= day1 = Time.zone.now.to_date.to_date.beginning_of_week.to_s %></p>
-        <p hidden> <%= day7 = Time.zone.now.to_date.to_date.end_of_week.to_s %></p>
-        <input type='text' id='weeklyDatePicker' value="<%= day1+" - "+day7 %>"/>
+        <input type='text' id='weeklyDatePicker' value=""/>
       </div>
       </h5>
         <span id="day">

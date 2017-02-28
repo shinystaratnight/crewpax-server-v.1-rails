@@ -642,7 +642,7 @@ $("#facebook").on("blur", function(){
   });
 
   $("#weeklyDatePicker").datepicker({
-    format: "mm/dd/yyyy",
+    format: "mm-dd-yyyy",
     todayHighlight: true,
     forceParse : false,
     autoclose:true,
@@ -651,12 +651,20 @@ $("#facebook").on("blur", function(){
 
   //Get the value of Start and End of Week in the calendar
   $("#weeklyDatePicker").on("change.dp",tdp);
-  // $(".avail-collapse-toggle").on('click', tdp);
+  $('.avail-collapse-toggle').on('click', tdp);
 
   function tdp (){
     var value = $("#weeklyDatePicker").val();
-    var sunday = moment(value, "MM/DD/YYYY").day(0).format("YYYY-MM-DD")
-    var saturday = moment(value, "MM/DD/YYYY").day(6).format("YYYY-MM-DD");
+    // case of one date from value picker
+    if ($(this).hasClass('avail-collapse-toggle')) {
+      value = moment().format("MM-DD-YYYY");
+    // case of two dates already there
+    }
+
+      var sunday = moment(value, "MM/DD/YYYY").day(0).format("YYYY-MM-DD");
+      var saturday = moment(value, "MM/DD/YYYY").day(6).format("YYYY-MM-DD");
+
+    // alert($(this).attr("aria-expanded"));
     var user_id = $("#info").data("user-id");
 
     $("#weeklyDatePicker").val(sunday + " - " + saturday);
