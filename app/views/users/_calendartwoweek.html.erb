@@ -7,11 +7,11 @@
   <div id="links_to_other_weeks">
     <!-- < % if @tw_start_date > Date.today %> -->
     <!-- <a class="small-cal-outer l-arrow"><<</a> -->
-    <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse l-arrow', remote: true %>
+    <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse', remote: true %>
     <!-- < % end %> -->
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
     <!-- <a class="small-cal-outer r-arrow">>></a> -->
-    <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse r-arrow', remote: true %>
+    <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse', remote: true %>
   </div>
   <table>
     <thead>

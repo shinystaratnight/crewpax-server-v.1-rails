@@ -1,14 +1,47 @@
+/* ==========In General==========================*/
+
+.row {
+  margin: 45px 0 0 51px;
+  /*margin-left:auto;*/
+  /*margin-right:auto;*/
+  width: 1300px;
+}
+
+.col-md-4 {
+  display: inline-block;
+}
+
+#sponsor-div {
+  margin: 0 0 0 30px;
+}
+
+#logo-div {
+  margin: 0 0px 0 15px;
+}
+
+#feed-div {
+    width: 300px;
+    margin-left: 60px;
+}
+
+.sponsor-p {
+  float: left;
+  width: 100px;
+}
+
+
+
 /* Medium devices (desktops, 992px and up)==================================*/
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   .bx-wrapper{
     width: 350px;
     margin-left: 10px;
   }
-  
+
   .sponsor_landingpage_image{
     margin-left: 20px;
   }
-  
+
 
 }
 
@@ -17,8 +50,8 @@
 /* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
+@media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .sponsor_landingpage_image img {
@@ -34,11 +67,11 @@
 /* ----------- iPhone 6 ---------------------------------------------------------------------------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
-  
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
   .sponsor_landingpage_image{
     margin-left: 30px;
   }
@@ -53,10 +86,10 @@
 /* ----------- iPhone 6 plus----------- */
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 2) {
   .sponsor_landingpage_image{
     margin-left: 30px;
   }

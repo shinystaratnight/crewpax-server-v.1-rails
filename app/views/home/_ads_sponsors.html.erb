@@ -1,17 +1,17 @@
-<script>
+<!-- <script>
   $(function(){
     $('.bxslider').bxSlider();
   });
-</script>
-<p>Sponsor: </p><%= image_tag 'gak_shak.JPG', class: 'sponsor-image' %>
+</script> -->
+<p class="sponsor-p">Sponsor: </p><%= image_tag 'gak_shak.JPG', class: 'sponsor-image' %>
 
-<% if Sponsor.all.length > 0 %>
+<!-- < % if Sponsor.all.length > 0 %>
   <p> Sponsors: </p>
     <ul class="bxslider">
-      <% for sponsor in Sponsor.all do %>
-        <li class="sponsor_landingpage_image"><a href="http://<%=sponsor.website_url%>">
-          <%=image_tag sponsor.picture.url %>
+      < % for sponsor in Sponsor.all do %>
+        <li class="sponsor_landingpage_image"><a href="http://< %=sponsor.website_url%>">
+          < %=image_tag sponsor.picture.url %>
           </a></li>
-      <% end %>
+      < % end %>
     </ul>
-<% end %>
+< % end %> -->
