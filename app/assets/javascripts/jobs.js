@@ -8,15 +8,15 @@ $(function(){
     responsive: true,
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
     "bSortClasses": false,
-              
+
   });
 
   $("#job_management").DataTable({
     responsive: true,
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
-    columnDefs: [ { 
+    columnDefs: [ {
       orderable: false,
-      targets: [2] 
+      targets: [2]
     } ]
   })
 
@@ -26,7 +26,7 @@ $(function(){
   })
 
 
-//=============================Search Jobs with specific roles=========================================  
+//=============================Search Jobs with specific roles=========================================
   $("#job_category").on("change", function(){
     var role_id = $(this).val();
     var regex = '\\b' + role_id + '\\b';
@@ -43,7 +43,7 @@ $(function(){
                            .search(regex, true, false)
                            .draw();
     }
-    
+
   });
 
 
@@ -51,22 +51,19 @@ $(function(){
 
 
 //=================Job Edit Page Job filled? ============================================================
-   // To trigger Bootstrap Switch 
+   // To trigger Bootstrap Switch
   $("[name='job_filled']").bootstrapSwitch();
-
-
-
+  // .notify("Hello World")
 });
 
 
 
 //========================================Common Function===============================================
-  
- 
-  
-
-  
 
 
 
-  
+
+
+
+
+

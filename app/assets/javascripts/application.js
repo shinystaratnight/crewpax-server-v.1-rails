@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require moment
+//= require notify
 //= require_tree .
 //= require bootstrap-datepicker.min
 //= require jquery.dataTables.min
