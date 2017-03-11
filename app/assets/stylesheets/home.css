@@ -27,8 +27,12 @@
 .sponsor-p {
   float: left;
   width: 100px;
+  margin: 0 10px 14px 0
 }
 
+.page-header {
+  margin-top: -0.3em;
+}
 
 
 /* Medium devices (desktops, 992px and up)==================================*/
