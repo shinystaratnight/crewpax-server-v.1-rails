@@ -1,5 +1,6 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
+
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="true">
         <span class="sr-only">Toggle navigation</span>
@@ -8,11 +9,12 @@
         <span class="icon-bar"></span>
       </button>
       <%= link_to root_path, class: 'navbar-brand' do %>
-                  <span>Crew</span>Call
-
+        <span>Crew</span>Call
       <% end %>
     </div>
+
     <div class="collapse navbar-collapse" id="navbar-collapse">
+
       <ul class="nav navbar-nav navbar-left">
         <li>
           <%= link_to 'Job Board', jobs_path %>
@@ -26,11 +28,11 @@
         <li>
           <%= link_to "Store", "http://paxgear.myshopify.com/collections/all" %>
         </li>
-
-
-
       </ul>
+
       <ul class="nav navbar-nav navbar-right">
+
+        <li class="upper-right">
         <% if user_signed_in? %>
           <li>
             <%= link_to 'Profile', user_path(current_user) %>
@@ -54,41 +56,17 @@
           <li>
             <%= link_to 'Sign up',new_user_registration_path %>
           </li>
-
         <% end %>
+        </li>
+
+        <li class="lower-right">
+          <li class="deliveries-mobile">
+            For deliveries: 1 (888) 904-CREW
+          </li>
+        </li>
+
       </ul>
-      <!-- <ul class="nav navbar-nav navbar-right lower-right">
-        <li class="deliveries">
-          <span>For deliveries: 1 (888) 904-CREW</span>
-        </li>
-      </ul> -->
-    </div>
-    <div class="collapse navbar-collapse" id="navbar-collapse-lower">
-      <!-- <ul class="nav navbar-nav navbar-left">
-        <li class="ad-banner">
-          <p> Some text </p>
-          < %= image_tag 'bannerAdSample.gif', class: 'banner-ad' %>
-        </li>
-      </ul> -->
-      <ul class="nav navbar-nav navbar-right">
-        <li class="deliveries">
-          <span>For deliveries: 1 (888) 904-CREW</span>
-        </li>
-      </ul>
+
     </div>
   </div>
-
- <!--  <ul class="nav navbar-nav navbar-right">
-     <li class="deliveries">
-        <span>For deliveries: 1 (888) 904-CREW</span>
-      </li>
-    </ul> -->
-
 </nav>
-<!-- <nav class="navbar navbar-inverse">
-  <ul class="nav navbar-nav navbar-right">
-    <li class="deliveries">
-      <span>For deliveries: 1 (888) 904-CREW</span>
-    </li>
-  </ul>
-</nav> -->

@@ -1,18 +1,43 @@
+
 .navbar-nav #navbar-upper-right {
   display: inline;
 }
 
-// .navbar-nav #navbar-lower-right {
-//   display: block;
-//   float: right;
+// .navbar-fixed-bottom .navbar-collapse {
+//   max-height: 320px;
 // }
+
+
+
+.navbar-right {
+  margin-bottom: -17px;
+}
+
+.upper-right {
+  display: block;
+  float: right;
+}
+
+.lower-right {
+  display: block;
+  text-align: right;
+  margin: 0 -16em 5px 0;
+}
+
+.deliveries-mobile {
+  // float: right;
+  color: #d5d5d5;
+  margin: 8px 0px 0px 14px;
+}
 
 .deliveries {
   // display: block;
   float: right;
   color: #d5d5d5;
-  margin: 2px 12px -15px 0;
+  margin: 2px 12px -15px 15px;
 }
+
+
 
 // . {
 //   display: inline-block;
