@@ -7,7 +7,11 @@
   <div id="links_to_other_weeks">
     <!-- <a class="left-scroll-arrow"><<</a> -->
     <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse', remote: true %>
-    <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
+    <% if @tw_start_date.to_date.beginning_of_week.mday < (@tw_start_date.to_date.end_of_week+7.day).mday %>
+      <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
+    <% else %>
+      <%= (I18n.t :abbr_month_names, :scope => :date)[@tw_start_date.to_date.beginning_of_week.month]+"-"+(I18n.t :abbr_month_names, :scope => :date)[(@tw_start_date.to_date.end_of_week+7.day).month] %> <%= @tw_start_date.to_date.year %>
+    <% end %>
     <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse', remote: true %>
     <!-- <a class="right-scroll-arrow">>></a> -->
   </div>
