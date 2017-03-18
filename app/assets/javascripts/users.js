@@ -297,6 +297,7 @@ $(function(){
     function convertDateToUTC(date) {
       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
+    alert('hi!');
     var date = new Date($(this).find('.today-date').text());
     date = convertDateToUTC(date);
     var day = date.getDay();
@@ -310,20 +311,50 @@ $(function(){
   });
 //==========================================================================================================
 
-  // $('.small-cal-outer').on('click', function (event) {
+//==========================Two week calendar scrolling====================================================//
+
+  $(document).on('click', '.small-cal-browse', function (event) {
+    $(this).parent().parent().addClass('browsing');
+    // $.ajax({
+    //   url: "/users/",
+    //   context: document.body
+    // }).done(function() {
+    //   alert('small cal browse clicked.');
+    // $( this ).addClass( "done" );
+    // });
+  });
+
+  // $('.left-scroll-arrow').on('click', function (event) {
+  //   $(this).parent().next().find('.tr').each(function(){
+  //     alert('hello');
+  //   });
   //   $.ajax({
-  //     url: "/users",
+  //     url: "/users/",
   //     method: "get",
-  //     dataType: "json",
-  //     // data: ajax_request_data,
+  //     // dataType: "json",
+  //     // data:{appointment:{day: day, id: availability_id, date:date, week:week}},
   //     success: function(response){
-  //       $(this).parent().parent().addClass('browsing');
-  //       $(this).next().trigger('click');
-  //     }
+  //       alert('hello');
+  //      }
   //   });
   // });
+  //   // for each tr
+  //     // for each td
+  //       // run a function to change the date, returning the new date
+  //       // run a function to get the availability / dot
+  //       // run a function to change the class name.
+  //   // run an ajax thing.
+  // });
 
-
+  // $('.right-scroll-arrow').on('click', function (event) {
+  //   $(this).parent().next().find('.tbody');
+  //   // for each tr
+  //     // for each td
+  //       // run a function to change the date, returning the new date
+  //       // run a function to get the availability / dot
+  //       // run a function to change the class name.
+  //   // run an ajax thing.
+  // });
 
 //==========================================================================================================
 
@@ -463,7 +494,7 @@ $(function(){
       success: function(response){
         checkbox.data("availability-id", "");
         checkbox.attr( 'data-availability-id', "" );
-        checkbox.removeClass("available").addClass("unavailable").find('.dot').css("background-color", "#aa2222");;
+        checkbox.removeClass("available").addClass("unavailable").find('.dot').css("background-color", "#aa2222");
       }
     // }).done(function(data) {
       // alert( "Availability deleted?" );

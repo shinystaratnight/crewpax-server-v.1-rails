@@ -1,5 +1,10 @@
 /* ==========In General==========================*/
 
+/* override for large buttons on home page */
+.btn-lg {
+  width: 404px;
+}
+
 .row {
   margin: 45px 0 0 51px;
   /*margin-left:auto;*/

@@ -2,7 +2,6 @@
 @import "layout";
 @import "alerts";
 @import "calendar";
-@import "jobs";
 @import "registrations";
 @import "prettify";
 @import "bootstrap-switch.min";
@@ -10,8 +9,8 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 @import "bootstrap-datepicker3.min";
-@import "user";
-@import "admin";
+
+
 /*@import "hiring_board";*/
 @import "data-tables";
 @import "dataTables.bootstrap.min";
@@ -20,7 +19,11 @@
 @import "responsive.dataTables.min";
 @import "jquery.bxslider.min";
 @import "home";
+@import "user";
+@import "jobs";
+@import "admin";
 @import "nav";
+
 
 //= require_self
 //= require_tree .

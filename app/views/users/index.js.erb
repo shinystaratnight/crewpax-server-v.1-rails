@@ -1,8 +1,24 @@
 $(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
 
-$(".small-cal-browse").on('click', function(e) {
-  $(this).parent().parent().addClass('browsing');
-});
+// $(".small-cal-browse").on('click', function(e) {
+//     $(this).parent().parent().addClass('browsing');
+// });
+
+// $('.profile-day.future').on('click', function (event) {
+//     function convertDateToUTC(date) {
+//       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+//     }
+//     var date = new Date($(this).find('.today-date').text());
+//     date = convertDateToUTC(date);
+//     var day = date.getDay();
+//     var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
+//     if ($(this).hasClass('unavailable')) {
+//       ajaxAddAvailabilityProfile(day,date,week,$(this));
+//     } else {
+//       var availability_id = $(this).data("availability-id");
+//       ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
+//     }
+//   });
 
 // $(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
 

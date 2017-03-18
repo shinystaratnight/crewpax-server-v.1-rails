@@ -5,13 +5,11 @@
     <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
   </p>
   <div id="links_to_other_weeks">
-    <!-- < % if @tw_start_date > Date.today %> -->
-    <!-- <a class="small-cal-outer l-arrow"><<</a> -->
+    <!-- <a class="left-scroll-arrow"><<</a> -->
     <%= link_to "<<", url_for(params.merge(tw_start_date: (@tw_start_date - 14.day).to_s)), class: 'small-cal-browse', remote: true %>
-    <!-- < % end %> -->
     <%= I18n.t("date.month_names")[@tw_start_date.to_date.month] %> <%= @tw_start_date.to_date.year %>
-    <!-- <a class="small-cal-outer r-arrow">>></a> -->
     <%= link_to ">>", url_for(params.merge(tw_start_date: (@tw_start_date + 14.day).to_s)), class: 'small-cal-browse', remote: true %>
+    <!-- <a class="right-scroll-arrow">>></a> -->
   </div>
   <table>
     <thead>
