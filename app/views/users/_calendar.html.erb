@@ -23,7 +23,7 @@
             <% else %>
               <span hidden><%= @availability_id = "" %></span>
             <% end %>
-            <%= content_tag :td, class: @user.td_classes_for(day,@appointments), "data-user-id" => @user.id, "data-availability-id" => @availability_id do %>
+            <%= content_tag :td, class: @user.td_classes_for(day,@appointments).push("current-user-"+(@user==current_user).to_s), "data-user-id" => @user.id, "data-availability-id" => @availability_id do %>
               <div hidden class="today-date"><%= day.to_s %></div>
               <%= Date.parse(day.to_s).mday %>
               <div class="dot"><div class="line"></div></div>

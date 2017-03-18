@@ -294,7 +294,7 @@ $(function(){
 
 
 //=====================================Change Availiability status============================================================
-  $('.profile-day.future').on('click', function (event) {
+  $('.profile-day.future.current-user-true').on('click', function (event) {
     function convertDateToUTC(date) {
       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
