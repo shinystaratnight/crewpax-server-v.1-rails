@@ -226,6 +226,7 @@ $(function(){
     return td_class;
   });
 
+
   Handlebars.registerHelper("idReturn", function(id){
     newId = Number(id);
     console.log(newId);
@@ -297,7 +298,6 @@ $(function(){
     function convertDateToUTC(date) {
       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
     }
-    alert('hi!');
     var date = new Date($(this).find('.today-date').text());
     date = convertDateToUTC(date);
     var day = date.getDay();
@@ -313,16 +313,19 @@ $(function(){
 
 //==========================Two week calendar scrolling====================================================//
 
+  // helper to pre-emptively add browsing class to calendar about to be re-rendered
   $(document).on('click', '.small-cal-browse', function (event) {
     $(this).parent().parent().addClass('browsing');
-    // $.ajax({
-    //   url: "/users/",
-    //   context: document.body
-    // }).done(function() {
-    //   alert('small cal browse clicked.');
-    // $( this ).addClass( "done" );
-    // });
   });
+
+
+    // add this to stuff
+    // if ($(this).hasClass('unavailable')) {
+    //   ajaxAddAvailabilityProfile(day,date,week,$(this));
+    // } else {
+    //   var availability_id = $(this).data("availability-id");
+    //   ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
+    // }
 
   // $('.left-scroll-arrow').on('click', function (event) {
   //   $(this).parent().next().find('.tr').each(function(){

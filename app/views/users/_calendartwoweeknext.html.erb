@@ -1,6 +1,5 @@
 <p hidden>
   <%= @tw_start_date = params[:tw_start_date].to_date %>
-
   <%= @tw_date_range = (@tw_start_date.to_date.beginning_of_week..@tw_start_date.to_date.end_of_week + 7.day).to_a %>
 </p>
 <div id="links_to_other_weeks">
@@ -27,8 +26,13 @@
     <% @tw_date_range.each_slice(7).each do |week| %>
       <tr>
         <% week.each do |day| %>
-          <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
-            <%= Date.parse(day.to_s).mday %>
+          <%= content_tag :td do %>
+            <span hidden>{{id}}</span>
+            <span class="full-date" hidden><%= day %></span>
+            <span class="start-date" hidden><%= @tw_start_date %></span>
+            <span class="two-week-day">
+              <%= Date.parse(day.to_s).mday %>
+            </span>
             <div class="dot"></div>
           <% end %>
         <% end %>
@@ -37,6 +41,7 @@
   </tbody>
 </table>
 
+<!-- class: "{{{classNameByAvailabilityScroll availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" -->
 
 
 

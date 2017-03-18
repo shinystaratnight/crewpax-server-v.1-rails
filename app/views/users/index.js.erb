@@ -1,73 +1,85 @@
-$(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
-
-// $(".small-cal-browse").on('click', function(e) {
-//     $(this).parent().parent().addClass('browsing');
-// });
-
-// $('.profile-day.future').on('click', function (event) {
-//     function convertDateToUTC(date) {
-//       return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-//     }
-//     var date = new Date($(this).find('.today-date').text());
-//     date = convertDateToUTC(date);
-//     var day = date.getDay();
-//     var week = (date.getDate() - day).toString() + " - " + (date.getDate() - day + 6).toString();
-//     if ($(this).hasClass('unavailable')) {
-//       ajaxAddAvailabilityProfile(day,date,week,$(this));
-//     } else {
-//       var availability_id = $(this).data("availability-id");
-//       ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
-//     }
-//   });
-
-// $(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>').removeClass('browsing');
+$(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>');
+var availability = $(".small-calendar.browsing").parent().find('.availability-holder').text();
+$(".small-calendar.browsing").find('tbody').children('tr').each(function(e0) {
+  $(this).children('td').each(function(e1) {
+    var fullDate = $(this).find('.full-date').text();
+    var startDate = $(this).find('.start-date').text();
+    $(this).addClass(tdClass(fullDate, startDate, availability));
+  });
+});
+$(".small-calendar.browsing").removeClass('browsing');
 
 
-// $(function(){
-//   Handlebars.registerHelper("classNameByAvailability", function(availability, day, start_date){
-//     function pad2(number) {
-//      return (number < 10 ? '0' : '') + number;
-//     }
-//     var d=new Date();
-//     var dd=pad2(d.getDate());
-//     var mm=pad2(d.getMonth()+1);
-//     var yyyy=d.getFullYear();
-//     var today=yyyy+mm+dd;
+function tdClass(day, start_date, availability) {
+  function pad2(number) {
+   return (number < 10 ? '0' : '') + number;
+  }
+  var d=new Date();
+  var dd=pad2(d.getDate());
+  var mm=pad2(d.getMonth()+1);
+  var yyyy=d.getFullYear();
+  var today=yyyy+mm+dd;
 
-//     day = day.toString();
-//     dashedDay = day.substring(0,4)+"-"+day.substring(4,6)+"-"+day.substring(6,8)
-//     var wday = ((new Date(dashedDay).getDay() + 1) % 7).toString();
-//     var td_class = "day ";
-//     td_class += "wday-" + wday;
+  day = day.toString();
+  dashedDay = day;
+  day = day.substring(0,4)+day.substring(5,7)+day.substring(8,10);
+  start_date = start_date.substring(0,4)+start_date.substring(5,7)+start_date.substring(8,10);
+  var wday = ((new Date(dashedDay).getDay() + 1) % 7).toString();
+  var td_class = "day ";
+  td_class += "wday-" + wday;
 
-//     if (day == today){
-//       td_class += " today ";
-//     } else if (day < today) {
-//       td_class += " past ";
-//     } else {
-//       td_class += " future ";
-//     }
+  if (day == today){
+    td_class += " today ";
+  } else if (day < today) {
+    td_class += " past ";
+  } else {
+    td_class += " future ";
+  }
 
-//     if (day == start_date.toString()) {
-//       td_class += "start-date ";
-//     }
-//     if (day.substring(4,6) != start_date.toString().substring(4,6)) {
-//       if (day < start_date) {
-//         td_class += "prev-month ";
-//       } else {
-//         td_class += "next-month ";
-//       }
-//     } else {
-//       td_class += "current-month ";
-//     }
+  if (day == start_date.toString()) {
+    td_class += "start-date ";
+  }
+  if (day.substring(4,6) != start_date.toString().substring(4,6)) {
+    if (day < start_date) {
+      td_class += "prev-month ";
+    } else {
+      td_class += "next-month ";
+    }
+  } else {
+    td_class += "current-month ";
+  }
 
-//     if (availability.indexOf(dashedDay) != -1) {
-//       td_class += "available";
-//     } else {
-//       td_class += "unavailable";
-//     }
+  if (availability.indexOf(dashedDay) != -1) {
+    td_class += "available";
+  } else {
+    td_class += "unavailable";
+  }
 
-//     return td_class;
-//   });
-// });
+  return td_class;
+}
 
+
+
+// function loadPosts(posts, opts,user_source){
+//     opts.postsDiv.empty(); // Clear the previous posts
+//     $.each(posts, function(){
+
+//         var user_card_template = Handlebars.compile($("#user_card_template").html());
+
+//         var context = {
+//             id: this.user_info.id,
+//             name: this.user_info.name,
+//             vehicle : this.user_info.has_vehicle,
+//             image: this.user_info.image.url,
+//             phone: this.user_info.phone,
+//             union_member: this.union_member,
+//             union_permit: this.union_permit,
+//             availability: this.availabilities,
+//             path: "users/" + this.user_info.id,
+//         };
+
+//         var html = user_card_template(context);
+//         opts.postsDiv.append(html);
+
+//     });
+//   }
