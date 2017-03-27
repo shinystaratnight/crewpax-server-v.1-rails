@@ -50,15 +50,88 @@ $(function(){
 
 
 
-//=================Job Edit Page Job filled? ============================================================
-   // To trigger Bootstrap Switch
-  $("[name='job_filled']").bootstrapSwitch();
-  // .notify("Hello World")
+//===========================Notifications for Jobs Posted and Jobs Filled=============================
+
+
+
+  $("#post_submit").on('click', function(e) {
+    // var notifyTitle = "Title: " + $('#job_name').val() + '\n';
+    var notifyTitle = `Title: ${$('#job_name').val()}\n`;
+    var notifyRole = "Role: " + $(`#job_role_id option[value=${$('#job_role_id').val()}]`).text() + '\n';
+    var notifyDescription = "Description: ".concat($('#job_description').val().toString());
+    localStorage.setItem('notifyTriple', notifyTitle + notifyRole + notifyDescription);
+  });
+
+  $(".alert-notice.alert").ready(function(){
+    if ($(".alert-notice").text().includes('Confirmation email has been sent.')) {
+      notifyMe('New Job Posted on Crew Call: \n' + localStorage.getItem('notifyTriple'));
+    }
+  });
+
+
+
+
+
+//=====================================================================================================
+
 });
 
+//=====================================Helper Functions for Notifications==============================
+
+function notifyMe(message) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification(message);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification("Hi there!");
+      }
+    });
+  }
+  // At last, if the user has denied notifications, and you
+  // want to be respectful there is no need to bother them any more.
+}
 
 
-//========================================Common Function===============================================
+// Service Worker API
+dictionary GetNotificationOptions {
+  DOMString tag = "";
+};
+
+partial interface ServiceWorkerRegistration {
+  Promise<void> showNotification(DOMString title, optional NotificationOptions options);
+  Promise<sequence<Notification>> getNotifications(optional GetNotificationOptions filter);
+};
+
+[Constructor(DOMString type, NotificationEventInit eventInitDict),
+ Exposed=ServiceWorker]
+interface NotificationEvent : ExtendableEvent {
+  readonly attribute Notification notification;
+  readonly attribute DOMString action;
+};
+
+dictionary NotificationEventInit : ExtendableEventInit {
+  required Notification notification;
+  DOMString action = "";
+};
+
+partial interface ServiceWorkerGlobalScope {
+  attribute EventHandler onnotificationclick;
+  attribute EventHandler onnotificationclose;
+};
+
+//========================================Common Function==============================================
 
 
 

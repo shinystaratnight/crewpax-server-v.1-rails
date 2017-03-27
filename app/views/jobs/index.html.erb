@@ -7,7 +7,9 @@
       <% end %>
   </div>
 
-  <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found"></div>
+  <div class="alert alert-info alert-dismissible" role="alert" hidden="true" id="label_not_found">
+
+  </div>
   <table id="job_posts_table" cellspacing="0" class="display responsive no-wrap">
       <span id="search_job_posts"> Search by Roles:
         <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%>

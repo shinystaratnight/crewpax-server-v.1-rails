@@ -24,11 +24,32 @@ class UsersController < ApplicationController
         format.html{render :index}
       end
 
+      # Old version with User.limit(30) and max 10 per page.
+      # if params[:current_page_number] == "0" || params[:current_page_number] == nil
+      #   @users = {};
+      #   @total_user = User.all.length
+      #   @paginated_users = User.limit(30)
+      #   @paginated_user_info = convert_user_info_json(@paginated_users)
+      #   @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
 
+      #   format.html
+      #   format.json{render json: @users}
+
+      # elsif params[:current_page_number].to_i % 3 == 2
+      #   @users = {};
+      #   @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
+      #   @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
+      #   @paginated_user_info = convert_user_info_json(@paginated_users)
+
+      #   format.html
+      #   format.json{render json: @paginated_user_info}
+      # end
+
+      # New version, all the users
       if params[:current_page_number] == "0" || params[:current_page_number] == nil
         @users = {};
         @total_user = User.all.length
-        @paginated_users = User.limit(30)
+        @paginated_users = User.all
         @paginated_user_info = convert_user_info_json(@paginated_users)
         @users = {number_users: @total_user, paginated_users:  @paginated_user_info}
 
@@ -38,13 +59,12 @@ class UsersController < ApplicationController
       elsif params[:current_page_number].to_i % 3 == 2
         @users = {};
         @ajax_request_time = (params[:current_page_number].to_i + 1) / 3
-        @paginated_users = User.limit(30).offset(@ajax_request_time * 30)
+        @paginated_users = User.all.offset(@ajax_request_time * User.all.length)
         @paginated_user_info = convert_user_info_json(@paginated_users)
 
         format.html
         format.json{render json: @paginated_user_info}
       end
-
 
 
     end

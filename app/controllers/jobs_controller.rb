@@ -4,16 +4,16 @@ class JobsController < ApplicationController
   before_filter :authorize, only: [ :edit, :update, :destroy]
   before_filter :set_role, only: :index
   respond_to :html, :js, :json
-  
+
   def index
-    #scope will return false b/c in jobs table, :published filed is set default 
+    #scope will return false b/c in jobs table, :published filed is set default
     #to be false
     if params[:user_id].present?
       @user_jobs = User.find(params[:user_id]).jobs
       render "job_management"
     else
-      @jobs = Job.published 
-      @jobs.find_most_recent(params[:updated_at])        
+      @jobs = Job.published
+      @jobs.find_most_recent(params[:updated_at])
     end
   end
 
@@ -25,9 +25,9 @@ class JobsController < ApplicationController
     @job = Job.new(job_params)
     if current_user.present?
       @job.user_id = current_user.id
-    end  
+    end
 
-    if @job.save      
+    if @job.save
       JobMailer.confirmation(@job).deliver_now
       redirect_to jobs_path, notice: 'Confirmation email has been sent.'
     else
@@ -67,7 +67,7 @@ class JobsController < ApplicationController
 
   def destroy
     if @job.destroy
-      @job.labels.find_by(job_id: @job.id).destroy   
+      @job.labels.find_by(job_id: @job.id).destroy
       redirect_to jobs_path, notice: 'Job has been removed.'
     end
   end
@@ -86,7 +86,7 @@ class JobsController < ApplicationController
 
   def authenticate
     # https://www.owasp.org/index.php/Covert_timing_channel
-    @authenticated = @job.secret == params[:secret] 
+    @authenticated = @job.secret == params[:secret]
   end
 
   def authorize
@@ -94,8 +94,8 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updaetd_at,:user_id, :job_filled)
+    params.require(:job).permit(:id, :name, :role_id, :description, :starts_on, :ends_on, :location, :company_name, :contact_name, :contact_phone, :contact_email,:secret,:updated_at,:user_id, :job_filled)
   end
 
- 
+
 end

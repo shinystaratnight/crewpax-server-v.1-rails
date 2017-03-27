@@ -8,7 +8,7 @@ $(function(){
     current_page_number == null ? current_page_number = 0 : current_page_number = current_page_number[0]
 
     var opts = {
-      pageMax: 10,
+      pageMax: 12,
       postsDiv: $('#user-list'),
 
     }
