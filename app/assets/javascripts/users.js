@@ -404,40 +404,49 @@ $(function(){
 
           // When click on the pagination button:
           $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
-            // when a page is clicked, reset prev button and next state
-            $(".pagination-prev, .pagination-next").removeClass("disabled")
 
-            if ($(this).hasClass("pagination-next")){
-              gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
-              disablePrevNextButton(gotoPageNumber, pageCount)
-            } else if($(this).hasClass("pagination-prev")){
-              gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
-              disablePrevNextButton(gotoPageNumber, pageCount)
-            }else{
+            // only works if not disabled
+            if (!$(this).hasClass("disabled")) {
 
-              gotoPageNumber = $(this).data("page");
-              disablePrevNextButton(gotoPageNumber, pageCount)
-            }
+              // when a page is clicked, reset prev button and next state
+              $(".pagination-prev, .pagination-next").removeClass("disabled")
 
 
-            if (gotoPageNumber % 3 == 2){
-              // Check if this page is clicked before, if yes, show already render info
-              if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-                changePage(gotoPageNumber, filter_data, opts, user_source)
-              } else{
-                // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-                changePage(gotoPageNumber, filter_data, opts, user_source)
+              if ($(this).hasClass("pagination-next")){
+                gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
+                disablePrevNextButton(gotoPageNumber, pageCount)
+              } else if($(this).hasClass("pagination-prev")){
+                gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
+                disablePrevNextButton(gotoPageNumber, pageCount)
+              }else{
 
-                // Need to preload filter user data
-                var need_to_load_times = Math.ceil(dataCount / 30)
-
-                if ((gotoPageNumber + 1)/3 < need_to_load_times){
-                  ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
-                  preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
-                }
+                gotoPageNumber = $(this).data("page");
+                disablePrevNextButton(gotoPageNumber, pageCount)
               }
-            }else{
-              changePage(gotoPageNumber, filter_data, opts, user_source)
+
+
+              if (gotoPageNumber % 3 == 2){
+                // Check if this page is clicked before, if yes, show already render info
+                if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
+                  changePage(gotoPageNumber, filter_data, opts, user_source)
+                } else{
+                  // send another ajax request to load more data if this page is never clicked before, and show its loaded data
+                  changePage(gotoPageNumber, filter_data, opts, user_source)
+
+                  // Need to preload filter user data
+                  var need_to_load_times = Math.ceil(dataCount / 30)
+
+                  if ((gotoPageNumber + 1)/3 < need_to_load_times){
+                    ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
+                    preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
+                  }
+                }
+              }else{
+                changePage(gotoPageNumber, filter_data, opts, user_source)
+              }
+            } else {
+              // prevent refresh when clicking disabled
+              event.preventDefault();
             }
           });
         }
