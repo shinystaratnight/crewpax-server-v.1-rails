@@ -370,95 +370,6 @@ $(function(){
 
 //======================================Common function====================================================
 
-  // original version:
-
-  // function ajaxPreLoadUser(opts, filter_data, role_id, current_page, hiring_board_status, url, ajax_request_data){
-  //   $.ajax({
-  //     url: url,
-  //     method: "get",
-  //     dataType: "json",
-  //     data: ajax_request_data,
-  //     success: function(response){
-  //       if (response == undefined || response.paginated_users == "") {
-  //         UserNotFound()
-  //       } else {
-  //         var dataCount = response.number_users;
-  //         var pageCount = Math.ceil(dataCount/opts.pageMax);
-  //         var user_source = $("#user_card_template").html();
-  //         $.map(response.paginated_users, function(user){return filter_data.push(user)})
-
-  //         if (dataCount > opts.pageMax){
-  //           // Remove original pagination
-  //           $(".pagination").remove();
-
-  //           paginate(pageCount ,opts, filter_data, user_source);
-
-  //           posts = response.paginated_users.slice(0, opts.pageMax);
-
-  //         } else {
-  //           posts = response.paginated_users;
-  //           $(".pagination").hide();
-  //         }
-
-  //         //load posts for the current page
-  //         loadPosts(posts,opts,user_source);
-
-  //         //When a page is loaded, prev button is set to be disabled
-  //         $(".pagination-prev").addClass("disabled")
-
-
-  //         // When click on the pagination button:
-  //         $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
-
-  //           // only works if not disabled
-  //           if (!$(this).hasClass("disabled")) {
-
-  //             // when a page is clicked, reset prev button and next state
-  //             $(".pagination-prev, .pagination-next").removeClass("disabled")
-
-
-  //             if ($(this).hasClass("pagination-next")){
-  //               gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
-  //               disablePrevNextButton(gotoPageNumber, pageCount)
-  //             } else if($(this).hasClass("pagination-prev")){
-  //               gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
-  //               disablePrevNextButton(gotoPageNumber, pageCount)
-  //             }else{
-
-  //               gotoPageNumber = $(this).data("page");
-  //               disablePrevNextButton(gotoPageNumber, pageCount)
-  //             }
-
-
-  //             if (gotoPageNumber % 3 == 2){
-  //               // Check if this page is clicked before, if yes, show already render info
-  //               if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-  //                 changePage(gotoPageNumber, filter_data, opts, user_source)
-  //               } else{
-  //                 // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-  //                 changePage(gotoPageNumber, filter_data, opts, user_source)
-
-  //                 // Need to preload filter user data
-  //                 var need_to_load_times = Math.ceil(dataCount / 30)
-
-  //                 if ((gotoPageNumber + 1)/3 < need_to_load_times){
-  //                   ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
-  //                   preloadUserData(gotoPageNumber,filter_data, opts, user_source, url, ajax_request_data)
-  //                 }
-  //               }
-  //             }else{
-  //               changePage(gotoPageNumber, filter_data, opts, user_source)
-  //             }
-  //           } else {
-  //             // prevent refresh when clicking disabled
-  //             event.preventDefault();
-  //           }
-  //         });
-  //       }
-  //     }
-  //   });
-  // }
-
   function ajaxPreLoadUser(opts, filter_data, role_id, current_page, hiring_board_status, url, ajax_request_data){
     $.ajax({
       url: url,
@@ -497,8 +408,8 @@ $(function(){
           loadPosts(posts,opts,user_source);
 
           //When a page is loaded, prev button is set to be disabled
-          $(".pagination-prev").addClass("disabled")
-          $(".pagination-10-back").addClass("disabled")
+          // $(".pagination-prev").addClass("disabled")
+          // $(".pagination-10-back").addClass("disabled")
 
           // When click on the pagination button:
           $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev, .pagination>li.pagination-10-back, .pagination>li.pagination-10-ahead").on("click", function(){
@@ -666,20 +577,6 @@ $(function(){
 
   function range(i){return i?range(i-1).concat(i):[]}
   function range2(j, i){return i>=j?range2(j, i-1).concat(i):[]}
-  // old version:
-  // function paginate(pageCount, opts, data, user_source){
-  //   var source = $("#pagination-template").html();
-  //   var template = Handlebars.compile(source);
-  //   var context = {pages: range(pageCount)};
-  //   var html = template(context);
-  //   //add the page bar on the bottom of the page
-  //   $("#user-pagination").append(html);
-
-  //   $('.pagination>li.pagination-page').on("click", function(){
-  //     changePage($(this).data("page"), data, opts, user_source)
-  //   }).filter('[data-page="1"]').addClass('active');
-
-  // }
 
   function paginate(pageCount, opts, data, user_source){
     if (pageCount <= 15) {
@@ -821,6 +718,13 @@ $(function(){
       var html = template(context);
       $(".pagination").replaceWith(html);
 
+      if (pageNumber <= 10) {
+      $(".pagination-10-back").addClass("disabled");
+      }
+      if (pageCount - pageNumber < 10) {
+      $(".pagination-10-ahead").addClass("disabled");
+      }
+
       // When click on the pagination button:
       $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev, .pagination>li.pagination-10-back, .pagination>li.pagination-10-ahead").on("click", function(){
 
@@ -852,19 +756,19 @@ $(function(){
             disablePrevNextButton(gotoPageNumber, pageCount)
           }
 
-          var ellipsisClicked = false;
+          var nextEllipsisClicked = false;
           if (!($(".pagination-page[data-page="+ gotoPageNumber +"]").length) ||
               $(".pagination-page[data-page="+ gotoPageNumber +"]").hasClass('ellipsis')) {
-            ellipsisClicked = true;
+            nextEllipsisClicked = true;
           }
 
           if (gotoPageNumber % 3 == 2){
             // Check if this page is clicked before, if yes, show already render info
             if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-              changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
             } else{
               // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-              changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
 
               // Need to preload filter user data
               var need_to_load_times = Math.ceil(dataCount / 30)
@@ -875,7 +779,7 @@ $(function(){
               // }
             }
           }else{
-            changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+            changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
           }
         } else {
           // prevent refresh when clicking disabled
@@ -909,9 +813,6 @@ $(function(){
 
     });
   }
-
-
-
 
 
 //====================================================================================================
