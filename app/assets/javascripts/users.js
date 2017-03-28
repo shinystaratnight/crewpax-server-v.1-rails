@@ -739,12 +739,21 @@ $(function(){
           var midGroupStart = Math.ceil((1+pageCount)/2) - 2;
           var source = $("#pagination-template-2-ellipses-large").html();
           var template = Handlebars.compile(source);
-          var context = { pages1: range(4),
-                          ellipsisPage1: Math.floor((4 + midGroupStart)/2),
-                          pages2: range2(midGroupStart, midGroupStart+4),
-                          ellipsisPage2: Math.floor((midGroupStart+4 + pageCount-3)/2),
-                          pages3: range2(pageCount-3, pageCount)
-                        };
+          if (pageNumber <= 4) {
+            var context = { pages1: range(4),
+                            ellipsisPage1: pageNumber+5,
+                            pages2: range2(midGroupStart, midGroupStart+4),
+                            ellipsisPage2: Math.min(midGroupStart+5+pageNumber, pageCount-2),
+                            pages3: range2(pageCount-3, pageCount)
+                          };
+          } else {
+            var context = { pages1: range(4),
+                            ellipsisPage1: (Math.max(3, midGroupStart-pageCount+pageNumber)),
+                            pages2: range2(midGroupStart, midGroupStart+4),
+                            ellipsisPage2: pageNumber-5,
+                            pages3: range2(pageCount-3, pageCount)
+                          };
+          }
         } else {
           var firstOfEleven = Math.ceil( (1+pageCount) / 2) - 5;
           var beforeSmooshLeftUpperBound = (firstOfEleven-1) - (firstOfEleven-1) % 5 + 4;
@@ -752,10 +761,10 @@ $(function(){
           if (pageNumber > beforeSmooshLeftUpperBound && pageNumber < beforeSmooshRightLowerBound) {
             var source = $("#pagination-template-2-ellipses-large").html();
             var template = Handlebars.compile(source);
-            var context = { pages1: range(1),
-                            ellipsisPage1: Math.floor((1+firstOfEleven)/2),
+            var context = { pages1: [1],
+                            ellipsisPage1: firstOfEleven - 5 + ((pageNumber - firstOfEleven) % 5),
                             pages2: range2(firstOfEleven, firstOfEleven+10),
-                            ellipsisPage2: Math.floor((firstOfEleven+10 + pageCount)/2),
+                            ellipsisPage2: firstOfEleven + 10 + 5 - ((firstOfEleven + 10 - pageNumber) % 5),
                             pages3: [pageCount]
                           };
           } else {
@@ -763,22 +772,22 @@ $(function(){
             var template = Handlebars.compile(source);
             var minusMod5 = pageNumber - pageNumber % 5;
             if (pageNumber <= beforeSmooshLeftUpperBound) {
-              var context = { pages1: range(1),
-                              ellipsisPage1: Math.floor((1+minusMod5)/2),
+              var context = { pages1: [1],
+                              ellipsisPage1: Math.max(3, pageNumber-5),
                               pages2: range2(minusMod5, minusMod5+4),
-                              ellipsisPage2: Math.floor( (minusMod5+4 + (pageCount - minusMod5 - 3) ) /2 ),
+                              ellipsisPage2: pageNumber+5,
                               pages3: range2(pageCount - minusMod5 - 3, pageCount - minusMod5 + 1),
-                              ellipsisPage3: Math.floor(( (pageCount - minusMod5 + 1) + pageCount) / 2),
+                              ellipsisPage3: Math.min(pageCount - minusMod5 + 6, pageCount-2),
                               pages4: [pageCount]
                             };
             } else {
               hiDelta = pageCount - minusMod5 - 4;
               var context = { pages1: range(1),
-                              ellipsisPage1: Math.floor((1+1+hiDelta)/2),
+                              ellipsisPage1: Math.max(3, 1+hiDelta+minusMod5 - 5),
                               pages2: range2(1+hiDelta, 1+hiDelta+4),
-                              ellipsisPage2: Math.floor( (1+hiDelta+4 + (minusMod5) ) /2 ),
+                              ellipsisPage2: pageNumber-5,
                               pages3: range2(minusMod5, minusMod5+4),
-                              ellipsisPage3: Math.floor( ( minusMod5+4 + pageCount) / 2),
+                              ellipsisPage3: Math.min(pageNumber + 5, pageCount-2),
                               pages4: [pageCount]
                             };
             }
