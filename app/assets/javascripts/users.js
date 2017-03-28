@@ -320,47 +320,6 @@ $(function(){
     $(this).parent().parent().addClass('browsing');
   });
 
-
-    // add this to stuff
-    // if ($(this).hasClass('unavailable')) {
-    //   ajaxAddAvailabilityProfile(day,date,week,$(this));
-    // } else {
-    //   var availability_id = $(this).data("availability-id");
-    //   ajaxDeleteAvailabilityProfile(day,date,week,availability_id, $(this));
-    // }
-
-  // $('.left-scroll-arrow').on('click', function (event) {
-  //   $(this).parent().next().find('.tr').each(function(){
-  //     alert('hello');
-  //   });
-  //   $.ajax({
-  //     url: "/users/",
-  //     method: "get",
-  //     // dataType: "json",
-  //     // data:{appointment:{day: day, id: availability_id, date:date, week:week}},
-  //     success: function(response){
-  //       alert('hello');
-  //      }
-  //   });
-  // });
-  //   // for each tr
-  //     // for each td
-  //       // run a function to change the date, returning the new date
-  //       // run a function to get the availability / dot
-  //       // run a function to change the class name.
-  //   // run an ajax thing.
-  // });
-
-  // $('.right-scroll-arrow').on('click', function (event) {
-  //   $(this).parent().next().find('.tbody');
-  //   // for each tr
-  //     // for each td
-  //       // run a function to change the date, returning the new date
-  //       // run a function to get the availability / dot
-  //       // run a function to change the class name.
-  //   // run an ajax thing.
-  // });
-
 //==========================================================================================================
 
 });
@@ -407,17 +366,12 @@ $(function(){
           //load posts for the current page
           loadPosts(posts,opts,user_source);
 
-          //When a page is loaded, prev button is set to be disabled
-          // $(".pagination-prev").addClass("disabled")
-          // $(".pagination-10-back").addClass("disabled")
+          // When a page is loaded, prev button is set to be disabled
+          $(".pagination-prev").addClass("disabled")
+          $(".pagination-10-back").addClass("disabled")
 
           // When click on the pagination button:
           $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev, .pagination>li.pagination-10-back, .pagination>li.pagination-10-ahead").on("click", function(){
-
-            // something like this needs to go somewhere here:
-            // $('.pagination>li.pagination-page').on("click", function(){
-            //   changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
-            // }).filter('[data-page="1"]').addClass('active');
 
             // only works if not disabled
             if (!$(this).hasClass("disabled")) {
@@ -439,7 +393,6 @@ $(function(){
               } else if ($(this).hasClass("pagination-10-ahead")){
                 gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+10
                 disablePrevNextButton(gotoPageNumber, pageCount)
-              // }
               } else {
                 gotoPageNumber = $(this).data("page");
                 disablePrevNextButton(gotoPageNumber, pageCount)
@@ -516,10 +469,6 @@ $(function(){
         checkbox.attr( 'data-availability-id', response.id );
         checkbox.data("availability-id", response.id);
       }
-    // }).done(function(data) {
-      // alert( "Availability added?" );
-      // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
-      // deleteMilestone(data);
     });
   }
 
@@ -534,10 +483,6 @@ $(function(){
         checkbox.attr( 'data-availability-id', "" );
         checkbox.removeClass("available").addClass("unavailable").find('.dot').css("background-color", "#aa2222");
       }
-    // }).done(function(data) {
-      // alert( "Availability deleted?" );
-      // $("dl[data-milestone-id='" + data.id + "']").parent().remove();
-      // deleteMilestone(data);
     });
   }
 //====================================================================================================
@@ -623,7 +568,7 @@ $(function(){
     if (ellipsisClicked) {
       if (pageCount <= 37) {
         if (pageNumber <= 7 || pageNumber > pageCount - 7) {
-          // fairly non-DRY, To be refactored
+          // fairly non-DRY, refactoring desired
           var source = $("#pagination-template-1-ellipsis").html();
           var template = Handlebars.compile(source);
           var context = { pages1: range(7),
@@ -654,7 +599,7 @@ $(function(){
                           pages3: [pageCount]
                     };
         }
-      // case over 37 pages
+      // cases for over 37 pages:
       } else {
         if (pageNumber <= 4 || pageCount - pageNumber <= 3) {
           var midGroupStart = Math.ceil((1+pageCount)/2) - 2;
@@ -738,7 +683,6 @@ $(function(){
           // same with 10-back and 10-ahead
           $(".pagination-10-back, .pagination-10-ahead").removeClass("disabled");
 
-
           if ($(this).hasClass("pagination-next")){
             gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
             disablePrevNextButton(gotoPageNumber, pageCount)
@@ -772,13 +716,8 @@ $(function(){
 
               // Need to preload filter user data
               var need_to_load_times = Math.ceil(dataCount / 30)
-
-              // if ((gotoPageNumber + 1)/3 < need_to_load_times){
-              //   ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
-              //   preloadUserData(gotoPageNumber,data, opts, user_source, url, ajax_request_data)
-              // }
             }
-          }else{
+          } else {
             changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
           }
         } else {
@@ -813,7 +752,6 @@ $(function(){
 
     });
   }
-
 
 //====================================================================================================
 
