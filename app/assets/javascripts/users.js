@@ -513,7 +513,6 @@ $(function(){
 
               // when a page is clicked, reset prev button and next state
               $(".pagination-prev, .pagination-next").removeClass("disabled");
-
               // same with 10-back and 10-ahead
               $(".pagination-10-back, .pagination-10-ahead").removeClass("disabled");
 
@@ -651,14 +650,17 @@ $(function(){
 
  // If this is the last page or the first page, disable next and prev button
   function disablePrevNextButton(page_number, pageCount){
+    if(page_number > pageCount - 10){
+      $(".pagination-10-ahead").addClass("disabled")
+    }
+    if(page_number < 11){
+      $(".pagination-10-back").addClass("disabled")
+    }
     if(page_number == pageCount){
       $(".pagination-next").addClass("disabled")
-    } else if(page_number == 0 || page_number == 1){
+    }
+    if(page_number == 0 || page_number == 1){
       $(".pagination-prev").addClass("disabled")
-    } else if(page_number + 10 > pageCount){
-      $(".pagination-10-ahead").addClass("disabled")
-    } else if(page_number - 10 < 1){
-      $(".pagination-10-back").addClass("disabled")
     }
   }
 
@@ -829,9 +831,9 @@ $(function(){
 
           // when a page is clicked, reset prev button and next state
           $(".pagination-prev, .pagination-next").removeClass("disabled");
-
           // same with 10-back and 10-ahead
           $(".pagination-10-back, .pagination-10-ahead").removeClass("disabled");
+
 
           if ($(this).hasClass("pagination-next")){
             gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
@@ -849,7 +851,6 @@ $(function(){
             gotoPageNumber = $(this).data("page");
             disablePrevNextButton(gotoPageNumber, pageCount)
           }
-
 
           var ellipsisClicked = false;
           if (!($(".pagination-page[data-page="+ gotoPageNumber +"]").length) ||
