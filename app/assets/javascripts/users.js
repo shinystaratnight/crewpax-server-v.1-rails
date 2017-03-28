@@ -499,9 +499,13 @@ $(function(){
           //When a page is loaded, prev button is set to be disabled
           $(".pagination-prev").addClass("disabled")
 
-
           // When click on the pagination button:
           $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
+
+            // something like this needs to go somewhere here:
+            // $('.pagination>li.pagination-page').on("click", function(){
+            //   changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
+            // }).filter('[data-page="1"]').addClass('active');
 
             // only works if not disabled
             if (!$(this).hasClass("disabled")) {
@@ -522,14 +526,19 @@ $(function(){
                 disablePrevNextButton(gotoPageNumber, pageCount)
               }
 
+              var ellipsisClicked = false;
+              if (!($(".pagination-page[data-page="+ gotoPageNumber +"]").length) ||
+                  $(".pagination-page[data-page="+ gotoPageNumber +"]").hasClass('ellipsis')) {
+                ellipsisClicked = true;
+              }
 
               if (gotoPageNumber % 3 == 2){
                 // Check if this page is clicked before, if yes, show already render info
                 if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
+                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
                 } else{
                   // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
+                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
 
                   // Need to preload filter user data
                   var need_to_load_times = Math.ceil(dataCount / 30)
@@ -540,13 +549,13 @@ $(function(){
                   }
                 }
               }else{
-                changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
+                changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
               }
             } else {
               // prevent refresh when clicking disabled
               event.preventDefault();
             }
-          });
+          }).filter('[data-page="' + current_page + '"]').addClass('active');
         }
       }
     });
@@ -703,7 +712,6 @@ $(function(){
       if (pageCount <= 37) {
         if (pageNumber <= 7 || pageNumber > pageCount - 7) {
           // fairly non-DRY, To be refactored
-          // works, done but not perfect
           var source = $("#pagination-template-1-ellipsis").html();
           var template = Handlebars.compile(source);
           var context = { pages1: range(7),
@@ -797,8 +805,63 @@ $(function(){
       }
       var html = template(context);
       $(".pagination").replaceWith(html);
-      $('.pagination>li.pagination-page').on("click", function(){
-        changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
+      // $('.pagination>li.pagination-page').on("click", function(){
+      //   changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
+      // }).filter('[data-page="' + pageNumber + '"]').addClass('active');
+
+      // When click on the pagination button:
+      $(".pagination>li.pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
+
+        var gotoPageNumber = -1;
+
+        // only works if not disabled
+        if (!$(this).hasClass("disabled")) {
+
+          // when a page is clicked, reset prev button and next state
+          $(".pagination-prev, .pagination-next").removeClass("disabled")
+
+
+          if ($(this).hasClass("pagination-next")){
+            gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
+            disablePrevNextButton(gotoPageNumber, pageCount)
+          } else if($(this).hasClass("pagination-prev")){
+            gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
+            disablePrevNextButton(gotoPageNumber, pageCount)
+          }else{
+
+            gotoPageNumber = $(this).data("page");
+            disablePrevNextButton(gotoPageNumber, pageCount)
+          }
+
+          var ellipsisClicked = false;
+          if (!($(".pagination-page[data-page="+ gotoPageNumber +"]").length) ||
+              $(".pagination-page[data-page="+ gotoPageNumber +"]").hasClass('ellipsis')) {
+            ellipsisClicked = true;
+          }
+
+          if (gotoPageNumber % 3 == 2){
+            // Check if this page is clicked before, if yes, show already render info
+            if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+            } else{
+              // send another ajax request to load more data if this page is never clicked before, and show its loaded data
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+
+              // Need to preload filter user data
+              var need_to_load_times = Math.ceil(dataCount / 30)
+
+              // if ((gotoPageNumber + 1)/3 < need_to_load_times){
+              //   ajax_request_data["current_page_number"] = $(".pagination-page.active").data("page")
+              //   preloadUserData(gotoPageNumber,data, opts, user_source, url, ajax_request_data)
+              // }
+            }
+          }else{
+            changePage(pageCount, gotoPageNumber, data, opts, user_source, ellipsisClicked)
+          }
+        } else {
+          // prevent refresh when clicking disabled
+          event.preventDefault();
+        }
       }).filter('[data-page="' + pageNumber + '"]').addClass('active');
     }
   }
