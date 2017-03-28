@@ -498,9 +498,10 @@ $(function(){
 
           //When a page is loaded, prev button is set to be disabled
           $(".pagination-prev").addClass("disabled")
+          $(".pagination-10-back").addClass("disabled")
 
           // When click on the pagination button:
-          $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
+          $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev, .pagination>li.pagination-10-back, .pagination>li.pagination-10-ahead").on("click", function(){
 
             // something like this needs to go somewhere here:
             // $('.pagination>li.pagination-page').on("click", function(){
@@ -511,17 +512,25 @@ $(function(){
             if (!$(this).hasClass("disabled")) {
 
               // when a page is clicked, reset prev button and next state
-              $(".pagination-prev, .pagination-next").removeClass("disabled")
+              $(".pagination-prev, .pagination-next").removeClass("disabled");
 
+              // same with 10-back and 10-ahead
+              $(".pagination-10-back, .pagination-10-ahead").removeClass("disabled");
 
               if ($(this).hasClass("pagination-next")){
                 gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
                 disablePrevNextButton(gotoPageNumber, pageCount)
-              } else if($(this).hasClass("pagination-prev")){
+              } else if ($(this).hasClass("pagination-prev")){
                 gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
                 disablePrevNextButton(gotoPageNumber, pageCount)
-              }else{
-
+              } else if ($(this).hasClass("pagination-10-back")){
+                gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-10
+                disablePrevNextButton(gotoPageNumber, pageCount)
+              } else if ($(this).hasClass("pagination-10-ahead")){
+                gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+10
+                disablePrevNextButton(gotoPageNumber, pageCount)
+              // }
+              } else {
                 gotoPageNumber = $(this).data("page");
                 disablePrevNextButton(gotoPageNumber, pageCount)
               }
@@ -644,8 +653,12 @@ $(function(){
   function disablePrevNextButton(page_number, pageCount){
     if(page_number == pageCount){
       $(".pagination-next").addClass("disabled")
-    }else if(page_number == 0 || page_number == 1){
+    } else if(page_number == 0 || page_number == 1){
       $(".pagination-prev").addClass("disabled")
+    } else if(page_number + 10 > pageCount){
+      $(".pagination-10-ahead").addClass("disabled")
+    } else if(page_number - 10 < 1){
+      $(".pagination-10-back").addClass("disabled")
     }
   }
 
@@ -805,12 +818,9 @@ $(function(){
       }
       var html = template(context);
       $(".pagination").replaceWith(html);
-      // $('.pagination>li.pagination-page').on("click", function(){
-      //   changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
-      // }).filter('[data-page="' + pageNumber + '"]').addClass('active');
 
       // When click on the pagination button:
-      $(".pagination>li.pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev").on("click", function(){
+      $(".pagination-page, .pagination>li.pagination-next, .pagination>li.pagination-prev, .pagination>li.pagination-10-back, .pagination>li.pagination-10-ahead").on("click", function(){
 
         var gotoPageNumber = -1;
 
@@ -818,20 +828,28 @@ $(function(){
         if (!$(this).hasClass("disabled")) {
 
           // when a page is clicked, reset prev button and next state
-          $(".pagination-prev, .pagination-next").removeClass("disabled")
+          $(".pagination-prev, .pagination-next").removeClass("disabled");
 
+          // same with 10-back and 10-ahead
+          $(".pagination-10-back, .pagination-10-ahead").removeClass("disabled");
 
           if ($(this).hasClass("pagination-next")){
             gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+1
             disablePrevNextButton(gotoPageNumber, pageCount)
-          } else if($(this).hasClass("pagination-prev")){
+          } else if ($(this).hasClass("pagination-prev")){
             gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-1
             disablePrevNextButton(gotoPageNumber, pageCount)
-          }else{
-
+          } else if ($(this).hasClass("pagination-10-back")){
+            gotoPageNumber = parseInt($('.pagination>li.active').data("page"))-10
+            disablePrevNextButton(gotoPageNumber, pageCount)
+          } else if ($(this).hasClass("pagination-10-ahead")){
+            gotoPageNumber = parseInt($('.pagination>li.active').data("page"))+10
+            disablePrevNextButton(gotoPageNumber, pageCount)
+          } else {
             gotoPageNumber = $(this).data("page");
             disablePrevNextButton(gotoPageNumber, pageCount)
           }
+
 
           var ellipsisClicked = false;
           if (!($(".pagination-page[data-page="+ gotoPageNumber +"]").length) ||
