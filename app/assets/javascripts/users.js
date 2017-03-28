@@ -703,6 +703,7 @@ $(function(){
       if (pageCount <= 37) {
         if (pageNumber <= 7 || pageNumber > pageCount - 7) {
           // fairly non-DRY, To be refactored
+          // works, done but not perfect
           var source = $("#pagination-template-1-ellipsis").html();
           var template = Handlebars.compile(source);
           var context = { pages1: range(7),
