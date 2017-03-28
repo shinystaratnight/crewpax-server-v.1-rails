@@ -1,11 +1,55 @@
-<script id="pagination-template" type="text/x-handlebars-template"> 
+<script id="pagination-template" type="text/x-handlebars-template">
   <ul class="pagination">
       <li class="pagination-prev"><a href="#">&laquo; Previous</a></li>
-      
+
       {{#each pages}}
       <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
       {{/each}}
-      
+
       <li class="pagination-next"><a href="#">&raquo; Next</a></li>
   </ul>
-</script>    
+</script>
+
+<script id="pagination-template-1-ellipsis" type="text/x-handlebars-template">
+  <ul class="pagination">
+      <li class="pagination-prev"><a href="#">&laquo; Previous</a></li>
+
+      {{#each pages1}}
+      <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
+      {{/each}}
+
+      <li class="pagination-page ellipsis" data-page="{{ellipsisPage}}" data-load=""><a href="#">..</a></li>
+
+      {{#each pages2}}
+      <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
+      {{/each}}
+
+      <li class="pagination-next"><a href="#">&raquo; Next</a></li>
+  </ul>
+</script>
+
+<script id="pagination-template-2-ellipsis" type="text/x-handlebars-template">
+  <ul class="pagination">
+      <li class="pagination-10-back"><a href="#">&laquo; 10 Back</a></li>
+      <li class="pagination-prev"><a href="#">&laquo; Previous</a></li>
+
+      {{#each pages1}}
+      <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
+      {{/each}}
+
+      <li class="pagination-page ellipsis" data-page="{{ellipsisPage1}}" data-load=""><a href="#">..</a></li>
+
+      {{#each pages2}}
+      <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
+      {{/each}}
+
+      <li class="pagination-page ellipsis" data-page="{{ellipsisPage2}}" data-load=""><a href="#">..</a></li>
+
+      {{#each pages3}}
+      <li class="pagination-page" data-page="{{this}}" data-load=""><a href="#">{{this}}</a></li>
+      {{/each}}
+
+      <li class="pagination-next"><a href="#">&raquo; Next</a></li>
+      <li class="pagination-10-ahead"><a href="#">&laquo; 10 Ahead</a></li>
+  </ul>
+</script>

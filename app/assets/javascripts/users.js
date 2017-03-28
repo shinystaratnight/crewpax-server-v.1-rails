@@ -641,7 +641,7 @@ $(function(){
   }
 
   function range(i){return i?range(i-1).concat(i):[]}
-
+  function range2(j, i){return i>=j?range2(j, i-1).concat(i):[]}
   // old version:
   // function paginate(pageCount, opts, data, user_source){
   //   var source = $("#pagination-template").html();
@@ -657,11 +657,32 @@ $(function(){
 
   // }
 
-    function paginate(pageCount, opts, data, user_source){
-    var source = $("#pagination-template").html();
-    var template = Handlebars.compile(source);
-    var context = {pages: range(pageCount)};
-    var html = template(context);
+  function paginate(pageCount, opts, data, user_source){
+    if (pageCount <= 15) {
+      var source = $("#pagination-template").html();
+      var template = Handlebars.compile(source);
+      var context = {pages: range(pageCount)};
+      var html = template(context);
+    } else if (pageCount <= 37) {
+      var source = $("#pagination-template-1-ellipsis").html();
+      var template = Handlebars.compile(source);
+      var context = { pages1: range(7),
+                      ellipsisPage: Math.floor((7 + pageCount-6)/2),
+                      pages2: range2(pageCount-6, pageCount)
+                    };
+      var html = template(context);
+    } else {
+      var midGroupStart = Math.ceil((1+pageCount)/2) - 2;
+      var source = $("#pagination-template-2-ellipses").html();
+      var template = Handlebars.compile(source);
+      var context = { pages1: range(4),
+                      ellipsisPage1: Math.floor((4 + midGroupStart)/2),
+                      pages2: range2(midGroupStart, midGroupStart+4),
+                      ellipsisPage2: Math.floor((midGroupStart+4 + pageCount-3)/2),
+                      pages3: range2(pageCount-3, pageCount)
+                    };
+      var html = template(context);
+    }
     //add the page bar on the bottom of the page
     $("#user-pagination").append(html);
 
