@@ -728,3 +728,8 @@
 .profile-pic-default {
   background-image:url('default_user_avatar.png');
 }
+
+//====================pagination: ellipses================//
+.ellipsis > a {
+  font-size: 100%;
+}

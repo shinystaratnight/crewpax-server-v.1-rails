@@ -474,7 +474,7 @@ $(function(){
           // pages can have maxes of at least 12 and up to 18.
           console.log(dataCount);
           opts.pageMax = Math.min(Math.max(opts.pageMaxLo, 3 * Math.ceil(dataCount/45)), opts.pageMaxHi);
-          pageCount = Math.ceil(dataCount/opts.pageMax)
+          pageCount = Math.ceil(dataCount/opts.pageMax);
           // var pageCount = Math.ceil(dataCount/opts.pageMax);  <- old version
 
           var user_source = $("#user_card_template").html();
@@ -526,10 +526,10 @@ $(function(){
               if (gotoPageNumber % 3 == 2){
                 // Check if this page is clicked before, if yes, show already render info
                 if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-                  changePage(gotoPageNumber, filter_data, opts, user_source)
+                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
                 } else{
                   // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-                  changePage(gotoPageNumber, filter_data, opts, user_source)
+                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
 
                   // Need to preload filter user data
                   var need_to_load_times = Math.ceil(dataCount / 30)
@@ -540,7 +540,7 @@ $(function(){
                   }
                 }
               }else{
-                changePage(gotoPageNumber, filter_data, opts, user_source)
+                changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, false)
               }
             } else {
               // prevent refresh when clicking disabled
@@ -673,7 +673,7 @@ $(function(){
       var html = template(context);
     } else {
       var midGroupStart = Math.ceil((1+pageCount)/2) - 2;
-      var source = $("#pagination-template-2-ellipses").html();
+      var source = $("#pagination-template-2-ellipses-large").html();
       var template = Handlebars.compile(source);
       var context = { pages1: range(4),
                       ellipsisPage1: Math.floor((4 + midGroupStart)/2),
@@ -687,19 +687,110 @@ $(function(){
     $("#user-pagination").append(html);
 
     $('.pagination>li.pagination-page').on("click", function(){
-      changePage($(this).data("page"), data, opts, user_source)
+      changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
     }).filter('[data-page="1"]').addClass('active');
 
   }
 
 //====================================================================================================
-  function changePage(pageNumber, data, opts, user_source){
+  function changePage(pageCount, pageNumber, data, opts, user_source, ellipsisClicked){
     $('.pagination>li.pagination-page').removeClass('active');
     $('.pagination>li.pagination-page').filter('[data-page="' + pageNumber + '"]').addClass('active');
     // data format = [object, object, object .. object]
     loadPosts(data.slice(pageNumber * opts.pageMax - opts.pageMax, pageNumber * opts.pageMax)
               ,opts, user_source);
-
+    if (ellipsisClicked) {
+      if (pageCount <= 37) {
+        if (pageNumber <= 7 || pageNumber > pageCount - 7) {
+          // fairly non-DRY, To be refactored
+          var source = $("#pagination-template-1-ellipsis").html();
+          var template = Handlebars.compile(source);
+          var context = { pages1: range(7),
+                          ellipsisPage: Math.floor((7 + pageCount-6)/2),
+                          pages2: range2(pageCount-6, pageCount)
+                        };
+        } else if (pageNumber <= 13) {
+          var source = $("#pagination-template-1-ellipsis").html();
+          var template = Handlebars.compile(source);
+          var context = { pages1: range2(1, 13),
+                          ellipsisPage: Math.floor((13 + pageCount)/2),
+                          pages2: [pageCount]
+                        };
+        } else if (pageCount - pageNumber <= 12) {
+          var source = $("#pagination-template-1-ellipsis").html();
+          var template = Handlebars.compile(source);
+          var context = { pages1: [1],
+                          ellipsisPage: Math.floor((1 + pageCount - 12)/2),
+                          pages2: range2(pageCount - 12, pageCount)
+                        };
+        } else {
+          var source = $("#pagination-template-2-ellipses-medium").html();
+          var template = Handlebars.compile(source);
+          var context = { pages1: [1],
+                          ellipsisPage1: 7,
+                          pages2: range2(14,24),
+                          ellipsisPage2: Math.floor((24 + pageCount)/2),
+                          pages3: [pageCount]
+                    };
+        }
+      // case over 37 pages
+      } else {
+        if (pageNumber <= 4 || pageCount - pageNumber <= 3) {
+          var midGroupStart = Math.ceil((1+pageCount)/2) - 2;
+          var source = $("#pagination-template-2-ellipses-large").html();
+          var template = Handlebars.compile(source);
+          var context = { pages1: range(4),
+                          ellipsisPage1: Math.floor((4 + midGroupStart)/2),
+                          pages2: range2(midGroupStart, midGroupStart+4),
+                          ellipsisPage2: Math.floor((midGroupStart+4 + pageCount-3)/2),
+                          pages3: range2(pageCount-3, pageCount)
+                        };
+        } else {
+          var firstOfEleven = Math.ceil( (1+pageCount) / 2) - 5;
+          var beforeSmooshLeftUpperBound = (firstOfEleven-1) - (firstOfEleven-1) % 5 + 4;
+          var beforeSmooshRightLowerBound = pageCount - ((firstOfEleven-1) - (firstOfEleven-1) % 5 - 1);
+          if (pageNumber > beforeSmooshLeftUpperBound && pageNumber < beforeSmooshRightLowerBound) {
+            var source = $("#pagination-template-2-ellipses-large").html();
+            var template = Handlebars.compile(source);
+            var context = { pages1: range(1),
+                            ellipsisPage1: Math.floor((1+firstOfEleven)/2),
+                            pages2: range2(firstOfEleven, firstOfEleven+10),
+                            ellipsisPage2: Math.floor((firstOfEleven+10 + pageCount)/2),
+                            pages3: [pageCount]
+                          };
+          } else {
+            var source = $("#pagination-template-3-ellipses").html();
+            var template = Handlebars.compile(source);
+            var minusMod5 = pageNumber - pageNumber % 5;
+            if (pageNumber <= beforeSmooshLeftUpperBound) {
+              var context = { pages1: range(1),
+                              ellipsisPage1: Math.floor((1+minusMod5)/2),
+                              pages2: range2(minusMod5, minusMod5+4),
+                              ellipsisPage2: Math.floor( (minusMod5+4 + (pageCount - minusMod5 - 3) ) /2 ),
+                              pages3: range2(pageCount - minusMod5 - 3, pageCount - minusMod5 + 1),
+                              ellipsisPage3: Math.floor(( (pageCount - minusMod5 + 1) + pageCount) / 2),
+                              pages4: [pageCount]
+                            };
+            } else {
+              hiDelta = pageCount - minusMod5 - 4;
+              var context = { pages1: range(1),
+                              ellipsisPage1: Math.floor((1+1+hiDelta)/2),
+                              pages2: range2(1+hiDelta, 1+hiDelta+4),
+                              ellipsisPage2: Math.floor( (1+hiDelta+4 + (minusMod5) ) /2 ),
+                              pages3: range2(minusMod5, minusMod5+4),
+                              ellipsisPage3: Math.floor( ( minusMod5+4 + pageCount) / 2),
+                              pages4: [pageCount]
+                            };
+            }
+          }
+        }
+      }
+      var html = template(context);
+      $(".pagination").replaceWith(html);
+      $('.pagination>li.pagination-page').on("click", function(){
+        changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
+      }).filter('[data-page="' + pageNumber + '"]').addClass('active');
+    }
   }
 
 //====================================================================================================
