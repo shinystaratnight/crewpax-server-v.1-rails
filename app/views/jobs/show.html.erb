@@ -3,7 +3,7 @@
     <div class="job_show page-header">
       <h1>
         <%= @job.name %>
-        <br/>       
+        <br/>
       </h1>
     </div>
   </header>
@@ -13,7 +13,7 @@
         <h3 class="panel-title">
           Job Overview
         </h3>
-      </div>    
+      </div>
       <div class="panel-body">
         <dl class="dl-horizontal">
           <dt>Job Description</dt>
@@ -21,7 +21,7 @@
             <%= @job.description %>
           </dd>
         </dl>
-      </div>    
+      </div>
     </div>
   <% end %>
 
@@ -83,7 +83,7 @@
     </p>
   <% else %>
     <p>
-      <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: job_url(@job) %>
+      <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: "\n\n\n" + 'Job page: ' + job_url(@job) + '' %>
     </p>
   <% end %>
   <p>

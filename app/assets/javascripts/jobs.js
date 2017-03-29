@@ -59,11 +59,13 @@ $(function(){
     var notifyTitle = `Title: ${$('#job_name').val()}\n`;
     var notifyRole = "Role: " + $(`#job_role_id option[value=${$('#job_role_id').val()}]`).text() + '\n';
     var notifyDescription = "Description: ".concat($('#job_description').val().toString());
+    alert(notifyTitle + notifyRole + notifyDescription);
     localStorage.setItem('notifyTriple', notifyTitle + notifyRole + notifyDescription);
   });
 
   $(".alert-notice.alert").ready(function(){
     if ($(".alert-notice").text().includes('Confirmation email has been sent.')) {
+      alert(localStorage.getItem('notifyTriple'));
       notifyMe('New Job Posted on Crew Call: \n' + localStorage.getItem('notifyTriple'));
     }
   });
@@ -105,31 +107,31 @@ function notifyMe(message) {
 
 
 // Service Worker API
-dictionary GetNotificationOptions {
-  DOMString tag = "";
-};
+// dictionary GetNotificationOptions {
+//   DOMString tag = "";
+// };
 
-partial interface ServiceWorkerRegistration {
-  Promise<void> showNotification(DOMString title, optional NotificationOptions options);
-  Promise<sequence<Notification>> getNotifications(optional GetNotificationOptions filter);
-};
+// partial interface ServiceWorkerRegistration {
+//   Promise<void> showNotification(DOMString title, optional NotificationOptions options);
+//   Promise<sequence<Notification>> getNotifications(optional GetNotificationOptions filter);
+// };
 
-[Constructor(DOMString type, NotificationEventInit eventInitDict),
- Exposed=ServiceWorker]
-interface NotificationEvent : ExtendableEvent {
-  readonly attribute Notification notification;
-  readonly attribute DOMString action;
-};
+// [Constructor(DOMString type, NotificationEventInit eventInitDict),
+//  Exposed=ServiceWorker]
+// interface NotificationEvent : ExtendableEvent {
+//   readonly attribute Notification notification;
+//   readonly attribute DOMString action;
+// };
 
-dictionary NotificationEventInit : ExtendableEventInit {
-  required Notification notification;
-  DOMString action = "";
-};
+// dictionary NotificationEventInit : ExtendableEventInit {
+//   required Notification notification;
+//   DOMString action = "";
+// };
 
-partial interface ServiceWorkerGlobalScope {
-  attribute EventHandler onnotificationclick;
-  attribute EventHandler onnotificationclose;
-};
+// partial interface ServiceWorkerGlobalScope {
+//   attribute EventHandler onnotificationclick;
+//   attribute EventHandler onnotificationclose;
+// };
 
 //========================================Common Function==============================================
 
