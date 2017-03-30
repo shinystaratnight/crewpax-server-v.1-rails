@@ -28,8 +28,11 @@ class JobsController < ApplicationController
     end
 
     if @job.save
-      JobMailer.confirmation(@job).deliver_now
-      redirect_to jobs_path, notice: 'Confirmation email has been sent.'
+      #JobMailer.confirmation(@job).deliver_now
+      #redirect_to jobs_path(@job, secret: params[:secret])
+      @job.labels.create(role_id: @job.role_id, user_id: current_user.id)
+      @job.update_attribute :published, true
+      redirect_to jobs_path, notice: 'Job has been published.'
     else
       redirect_to new_job_path
       flash[:danger] = @job.errors.full_messages.to_sentence
