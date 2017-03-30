@@ -11,14 +11,16 @@
 
   </div>
   <table id="job_posts_table" cellspacing="0" class="display responsive no-wrap">
-      <span id="search_job_posts"> Search by Roles:
-        <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%>
-        <%= render "search_location" %>
-      </span>
+      <div id="search-reset-and-filled">
+        <span id="search_job_posts"> Search by Roles:
+          <%= select_tag :role_id, options_from_collection_for_select(Role.all, :id, :name, params[:role_id]), prompt: 'All', class: 'form-control', id: 'job_category', data: {job_role: ""}%>
+          <%= render "search_location" %>
+        </span>
         <%=link_to "Reset", jobs_path, id: "job_reset_button", class: "btn btn-danger" %>
         <span id="job_filled_indicator">
-          <button class="btn btn-lg btn-danger"></button> Job has been filled
+          <button class="btn btn-lg btn-danger" id="job_filled_button"></button> Job has been filled
         </span>
+      </div>
       </br>
     <thead>
       <tr role="row">

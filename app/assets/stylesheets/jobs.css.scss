@@ -1,7 +1,8 @@
 //==============================Job Index Page============================================================
 
 //---------------------***** For Desktop view *****-------------------------------------------------------
-@media (min-width: 992px) { 
+
+@media (min-width: 992px) {
   .disclaimer {
     color: $gray-light;
   }
@@ -13,7 +14,10 @@
 
 
   #post_job_button{
-    margin-left: 75%;
+    margin-top: -12px;
+    margin-left: 66%;
+    width: 144px;
+    position: fixed;
   }
 
   #job_category{
@@ -33,7 +37,7 @@
     display:inline-block;
     margin-bottom:-13px;
   }
-  
+
   #job_posts_table_filter input {
     border: 1px solid #ccc;
     border-radius:4px;
@@ -50,22 +54,66 @@
     color:white;
 
   }
-  
-  
 
   #job_filled_indicator{
-    margin-left: 330px;    
+    margin-left: 30%;
+    display: inline-block;
+    float: right;
+    position: fixed;
+    width: 200px;
+  }
+
+  #job_filled_indicator > .btn{
+    margin-right: 4px;
+    width: 30px;
   }
 
   #search_job_posts {
     margin-left: 20px;
   }
+
+  #search-reset-and-filled {
+    display: block;
+    margin-bottom: 6px;
+  }
 }
+
+
+//------narrower widths-------//
+@media (max-width: 991px) {
+  .job_has_filled{
+    background-color: #d9534f;
+    color: white;
+  }
+
+  #post_job_button{
+    //margin-left: 75%;
+    width: 144px;
+  }
+
+  #job_filled_indicator{
+    margin-left: 330px;
+    display: inline-block;
+    float: right;
+    position: fixed;
+    width: 200px;
+  }
+
+  #job_filled_indicator > .btn{
+    margin-right: 4px;
+    width: 30px;
+  }
+
+  #job_reset_button{
+    margin-top: 10px;
+  }
+}
+
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
 
-  @media only screen 
-    and (min-device-width: 320px) 
+  @media only screen
+    and (min-device-width: 320px)
     and (max-device-width: 568px)
     and (-webkit-min-device-pixel-ratio: 2) {
 
@@ -85,7 +133,7 @@
       margin-left: 55px;
       text-align:left;
     }
-   
+
     #job_posts_table_length label{
       margin-left: 60px;
     }
@@ -93,7 +141,7 @@
     #job_posts_table_length {
       text-align:left;
     }
-    
+
     #job_posts_table_paginate {
       text-align:left;
       margin-left: 40px;
@@ -106,7 +154,7 @@
     #job_posts_table_filter{
       text-align:left;
     }
-    
+
 
     #job_posts_table_filter input {
       width: 290px;
@@ -126,7 +174,12 @@
     }
 
     #job_filled_indicator{
-      margin-left: 60px;    
+      margin-left: 60px;
+    }
+
+    #job_filled_indicator > .btn{
+      margin-right: 4px;
+      width: 30px;
     }
 
   }
@@ -134,10 +187,10 @@
 //-------***** iPhone 6 *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
 
-  @media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
+  @media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
 
     #post_job_button{
       margin-left: 60%;
@@ -166,17 +219,17 @@
     .job_location_search{
       width: 300px;
     }
-    
+
 
   }
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
-  @media only screen 
+  @media only screen
   and (min-device-width: 414px)
-  and (max-device-width: 736px) { 
+  and (max-device-width: 736px) {
     #job_category {
-      width: 320px;      
+      width: 320px;
     }
-  
+
     .job_location_search{
       width: 320px;
     }
@@ -184,15 +237,15 @@
     #job_posts_table_filter input {
       width: 320px;
     }
-    
+
 
   }
 
 
 //==============================Job New Page============================================================
 //---------------------***** For Desktop view *****-------------------------------------------------------
-@media (min-width: 992px) { 
-  
+@media (min-width: 992px) {
+
 
   #cancel_job_post{
     color:white;
@@ -207,7 +260,7 @@
     border-radius: 0;
 
   }
-  
+
   .job_form:hover,
   .job_form:active,
   .job_form:focus{
@@ -233,8 +286,8 @@
 
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
-@media only screen 
-    and (min-device-width: 320px) 
+@media only screen
+    and (min-device-width: 320px)
     and (max-device-width: 568px)
     and (-webkit-min-device-pixel-ratio: 2) {
 
@@ -260,14 +313,19 @@
     margin-left: 40px;
   }
 
+  #job_filled_indicator > .btn{
+    margin-right: 4px;
+    width: 30px;
+  }
+
 
 }
 
 //-------***** iPhone 6 *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
- @media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
+ @media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
     #post_submit{
       margin-left: 60px;
@@ -283,9 +341,9 @@
 
 
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
-@media only screen 
+@media only screen
   and (min-device-width: 414px)
-  and (max-device-width: 736px) { 
+  and (max-device-width: 736px) {
     #post_submit{
       margin-left: 80px;
     }
@@ -298,7 +356,7 @@
 
 //==============================Job Edit Page============================================================
 //---------------------***** For Desktop view *****-------------------------------------------------------
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   #edit_post_submit{
     margin-left:150px;
   }
@@ -317,8 +375,8 @@
 
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
-@media only screen 
-    and (min-device-width: 320px) 
+@media only screen
+    and (min-device-width: 320px)
     and (max-device-width: 568px)
     and (-webkit-min-device-pixel-ratio: 2) {
 
@@ -342,9 +400,9 @@
 
 //-------***** iPhone 6 *****----------------------------------------------------------------
 //-****Portrait and Landscape *****----------------------------------------------------------------------
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
     #job_edit_form{
       margin-left: 10px;
@@ -359,9 +417,9 @@
 }
 
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
-@media only screen 
+@media only screen
   and (min-device-width: 414px)
-  and (max-device-width: 736px) { 
+  and (max-device-width: 736px) {
 
   #job_edit_form{
     margin-left: 10px;
