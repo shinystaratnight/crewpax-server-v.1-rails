@@ -10,15 +10,14 @@ CarrierWave.configure do |config|
   # config.dropbox_access_type = "dropbox" if you Choose the type of access App folder or
   config.dropbox_access_type = "app_folder"
 
-  # uncommented for deployment
-  config.fog_credentials = {
-    provider: ENV['FOG_PROVIDER'],
-    aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-    region: 'us-west-1',
-    endpoint: 'http://s3.amazonaws.com'
-  }
-  config.fog_directory = ENV['FOG_DIRECTORY']
+  # config.fog_credentials = {
+  #   provider: ENV['FOG_PROVIDER'],
+  #   aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+  #   aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+  #   region: 'us-west-1',
+  #   endpoint: 'http://s3.amazonaws.com'
+  # }
+  # config.fog_directory = ENV['FOG_DIRECTORY']
 end
 
 
