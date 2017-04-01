@@ -55,9 +55,10 @@ $(function(){
 
 
   $("#post_submit").on('click', function(e) {
-    // var notifyTitle = "Title: " + $('#job_name').val() + '\n';
-    var notifyTitle = `Title: ${$('#job_name').val()}\n`;
-    var notifyRole = "Role: " + $(`#job_role_id option[value=${$('#job_role_id').val()}]`).text() + '\n';
+    var notifyTitle = "Title: " + $('#job_name').val() + '\n';
+    //var notifyTitle = `Title: ${$('#job_name').val()}\n`;
+    //var notifyRole = "Role: " + $(`#job_role_id option[value=${$('#job_role_id').val()}]`).text() + '\n';
+    var notifyRole = "Role: " + $("#job_role_id option[value=$('#job_role_id').val()]").text() + '\n';
     var notifyDescription = "Description: ".concat($('#job_description').val().toString());
     alert(notifyTitle + notifyRole + notifyDescription);
     localStorage.setItem('notifyTriple', notifyTitle + notifyRole + notifyDescription);
