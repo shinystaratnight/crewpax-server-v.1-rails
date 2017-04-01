@@ -78,7 +78,8 @@ Bcpax::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  # commenting out for heroku test deployment
+  # config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   config.action_mailer.smtp_settings = {
     port: ENV['MAILGUN_SMTP_PORT'],
