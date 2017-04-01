@@ -5,7 +5,7 @@ $(function(){
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".union-name").on("blur", function(){
-    //Check to see if a union is already created and decide which url the ajax should send to(create/update) 
+    //Check to see if a union is already created and decide which url the ajax should send to(create/update)
     var text_box = $(this);
     var union_id = text_box.closest(".union-info").data("union-id");
     if (union_id == "") {
@@ -22,7 +22,7 @@ $(function(){
       return false;
     } else {
       $(".union-name-error").hide();
-      text_box.addClass("valid");            
+      text_box.addClass("valid");
 
       $.ajax({
         url: url,
@@ -39,14 +39,14 @@ $(function(){
             text_box.closest(".union-info")
                     .next(".union-info")
                     .next(".union-info")
-                    .next(".union-info").children(".cancel-button").data("union-id", response.id); 
+                    .next(".union-info").children(".cancel-button").data("union-id", response.id);
             $("#newUnion").data("name", response.name);
             $("#new-union-roles").show();
 
-          } else {              
+          } else {
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
-            $(".union-name").addClass("invalid");   
+            $(".union-name").addClass("invalid");
           }
         }
       });
@@ -56,13 +56,13 @@ $(function(){
 
 //update new unions whether they have member status or permit status
   $("#has_member, #has_permit, #edit_has_member, #edit_has_permit").on("click", function(){
-    if ($(this).is(":checked")){ 
-      var union_status_value = $(this).val();     
+    if ($(this).is(":checked")){
+      var union_status_value = $(this).val();
       updateUnionStatus($(this), union_status_value)
     }else{
       var union_status_value = "false"
       updateUnionStatus($(this), union_status_value)
-      
+
     }
   })
 
@@ -105,13 +105,13 @@ $(function(){
         url: "/admin/eligibilities",
         method:"post",
         dataType: "json",
-        data:{eligibility: {   
-                union_id: union_id, 
+        data:{eligibility: {
+                union_id: union_id,
                 role_id: role_id}},
         success: function(response){
           if (response.id) {
             $(checkbox).data("eligibility-id", response.id);
-          } else {              
+          } else {
             var errors = response.toString();
             $(".union-name-error").text("*"+ errors).show();
           }
@@ -119,13 +119,13 @@ $(function(){
       });
 
      } else {
-        //existing eligibility to be deleted 
+        //existing eligibility to be deleted
 
       $.ajax({
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
-        data:{eligibility_id},
+        data: {eligibility_id: eligibility_id},
         success: function(response){
         }
       });
@@ -133,14 +133,14 @@ $(function(){
      };
   });
 
- $(".delete-union, .cancel-button").on("click", function(){ 
+ $(".delete-union, .cancel-button").on("click", function(){
 
     var union_id = $(this).data("union-id");
     var union_name = $(this).closest(".in").data("name");
       $.ajax({
         url: "/admin/unions/" + union_id,
         method: "delete",
-        success: function(response){   
+        success: function(response){
           if (response.result) {
             $("#delete-union-success").show();
             $("#edit"+union_name).remove();
@@ -171,13 +171,13 @@ $(function(){
 
 
   });
-  
+
 //*********************************************************************************************************
 // Add, Update or Delete Role Section
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".role-name").on("blur", function(){
-    //Check to see if a role is already created and decide which url the ajax should send to(create/update) 
+    //Check to see if a role is already created and decide which url the ajax should send to(create/update)
     var text_box = $(this);
     var role_id = text_box.closest(".role-info").data("role-id");
     if (role_id == "") {
@@ -194,7 +194,7 @@ $(function(){
       return false;
     } else {
       $(".role-name-error").hide();
-      text_box.addClass("valid");            
+      text_box.addClass("valid");
 
       $.ajax({
         url: url,
@@ -206,13 +206,13 @@ $(function(){
             text_box
               .closest(".role-info").data("role-id", response.id)
               .next(".role-info").data("role-id", response.id)
-              .next(".role-info").children(".delete-role").data("role-id", response.id);  
+              .next(".role-info").children(".delete-role").data("role-id", response.id);
             $("#newrole").data("name", response.name);
             $("#new-role-roles").show();
-          } else {             
+          } else {
             var errors = response.toString();
             $(".role-name-error").text("*"+ errors).show();
-            $(".role-name").addClass("invalid");   
+            $(".role-name").addClass("invalid");
           }
         }
       });
@@ -234,13 +234,13 @@ $(function(){
         url: "/admin/eligibilities",
         method:"post",
         dataType: "json",
-        data:{eligibility: {   
-                role_id: role_id, 
+        data:{eligibility: {
+                role_id: role_id,
                 union_id: union_id}},
         success: function(response){
           if (response.id) {
             checkbox.data("eligibility-id", response.id);
-          } else {              
+          } else {
             var errors = response.toString();
             $(".role-name-error").text("*"+ errors).show();
           }
@@ -248,13 +248,13 @@ $(function(){
       });
 
      } else {
-        //existing eligibility to be deleted 
+        //existing eligibility to be deleted
 
       $.ajax({
         url: "/admin/eligibilities/" + eligibility_id,
         method:"delete",
         dataType: "json",
-        data:{eligibility_id},
+        data:{eligibility_id:eligibility_id},
         success: function(response){
         }
       });
@@ -262,14 +262,14 @@ $(function(){
      };
   });
 
-  $(".delete-role").on("click", function(){ 
+  $(".delete-role").on("click", function(){
 
     var role_id = $(this).data("role-id");
 
       $.ajax({
         url: "/admin/roles/" + role_id,
         method: "delete",
-        success: function(response){    
+        success: function(response){
           if (response.result) {
             $("#delete-role-success").show();
             $("#edit-role-"+role_id).remove();
@@ -304,7 +304,7 @@ $(function(){
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".certificate-name").on("blur", function(){
-    //Check to see if a certificate is already created and decide which url the ajax should send to(create/update) 
+    //Check to see if a certificate is already created and decide which url the ajax should send to(create/update)
     var text_box = $(this)
 
     var certificate_id = text_box.closest(".certificate-info").data("certificate-id");
@@ -322,7 +322,7 @@ $(function(){
       return false;
     } else {
       $(".certificate-name-error").hide();
-      text_box.addClass("valid");            
+      text_box.addClass("valid");
 
       $.ajax({
         url: url,
@@ -334,13 +334,13 @@ $(function(){
             text_box
               .closest(".certificate-info").data("certificate-id", response.id)
               .next(".certificate-info").data("certificate-id", response.id)
-              .next(".certificate-info").children(".delete-certificate").data("certificate-id", response.id);  
+              .next(".certificate-info").children(".delete-certificate").data("certificate-id", response.id);
             $("#newCertificate").data("name", response.name);
             $("#new-certificate-users").show();
-          } else {               
+          } else {
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
-            $(".certificate-name").addClass("invalid");   
+            $(".certificate-name").addClass("invalid");
           }
         }
       });
@@ -362,13 +362,13 @@ $(function(){
         url: "/admin/certifiables",
         method:"post",
         dataType: "json",
-        data:{certifiable: {   
-                certificate_id: certificate_id, 
+        data:{certifiable: {
+                certificate_id: certificate_id,
                 user_id: user_id}},
         success: function(response){
           if (response.id) {
             checkbox.data("certifiable-id", response.id);
-          } else {              
+          } else {
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
           }
@@ -382,7 +382,7 @@ $(function(){
         url: "/admin/certifiables/" + certifiable_id,
         method:"delete",
         dataType: "json",
-        data:{certifiable_id},
+        data:{certifiable_id:certifiable_id},
         success: function(response){
 
         }
@@ -391,13 +391,13 @@ $(function(){
      };
   });
 
-  $(".delete-certificate").on("click", function(){ 
+  $(".delete-certificate").on("click", function(){
 
     var certificate_id = $(this).data("certificate-id");
       $.ajax({
         url: "/admin/certificates/" + certificate_id,
         method: "delete",
-        success: function(response){    
+        success: function(response){
           if (response.result) {
             $("#delete-certificate-success").show();
             $("#edit-cert-"+certificate_id).remove();
@@ -433,7 +433,7 @@ $(function(){
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
   $(".user-name").on("blur", function(){
-    //Check to see if a user is already created and decide which url the ajax should send to(create/update) 
+    //Check to see if a user is already created and decide which url the ajax should send to(create/update)
     var user_id = $(this).closest(".user-info").data("user-id");
     if (user_id == "") {
       var url = "admin/users";
@@ -449,7 +449,7 @@ $(function(){
       return false;
     } else {
       $(".user-name-error").hide();
-      $(this).addClass("valid");            
+      $(this).addClass("valid");
 
       $.ajax({
         url: url,
@@ -460,10 +460,10 @@ $(function(){
           if (response.id) {
             $(".user-info").data("user-id", response.id);
             // $("#new-user-roles").show();
-          } else {              
+          } else {
             var errors = response.toString();
             $(".user-name-error").text("*"+ errors).show();
-            $(".user-name").addClass("invalid");   
+            $(".user-name").addClass("invalid");
           }
         }
       });
@@ -486,13 +486,13 @@ $(function(){
         url: "/admin/certifiables",
         method:"post",
         dataType: "json",
-        data:{certifiable: {   
-                certificate_id: certificate_id, 
+        data:{certifiable: {
+                certificate_id: certificate_id,
                 user_id: user_id}},
         success: function(response){
           if (response.id) {
             $(checkbox).data("certifiable-id", response.id);
-          } else {              
+          } else {
             var errors = response.toString();
             $(".certificate-name-error").text("*"+ errors).show();
           }
@@ -500,14 +500,14 @@ $(function(){
       });
 
      } else {
- 
+
       $.ajax({
-        //existing certifiable to be deleted 
-   
+        //existing certifiable to be deleted
+
         url: "/admin/certifiables/" + certifiable_id,
         method:"delete",
         dataType: "json",
-        data:{certifiable_id},
+        data:{certifiable_id: certifiable_id},
         success: function(response){
         }
       });
@@ -516,25 +516,25 @@ $(function(){
   });
 
 
-  $(".delete-user").on("click", function(event){ 
+  $(".delete-user").on("click", function(event){
     $(this).hide()
-    $(this).next().show();    
+    $(this).next().show();
     event.preventDefault();
     var user_id = $(this).data("user-id");
     var user_name = $(this).data("user-name")
       $.ajax({
         url: "/admin/users/" + user_id,
         method: "delete",
-        success: function(response){   
-          if (response.result == true) { 
-          
+        success: function(response){
+          if (response.result == true) {
+
             $("#delete-user-success").show();
 
             setTimeout(function() {
               $("#delete-user-success").fadeOut();
               location.reload();
             }, 3000);
-          
+
           }
         }
       });
@@ -558,21 +558,21 @@ $(function(){
 //*********************************************************************************************************
 // Edit Jobs (Job management using datatables)
 //********************************************************************************************************
-  $("#admin_job_management").DataTable({  
+  $("#admin_job_management").DataTable({
     responsive: true,
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
-    columnDefs: [ { 
+    columnDefs: [ {
       orderable: false,
-      targets: [2] 
+      targets: [2]
     } ]
   });
 
   var admin_user_table = $("#admin_edit_user").DataTable({
     responsive: true,
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
-    columnDefs: [ { 
+    columnDefs: [ {
       orderable: false,
-      targets: [1,2] 
+      targets: [1,2]
     } ]
   })
 
@@ -602,7 +602,7 @@ $(function(){
       return false
     }else{
       var formData = new FormData();
-      $input=$("#upload_sponsor_picture");    
+      $input=$("#upload_sponsor_picture");
       formData.append("sponsor[picture]",$input[0].files[0]);
       $.ajax({
         url: "/sponsors",
@@ -612,7 +612,7 @@ $(function(){
         contentType: false,
         processData: false,
         success:function(response){
-          if (response.id > 0){         
+          if (response.id > 0){
             var sponsor_id = response.id
             $.ajax({
               url: "/sponsors/" + sponsor_id,
@@ -623,25 +623,25 @@ $(function(){
                   $("#add-sponsor-success").show();
                   setTimeout(function() {
                   location.reload(true);
-                  }, 2000); 
-                }                
+                  }, 2000);
+                }
               }
             })
           }else{
-            alert(response);          
+            alert(response);
             $("#submit_sponsor").hide();
             $("#add_sponsor").show();
           }
-          
+
         }
       })
 
 
     }
 
-    
-    
-    
+
+
+
   })
 //*********************************************************************************************************
 // Delete Sponsors
@@ -663,7 +663,7 @@ $(function(){
           setTimeout(function() {
             location.reload(true);
           }, 2000);
-         
+
         }
       })
     }else{
@@ -676,7 +676,7 @@ $(function(){
 //********************************************************************************************************
   $(".update_existing_sponsor").on("click", function(event){
     event.preventDefault();
-    $(this).hide();// Update button disappeareas 
+    $(this).hide();// Update button disappeareas
     $(this).next().show();// Spinning button shows up
     var sponsor_name = $(this).prev().find("#update_sponsor_name").val().trim()
     var sponsor_website = $(this).prev().find("#update_sponsor_webiste").val().trim();
@@ -685,14 +685,14 @@ $(function(){
       updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id, $(this))
     }else{
       var formData = new FormData();
-      $input=$(this).prev().find("#update_sponsor_picture");    
+      $input=$(this).prev().find("#update_sponsor_picture");
       formData.append("sponsor[picture]",$input[0].files[0])
       formData.append("sponsor[id]", sponsor_id)// To include sponsor id in the sponsor_params
       var update_button = $(this);
       $.ajax({
         url: "/sponsors/"+ sponsor_id,
         method: "put",
-        data: formData, 
+        data: formData,
         cache: false,
         contentType: false,
         processData: false,
@@ -706,13 +706,13 @@ $(function(){
 //*********************************************************************************************************
 // Sponsors Management Datatables
 //********************************************************************************************************
-  $("#admin_sponsors_management").DataTable({  
+  $("#admin_sponsors_management").DataTable({
     responsive: true,
     "dom": '<"top"f>rt<"bottom"lip><"clear">',
-    columnDefs: [ { 
+    columnDefs: [ {
       orderable: false,
-      targets: [1,2,3,4] 
-      
+      targets: [1,2,3,4]
+
     } ]
   });
 
@@ -722,7 +722,7 @@ $(function(){
 //*********************************************************************************************************
 // common functions
 //********************************************************************************************************
- 
+
   function updateSponsorNameImage(sponsor_name, sponsor_website,sponsor_id, update_button){
     var error_message= $(update_button).prev().prev()
     if(sponsor_name == ""|| sponsor_website == ""){
@@ -738,13 +738,13 @@ $(function(){
         success: function(response){
           $(update_button).show();
           $(update_button).next().hide();
-          $(error_message).prev().show(); // Success message         
+          $(error_message).prev().show(); // Success message
           setTimeout(function() {
             location.reload(true);
-          }, 2000); 
+          }, 2000);
         }
       });
     }
- 
+
 
   }
