@@ -1,3 +1,9 @@
+require 'pusher'
+
+Pusher.app_id = "322631"                  #'YOUR_PUSHER_APP_ID'
+Pusher.key =  "6e6ee3ba9e9e8ec30dc3"      #'YOUR_PUSHER_KEY'
+Pusher.secret = "6e2d9f16ce9e2d08c3ce"    #'YOUR_PUSHER_SECRET'
+
 Bcpax::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -26,12 +32,12 @@ Bcpax::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
-  
+
   config.action_mailer.delivery_method = :letter_opener
   config.beginning_of_week = :sunday
-  
+
   config.action_mailer.default_url_options = { :host => "localhost",
                                                :port => "3000"}
-                                               
-  #config.active_record.raise_in_transactional_callbacks = true                                             
+
+  #config.active_record.raise_in_transactional_callbacks = true
 end

@@ -7,10 +7,13 @@
     = stylesheet_link_tag 'application','https://fonts.googleapis.com/css?family=Raleway', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+    // Anachronistc manifest-add for Push Notifications
+    / %link{:href => "/manifest.json", :rel => "manifest"}
   %body
     = render 'navbar'
     .container-fluid
       = render 'flash'
       = yield
+
   %footer
     = render 'footer'

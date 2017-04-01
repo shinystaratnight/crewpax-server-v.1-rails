@@ -22,6 +22,17 @@ module Bcpax
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
     config.action_mailer.default_options = { from: 'BCPAX <robot@bcpax.com>' }
     # config.assets.enabled = true
-   
+
   end
 end
+
+
+# #webpush things
+# vapid_key = Webpush.generate_key
+
+# # Save these in our application server settings
+# vapid_key.public_key
+# # => "BC1mp...HQ="
+
+# vapid_key.private_key
+# # => "XhGUr...Kec"

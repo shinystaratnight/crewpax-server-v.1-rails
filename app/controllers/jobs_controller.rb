@@ -6,6 +6,7 @@ class JobsController < ApplicationController
   respond_to :html, :js, :json
 
   def index
+
     #scope will return false b/c in jobs table, :published filed is set default
     #to be false
     if params[:user_id].present?
@@ -15,6 +16,11 @@ class JobsController < ApplicationController
       @jobs = Job.published
       @jobs.find_most_recent(params[:updated_at])
     end
+
+    # Heroku push
+    Pusher['test_channel'].trigger('greet', {
+      :greeting => "Hello there!"
+    })
   end
 
   def new

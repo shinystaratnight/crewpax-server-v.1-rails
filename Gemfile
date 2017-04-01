@@ -20,9 +20,13 @@ gem "simple_calendar", "~> 2.0"
 gem 'omniauth-facebook'
 gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
+# heroku notifications
+gem 'pusher'
 
-#added to try to get a handle on handlebars js. (not sorry :))
-# gem 'handlebars_assets'
+
+# anachronistic push gems
+# gem 'serviceworker-rails'
+# gem "webpush"
 
 
 

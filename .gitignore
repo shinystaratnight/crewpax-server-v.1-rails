@@ -3,5 +3,6 @@
 /public/assets
 /log/*.log
 /tmp
+/anachronisms
 
 .DS_Store
