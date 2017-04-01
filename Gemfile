@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'mini_magick'
 gem 'carrierwave'
+gem 'fog'
 gem 'simple_form'
 gem 'pry'
 gem 'carrierwave-dropbox'
@@ -30,9 +31,9 @@ gem 'pusher'
 
 
 
-group :assets do
-  gem 'asset_sync'
-end
+# group :assets do
+#   gem 'asset_sync'
+# end
 
 group :development, :test do
   gem 'rspec-rails'
