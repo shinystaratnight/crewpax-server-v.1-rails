@@ -42,9 +42,8 @@ Bcpax::Application.routes.draw do
   end
 
 
-  # non-heroku method, to be deleted?
-  # subscriptions for notifications
-  # post "/subscribe" => "subscriptions#create"
+  resources :messages
+
 
   resources :sponsors
 

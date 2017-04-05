@@ -7,8 +7,6 @@ class JobsController < ApplicationController
 
   def index
 
-    #scope will return false b/c in jobs table, :published filed is set default
-    #to be false
     if params[:user_id].present?
       @user_jobs = User.find(params[:user_id]).jobs
       render "job_management"
@@ -17,10 +15,7 @@ class JobsController < ApplicationController
       @jobs.find_most_recent(params[:updated_at])
     end
 
-    # Heroku push
-    Pusher['test_channel'].trigger('greet', {
-      :greeting => "Hello there!"
-    })
+
   end
 
   def new
@@ -36,9 +31,14 @@ class JobsController < ApplicationController
     if @job.save
       #JobMailer.confirmation(@job).deliver_now
       #redirect_to jobs_path(@job, secret: params[:secret])
+
+
       @job.labels.create(role_id: @job.role_id, user_id: current_user.id)
       @job.update_attribute :published, true
-      redirect_to jobs_path, notice: 'Job has been published.'
+      redirect_to jobs_path(Pusher.trigger('test_channel', 'greet', {
+      :greeting => "Hello there!?"
+    })), notice: 'Job has been published.'
+
     else
       redirect_to new_job_path
       flash[:danger] = @job.errors.full_messages.to_sentence

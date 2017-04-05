@@ -7,17 +7,18 @@
     </div>
     <div class= "col-md-8">
       <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <%= render "notifications" %>
         <%= render "editunion" %>
         <%= render "editcalendar" %>
         <%= render "editcertificates" %>
         <%= render "editdocumentupload" %>
-      </div>   
+      </div>
       <% if current_user.admin? %>
         <p class="edit_user">
         <%= link_to "Back to Admin Page",admin_index_path, class: 'profile_page btn btn-primary' %>
         </p>
       <% else %>
         <%= link_to "Continue to Profile Page", user_path(current_user), class: "profile_page btn btn-primary" %>
-      <% end %>      
+      <% end %>
     </div>
   </div>

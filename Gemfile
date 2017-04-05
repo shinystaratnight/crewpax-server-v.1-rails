@@ -20,17 +20,9 @@ gem "simple_calendar", "~> 2.0"
 gem 'omniauth-facebook'
 gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
-# heroku notifications
-gem 'pusher'
 
 
-# anachronistic push gems
-# gem 'serviceworker-rails'
-# gem "webpush"
-
-
-
-
+# commented out for deployment
 # group :assets do
 #   gem 'asset_sync'
 # end

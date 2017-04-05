@@ -6,11 +6,11 @@
       </a>
     </h3>
   </div>
-  
+
   <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
     <div class="list-group">
     <!--new code -->
-      <% @unions.each do |union| %>
+      <% @unions.order(:id).each do |union| %>
         <div hidden="true">
           <%=union.id %>
         </div>
@@ -27,73 +27,73 @@
         <%# if (union.name == "DGC") || (union.name == "IATSE") %>
 
           <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>" class="union_status">
-            <% if @user.eligibilities.find_by(union_id: union.id) && @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>             
+            <% if @user.eligibilities.find_by(union_id: union.id) && @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>
                 <label for="<%=union.name.downcase%>_permit">
-                  <input type="checkbox" 
-                         class="union_permit_days" 
-                         id="<%=union.name.downcase%>_permit" 
-                         data-name="permit" 
-                         value="" 
+                  <input type="checkbox"
+                         class="union_permit_days"
+                         id="<%=union.name.downcase%>_permit"
+                         data-name="permit"
+                         value=""
                          data-union-name="<%=union.name.downcase %>"
                          checked/>
-                  Permit 
+                  Permit
                  </label>
                 <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry" data-union-name="<%=union.name.downcase %>"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
                 </span>
             <% else %>
               <label for="<%=union.name.downcase%>_permit">
-                <input type="checkbox" 
-                      class= "union_permit_days" 
-                      id="<%=union.name.downcase%>_permit" 
-                      data-name="permit" 
+                <input type="checkbox"
+                      class= "union_permit_days"
+                      id="<%=union.name.downcase%>_permit"
+                      data-name="permit"
                       data-union-name="<%=union.name.downcase %>"
                       value="" />
-                Permit 
+                Permit
                </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
                 <div contenteditable="true" hidden="true" class="permit_days_entry" id="<%=union.name.downcase%>_permit_days" data-union-name="<%=union.name.downcase %>"></div>
               </span>
-            <% end %> 
+            <% end %>
 
             <% if @user.eligibilities.find_by(member: true, union_id: union.id) %>
 
-              <input type="checkbox" 
-                     class="union_member" 
-                     id="<%=union.name.downcase%>_member" 
+              <input type="checkbox"
+                     class="union_member"
+                     id="<%=union.name.downcase%>_member"
                      data-name="member"
-                     data-union-name="<%=union.name.downcase %>" 
-                     value="true" 
-                     checked/> 
-            <% else %>              
-              <input type="checkbox" 
-                     class="union_member" 
-                     id="<%=union.name.downcase%>_member" 
-                     data-name="member" 
+                     data-union-name="<%=union.name.downcase %>"
+                     value="true"
+                     checked/>
+            <% else %>
+              <input type="checkbox"
+                     class="union_member"
+                     id="<%=union.name.downcase%>_member"
+                     data-name="member"
                      data-union-name="<%=union.name.downcase %>"
                      value="true" />
             <% end %>
 
             <label for="<%=union.name.downcase%>_member"> Member </label>
-            
+
 
             <br>
           </div>
-        
+
         <%elsif union.has_member_status == true %>
           <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
             <% if @user.eligibilities.find_by(member: true, union_id: union.id) %>
-              <input type="checkbox" 
-                      class="union_member" 
-                      id="<%=union.name.downcase%>_member" 
-                      data-name="member" 
+              <input type="checkbox"
+                      class="union_member"
+                      id="<%=union.name.downcase%>_member"
+                      data-name="member"
                       data-union-name= "<%=union.name.downcase%>"
-                      value="true" 
-                      checked/> 
-            <% else %>              
-              <input type="checkbox" 
-                     class="union_member" 
-                     id="<%=union.name.downcase%>_member" 
-                     data-name="member" 
+                      value="true"
+                      checked/>
+            <% else %>
+              <input type="checkbox"
+                     class="union_member"
+                     id="<%=union.name.downcase%>_member"
+                     data-name="member"
                      data-union-name="<%=union.name.downcase %>"
                      value="true" />
             <% end %>
@@ -102,29 +102,29 @@
 
         <% elsif union.has_permit_status == true %>
           <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
-            <% if @user.eligibilities.find_by(union_id: union.id) && @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>             
-                <input type="checkbox" 
-                       class="union_permit_days" 
-                       id="<%=union.name.downcase%>_permit" 
-                       data-name="permit" 
+            <% if @user.eligibilities.find_by(union_id: union.id) && @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first %>
+                <input type="checkbox"
+                       class="union_permit_days"
+                       id="<%=union.name.downcase%>_permit"
+                       data-name="permit"
                        data-union-name="<%=union.name.downcase%>"
-                       value="" 
+                       value=""
                        checked/>
                 <label for="<%=union.name.downcase%>_permit"> Permit </label>
                 <span id="<%=union.name.downcase%>_number_days"> * Number of Days:<div contenteditable="true" id="<%=union.name.downcase%>_permit_days" class="permit_days_entry" data-union-name="<%=union.name.downcase %>"><%= @user.eligibilities.where(union_id: union.id).where.not(permit_days: nil).first.permit_days %></div>
                 </span>
             <% else %>
-              <input type="checkbox" 
-                     class= "union_permit_days" 
-                     id="<%=union.name.downcase%>_permit" 
-                     data-name="permit" 
+              <input type="checkbox"
+                     class= "union_permit_days"
+                     id="<%=union.name.downcase%>_permit"
+                     data-name="permit"
                      data-union-name="<%=union.name.downcase %>"
                      value="" />
               <label for="<%=union.name.downcase%>_permit"> Permit </label>
               <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
                 <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"class="permit_days_entry" data-union-name="<%=union.name.downcase %>" ></div>
               </span>
-            <% end %> 
+            <% end %>
           </div>
         <%end%>
 
@@ -133,44 +133,44 @@
       <!--Roles that belong to Unions  -->
         <div id="<%=union.name.downcase%>_roles" class="union_roles">
           <%union.roles.distinct.each do |role|%>
-           <% if @user.eligibilities.find_by(role_id: role.id, union_id: union.id) %> 
+           <% if @user.eligibilities.find_by(role_id: role.id, union_id: union.id) %>
               <label for="<%=role.name%>">
-                <input 
-                  type="checkbox" 
-                  class="roles" 
-                  id="<%=role.name%>" 
-                  name="<%=role.name%>" 
+                <input
+                  type="checkbox"
+                  class="roles"
+                  id="<%=role.name%>"
+                  name="<%=role.name%>"
                   data-user-id="<%=@user.id%>"
                   data-union-id="<%=union.id%>"
                   data-union-name="<%=union.name.downcase%>"
-                  data-label-id="" 
-                  data-rolez-id="<%=role.id%>" 
-                  data-eligibility-id="<%= @user.eligibilities.find_by(role_id: role.id, union_id: union.id).id %>" 
-                  value="<%=role.name%>" 
+                  data-label-id=""
+                  data-rolez-id="<%=role.id%>"
+                  data-eligibility-id="<%= @user.eligibilities.find_by(role_id: role.id, union_id: union.id).id %>"
+                  value="<%=role.name%>"
                   data-union-has-member="<%=union.has_member_status%>"
                   data-union-has-permit ="<%=union.has_permit_status%>"
-                  checked/> 
+                  checked/>
                 <span class="label-text">
                 <%=role.name%>
                 </span>
               </label>
             <% else %>
                 <label for="<%=role.name%>">
-                  <input 
-                  type="checkbox" 
-                  class="roles" 
-                  id="<%=role.name%>" 
-                  name="<%=role.name%>" 
+                  <input
+                  type="checkbox"
+                  class="roles"
+                  id="<%=role.name%>"
+                  name="<%=role.name%>"
                   data-user-id="<%=@user.id%>"
                   data-union-id="<%=union.id%>"
                   data-union-name="<%=union.name.downcase%>"
                   data-union-has-member="<%=union.has_member_status%>"
                   data-union-has-permit ="<%=union.has_permit_status%>"
-                  data-rolez-id="<%=role.id%>" 
-                  data-eligibility-id="" 
+                  data-rolez-id="<%=role.id%>"
+                  data-eligibility-id=""
                   value="<%=role.name%>"/>
                   <span class="label-text">
-                  <%=role.name%> 
+                  <%=role.name%>
                   </span>
                 </label>
             <%end%>
@@ -179,9 +179,9 @@
         </div>
 
 
-        </div>
-      <%end%>
       </div>
+    <%end%>
     </div>
   </div>
+</div>
           <!--new code -->
