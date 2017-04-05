@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328021332) do
+ActiveRecord::Schema.define(version: 20170405042147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(version: 20170328021332) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                      default: "",    null: false
-    t.string   "encrypted_password",         default: "",    null: false
+    t.string   "email",                      default: "",               null: false
+    t.string   "encrypted_password",         default: "",               null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20170328021332) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "sign_in_count",              default: 0
-    t.integer  "roles_ids",                  default: [],                 array: true
+    t.integer  "roles_ids",                  default: [],                            array: true
     t.string   "provider"
     t.string   "uid"
     t.boolean  "is_iatse_member",            default: false
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 20170328021332) do
     t.string   "vimeo"
     t.string   "linkedin"
     t.string   "facebook"
+    t.string   "notify_when_job_posted",     default: "selected_roles"
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

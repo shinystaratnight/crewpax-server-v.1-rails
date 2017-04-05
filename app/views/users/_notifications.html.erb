@@ -1,18 +1,30 @@
-<div class="panel panel-default">
+<div class="panel panel-default notification-panel">
   <div class="panel-heading" role="tab" id="headingZero">
     <h3 class="panel-title">
       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero" class="avail-collapse-toggle">
-        Availability Calendar
+        Notification Settings for Job Postings
       </a>
     </h3>
   </div>
 
   <div id="collapseZero" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZero">
     <div> Please select your notification preferences: </div>
-    <form action="">
-      <input type="radio" name="notification" value="never">Never notify me when a job is posted<br>
-      <input type="radio" name="notification" value="always">Email me when any job is posted<br>
-      <input type="radio" name="notification" value="roles">Email me when jobs for my selected departments are posted
+    <form id="notification_form" data-user-id="<%=@user.id %>" action="">
+      <input type="radio" class="profile_input" data-profile-entry="notify_never" id="notify_never" class="notification_options" name="notification" value="never"
+      <% if @user.notify_when_job_posted == "never" %>
+        selected="selected"
+      <% end %>
+      >Never notify me when a new job is posted<br>
+      <input type="radio" class="profile_input" data-profile-entry="notify_always" id="notify_always" class="notification_options" name="notification" value="always"
+      <% if @user.notify_when_job_posted == "always" %>
+        selected="selected"
+      <% end %>
+      >Email me when any new job is posted<br>
+      <input type="radio" class="profile_input" data-profile-entry="notify_selected_roles" id="notify_selected_roles" class="notification_options" name="notification" value="selected_roles"
+      <% if @user.notify_when_job_posted == "selected_roles" %>
+        selected="selected"
+      <% end %>
+      >Email me when new jobs matching my selected departments are posted
     </form>
   </div>
 </div>

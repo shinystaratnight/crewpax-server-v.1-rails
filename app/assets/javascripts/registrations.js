@@ -490,6 +490,37 @@ $("#facebook").on("blur", function(){
       };
   });
 
+
+//*********************************************************************************************************
+// Registration Form Notification Settings for Job Postings Section
+//********************************************************************************************************
+
+$("#notification-panel").on("change", function(){
+    var user_id = $('#notification_form').data("user-id");
+
+    var setting = "";
+    if ($("#notify_never").prop('checked')) {
+      setting = "never";
+    } else if ($("#notify_always").prop('checked')) {
+      setting = "always";
+    } else {
+      setting = "selected_roles";   // default
+    }
+
+    $.ajax({
+      url:"/users/" + user_id,
+      method:"put",
+      dataType:"json",
+      data:{user:{notify_when_job_posted: setting}},
+      success: function(response){
+        userCreated();
+      }
+    });
+  });
+
+
+
+
 //==========================================================================================================
 //*********************************************************************************************************
 // Registration Form Department Section
