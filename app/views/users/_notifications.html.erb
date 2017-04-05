@@ -12,17 +12,17 @@
     <form id="notification_form" data-user-id="<%=@user.id %>" action="">
       <input type="radio" class="profile_input" data-profile-entry="notify_never" id="notify_never" class="notification_options" name="notification" value="never"
       <% if @user.notify_when_job_posted == "never" %>
-        selected="selected"
+        checked="checked"
       <% end %>
       >Never notify me when a new job is posted<br>
       <input type="radio" class="profile_input" data-profile-entry="notify_always" id="notify_always" class="notification_options" name="notification" value="always"
       <% if @user.notify_when_job_posted == "always" %>
-        selected="selected"
+        checked="checked"
       <% end %>
       >Email me when any new job is posted<br>
       <input type="radio" class="profile_input" data-profile-entry="notify_selected_roles" id="notify_selected_roles" class="notification_options" name="notification" value="selected_roles"
       <% if @user.notify_when_job_posted == "selected_roles" %>
-        selected="selected"
+        checked="checked"
       <% end %>
       >Email me when new jobs matching my selected departments are posted
     </form>

@@ -495,7 +495,7 @@ $("#facebook").on("blur", function(){
 // Registration Form Notification Settings for Job Postings Section
 //********************************************************************************************************
 
-$("#notification-panel").on("change", function(){
+$(".notification-panel").on("change", function(){
     var user_id = $('#notification_form').data("user-id");
 
     var setting = "";

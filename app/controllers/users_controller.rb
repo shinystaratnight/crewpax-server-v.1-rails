@@ -622,7 +622,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit( :name, :id, :image, :last_sign_in_at,:password, :password_confirmation,
             :email, :image_cache, :is_dgc_member, :has_traffic_control_ticket, :has_vehicle,
-            :admin, :phone, :imdb, :youtube, :vimeo, :linkedin, :facebook, {roles_ids:[]})
+            :admin, :phone, :imdb, :youtube, :vimeo, :linkedin, :facebook, :notify_when_job_posted, {roles_ids:[]})
 
   end
 
