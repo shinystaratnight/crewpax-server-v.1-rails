@@ -12,6 +12,9 @@
       <%= render "links"     %>
     </div>
     <div class="col-md-5">
+      <% if @user == current_user %>
+        <%= render "notifications" %>
+      <% end %>
       <%= render "union" %>
       <%= render "certificate" %>
       <%= render 'contacts' %>
