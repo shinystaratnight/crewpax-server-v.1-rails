@@ -29,15 +29,26 @@ class JobsController < ApplicationController
     end
 
     if @job.save
-      #JobMailer.confirmation(@job).deliver_now
-      #redirect_to jobs_path(@job, secret: params[:secret])
+
+      # email the correct users
+      User.all.each do |user|
+        @rolePresent = false
+        if user.notify_when_job_posted == "selected_roles"
+          user.roles.each do |rl|
+            if rl.id == @job.role_id
+              @rolePresent = true
+            end
+          end
+        end
+        if user.notify_when_job_posted == "always" || (user.notify_when_job_posted == "selected_roles" && @rolePresent)
+          JobMailer.notification(@job, user.email).deliver_now
+        end
+      end
 
 
       @job.labels.create(role_id: @job.role_id, user_id: current_user.id)
       @job.update_attribute :published, true
-      redirect_to jobs_path(Pusher.trigger('test_channel', 'greet', {
-      :greeting => "Hello there!?"
-    })), notice: 'Job has been published.'
+      redirect_to jobs_path, notice: 'Job has been published.'
 
     else
       redirect_to new_job_path

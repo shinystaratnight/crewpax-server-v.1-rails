@@ -19,12 +19,12 @@
       <% if @user.notify_when_job_posted == "always" %>
         checked="checked"
       <% end %>
-      >Email me when any new job is posted<br>
+      >Always email me when any new job is posted<br>
       <input type="radio" class="profile_input" data-profile-entry="notify_selected_roles" id="notify_selected_roles" class="notification_options" name="notification" value="selected_roles"
       <% if @user.notify_when_job_posted == "selected_roles" %>
         checked="checked"
       <% end %>
-      >Email me when new jobs matching my selected departments are posted
+      >Only email me when new jobs matching my selected departments are posted
     </form>
   </div>
 </div>
