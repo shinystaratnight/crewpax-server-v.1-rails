@@ -7,7 +7,8 @@
       </h1>
     </div>
   </header>
-  <% if @job.description.present? %>
+  <!-- adding job role -->
+  <% if @job.role.present? || @job.description.present? %>
     <div class="job_show panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -16,10 +17,18 @@
       </div>
       <div class="panel-body">
         <dl class="dl-horizontal">
+          <% if @job.role.present? %>
+          <dt>Role</dt>
+          <dd>
+            <%= @job.role.name %>
+          </dd>
+          <% end %>
+          <% if @job.description.present? %>
           <dt>Job Description</dt>
           <dd>
             <%= @job.description %>
           </dd>
+          <% end %>
         </dl>
       </div>
     </div>
