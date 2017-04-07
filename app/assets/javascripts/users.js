@@ -33,9 +33,12 @@ $(function(){
     var role_id = $(this).val();
 
   // when the selection is all
-    if (role_id == 0){
-      // if ($(this).data("selected-user-role") == "")
+    if (role_id == 0 && $(this).data("selected-user-role") == ""){
+      // if ($(this).data("selected-user-role") == "") {
       $(".user-card").show();
+      // } else {
+
+      // }
       return false;
     }else{
       $(this).data("selected-user-role", "clicked")
@@ -44,6 +47,14 @@ $(function(){
       var filter_data = [];
       var url = "/roles/" + role_id + "/labels"
       var ajax_request_data = {label:{role_id: role_id, hiring_board: hiring_board_status}, current_page_number: current_page}
+
+      // ???
+      if (role_id == 0) {
+        url = "/users";
+        ajax_request_data = {current_page_number: 0};
+        role_id = "";
+        hiring_board_status = "";
+      }
 
       ajaxPreLoadUser(opts, filter_data, role_id, current_page, hiring_board_status, url, ajax_request_data)
 
