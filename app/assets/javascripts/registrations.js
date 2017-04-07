@@ -598,9 +598,16 @@ $(".notification-panel").on("change", function(){
         ajaxDeleteEligibility(union_id, role_id, eligibility_id);
         ajaxDeleteLabel(role_id, user_id);
       }
-    }else if($(checkbox).data("union-has-member")== true || $(checkbox).data("union-has-permit")==true){
-      alert("You must indicate whether you are a member or you have a permit")
+    // }else if($(checkbox).data("union-has-member") == true || $(checkbox).data("union-has-permit")==true){
+    //   alert("You must indicate whether you are a member or you have a permit")
 
+    } else if($(checkbox).data("union-has-member") == true ){
+      alert("You must indicate that you are a member");
+      checkbox.attr('checked', false);
+
+    } else if($(checkbox).data("union-has-permit") == true){
+      alert("You must indicate that you have a permit");
+      checkbox.attr('checked', false);
     }
   });
 
