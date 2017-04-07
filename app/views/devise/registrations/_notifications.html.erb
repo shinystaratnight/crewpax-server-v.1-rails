@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingZero">
+    <h3 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="false" aria-controls="collapseZero" class="avail-collapse-toggle">
+        Notification Settings for Job Postings
+      </a>
+    </h3>
+  </div>
+
+  <div id="collapseZero" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingZero">
+    <div> Please select your notification preferences: </div>
+    <form id="notification_form" data-user-id="" action="">
+      <input type="radio" class="profile_input" data-profile-entry="notify_never" id="notify_never" class="notification_options" name="notification" value="never">
+      Never notify me when a new job is posted
+      <br>
+      <input type="radio" class="profile_input" data-profile-entry="notify_always" id="notify_always" class="notification_options" name="notification" value="always">
+      Always email me when any new job is posted
+      <br>
+      <input type="radio" class="profile_input" data-profile-entry="notify_selected_roles" id="notify_selected_roles" class="notification_options" name="notification" value="selected_roles"checked="checked">
+      Only email me when new jobs matching my roles are posted
+    </form>
+  </div>
+</div>
