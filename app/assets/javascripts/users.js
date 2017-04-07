@@ -34,6 +34,7 @@ $(function(){
 
   // when the selection is all
     if (role_id == 0){
+      // if ($(this).data("selected-user-role") == "")
       $(".user-card").show();
       return false;
     }else{
