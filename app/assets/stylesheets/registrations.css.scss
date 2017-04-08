@@ -53,8 +53,12 @@ label {
   padding: 0 8px 0 0;
 }
 
-input[type="checkbox"] {    
-  
+div#collapseZero {
+    padding: 5px 0px 3px 6px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+
   margin-left: 5px;
   cursor:pointer;
   -webkit-appearance: none;
@@ -72,25 +76,44 @@ input[type="checkbox"] {
   left: 2px;
   position: relative;
 
-} 
+}
 
-input[type="checkbox"].edit-roles, input[type="checkbox"].edit-users {    
+input[type="radio"], {
+  margin: 4px 5px 0 0px;
+  line-height: normal;
+}
+
+input[type="checkbox"].edit-roles, input[type="checkbox"].edit-users {
   left: -2px;
-} 
-
-
-input[type="checkbox"]:checked{
-  background-color: #2ECC71;
- 
 }
 
 
- 
+input[type="checkbox"]:checked, {
+  background-color: #2ECC71;
+}
 
-input[type="checkbox"]:focus{
+input[type="radio"]:checked {
+  background-color: rgba(82, 125, 247, 0.92);
+}
+
+input[type="checkbox"]:focus, input[type="radio"]:focus{
   outline: 0 none;
   box-shadow: none;
 }
+
+
+
+/* border for union status */
+.union_status {
+  border: solid 1px #dddddd;
+  padding: 0px 7px 3px 0px;
+  margin-left: -1px;
+  display: inline-block;
+}
+
+
+
+
 
 
 
@@ -119,7 +142,7 @@ input[type="checkbox"]:focus{
   padding: 0px 26px;
   margin-left: 5px;
   margin-bottom:8px;
-  
+
 }
 
 .panel-body {
@@ -153,7 +176,7 @@ input[type="checkbox"]:focus{
 #upload_new_documents_button {
   margin: 5px 15px;
   font-size:medium;
-  
+
 }
 
 #submit_button {
@@ -189,7 +212,7 @@ input[type="checkbox"]:focus{
   margin-bottom: 10px;
 }
 
-#selected_file { 
+#selected_file {
   border: 1px solid lightgray;
   background: transparent;
 }
@@ -223,13 +246,13 @@ input[type="checkbox"]:focus{
 /* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
+@media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
 
 //=======For Calender ===============================================================
-  
+
 
 
 
