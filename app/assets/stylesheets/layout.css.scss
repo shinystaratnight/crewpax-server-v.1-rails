@@ -31,6 +31,7 @@
 
 }
 
+
 /* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
 /* Portrait and Landscape */
@@ -46,7 +47,23 @@
     }
 }
 
-//-------***** iPhone 6 plus *****----------------------------------------------------------------
+
+/* ----------- iPhone 6 ---------------------------------------------------------------------------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2){
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+}
+
+/* ----------- iPhone 6 plus --------------------------------------------------------------------*/
+
+/* Portrait and Landscape */
 @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px) {
@@ -54,7 +71,63 @@
       margin-left: 25px;
       color: gray;
     }
-
-
-
 }
+
+
+/* ----------- Galaxy S3 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 2) {
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+}
+
+
+
+/* ----------- Galaxy S4 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3) {
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+}
+
+
+/* ----------- Galaxy S5 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3) {
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+}
+
+
+/* ----------- HTC One ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3) {
+    .footer {
+      margin-left: 25px;
+      color: gray;
+    }
+}
+
+
