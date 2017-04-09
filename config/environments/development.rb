@@ -30,6 +30,10 @@ Bcpax::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  # Precompile additional assets.
+  # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
+  # config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
   config.action_mailer.delivery_method = :smtp #:sendmail  #:letter_opener
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",

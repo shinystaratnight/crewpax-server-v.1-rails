@@ -44,16 +44,45 @@
   margin: 30px 0 0 0;
 }
 
-.bcpax-banner-ad {
+.bcpax-banner-ad, .bcpax-banner-ad-landscape {
   max-width: 100%;
   height: auto;
+  float: left;
 }
 
-@media (min-device-width: 421px) {
+.ad-container-fluid {
+  height: auto;
+  border-bottom: solid 1px #ffffff;
+}
+
+@media (max-device-width: 440px) {
+  .bcpax-banner-ad-landscape {
+    visibility: collapse;
+    width: 0%;
+    height: 0%;
+  }
+}
+
+@media (min-device-width: 440px) {
   .bcpax-banner-ad {
     visibility: collapse;
+    width: 0%;
+    height: 0%;
   }
-  .ad-container-fluid {
-    height: 0px;
+}
+
+@media (min-device-width: 440px) and (max-device-width: 750px) {
+  .bcpax-banner-ad-landscape {
+    visibility: visible;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-device-width: 750px) {
+  .bcpax-banner-ad-landscape {
+    visibility: collapse;
+    width: 0%;
+    height: 0%;
   }
 }
