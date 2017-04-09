@@ -23,14 +23,14 @@
 }
 
 .chat-room {
-  color: #757575;
-  margin: 16px 0px 0px 16px;
+  color: #888888;
+  margin: 16px 0px 8px 15px
 }
 
 .deliveries-mobile {
-  // float: right;
   color: #959595;
   margin: 8px 0px 0px 14px;
+  font-style: italic;
 }
 
 .ad-container-fluid {
@@ -85,4 +85,13 @@
     width: 0%;
     height: 0%;
   }
+}
+
+@media (max-device-width: 750px) {
+  .deliveries-mobile {
+
+  color: #959595;
+  margin: 14px 0px 13px 14px;
+  font-style: italic;
+}
 }
