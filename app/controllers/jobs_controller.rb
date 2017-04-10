@@ -35,7 +35,7 @@ class JobsController < ApplicationController
         @rolePresent = false
         if user.notify_when_job_posted == "selected_roles"
           user.roles.each do |rl|
-            if rl.id == @job.role_id
+            if @job.role_id.present? && rl.id == @job.role_id
               @rolePresent = true
             end
           end
