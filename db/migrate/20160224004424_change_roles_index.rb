@@ -2,7 +2,7 @@ class ChangeRolesIndex < ActiveRecord::Migration
   def change
     change_table :labels do |t|
       t.remove :category_id
-      
+
     end
     add_reference :labels, :role, index:true
     # change_table :jobs do |t|
