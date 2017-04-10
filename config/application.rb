@@ -24,10 +24,13 @@ module Bcpax
     # config.i18n.default_locale = :de
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
     config.action_mailer.default_options = { from: 'BCPAX <robot@bcpax.com>' }
-    # config.assets.enabled = true
+
+
+    config.assets.paths << Rails.root.join('public','assets', 'fonts')
+    config.assets.enabled = true
 
     # Because by default Rails 4 will not serve your assets:
-    # config.serve_static_files = true
+    config.serve_static_files = true
 
   end
 end
