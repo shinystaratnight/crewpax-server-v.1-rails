@@ -97,7 +97,7 @@ class JobsController < ApplicationController
 
 
   def set_role
-    @role = Role.find params[:role_id] if params[:role_id]
+    @role_id = Role.find params[:role_id] if params[:role_id]
   end
 
   def set_job
