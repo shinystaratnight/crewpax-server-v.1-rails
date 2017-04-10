@@ -169,6 +169,10 @@
       word-break: break-all;
     }
 
+    #job_management > tbody > tr > td > a {
+      word-break: break-all;
+    }
+
     #job_posts_table_info{
       margin-left: 55px;
       text-align:left;
@@ -247,6 +251,7 @@
     #job_posts_table > tbody > tr > td > a {
       word-break: break-all;
     }
+
 
     #job_posts_table_info{
       margin-left: 90px;
@@ -391,6 +396,12 @@
     margin-right: 4px;
     width: 30px;
   }
+
+
+  // //=====manage user's job postings=======//    <<---- hard-coded in html.erb file for now
+  // #job_management > tbody > tr > td > a {
+  //   word-break: break-all;
+  // }
 
 
 }

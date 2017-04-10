@@ -10,7 +10,7 @@
     <tbody>
       <% for user_job in @user_jobs %>
         <tr>
-          <th><%= link_to user_job.name, job_path(user_job) %></th>
+          <th><%= link_to user_job.name, job_path(user_job), style: "word-break: break-all;" %></th>
           <th><%= user_job.starts_on %>
           <th><%= link_to "Edit", job_path(user_job) + "/edit?secret=" + user_job.secret, class: "btn  btn-primary" %></th>
         </tr>
