@@ -145,7 +145,26 @@
     color: #c8d9fb;
   }
 
+  .btn-danger {
+    width: 94px;
+  }
 
+  .btn-success {
+    width: 94px;
+  }
+
+  .send_text{
+    margin-left: 60px;
+    margin-top: -15px;
+    font-size: 13px;
+    width: 94px;
+  }
+
+  .photo-box{
+    box-shadow: -1px 1px 30px lightgray;
+    padding-bottom: 22px;
+    width: 341px;
+  }
 //========== Medium devices (desktops, 992px and up)==========================================
 
 @media (min-width: 992px) {
@@ -377,6 +396,9 @@
       margin-bottom: 15px;
     }
 
+    #reset_button{
+      margin-top: 10px;
+    }
 
 
 
@@ -609,6 +631,19 @@
   .description{
     margin-left:35px;
     margin-top: 10px;
+  }
+
+  .send_text {
+    margin-left: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  #view_profile_btn{
+    width: 50px;
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 10px;
   }
 
 
