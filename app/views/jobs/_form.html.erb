@@ -8,7 +8,12 @@
     <div class="form-group">
       <%= f.label(:role_id, "Role * :") %>
    <!--  #f.select :role_id, options_from_collection_for_select(Role.all,:id, :name, params[:role_id]),%> -->
-      <%=f.collection_select(:role_id,Role.all,:id,:name,{prompt:"Please choose.."},{class:"form-control"})%>
+      <%= collection_select(:job, :role_id, Role.all, :id, :name, {prompt:"Please choose.."},{class:"form-control"})%>
+      <!-- <select name="post[author_id]">
+        < % Author.all.each do |author| %>
+          <option value="< %= author.id %>">< %= author.name_with_initial %></option>
+        < % end %> -->
+</select>
 
     </div>
 
