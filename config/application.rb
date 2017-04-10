@@ -27,7 +27,7 @@ module Bcpax
     # config.assets.enabled = true
 
     # Because by default Rails 4 will not serve your assets:
-    config.serve_static_assets = true
+    # config.serve_static_files = true
 
   end
 end
