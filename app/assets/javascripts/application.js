@@ -1,9 +1,9 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.bxslider.min
 //= require bootstrap
 //= require moment
 //= require_tree .
 //= require bootstrap-datepicker.min
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap.min
-//= require jquery.bxslider.min
