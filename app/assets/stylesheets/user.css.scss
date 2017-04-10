@@ -220,12 +220,16 @@
 
   #user-pagination{
     float: right;
-    margin-right: 100px;
+    margin: -85px 200px 0 0;
   }
 
   #paginated_users{
     margin-top: 15px;
   }
+
+  .pagination > li {
+      display: inherit;
+    }
 
   #filter_bar{
     margin-left: 0px;
@@ -400,6 +404,11 @@
       margin-top: 10px;
     }
 
+    .pagination > li {
+      display: inherit;
+    }
+
+
 
 
 //=====================User reset password enter email address passwords/new ============================
@@ -477,6 +486,10 @@
     margin: 0 0 5px;
     font-size: 24px;
     font-weight: bold;
+  }
+
+  .pagination > li {
+    display: inherit;
   }
 
 
@@ -584,6 +597,10 @@
     display: inline-block;
     margin-left: 0px;
     margin-bottom: 10px;
+  }
+
+  .pagination > li {
+    display: inherit;
   }
 
 //=================================User Sign Up ==================================================
@@ -742,6 +759,10 @@
     #display_image img {
       width: 250px;
       height: 250px;
+    }
+
+    .pagination > li {
+      display: inherit;
     }
 
 }
