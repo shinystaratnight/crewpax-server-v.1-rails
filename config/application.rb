@@ -27,8 +27,9 @@ module Bcpax
 
 
 
+    # development troubles - commenting out
     config.assets.paths << Rails.root.join('public','assets', 'fonts')
-    config.assets.enabled = true
+    #config.assets.enabled = true
 
     # Because by default Rails 4 will not serve your assets:
     config.serve_static_files = true

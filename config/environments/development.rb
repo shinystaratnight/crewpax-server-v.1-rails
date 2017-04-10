@@ -56,5 +56,6 @@ Bcpax::Application.configure do
 
   #config.active_record.raise_in_transactional_callbacks = true
 
-  config.assets.raise_production_errors = true
+  # turned this off to avoid application.haml css error
+  # config.assets.raise_production_errors = true
 end

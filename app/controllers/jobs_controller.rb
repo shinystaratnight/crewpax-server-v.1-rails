@@ -2,7 +2,7 @@ class JobsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
-  before_filter :set_role, only: :index
+  before_filter :set_role, only: [:index, :new]
   respond_to :html, :js, :json
 
   def index
@@ -15,12 +15,14 @@ class JobsController < ApplicationController
       @jobs.find_most_recent(params[:updated_at])
     end
 
-
   end
+
 
   def new
     @job = Job.new
+    set_role
   end
+
 
   def create
     @job = Job.new(job_params)
