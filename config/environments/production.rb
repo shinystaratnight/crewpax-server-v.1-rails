@@ -14,6 +14,32 @@ Bcpax::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Precompile All The Javascipt
+  config.assets.precompile += %w( *.js )
+  # Precompile CSS files
+  config.assets.precompile += %w(admin.css.scss)
+  config.assets.precompile += %w(alerts.css.scss)
+  config.assets.precompile += %w(bootstrap-datepicker3.min.css)
+  config.assets.precompile += %w(bootstrap-switch.min.css)
+  config.assets.precompile += %w(calendar.css.scss)
+  config.assets.precompile += %w(chosen.min.css)
+  config.assets.precompile += %w(data-tables.css)
+  config.assets.precompile += %w(dataTables.bootstrap.min.css)
+  config.assets.precompile += %w(dataTables.jqueryui.min.css)
+  config.assets.precompile += %w(fontello.css)
+  config.assets.precompile += %w(home.css)
+  config.assets.precompile += %w(index.css.scss)
+  config.assets.precompile += %w(jobs.css.scss)
+  config.assets.precompile += %w(jquery.bxslider.min.css)
+  config.assets.precompile += %w(jquery.dataTables.css)
+  config.assets.precompile += %w(layout.css.scss)
+  config.assets.precompile += %w(nav.css.scss)
+  config.assets.precompile += %w(prettify.css)
+  config.assets.precompile += %w(registrations.css.scss)
+  config.assets.precompile += %w(responsive.bootstrap.min.css)
+  config.assets.precompile += %w(responsive.dataTables.min.css)
+  config.assets.precompile += %w(user.css.scss)
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
