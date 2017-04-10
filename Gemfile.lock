@@ -433,6 +433,7 @@ DEPENDENCIES
   sass-rails
   simple_calendar (~> 2.0)
   simple_form
+  sprockets-rails
   twilio-ruby
   uglifier
 

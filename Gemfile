@@ -23,6 +23,7 @@ gem 'jquery-datatables-rails', '~> 3.4'
 
 # for heroku
 gem 'rails_12factor'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # commented out for deployment
 # group :assets do
