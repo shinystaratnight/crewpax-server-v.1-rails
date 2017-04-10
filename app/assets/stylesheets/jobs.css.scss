@@ -218,7 +218,7 @@
     }
 
     #job_filled_indicator{
-      margin-left: 20px;
+      margin-left: -7px;
     }
 
     #job_filled_indicator > .btn{
@@ -228,6 +228,11 @@
 
     #job_category {
       wodth: 320px;
+    }
+
+    .job_has_filled {
+      background-color: #d9534f;
+      color: white;
     }
 
   }
@@ -277,7 +282,12 @@
     }
 
     #job_filled_indicator{
-      margin-left: 70px;
+      margin-left: 40px;
+    }
+
+    .job_has_filled {
+      background-color: #d9534f;
+      color: white;
     }
 
   }
@@ -312,7 +322,12 @@
     }
 
     #job_filled_indicator{
-      margin-left: 110px;
+      margin-left: 80px;
+    }
+
+    .job_has_filled {
+      background-color: #d9534f;
+      color: white;
     }
 
   }
