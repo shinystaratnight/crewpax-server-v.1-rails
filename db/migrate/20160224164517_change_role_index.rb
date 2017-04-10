@@ -3,7 +3,7 @@ class ChangeRoleIndex < ActiveRecord::Migration
     remove_index :jobs, column: :category_id
     # add_reference :jobs, :role, index: true
     change_table :users do |t|
-      t.remove :category_ids
+      # t.remove :category_ids
       t.string :roles_ids, default: [], array:true
     end
   end
