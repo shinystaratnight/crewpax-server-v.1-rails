@@ -5,16 +5,12 @@
       <%= f.text_field :name, class: "job_form form-control"%>
     </div>
 
-    <div class="form-group">
-      <%= f.label(:role_id, "Role") %>
-   <!--  #f.select :role_id, options_from_collection_for_select(Role.all,:id, :name, params[:role_id]),%> -->
-      <%= collection_select(:job,:role_id,Role.all,:id,:name,{prompt:"Please choose.."},{class:"form-control"}) %>
-      <!-- <select name="post[author_id]">
-        < % Author.all.each do |author| %>
-          <option value="< %= author.id %>">< %= author.name_with_initial %></option>
-        < % end %> -->
-</select>
+     <!--  #f.select :role_id, options_from_collection_for_select(Role.all,:id, :name, params[:role_id]),%> -->
 
+    <div class="form-group">
+      <%= f.label(:role_id, "Role * :") %>
+
+      <%=collection_select(:job,:role_id,Role.all,:id,:name,{prompt:"Please choose.."},{class:"form-control"})%>
     </div>
 
     <div class="form-group">
