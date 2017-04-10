@@ -5,29 +5,8 @@
   width: 404px;
 }
 
-.row {
-  margin: 45px 0 0 51px;
-  /*margin-left:auto;*/
-  /*margin-right:auto;*/
-  width: 1300px;
-}
-
 .col-md-4 {
   display: inline-block;
-}
-
-#sponsor-div {
-  margin: 0 0 0 30px;
-}
-
-#logo-div {
-  /*margin: 0 0px 0 15px;*/
-  margin: -10px 30px 0px -30px
-}
-
-#feed-div {
-    width: 300px;
-    margin: 30px 0 0 45px;
 }
 
 .sponsor-p {
@@ -64,9 +43,72 @@
     width: 1300px;
   }
 
+  .row {
+    margin: 45px 0 0 51px;
+    /*margin-left:auto;*/
+    /*margin-right:auto;*/
+    width: 1300px;
+  }
+
+  #sponsor-div {
+    margin: -2px 0 0 30px;
+  }
+
+  #logo-div {
+    /*margin: 0 0px 0 15px;*/
+    margin: -10px 45px 0px -15px;
+  }
+
+  .logo {
+    width: 440px;
+    margin: 0px 0px 50px -20px;
+  }
+
+  #feed-div {
+      width: 300px;
+      margin: 30px 0 0 45px;
+  }
+
+
 }
 
+/* ------- Div layout and other generalizable settings for all mobile devices up to 750px max-dimension ------- */
 
+@media (max-device-width: 750px) {
+  #sponsor-div {
+    margin: 0 0 0 30px;
+    float: left;
+    display: block;
+    width: 100%;
+  }
+
+  #logo-div {
+    /*margin: 0 0px 0 15px;*/
+    margin: -10px 30px 0px -30px;
+    float: left;
+    display: block;
+  }
+
+  #feed-div {
+      width: 300px;
+      margin: 30px 0 0 45px;
+      float: left;
+      display: block;
+  }
+
+  .sponsor-p {
+    float: initial;
+  }
+
+  .sponsor-image {
+    width: 80%;
+  }
+
+  .logo {
+    width: 68%;
+    margin: 10px 10px 10px 10px;
+  }
+}
 
 /* ----------- iPhone 5 and 5S ----------------------------------------------------------*/
 
@@ -83,6 +125,28 @@
   }
   .page-header h1 {
     font-size: 150%;
+  }
+
+  .sponsor-image {
+    width: 80%;
+    margin-left: -1%;
+  }
+
+  .logo {
+    width: 92%;
+    margin: 75px 0px 15px 14%;
+  }
+
+  .btn-lg {
+    width: 99%;
+    margin-left: 11%;
+  }
+
+  #feed-div {
+    margin: 28px 0 0 6%;
+    float: left;
+    display: block;
+    width: 88%;
   }
 }
 
@@ -108,6 +172,23 @@
     margin-left: -10px;
   }
 
+  .logo {
+    width: 94%;
+    margin: 75px 0px 15px 12%;
+  }
+
+  .btn-lg {
+    width: 99%;
+    margin-left: 9%;
+  }
+
+  #feed-div {
+    margin: 30px 0 0 5%;
+    float: left;
+    display: block;
+    width: 90%;
+  }
+
 }
 
 
@@ -125,6 +206,32 @@
   .page-header h1 {
     font-size: 178%;
   }
+
+    .sponsor_landingpage_image img {
+    margin-left: -10px;
+  }
+
+  .sponsor-image {
+    width: 80%;
+    margin-left: 2%;
+  }
+
+  .logo {
+    width: 95%;
+    margin: 75px 0px 15px 12%;
+  }
+
+  .btn-lg {
+    width: 103%;
+    margin-left: 9%;
+  }
+
+  #feed-div {
+    margin: 33px 0 0 5%;
+    float: left;
+    display: block;
+    width: 110%;
+  }
 }
 
 
@@ -138,6 +245,32 @@
   and (-webkit-device-pixel-ratio: 2) {
   .page-header h1 {
     font-size: 150%;
+  }
+
+  .sponsor_landingpage_image img {
+    width:240px;
+    height:200px;
+    margin-left: 20px;
+  }
+
+  .sponsor-image {
+    width: 80%;
+  }
+
+  .logo {
+    width: 92%;
+    margin: 75px 0px 15px 14%;
+  }
+
+  .btn-lg {
+    width: 99%;
+    margin-left: 11%;
+  }
+
+  #feed-div {
+    margin: 20px 0 0 11px;
+    float: left;
+    display: block;
   }
 }
 
@@ -153,6 +286,32 @@
   .page-header h1 {
     font-size: 150%;
   }
+
+  .sponsor_landingpage_image img {
+    width:240px;
+    height:200px;
+    margin-left: 20px;
+  }
+
+  .sponsor-image {
+    width: 80%;
+  }
+
+  .logo {
+    width: 92%;
+    margin: 75px 0px 15px 14%;
+  }
+
+  .btn-lg {
+    width: 99%;
+    margin-left: 11%;
+  }
+
+  #feed-div {
+    margin: 20px 0 0 11px;
+    float: left;
+    display: block;
+  }
 }
 
 
@@ -163,11 +322,22 @@
   and (device-width: 360px)
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3) {
+
   .page-header h1 {
     font-size: 155%;
   }
-}
 
+
+  .logo {
+    width: 94%;
+    margin: 75px 0px 15px 12%;
+  }
+  #feed-div {
+    margin: 20px 0 0 8%;
+    float: left;
+    display: block;
+  }
+}
 
 /* ----------- HTC One ----------- */
 
@@ -176,9 +346,53 @@
   and (device-width: 360px)
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3) {
+
   .page-header h1 {
     font-size: 155%;
   }
+
+    .logo {
+    width: 94%;
+    margin: 75px 0px 15px 12%;
+  }
+
+
+  #feed-div {
+    margin: 20px 0 0 8%;
+    float: left;
+    display: block;
+  }
+
+}
+
+/* ------ Landscape for all mobiles ---------- */
+@media screen and (min-width: 440px) and (max-width: 800px) {
+
+  #sponsor-div {
+    margin-left: 18px;
+  }
+
+  .sponsor-image {
+    width: 400px;
+  }
+
+  .logo {
+    width: 424px;
+    margin: 80px 0px 45px 55px;
+  }
+
+  .btn-lg {
+    width: 90%;
+    margin: 0px 0 0 55px;
+  }
+
+  #feed-div {
+    margin: 58px 0 8px 26px;
+    float: left;
+    display: block;
+    width: 112%;
+  }
+
 }
 
 
