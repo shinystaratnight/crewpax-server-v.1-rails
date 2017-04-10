@@ -55,4 +55,6 @@ Bcpax::Application.configure do
                                                :port => "3000"}
 
   #config.active_record.raise_in_transactional_callbacks = true
+
+  config.assets.raise_production_errors = true
 end

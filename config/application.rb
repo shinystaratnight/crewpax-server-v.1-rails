@@ -26,8 +26,12 @@ module Bcpax
     config.action_mailer.default_options = { from: 'BCPAX <robot@bcpax.com>' }
     # config.assets.enabled = true
 
+    # Because by default Rails 4 will not serve your assets:
+    config.serve_static_assets = true
+
   end
 end
+
 
 
 # #webpush things
