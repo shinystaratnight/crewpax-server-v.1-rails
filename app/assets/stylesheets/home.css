@@ -190,9 +190,9 @@
     margin: 75px 0px 15px 14%;
   }
 
-  .btn-lg {
+  .btn-lg, .btn-group-lg > .btn {
     width: 99%;
-    margin-left: 11%;
+    margin: 0px 0 0 11%;
   }
 
   #feed-div {
