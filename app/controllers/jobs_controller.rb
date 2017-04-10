@@ -2,7 +2,7 @@ class JobsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_job, :authenticate, only: [:show, :edit, :update, :destroy]
   before_filter :authorize, only: [ :edit, :update, :destroy]
-  before_filter :set_role, only: [:index, :new]
+  before_filter :set_role, only: :index
   respond_to :html, :js, :json
 
   def index
