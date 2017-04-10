@@ -1,7 +1,5 @@
 class MessagesController < ApplicationController
 
-  previous phone-related(?) code
-
   def new
     @message = Message.new
   end
