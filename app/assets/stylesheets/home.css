@@ -37,7 +37,7 @@
   }
 
   .row {
-    margin: 45px auto;
+    margin: 75px auto;
     /* margin-left: auto; */
     /* margin-right: auto; */
     width: 1300px;
@@ -60,8 +60,8 @@
   }
 
   .logo {
-    width: 440px;
-    margin: 0px 0px 50px -20px;
+    width: 380px;
+    margin: 0px 0px 50px 12px;
   }
 
   #feed-div {
