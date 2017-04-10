@@ -21,6 +21,8 @@ gem 'omniauth-facebook'
 gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
 
+# for heroku
+gem 'rails_12factor'
 
 # commented out for deployment
 # group :assets do
