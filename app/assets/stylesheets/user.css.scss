@@ -181,6 +181,12 @@ body{
   display: inline;
 }
 
+//=======Edit Profile generals=======//
+.calendar-day {
+  font-size: 13px;
+  padding: 0px 0px 0px 0px;
+}
+
 //========== Medium devices (desktops, 992px and up)==========================================
 
 @media (min-width: 992px) {
@@ -360,7 +366,8 @@ body{
 
 //=============================User Edit Profile==================================================
   .profile_page{
-    margin-left: 700px;
+    margin-top: 10px;
+    margin-left: 655px;
   }
 
 
