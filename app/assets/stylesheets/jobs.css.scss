@@ -21,7 +21,7 @@
 
 
   #post_job_button{
-    margin-top: 0px;
+    margin-top: -9px;
     margin-right: 10px;
     width: 144px;
     position: relative;
@@ -81,7 +81,7 @@
   }
 
   #search-reset-and-filled {
-    display: block;
+    display: inline;
     margin-bottom: 6px;
   }
 
@@ -102,7 +102,8 @@
 
 
 //------in between widths-------//
-@media (mid-width: 740px) and (max-width: 991px) {
+
+@media (min-width: 568px) and (max-width: 1054px) {
   .job_has_filled{
     background-color: #d9534f;
     color: white;
@@ -114,11 +115,10 @@
   }
 
   #job_filled_indicator{
-    margin-left: 330px;
-    display: inline-block;
-    float: right;
-    position: fixed;
-    width: 200px;
+    margin: 6px 0 0 255px;
+    width: 364px;
+    position: absolute;
+    display: inline;
   }
 
   #job_filled_indicator > .btn{
@@ -152,7 +152,10 @@
 
     #post_job_button{
       margin-left: 55%;
-      margin-top: 10px;
+      margin-top: -45px;
+      width: 144px;
+      position: relative;
+      float: right;
     }
 
     #job_category{
@@ -211,12 +214,16 @@
     }
 
     #job_filled_indicator{
-      margin-left: 60px;
+      margin-left: 20px;
     }
 
     #job_filled_indicator > .btn{
       margin-right: 4px;
       width: 30px;
+    }
+
+    #job_category {
+      wodth: 320px;
     }
 
   }
@@ -229,10 +236,13 @@
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
 
-    #post_job_button{
-      margin-left: 60%;
-      margin-top: 10px;
-    }
+  #post_job_button {
+    margin-left: 60%;
+    margin-top: -45px;
+    width: 144px;
+    position: relative;
+    float: right;
+  }
 
     #job_posts_table > tbody > tr > td > a {
       word-break: break-all;
@@ -261,6 +271,9 @@
       width: 300px;
     }
 
+    #job_filled_indicator{
+      margin-left: 70px;
+    }
 
   }
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
@@ -268,12 +281,21 @@
   and (min-device-width: 414px)
   and (max-device-width: 736px) {
 
+    #post_job_button {
+      margin-left: 60%;
+      margin-top: -45px;
+      width: 144px;
+      position: relative;
+      float: right;
+    }
+
     #job_posts_table > tbody > tr > td > a {
       word-break: break-all;
     }
 
     #job_category {
       width: 320px;
+      display: block;
     }
 
     .job_location_search{
@@ -284,6 +306,9 @@
       width: 320px;
     }
 
+    #job_filled_indicator{
+      margin-left: 110px;
+    }
 
   }
 
@@ -318,13 +343,13 @@
     width: 600px;
   }
 
-  #post_job_title{
-    margin-left: 600px;
+  #post_job_title {
+    text-align: center;
   }
 
-  #post_submit{
-    margin-left:200px;
-  }
+  // #post_submit{
+  //   margin-left:200px;
+  // }
 
 
 
@@ -356,7 +381,10 @@
   }
 
   #post_submit{
-    margin-left: 40px;
+    margin-top: 10px;
+  }
+  #cancel_job_post{
+    margin-top: 10px;
   }
 
   #job_filled_indicator > .btn{
@@ -373,12 +401,14 @@
   and (min-device-width: 375px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
-    #post_submit{
-      margin-left: 60px;
-    }
 
-
+  #post_submit{
+    margin-top: 10px;
   }
+  #cancel_job_post{
+    margin-top: 10px;
+  }
+}
 
 
 
@@ -390,11 +420,14 @@
 @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px) {
-    #post_submit{
-      margin-left: 80px;
-    }
 
+  #post_submit{
+    margin-top: 10px;
   }
+  #cancel_job_post{
+    margin-top: 10px;
+  }
+}
 
 
 
@@ -441,6 +474,11 @@
       width: 100px;
     }
 
+    .btn-lg {
+      width: 80%;
+      margin: 0px 0 0 30px;
+    }
+
 
 }
 
@@ -459,6 +497,11 @@
       margin-left: 0px;
     }
 
+    .btn-lg {
+      width: 82%;
+      margin: 0px 0 0 33px;
+    }
+
 
 }
 
@@ -472,6 +515,10 @@
     width: 380px;
   }
 
+  .btn-lg {
+    width: 82%;
+    margin: 0px 0 0 34px;
+  }
 
 
 
