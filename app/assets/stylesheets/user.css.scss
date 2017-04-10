@@ -249,7 +249,7 @@ body{
 
   #user-pagination{
     float: right;
-    margin: -85px 200px 0 0;
+    margin: -75px 200px 0 0;
   }
 
   #paginated_users{
@@ -261,13 +261,14 @@ body{
     }
 
   #filter_bar{
-    margin-left: 0px;
+    margin: 30px 0 20px 0;
   }
 
 //*------------------------User Index User Cards--------------------------------------------
   .user-card{
     display: inline-block;
     width: 31.0%;
+    margin: -40px 0 -40px 0
   }
 
   .user-card .col-md-4 {
