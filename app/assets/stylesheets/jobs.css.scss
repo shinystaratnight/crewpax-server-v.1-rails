@@ -1,5 +1,12 @@
 //==============================Job Index Page============================================================
 
+//--------*** Some generalizable rules ***-----------//
+
+.disclaimer-wrap {
+  margin: 6px 3px 0 1%;
+}
+
+
 //---------------------***** For Desktop view *****-------------------------------------------------------
 
 @media (min-width: 992px) {
@@ -14,10 +21,11 @@
 
 
   #post_job_button{
-    margin-top: -12px;
-    margin-left: 66%;
+    margin-top: 0px;
+    margin-right: 10px;
     width: 144px;
-    position: fixed;
+    position: relative;
+    float: right;
   }
 
   #job_category{
@@ -38,6 +46,7 @@
     margin-bottom:-13px;
   }
 
+
   #job_posts_table_filter input {
     border: 1px solid #ccc;
     border-radius:4px;
@@ -51,16 +60,15 @@
 
   .job_has_filled{
     background-color: #d9534f;
-    color:white;
-
+    color: white;
   }
 
   #job_filled_indicator{
-    margin-left: 30%;
-    display: inline-block;
+    margin-top: 0px;
+    margin-right: 10px;
+    width: 164px;
+    position: relative;
     float: right;
-    position: fixed;
-    width: 200px;
   }
 
   #job_filled_indicator > .btn{
@@ -76,11 +84,25 @@
     display: block;
     margin-bottom: 6px;
   }
+
+
+  .footer {
+    // text-align: center;
+    // margin-left: -5px;
+    // color: gray;
+    // font-size: 16px;
+    margin: 10px 50px;
+    color: gray;
+    font-size: 16px;
+    float: right;
+  }
+
+
 }
 
 
-//------narrower widths-------//
-@media (max-width: 991px) {
+//------in between widths-------//
+@media (mid-width: 740px) and (max-width: 991px) {
   .job_has_filled{
     background-color: #d9534f;
     color: white;
@@ -107,6 +129,17 @@
   #job_reset_button{
     margin-top: 10px;
   }
+
+  .footer {
+    // text-align: center;
+    // margin-left: -5px;
+    // color: gray;
+    // font-size: 16px;
+    margin: 10px 50px;
+    color: gray;
+    font-size: 16px;
+    float: right;
+  }
 }
 
 //-------***** iphone 5 & 5s *****----------------------------------------------------------------
@@ -127,6 +160,10 @@
       display: inline;
       margin-right:10px;
       margin-bottom:10px;
+    }
+
+    #job_posts_table > tbody > tr > td > a {
+      word-break: break-all;
     }
 
     #job_posts_table_info{
@@ -197,6 +234,10 @@
       margin-top: 10px;
     }
 
+    #job_posts_table > tbody > tr > td > a {
+      word-break: break-all;
+    }
+
     #job_posts_table_info{
       margin-left: 90px;
       text-align:left;
@@ -226,6 +267,11 @@
   @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px) {
+
+    #job_posts_table > tbody > tr > td > a {
+      word-break: break-all;
+    }
+
     #job_category {
       width: 320px;
     }
