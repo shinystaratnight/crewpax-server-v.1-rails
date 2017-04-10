@@ -1,0 +1,1 @@
+!function(a){a.fn.dataTableExt.oApi.fnGetColumnData=function(a,r,i,n,t){if(void 0===r)return new Array;void 0===i&&(i=!0),void 0===n&&(n=!0),void 0===t&&(t=!0);var e;e=1==n?a.aiDisplay:a.aiDisplayMaster;for(var o=new Array,u=0,f=e.length;u<f;u++){iRow=e[u];var v=this.fnGetData(iRow,r);1==t&&0==v.length||(1==i&&jQuery.inArray(v,o)>-1||o.push(v))}return o}}(jQuery);

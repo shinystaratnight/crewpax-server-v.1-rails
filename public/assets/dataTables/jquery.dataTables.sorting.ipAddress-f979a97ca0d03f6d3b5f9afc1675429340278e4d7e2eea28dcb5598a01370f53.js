@@ -1,0 +1,1 @@
+jQuery.extend(jQuery.fn.dataTableExt.oSort,{"ip-address-pre":function(e){for(var r=e.split("."),n="",t=0;t<r.length;t++){var a=r[t];1==a.length?n+="00"+a:2==a.length?n+="0"+a:n+=a}return n},"ip-address-asc":function(e,r){return e<r?-1:e>r?1:0},"ip-address-desc":function(e,r){return e<r?1:e>r?-1:0}});
