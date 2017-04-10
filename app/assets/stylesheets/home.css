@@ -1,7 +1,7 @@
 /* ==========In General==========================*/
 
 /* override for large buttons on home page */
-.btn-lg {
+/*.btn-lg {
   width: 404px;
 }
 
@@ -22,10 +22,11 @@
 .page-header h1 {
   margin-top: 4px;
   line-height: 1.4;
-}
+}*/
 
 
-/* Medium devices (desktops, 992px and up)==================================*/
+
+/* Medium devices (desktops, 992px and up)===============*/
 @media (min-width: 992px) {
   .bx-wrapper{
     width: 350px;
@@ -43,12 +44,11 @@
     width: 1300px;
   }
 
-  .row {
+/*  .row {
     margin: 45px 0 0 51px;
-    /*margin-left:auto;*/
-    /*margin-right:auto;*/
+    margin-left:auto;
     width: 1300px;
-  }
+  }*/
 
   #sponsor-div {
     margin: -2px 0 0 30px;
@@ -71,6 +71,59 @@
 
 
 }
+
+
+/* In between */
+
+@media (min-device-width: 750px) and (max-device-width: 992px) {
+   .bx-wrapper{
+    width: 350px;
+    margin-left: 10px;
+  }
+
+  .sponsor_landingpage_image{
+    margin-left: 20px;
+  }
+
+  .row {
+    margin: 75px auto;
+    width: 1300px;
+  }
+
+  .row {
+    margin: 45px 0 0 51px;
+
+    margin-right:auto;
+    width: 1300px;
+    position: fixed;
+  }
+
+  #sponsor-div {
+    margin: -2px 0 0 30px;
+    width: 433px;
+    height: 284px;
+  }
+
+  #logo-div {
+    width: 433px;
+    height: 656px;
+    margin: -280px 45px 0px 418px;
+  }
+
+  .logo {
+    width: 380px;
+    margin: 0px 0px 50px 12px;
+  }
+
+  #feed-div {
+      width: 300px;
+      height: 500px;
+      margin: -630px 0 0 906px  }
+
+
+}
+
+
 
 /* ------- Div layout and other generalizable settings for all mobile devices up to 750px max-dimension ------- */
 
