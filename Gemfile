@@ -24,7 +24,7 @@ gem 'jquery-datatables-rails', '~> 3.4'
 # for or recommended by heroku
 gem 'sprockets_better_errors'
 gem 'rails_12factor', group: :production
-gem 'ruby'
+ruby '2.3.0'
 # gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # commented out for deployment
