@@ -113,7 +113,7 @@ Bcpax::Application.configure do
     :address          => ENV['MAILGUN_SMTP_SERVER'],
     :username         => ENV['MAILGUN_SMTP_LOGIN'],
     :password         => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain           => 'rhubarb-tart-84937.herokuapp.com'
+    :domain           => 'rhubarb-tart-84937.herokuapp.com',
     :authentication   => :plain
   }
 
