@@ -107,7 +107,15 @@ Bcpax::Application.configure do
   # commenting out for heroku test deployment
   # config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
-
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :port             => ENV['MAILGUN_SMTP_PORT'],
+    :address          => ENV['MAILGUN_SMTP_SERVER'],
+    :username         => ENV['MAILGUN_SMTP_LOGIN'],
+    :password         => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain           => 'rhubarb-tart-84937.herokuapp.com'
+    :authentication   => :plain
+  }
+
   config.beginning_of_week = :sunday
 end
