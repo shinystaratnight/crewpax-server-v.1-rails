@@ -107,16 +107,7 @@ Bcpax::Application.configure do
   # commenting out for heroku test deployment
   # config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => 587,
-    :domain => 'gmail.com',
-    :user_name => ENV['GMAIL_USERNAME'],
-    :password => ENV['GMAIL_PASSWORD'],
-    :authentication => 'plain',
-    :enable_starttls_auto => true
-  }
+
   config.action_mailer.delivery_method = :smtp
   config.beginning_of_week = :sunday
 end

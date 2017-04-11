@@ -20,7 +20,6 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
-    set_role
   end
 
 
