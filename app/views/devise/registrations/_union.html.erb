@@ -18,63 +18,63 @@
           </div>
 
           <div class="list-group-item">
-            <a role="button" id="<%=union.name.tr!(' ','-')%>" data-union-name="<%=union.name%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
+            <a role="button" id="<%=union.name.tr(' /', '-').tr('\\','-')%>" data-union-name="<%=union.name.tr(' /', '-').tr('\\','-')%>" data-union-id="<%=union.id%>" data-toggle="collapse" href="#union-<%=union.name.tr(' /', '-').tr('\\','-')%>" data-role-ids="[]" data-eligibility-id="" aria-expanded="false">
               <%=union.name%>
             </a>
           </div>
 
-          <div id="union-<%=union.name%>" class="collapse" data-union-id="<%=union.id%>">
+          <div id="union-<%=union.name.tr(' /', '-').tr('\\','-')%>" class="collapse" data-union-id="<%=union.id%>">
           <% if union.has_member_status == true && union.has_permit_status == true  %>
-            <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>" class="union_status">
-                <label for="<%=union.name.downcase%>_permit">
+            <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>Status" data-union-id="<%=union.id%>" class="union_status">
+                <label for="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit">
                 <input type="checkbox"
                       class= "union_permit_days"
-                      id="<%=union.name.downcase%>_permit"
+                      id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit"
                       data-name="permit"
-                      data-union-name="<%=union.name.downcase %>"
+                      data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>"
                       value="" />
                 Permit
                 </label>
-                <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                <div contenteditable="true" hidden="true" class="permit_days_entry" id="<%=union.name.downcase%>_permit_days" data-union-name="<%=union.name.downcase %>"></div>
+                <span hidden="true" id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_number_days"> * Number of Days:
+                <div contenteditable="true" hidden="true" class="permit_days_entry" id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit_days" data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>"></div>
                 </span>
 
                 <input type="checkbox"
                      class="union_member"
-                     id="<%=union.name.downcase%>_member"
+                     id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_member"
                      data-name="member"
-                     data-union-name="<%=union.name.downcase %>"
+                     data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>"
                      value="true" />
-                <label for="<%=union.name.downcase%>_member"> Member </label>
+                <label for="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_member"> Member </label>
             </div>
             <% elsif union.has_member_status == true %>
-              <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
+              <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>Status" data-union-id="<%=union.id%>">
                 <input type="checkbox"
                      class="union_member"
-                     id="<%=union.name.downcase%>_member"
+                     id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_member"
                      data-name="member"
-                     data-union-name="<%=union.name.downcase %>"
+                     data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>"
                      value="true" />
-                <label for="<%=union.name.downcase%>_member"> Member </label>
+                <label for="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_member"> Member </label>
               </div>
             <% elsif union.has_permit_status == true %>
-              <div id="<%=union.name.downcase%>Status" data-union-id="<%=union.id%>">
+              <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>Status" data-union-id="<%=union.id%>">
                 <input type="checkbox"
                      class= "union_permit_days"
-                     id="<%=union.name.downcase%>_permit"
+                     id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit"
                      data-name="permit"
-                     data-union-name="<%=union.name.downcase %>"
+                     data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>"
                      value="" />
-                <label for="<%=union.name.downcase%>_permit"> Permit </label>
-                <span hidden="true" id="<%=union.name.downcase%>_number_days"> * Number of Days:
-                  <div contenteditable="true" hidden="true" id="<%=union.name.downcase%>_permit_days"class="permit_days_entry" data-union-name="<%=union.name.downcase %>" ></div>
+                <label for="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit"> Permit </label>
+                <span hidden="true" id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_number_days"> * Number of Days:
+                  <div contenteditable="true" hidden="true" id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_permit_days"class="permit_days_entry" data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase %>" ></div>
                 </span>
               </div>
 
 
           <%end%>
 
-            <div id="<%=union.name.downcase%>_roles" class="union_roles">
+            <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_roles" class="union_roles">
               <%union.roles.distinct.each do |role|%>
                 <label for="<%=role.name%>">
                   <input
@@ -84,7 +84,7 @@
                   name="<%=role.name%>"
                   data-user-id=""
                   data-union-id="<%=union.id%>"
-                  data-union-name="<%=union.name.downcase%>"
+                  data-union-name="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>"
                   data-union-has-member="<%=union.has_member_status%>"
                   data-union-has-permit ="<%=union.has_permit_status%>"
                   data-rolez-id="<%=role.id%>"

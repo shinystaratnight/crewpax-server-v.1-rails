@@ -1,32 +1,32 @@
 <h3> Unions and Roles </h3>
   <div>
     <% if @unions.present? %>
-      <% @unions.each do |union| %>       
+      <% @unions.order(:id).each do |union| %>
       <div class='union_font'>
         <%= union.name + ":" %>
       </div>
-      <div class="role_font"> 
+      <div class="role_font">
         <% eligibility= @eligibilities.find_by(union_id: union.id) %>
         <% if eligibility.member == true %>
-          
+
           <%="User is a member" %>
         <% elsif eligibility.permit_days.to_i >0 %>
           <%= "Permit days:" + " " + eligibility.permit_days.to_s + " days"%>
         <% else %>
-        <% end %> 
-      </div> 
-        <% @eligibilities.each do |e| %>                
-          <% if e.union_id == union.id %> 
+        <% end %>
+      </div>
+        <% @eligibilities.each do |e| %>
+          <% if e.union_id == union.id %>
            <% role = @roles.find(e.role_id) %>
             <div class="role_font">
               <i class="fa fa-circle" style="font-size:8px;"></i>
               <%= role.name %>
-            </div>                         
-          <% end %>          
-        <% end %>          
-      <% end %>      
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
     <% else %>
-      <div class="union_font">        
+      <div class="union_font">
         <%= "Non Union" %>
       </div>
     <% end %>

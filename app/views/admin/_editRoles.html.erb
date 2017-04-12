@@ -36,22 +36,22 @@
 
       <div class="field role-info" data-role-id="<%=role.id %>">
         <h5> Add to unions: </h5>
-        <%@unions.each do |union| %>
-          <label>            
+        <%@unions.order(:id).each do |union| %>
+          <label>
             <div hidden="true"><%=union.id%>
             </div>
             <% if union.roles.include? role %>
-                  
+
               <% if union.eligibilities.find_by(role_id: role.id, user_id: nil) %>
-                <input 
-                  type="checkbox" 
-                  class="edit-unions" 
-                  id="<%=role.id%>-<%=union.id%>" 
-                  name="<%=role.id%>-<%=union.id%>" 
-                  value="<%=union.name%>" 
-                  data-union-id="" 
-                  data-label-id="" 
-                  data-eligibility-id="<%= union.eligibilities.find_by(role_id: role.id, user_id: nil).id%>" 
+                <input
+                  type="checkbox"
+                  class="edit-unions"
+                  id="<%=role.id%>-<%=union.id%>"
+                  name="<%=role.id%>-<%=union.id%>"
+                  value="<%=union.name%>"
+                  data-union-id=""
+                  data-label-id=""
+                  data-eligibility-id="<%= union.eligibilities.find_by(role_id: role.id, user_id: nil).id%>"
                   checked/>
                   <%=union.name%>
               <% end %>
@@ -74,7 +74,7 @@
   <%end%>
 
   <div id="newRole" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="newRole">
-    
+
     <div class="field role-info" data-role-id="">
       <h5> Role Name: </h5>
       <div class="role-name" contenteditable="true"></div>
@@ -83,12 +83,12 @@
 
     <div class="field role-info" data-role-id="">
       <h5> Add to unions: </h5>
-      <%@unions.each do |union| %>
+      <%@unions.order(:id).each do |union| %>
 
-        <label>            
+        <label>
           <div hidden="true"><%=union.id%>
           </div>
-          <input type="checkbox" class="edit-unions" id="new-role-<%=union.id%>" name="new-role-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id=""/><%=union.name%>    
+          <input type="checkbox" class="edit-unions" id="new-role-<%=union.id%>" name="new-role-<%=union.id%>" value="<%=union.name%>" data-union-id="" data-label-id="" data-eligibility-id=""/><%=union.name%>
         </label>
 
       <%end%>
