@@ -8,7 +8,7 @@
   <div id="editRole" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="editRole">
 
     <div class="list-group">
-      <%@roles.each do |role| %>
+      <%@roles.order(:name).each do |role| %>
         <div class="list-group-item" id = "button-role-<%=role.id%>">
           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit-role-<%=role.id%>" aria-expanded="false" aria-controls="edit-role-<%=role.id%>">
             <%= role.name %>
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <%@roles.each do |role| %>
+  <%@roles.order(:name).each do |role| %>
     <div id="edit-role-<%=role.id%>" class="panel panel-collapse collapse" role="tabpanel" aria-labelledby="edit-role-<%=role.id%>">
 
       <div class="field role-info" data-role-id="<%=role.id %>">

@@ -57,7 +57,7 @@
 
       <div class="field union-info" data-union-id="<%=union.id %>">
         <h5> Add some roles: </h5>
-          <%@roles.each do |role| %>
+          <%@roles.order(:name).each do |role| %>
             <label>
               <div hidden="true"><%=role.id%>
               </div>
@@ -106,7 +106,7 @@
 
     <div class="field union-info" data-union-id="" id="new-union-roles">
       <h5> Add some roles: </h5>
-      <%@roles.each do |role| %>
+      <%@roles.order(:name).each do |role| %>
         <label>
           <div hidden="true"><%=role.id%>
           </div>
