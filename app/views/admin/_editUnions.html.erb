@@ -9,8 +9,8 @@
 
     <div class="list-group">
       <%@unions.each do |union| %>
-        <div class="list-group-item" id="button<%=union.name.tr(' ','-')%>">
-          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr(' ','-')%>" aria-expanded="false" aria-controls="edit<%=union.name.tr(' ','-')%>">
+        <div class="list-group-item" id="button<%=union.name.tr(' /', '-')%>">
+          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#edit<%=union.name.tr(' /', '-')%>" aria-expanded="false" aria-controls="edit<%=union.name.tr(' /', '-')%>">
             <%= union.name %>
           </a>
         </div>
@@ -26,13 +26,13 @@
   </div>
 
   <%@unions.each do |union| %>
-    <div id="edit<%=union.name.tr(' ','-')%>" class="panel panel-collapse collapse" data-name ="<%=union.name.tr(' ','-')%>"role ="tabpanel" aria-labelledby="edit<%=union.name.tr(' ','-')%>">
+    <div id="edit<%=union.name.tr(' /', '-')%>" class="panel panel-collapse collapse" data-name ="<%=union.name.tr(' /', '-')%>"role ="tabpanel" aria-labelledby="edit<%=union.name.tr(' /', '-')%>">
 
       <div class="field union-info" data-union-id="<%=union.id %>">
         <h5> Union Name: </h5>
         <div class="union-name" contenteditable="true"><%=union.name %></div>
         <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
-        <!-- Display if a union has member status or permit status --> 
+        <!-- Display if a union has member status or permit status -->
         <% if union.has_member_status == true %>
           <label for ="edit_has_member"> Has Member Status:
             <input type="checkbox" id="edit_has_member" value="true" data-name="has_member" checked>
@@ -40,7 +40,7 @@
         <% else %>
           <label for ="edit_has_member"> Has Member Status:
             <input type="checkbox" id="edit_has_member" value="true" data-name="has_member" >
-          </label>       
+          </label>
         <% end %>
         <% if union.has_permit_status == true %>
           <label for = "edit_has_permit"> Has Permit Status:
@@ -58,11 +58,11 @@
       <div class="field union-info" data-union-id="<%=union.id %>">
         <h5> Add some roles: </h5>
           <%@roles.each do |role| %>
-            <label>            
+            <label>
               <div hidden="true"><%=role.id%>
               </div>
               <% if union.roles.include? role %>
-                  
+
                 <% if role.eligibilities.find_by(union_id: union.id, user_id: nil) %>
                   <input type="checkbox" class="edit-roles" id="<%=union.id%>-<%=role.id%>" name="<%=union.id%>-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id="<%= role.eligibilities.find_by(union_id: union.id, user_id: nil).id%>" checked/><%=role.name%>
                 <% end %>
@@ -91,7 +91,7 @@
       <h5> Union Name: </h5>
       <div class="union-name" contenteditable="true"></div>
       <span class="error" hidden="true" class="union-name-error"> *Name is not valid</span>
-    
+
       <label for="has_member">Has Member Status
         <input type="checkbox" id="has_member" value="true" data-name="has_member">
       </label>
@@ -102,14 +102,14 @@
 
 
     </div>
-          
-    
+
+
     <div class="field union-info" data-union-id="" id="new-union-roles">
       <h5> Add some roles: </h5>
-      <%@roles.each do |role| %>              
-        <label>  
+      <%@roles.each do |role| %>
+        <label>
           <div hidden="true"><%=role.id%>
-          </div>         
+          </div>
           <input type="checkbox" class="edit-roles" id="new-<%=role.id%>" name="new-<%=role.id%>" value="<%=role.name%>" data-role-id="" data-label-id="" data-eligibility-id=""/><%=role.name%>
         </label>
 

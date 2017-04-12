@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   # caches_page :index
   def index
-    @user = User.find(4)     #doesn't matter which?
+    @user = User.find(1)     #doesn't matter which?
 
     respond_to do |format|
 
