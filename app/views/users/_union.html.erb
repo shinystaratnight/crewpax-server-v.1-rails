@@ -1,7 +1,7 @@
 <h3> Unions and Roles </h3>
   <div>
     <% if @unions.present? %>
-      <% @unions.each do |union| %>
+      <% @unions.sort_by(&:id).each do |union| %>
         <div class='union_font'>
           <%= union.name + ":" %>
         </div>

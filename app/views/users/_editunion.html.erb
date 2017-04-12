@@ -133,7 +133,7 @@
 
       <!--Roles that belong to Unions  -->
         <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_roles" class="union_roles">
-          <%union.roles.distinct.order(:name).each do |role|%>
+          <%union.roles.distinct.sort_by(&:name).each do |role|%>
            <% if @user.eligibilities.find_by(role_id: role.id, union_id: union.id) %>
               <label for="<%=role.name%>">
                 <input

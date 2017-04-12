@@ -75,7 +75,7 @@
           <%end%>
 
             <div id="<%=union.name.tr(' /', '-').tr('\\','-').downcase%>_roles" class="union_roles">
-              <%union.roles.distinct.order(:name).each do |role|%>
+              <%union.roles.distinct.sort_by(&:name).each do |role|%>
                 <label for="<%=role.name%>">
                   <input
                   type="checkbox"
