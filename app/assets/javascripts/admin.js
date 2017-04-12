@@ -4,14 +4,6 @@ $(function(){
 // Add, Update or Delete Union Section
 //********************************************************************************************************
 
-//Dirty fix for bug where Union names with slashes cause collapsables not work
-  // $(".union-name").on('keydown', function(event) {
-  //   var keycode = (event.keyCode ? event.keyCode : event.which);
-  //   if (keycode == '191' || keycode == '220') {
-  //     event.preventDefault();
-  //   }
-  // });
-
 //When a mouse leaves the entry div, it will trigger ajax
   $(".union-name").on("blur", function(){
     //Check to see if a union is already created and decide which url the ajax should send to(create/update)
