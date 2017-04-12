@@ -283,3 +283,5 @@ User.create(name: "panacheley", email: "panacheley@gmail.com", password: "1234")
 #   User.create(email: "new##{i+100}@sample.net", name: "##{i+35}shley", admin: false)
 # end
 
+
+
