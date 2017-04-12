@@ -121,7 +121,7 @@ body{
   color: gray;
 }
 
-//=====================================User Card User Index=================================
+//=============================User Card User Index In-General================================
 .container-fluid {
   padding-bottom: 25px;
 }
@@ -302,10 +302,7 @@ body{
     height: 117px;
   }
 
-  .username {
-    display: inline-block;
-    padding: 30px 0 0px 60px;
-  }
+
 
   #view_profile_btn{
     display: inline-block;
@@ -545,6 +542,11 @@ body{
     margin-left:35px;
   }
 
+  .username {
+    display: inline-block;
+    padding: 30px 0 0px 36px;
+  }
+
   .username p {
     margin: 0 0 5px;
     font-size: 24px;
@@ -689,6 +691,18 @@ body{
     margin-bottom: 10px;
   }
 
+
+  .username {
+    display: inline-block;
+    padding: 30px 0 0px 36px;
+  }
+
+  .username p {
+    margin: 0 0 5px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   .pagination > li {
     display: inherit;
   }
@@ -779,6 +793,20 @@ body{
   }
 
 
+  .username {
+    display: inline-block;
+    padding: 30px 0 0px 36px;
+  }
+
+  .username p {
+    margin: 0 0 5px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .pagination > li {
+    display: inherit;
+  }
 
 //=================================User Sign Up ==================================================
   #login_page{
@@ -901,9 +929,20 @@ body{
       height: 250px;
     }
 
-    .pagination > li {
-      display: inherit;
-    }
+  .username {
+    display: inline-block;
+    padding: 30px 0 0px 36px;
+  }
+
+  .username p {
+    margin: 0 0 5px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .pagination > li {
+    display: inherit;
+  }
 
 }
 
