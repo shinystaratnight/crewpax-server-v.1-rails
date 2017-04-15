@@ -62,8 +62,10 @@
       <% end %>
     </div>
 
-    <%=submit_tag("Submit", class: "btn btn-lg btn-success",id: "post_submit")%>
+    <%=submit_tag("Submit*", class: "btn btn-lg btn-success",id: "post_submit")%>
+
     <%= link_to "Cancel", jobs_path, id: "cancel_job_post", class: "btn btn-lg btn-danger"%>
+        <h5 style="margin-left:115px;">*Email notifications upon Submit to be implemented soon</h5>
 
 
   <% end %>
