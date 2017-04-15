@@ -92,15 +92,15 @@
     </p>
   <% else %>
     <p>
-      <%= mail_to @job.contact_email, 'Apply', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: "\n\n\n" + 'Job page: ' + job_url(@job) + '' %>
+      <%= mail_to @job.contact_email, 'Apply', id: 'apply-to-job', class: 'btn job_show btn-lg btn-block btn-success',subject: @job.name, body: "\n\n\n" + 'Job page: ' + job_url(@job) + '' %>
     </p>
   <% end %>
   <p>
-    <%= link_to "Back to Job Board", jobs_path, class: 'btn job_show btn-lg btn-block btn-primary' %>
+    <%= link_to "Back to Job Board", jobs_path, id: 'back-to-board', class: 'btn job_show btn-lg btn-block btn-primary' %>
   </p>
   <% if @authenticated %>
     <p>
-      <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), class: 'btn job_show btn-block btn-lg btn-primary' %>
+      <%= link_to 'Edit', edit_job_path(@job, secret: params[:secret]), id: 'edit_this_job', class: 'btn job_show btn-block btn-lg btn-primary' %>
     </p>
   <% end %>
 <% end %>
