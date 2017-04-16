@@ -118,5 +118,8 @@ Bcpax::Application.configure do
     :authentication   => :plain
   }
 
+  # for twilio
+  config.middleware.use Rack::TwilioWebhookAuthentication, Rails.application.secrets.twilio_auth_token, '/voice'
+
   config.beginning_of_week = :sunday
 end

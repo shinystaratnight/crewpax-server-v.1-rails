@@ -1,4 +1,15 @@
+require 'twilio-ruby'
+
+
 class MessagesController < ApplicationController
+
+  include Webhookable
+
+  after_filter :set_header
+
+  skip_before_action :verify_authenticity_token
+
+
 
   def new
     @message = Message.new
@@ -10,8 +21,10 @@ class MessagesController < ApplicationController
     number_to_send_to = params[:recipient_phone]
     @message = Message.new(message_params)
     @message.user_id = current_user_id
+    account_sid = ENV["TWILIO_ACCOUNT_SID"]
+    auth_token = ENV["TWILIO_AUTH_TOKEN"]
     @twilio_number = ENV["TWILIO_PHONE_NUMBER"] ## In Production
-    @twilio_client = Twilio::REST::Client.new
+    @twilio_client = Twilio::REST::Client.new account_sid, auth_token
     @sms = @twilio_client.account.messages.create(
       :from => @twilio_number,
       :to => "+1#{number_to_send_to}",
