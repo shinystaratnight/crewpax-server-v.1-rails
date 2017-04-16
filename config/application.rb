@@ -31,21 +31,21 @@ module Bcpax
     config.assets.paths << Rails.root.join('public','assets', 'fonts')
     #config.assets.enabled = true
 
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
-    config.before_configuration do
-      env_file = File.join(Rails.root, 'config', 'local_env.yml')
-      YAML.load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?(env_file)
-    end
-
     # Because by default Rails 4 will not serve your assets:
     config.serve_static_files = true
 
-    # to prevent CRSF attacks. Twilio controller can get past it.
-    # protect_from_forgery with: :exception
 
   end
 end
+
+
+
+# #webpush things
+# vapid_key = Webpush.generate_key
+
+# # Save these in our application server settings
+# vapid_key.public_key
+# # => "BC1mp...HQ="
+
+# vapid_key.private_key
+# # => "XhGUr...Kec"

@@ -4,6 +4,5 @@
 /log/*.log
 /tmp
 /anachronisms
-/config/local_env.yml
 
 .DS_Store
