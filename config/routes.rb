@@ -57,4 +57,7 @@ Bcpax::Application.routes.draw do
 
   root 'home#index'
 
+  #twilio route
+  post 'twilio/voice' => 'twilio#voice'
+
 end

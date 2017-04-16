@@ -54,6 +54,9 @@ Bcpax::Application.configure do
   config.action_mailer.default_url_options = { :host => "localhost",
                                                :port => "3000"}
 
+  # for twilio - probably not needed in development
+  # config.middleware.use Rack::TwilioWebhookAuthentication, Rails.application.secrets.twilio_auth_token, '/voice'
+
   #config.active_record.raise_in_transactional_callbacks = true
 
   # turned this off to avoid application.haml css error
