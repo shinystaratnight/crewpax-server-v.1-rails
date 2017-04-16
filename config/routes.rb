@@ -61,5 +61,4 @@ Bcpax::Application.routes.draw do
   # twilio route, if ever needed
   # post 'twilio/voice' => 'twilio#voice'
 
-
 end
