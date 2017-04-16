@@ -1,1 +1,0 @@
-$(".simple-calendar").html('<%= j render("calendarmonthtwo.html.erb")%>');
