@@ -13,12 +13,14 @@
         <%= render "editcertificates" %>
         <%= render "editdocumentupload" %>
       </div>
-      <% if current_user.admin? %>
-        <p class="edit_user">
-        <%= link_to "Back to Admin Page",admin_index_path, class: 'profile_page btn btn-primary' %>
-        </p>
-      <% else %>
-        <%= link_to "Continue to Profile Page", user_path(current_user), class: "profile_page btn btn-primary" %>
-      <% end %>
+
+        <%= link_to "Back to Profile Page", user_path(current_user), class: "profile_page btn btn-primary edit_profile_submit" %>
+
+        <% if current_user.admin? %>
+          <p class="edit_user">
+          <%= link_to "Go to Admin Page",admin_index_path, class: 'profile_page btn btn-info edit_profile_submit' %>
+          </p>
+        <% end %>
+      <!-- < % end %> -->
     </div>
   </div>

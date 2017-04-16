@@ -1,415 +1,465 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-# production_manager = Role.create(name: "Production Manager (PM)")
-# unit_production_manager = Role.create(name: "Unit Production Manager (UPM)")
-# key_pa = Role.create(name: "Key PA")
-# office_production_assistant = Role.create(name: "Office Production Assistant (OPA)")
-# location_manager = Role.create(name: "Location Manager (LM)")
-# assistant_location_manager = Role.create(name: "Assistant Location Manager (ALM)")
-# trainee_assistant_location_manager = Role.create(name: "Trainee Assistant Location Manager (TAL)")
-# first_assistant_director = Role.create(name: "1st Assistant Director (1st AD)")
-# second_assistant_director = Role.create(name: "2nd Assistant Director (2nd AD)")
-# third_assistant_director = Role.create(name: "3rd Assistant Director (3rd AD)")
-# trainee_assistant_director = Role.create(name: "Trainee Assistant Director (TAD)")
-# background_coordinator = Role.create(name: "Background Coordinator (AADBKC)")
-# director = Role.create(name: "Director")
-# producer = Role.create(name: "Producer")
-# director_assistant = Role.create(name: "Director’s Assistant")
-# producer_assistant = Role.create(name: "Producer’s Assistant")
-# art_production_design = Role.create(name: "Art / Production Design")
-# construction = Role.create(name: "Construction")
-# costumes = Role.create(name: "Costumes")
-# editors = Role.create(name: "Editors")
-# first_aid = Role.create(name: "First Aid / Craft Services (FACS)")
-# greens = Role.create(name: "Greens")
-# grips = Role.create(name: "Grips")
-# lighting = Role.create(name: "Lighting / Electrics (LX)")
-# hair = Role.create(name: "Hair")
-# make_up = Role.create(name: "Make Up")
-# paint = Role.create(name: "Paint")
-# production_coordinators = Role.create(name: "Production Coordinators")
-# properties= Role.create(name: "Properties (Props)")
-# script_supervisors = Role.create(name: "Script Supervisors")
-# set_dec = Role.create(name: "Set Dec")
-# sound = Role.create(name: "Sound")
-# special_effects = Role.create(name: "Special Effects (SPFX)")
-# transport = Role.create(name: "Transport")
-# visual_effects = Role.create(name: "Visual Effects")
-# location_scout = Role.create(name: "Location Scout")
-# stills_photographer = Role.create(name:"Stills Photographer")
-
-# #comment out previous data to avoid duplication
-
-# casting_director = Role.create(name: "Casting Director")
-# background_casting = Role.create(name: "Background Casting")
-# accountant = Role.create(name: "Accountant")
-# properties_master = Role.create(name: "Properties Master")
-# visual_FX_animators = Role.create(name: "Visual FX Animators")
-# visual_FX_compositors = Role.create(name: "Visual FX Compositors")
-# visual_FX_artists = Role.create(name: "Visual FX Artists")
-
-# dgc = Union.create(name: "DGC")
-# iatse_891 = Union.create(name: "IATSE 891")
-# iatse_669 = Union.create(name: "IATSE 669")
-# acfc= Union.create(name: "ACFC")
-# teamsters = Union.create(name: "TEAMSTERS")
-# none= Union.create(name: "None")
-
-
-# on_set_key= Role.create(name: "On Set Key")
-# catering= Role.create(name: "Catering")
-# actor= Role.create(name:"Actor")
-# stand_in= Role.create(name:"Stand In")
-# extra= Role.create(name:"Extra")
-# security= Role.create(name:"Security")
-# animals= Role.create(name:"Animals")
-# wranglers = Role.create(name:"Wranglers")
-# scenic_art = Role.create(name:"Scenic Art")
-# publicity= Role.create(name: "Publicity")
-# prop_buidling = Role.create(name: "Prop Building")
-# office= Role.create(name:"Office")
-# production = Role.create(name: "Production")
-
-# whmis=Certificate.create(name: "WHMIS")
-# tcp=Certificate.create(name: "TCP")
-# tdg=Certificate.create(name: "TDG")
-# forklift_ticket=Certificate.create(name: "FORKLIFT TICKET")
-# aerial_lift = Certificate.create(name:"AERIAL LIFT")
-# scissor_lift= Certificate.create(name:"SCISSOR LIFT")
-# pal_gun_license= Certificate.create(name:"PAL GUN LICENSE")
-# act_safe= Certificate.create(name: "ACT SAFE")
-# electricians_ticket = Certificate.create(name:"ELECTRICIAN TICKET")
-# life_ticket= Certificate.create(name: "LIFT TICKET")
-# se_de_exam= Certificate.create(name:"SE DE EXAM")
-# boom_lift_ticket= Certificate.create(name:"BOOM LIFT TICKET")
-# food_safe= Certificate.create(name:"FOODSAFE")
-# drivers_license_class_one= Certificate.create(name:"DRIVERS LICENSE CLASS 1")
-# drivers_license_class_two= Certificate.create(name:"DRIVERS LICENSE CLASS 2")
-# drivers_license_class_three= Certificate.create(name:"DRIVERS LICENSE CLASS 3")
-
-dgc = Union.create(name: "DGC") # union_id: 1
-# iatse_891 = Union.create(name: "IATSE 891")
-# iatse_669 = Union.create(name: "IATSE 669")
-iatse = Union.create(name: "IATSE") # union_id: 2
-acfc = Union.create(name: "ACFC") # union_id: 3
-teamsters = Union.create(name: "TEAMSTERS") # union_id: 4
-ubcp = Union.create(name: "UBCP/ACTRA") # union_id: 5
-# actra = Union.create(name: "ACTRA") # union_id *was* 6
-none = Union.create(name: "None") # union_id: 6
-
-# all roles now (also) fall under "None"
-
-# dgc, none
-production_manager = dgc.roles.create(name: "Production Manager (PM)")
-production_manager.eligibilities.create(union_id: 6)
-key_pa = dgc.roles.create(name: "Key PA")
-key_pa.eligibilities.create(union_id: 6)
-opa = dgc.roles.create(name: "Office Production Assistant (OPA)")
-opa.eligibilities.create(union_id: 6)
-lm = dgc.roles.create(name: "Location Manager (LM)")
-lm.eligibilities.create(union_id: 6)
-alm = dgc.roles.create(name: "Assistant Location Manager (ALM)")
-alm.eligibilities.create(union_id: 6)
-tal = dgc.roles.create(name: "Trainee Assistant Location Manager (TAL)")
-tal.eligibilities.create(union_id: 6)
-ad1 = dgc.roles.create(name: "1st Assistant Director (1st AD)")
-ad1.eligibilities.create(union_id: 6)
-ad2 = dgc.roles.create(name: "2nd Assistant Director (2nd AD)")
-ad2.eligibilities.create(union_id: 6)
-ad3 = dgc.roles.create(name: "3rd Assistant Director (3rd AD)")
-ad3.eligibilities.create(union_id: 6)
-tad = dgc.roles.create(name: "Trainee Assistant Director (TAD)")
-tad.eligibilities.create(union_id: 6)
-bg_wrangler = dgc.roles.create(name: "BG Wrangler")
-bg_wrangler.eligibilities.create(union_id: 6)
-pa = dgc.roles.create(name: "Producer’s Assistant")
-pa.eligibilities.create(union_id: 6)
-location_scout = dgc.roles.create(name: "Location Scout")
-location_scout.eligibilities.create(union_id: 6)
-os_key = dgc.roles.create(name: "On Set Key")
-os_key.eligibilities.create(union_id: 6)
-os_pa = dgc.roles.create(name: "On Set PA")
-os_pa.eligibilities.create(union_id: 6)
-
-# dgc, acfc, teamsters and none
-transport = dgc.roles.create(name: "Transport")
-transport.eligibilities.create(union_id: 3)
-transport.eligibilities.create(union_id: 4)
-transport.eligibilities.create(union_id: 6)
-
-# iatse (sometimes none as well, see further down)
-assistant_accountant = iatse.roles.create(name: "Assistant Accountant")
-accounting_clerk_1 = iatse.roles.create(name: "Accounting Clerk 1")
-accounting_clerk_2 = iatse.roles.create(name: "Accounting Clerk 2")
-accounting_trainee = iatse.roles.create(name: "Accounting Trainee")
-production_designer = iatse.roles.create(name: "Production Designer")
-art_director = iatse.roles.create(name: "Art Director")
-assistant_art_director = iatse.roles.create(name: "Assistant Art Director")
-draftsperson = iatse.roles.create(name: "Draftsperson")
-graphics = iatse.roles.create(name: "Graphics")
-illustrator = iatse.roles.create(name: "Illustrator")
-storyboard_artist = iatse.roles.create(name: "Storyboard Artist")
-set_designer = iatse.roles.create(name: "Set Designer")
-art_department_assistant = iatse.roles.create(name: "Art Department Assistant")
-construction_coordinator = iatse.roles.create(name: "Construction Coordinator")
-construction_foreman = iatse.roles.create(name: "Construction Foreman")
-lead_carpenter = iatse.roles.create(name: "Lead Carpenter")
-scenic_carpenter = iatse.roles.create(name: "Scenic Carpenter")
-metal_fabricator = iatse.roles.create(name: "Metal Fabricator")
-scenic_metal_fabricator = iatse.roles.create(name: "Scenic Metal Fabricator")
-construction_buyer = iatse.roles.create(name: "Construction Buyer")
-sculptor = iatse.roles.create(name: "Sculptor")
-model_maker = iatse.roles.create(name: "Model Maker")
-labourer_construction = iatse.roles.create(name: "Labourer (Construction)")
-costume_designer = iatse.roles.create(name: "Costume Designer")
-asst_costume_designer_coordinator = iatse.roles.create(name: "Asst. Costume Designer/Coordinator")
-set_supervisor = iatse.roles.create(name: "Set Supervisor")
-performers_costumer = iatse.roles.create(name: "Performer's Costumer")
-set_costumer = iatse.roles.create(name: "Set Costumer")
-props_master = iatse.roles.create(name: "Props Master")
-assistant_props_master = iatse.roles.create(name: "Assistant Props Master")
-props = iatse.roles.create(name: "Props")
-props_buyer = iatse.roles.create(name: "Props Buyer")
-production_office_coordinator = iatse.roles.create(name: "Production Office Coordinator")
-assistant_production_office_coordinator = iatse.roles.create(name: "Assistant Production Office Coordinator")
-assistant_office_coordinator_2 = iatse.roles.create(name: "2nd Assistant Office Coordinator")
-supervising_editor = iatse.roles.create(name: "Supervising Editor")
-supervising_sound_editor = iatse.roles.create(name: "Supervising Sound Editor")
-editor = iatse.roles.create(name: "Editor")
-sound_effects_editor = iatse.roles.create(name: "Sound Effects Editor")
-music_editor = iatse.roles.create(name: "Music Editor")
-assistant_editor = iatse.roles.create(name: "Assistant Editor")
-sound_mixer = iatse.roles.create(name: "Sound Mixer")
-sound_boom = iatse.roles.create(name: "Sound Boom")
-sound_assist = iatse.roles.create(name: "Sound Assist")
-set_dec_buyer = iatse.roles.create(name: "Set Dec Buyer")
-set_dec_lead_dresser = iatse.roles.create(name: "Set Dec Lead Dresser")
-set_dec_on_set = iatse.roles.create(name: "Set Dec On Set")
-key_grip = iatse.roles.create(name: "Key Grip")
-truck_grip = iatse.roles.create(name: "Truck Grip")
-grip = iatse.roles.create(name: "Grip")
-dolly_grip = iatse.roles.create(name: "Dolly Grip")
-rigging_grip = iatse.roles.create(name: "Rigging Grip")
-gaffer = iatse.roles.create(name: "Gaffer")
-truck_lx = iatse.roles.create(name: "Truck LX")
-lamp_op = iatse.roles.create(name: "Lamp Op")
-rigging_lx = iatse.roles.create(name: "Rigging LX")
-hair_department_head = iatse.roles.create(name: "Hair Department Head")
-assistant_hairstylist = iatse.roles.create(name: "Assistant Hairstylist")
-second_assistant_hairstylist = iatse.roles.create(name: "Second Assistant Hairstylist")
-special_makeup_effects = iatse.roles.create(name: "Special Makeup Effects")
-makeup_department_head = iatse.roles.create(name: "Makeup Department Head")
-first_assistant_makeup_artist = iatse.roles.create(name: "First Assistant Makeup Artist")
-second_assistant_makeup_artist = iatse.roles.create(name: "Second Assistant Makeup Artist")
-third_assistant_makeup_artist = iatse.roles.create(name: "Third Assistant Makeup Artist")
-first_aid = iatse.roles.create(name: "First Aid")
-craft_service = iatse.roles.create(name: "Craft Service")
-paint_coordinator = iatse.roles.create(name: "Paint Coordinator")
-lead_painter = iatse.roles.create(name: "Lead Painter")
-scenic_artist = iatse.roles.create(name: "Scenic Artist")
-sign_painter_fabricator = iatse.roles.create(name: "Sign Painter/Fabricator")
-scenic_painter = iatse.roles.create(name: "Scenic Painter")
-plasterer = iatse.roles.create(name: "Plasterer")
-set_painter = iatse.roles.create(name: "Set Painter")
-paint_labourer = iatse.roles.create(name: "Paint Labourer")
-script_supevisor_continuity = iatse.roles.create(name: "Script Supevisor/Continuity")
-assistant_to_script_supervisor_continuity = iatse.roles.create(name: "Assistant to Script Supervisor/Continuity")
-special_effects_coordinator = iatse.roles.create(name: "Special Effects Coordinator")
-first_assistant_special_effects = iatse.roles.create(name: "First Assistant Special Effects")
-special_effects_assistant = iatse.roles.create(name: "Special Effects Assistant")
-special_effects_labourer = iatse.roles.create(name: "Special Effects Labourer")
-vfx_artist_level_1 = iatse.roles.create(name: "VFX Artist ‐ Level 1")
-vfx_artist_level_2 = iatse.roles.create(name: "VFX Artist ‐ Level 2")
-vfx_artist_level_3 = iatse.roles.create(name: "VFX Artist ‐ Level 3")
-vfx_technician_level_1 = iatse.roles.create(name: "VFX Technician ‐ Level 1")
-vfx_technician_level_2 = iatse.roles.create(name: "VFX Technician ‐ Level 2")
-director_of_photography = iatse.roles.create(name: "Director of Photography")
-operator = iatse.roles.create(name: "Operator")
-first_assistant_operator = iatse.roles.create(name: "1st Assistant Operator")
-second_assistant_operator = iatse.roles.create(name: "2nd Assistant Operator")
-film_loader = iatse.roles.create(name: "Film Loader")
-trainee = iatse.roles.create(name: "Trainee")
-# stills_photographer_i = iatse.roles.create(name: "Stills Photographer I") # redundant until further notice
-motion_picture_video_coordinator = iatse.roles.create(name: "Motion Picture Video Coordinator")
-motion_picture_video_assistant_1 = iatse.roles.create(name: "Motion Picture Video Assistant 1")
-motion_picture_video_assistant_2 = iatse.roles.create(name: "Motion Picture Video Assistant 2")
-digital_imaging_technician = iatse.roles.create(name: "Digital Imaging Technician")
-vfx = iatse.roles.create(name: "Visual Effects")
-paint = iatse.roles.create(name: "Paint")
-
-
-# iatse, acfc ( no longer none )
-apd = iatse.roles.create(name: "Art / Production Design")
-apd.eligibilities.create(union_id: 3)
-#apd.eligibilities.create(union_id: 6)
-construction = iatse.roles.create(name: "Construction")
-construction.eligibilities.create(union_id: 3)
-#construction.eligibilities.create(union_id: 6)
-cost = iatse.roles.create(name: "Costumes")
-cost.eligibilities.create(union_id: 3)
-#edit = iatse.roles.create(name: "Editors")
-#edit.eligibilities.create(union_id: 3)
-#edit.eligibilities.create(union_id: 6)
-facs = iatse.roles.create(name: "First Aid / Craft Services (FACS)")
-facs.eligibilities.create(union_id: 3)
-#facs.eligibilities.create(union_id: 6)
-head_greensperson = iatse.roles.create(name: "Head Greensperson")
-head_greensperson.eligibilities.create(union_id: 3)
-greensperson = iatse.roles.create(name: "Greensperson")
-greensperson.eligibilities.create(union_id: 3)
-# grips = iatse.roles.create(name: "Grips") "Grip" already exists
-grip.eligibilities.create(union_id: 3)
-#grips.eligibilities.create(union_id: 6)
-lx = iatse.roles.create(name: "Lighting / Electrics (LX)")
-lx.eligibilities.create(union_id: 3)
-#lx.eligibilities.create(union_id: 6)
-hair = iatse.roles.create(name: "Hair")
-hair.eligibilities.create(union_id: 3)
-make = iatse.roles.create(name: "Make Up")
-make.eligibilities.create(union_id: 3)
-accountant = iatse.roles.create(name: "Accountant")
-accountant.eligibilities.create(union_id: 3)
-props = iatse.roles.create(name: "Properties (Props)")
-props.eligibilities.create(union_id: 3)
-script_sup = iatse.roles.create(name: "Script Supervisors")
-script_sup.eligibilities.create(union_id: 3)
-#script_sup.eligibilities.create(union_id: 6)
-set_dec = iatse.roles.create(name: "Set Decorator")
-set_dec.eligibilities.create(union_id: 3)
-#set_dec.eligibilities.create(union_id: 6)
-sound = iatse.roles.create(name: "Sound")
-sound.eligibilities.create(union_id: 3)
-#sound.eligibilities.create(union_id: 6)
-spfx = iatse.roles.create(name: "Special Effects (SPFX)")
-spfx.eligibilities.create(union_id: 3)
-#spfx.eligibilities.create(union_id: 6)
-office = iatse.roles.create(name:"Office")
-office.eligibilities.create(union_id: 3)
-#office.eligibilities.create(union_id: 6)
-production = iatse.roles.create(name: "Production")
-production.eligibilities.create(union_id: 3)
-#production.eligibilities.create(union_id: 6)
-
-# acfc
-catering = acfc.roles.create(name: "Catering")
-#catering.eligibilities.create(union_id: 6)
-animals = acfc.roles.create(name: "Animals")
-#animals.eligibilities.create(union_id: 6)
-wranglers = acfc.roles.create(name: "Wrangler")
-#wranglers.eligibilities.create(union_id: 6)
-scenic_art = acfc.roles.create(name: "Scenic Art")
-#scenic_art.eligibilities.create(union_id: 6)
-publicity = acfc.roles.create(name: "Publicity")
-#publicity.eligibilities.create(union_id: 6)
-prop_building = acfc.roles.create(name: "Prop Building")
-#prop_building.eligibilities.create(union_id: 6)
-
-# acfc, teamsters
-security = acfc.roles.create(name: "Security")
-security.eligibilities.create(union_id: 4)
-#security.eligibilities.create(union_id: 6)
-
-# teamsters
-captain = teamsters.roles.create(name: "Captain")
-#captain.eligibilities.create(union_id: 6)
-co_captain = teamsters.roles.create(name: "Co-Captain")
-#co_captain.eligibilities.create(union_id: 6)
-driver = teamsters.roles.create(name: "Driver")
-picture_car = teamsters.roles.create(name: "Picture Car")
-#picture_car.eligibilities.create(union_id: 6)
-
-# ubcp-actra, none
-actor = ubcp.roles.create(name: "Actor")
-actor.eligibilities.create(union_id: 6)
-stand_in = ubcp.roles.create(name: "Stand In")
-stand_in.eligibilities.create(union_id: 6)
-extra = ubcp.roles.create(name: "Extra")
-extra.eligibilities.create(union_id: 6)
-
-# no union
-unit_production_manager = none.roles.create(name: "Unit Production Manager (UPM)")
-background_coordinator = none.roles.create(name: "Background Coordinator (AADBKC)")
-director = none.roles.create(name: "Director")
-producer = none.roles.create(name: "Producer")
-director_assistant = none.roles.create(name: "Director’s Assistant")
-stills_photographer = none.roles.create(name:"Stills Photographer")
-casting_director = none.roles.create(name: "Casting Director")
-background_casting = none.roles.create(name: "Background Casting")
-properties_master = none.roles.create(name: "Properties Master")
-visual_FX_animators = none.roles.create(name: "Visual FX Animator")
-visual_FX_compositors = none.roles.create(name: "Visual FX Compositor")
-visual_FX_artists = none.roles.create(name: "Visual FX Artist")
-production_coordinator = none.roles.create(name: "Production Coordinator")
-gennie_op = none.roles.create(name: "Gennie Op")
-designer = none.roles.create(name: "Designer")
-camera_operator = none.roles.create(name: "Camera Operator")
-camera_assist_1 = none.roles.create(name: "1st Camera Assist")
-camera_assist_2 = none.roles.create(name: "2nd Camera Assist")
-dit = none.roles.create(name: "DIT")
-scripty = none.roles.create(name: "Scripty")
-transport_captain = none.roles.create(name: "Transport Captain")
-special_fx_make_up = none.roles.create(name: "Special Effects Make Up")
-assistant_production_coordinator = none.roles.create(name: "Assistant Production Coordinator")
-sound_editor = none.roles.create(name: "Sound Editor")
-boom_op = none.roles.create(name: "Boom Op")
-
-
-# no union in addition to another union (see earlier)
-key_grip.eligibilities.create(union_id: 6)
-grip.eligibilities.create(union_id: 6)
-gaffer.eligibilities.create(union_id: 6)
-lamp_op.eligibilities.create(union_id: 6)
-props_master.eligibilities.create(union_id: 6)
-props_buyer.eligibilities.create(union_id: 6)
-props.eligibilities.create(union_id: 6)
-set_dec.eligibilities.create(union_id: 6)
-greensperson.eligibilities.create(union_id: 6)
-paint.eligibilities.create(union_id: 6)
-trainee.eligibilities.create(union_id: 6)
-driver.eligibilities.create(union_id: 6)
-cost.eligibilities.create(union_id: 6)
-make.eligibilities.create(union_id: 6)
-hair.eligibilities.create(union_id: 6)
-accountant.eligibilities.create(union_id: 6)
-editor.eligibilities.create(union_id: 6)
-sound_mixer.eligibilities.create(union_id: 6)
-sound_assist.eligibilities.create(union_id: 6)
-facs.eligibilities.create(union_id: 6)
-vfx.eligibilities.create(union_id: 6)
-construction.eligibilities.create(union_id: 6)
-
-
-
-Certificate.create(name: "WHMIS")
-Certificate.create(name: "TCP")
-Certificate.create(name: "TDG")
-Certificate.create(name: "FORKLIFT TICKET")
-Certificate.create(name: "AERIAL LIFT")
-Certificate.create(name: "SCISSOR LIFT")
-Certificate.create(name: "PAL GUN LICENSE")
-Certificate.create(name: "ACT SAFE")
-Certificate.create(name: "ELECTRICIAN TICKET")
-Certificate.create(name: "LIFT TICKET")
-Certificate.create(name: "SE DE EXAM")
-Certificate.create(name: "BOOM LIFT TICKET")
-Certificate.create(name: "FOODSAFE")
-Certificate.create(name: "DRIVERS LICENSE CLASS 1")
-Certificate.create(name: "DRIVERS LICENSE CLASS 2")
-Certificate.create(name: "DRIVERS LICENSE CLASS 3")
-
-User.create(name: "ashley", email: "ashley@gmail.com", password: "1234", admin: true)
-User.create(name: "bashley", email: "bashley@gmail.com", password: "1234")
-User.create(name: "smashley", email: "smashley@gmail.com", password: "1234")
-User.create(name: "panacheley", email: "panacheley@gmail.com", password: "1234")
-
-# 200.times do |i|
-#   User.create(email: "new##{i+100}@sample.net", name: "##{i+35}shley", admin: false)
-# end
-
-
-
+User.create!([
+  {email: "ashley@gmail.com", encrypted_password: "$2a$10$.ZlcPrY7fJlmQCdiPvO.h.GliwpK1ROf0dSDHCfILQ8ODcuqZ5xka", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, name: "ashley", photo: nil, phone: nil, is_dgc_member: false, has_traffic_control_ticket: false, has_vehicle: false, image: nil, admin: true, current_sign_in_at: "2017-04-14 23:26:21", last_sign_in_at: "2017-04-12 21:42:33", current_sign_in_ip: "10.0.2.2", last_sign_in_ip: "10.0.2.2", sign_in_count: 3, roles_ids: [], provider: nil, uid: nil, is_iatse_member: false, imdb: nil, youtube: nil, vimeo: nil, linkedin: nil, facebook: nil, notify_when_job_posted: "selected_roles"},
+  {email: "smashley@gmail.com", encrypted_password: "$2a$10$bNvSjNyA4304grJr8SfCse0awTVLVAG/XgHmpsU5jnRCi4LmAd9ma", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, name: "smashley", photo: nil, phone: nil, is_dgc_member: false, has_traffic_control_ticket: false, has_vehicle: false, image: nil, admin: nil, current_sign_in_at: "2017-04-15 00:32:37", last_sign_in_at: "2017-04-15 00:32:37", current_sign_in_ip: "10.0.2.2", last_sign_in_ip: "10.0.2.2", sign_in_count: 1, roles_ids: [], provider: nil, uid: nil, is_iatse_member: false, imdb: nil, youtube: nil, vimeo: nil, linkedin: nil, facebook: nil, notify_when_job_posted: "selected_roles"},
+  {email: "noam.ascher@gmail.com", encrypted_password: "$2a$10$FRpYMd.lYCU5wBdfvhXDS.aOGWcW5kK9vm/ap/L8R0SHJhXhggrey", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, name: "New User", photo: nil, phone: nil, is_dgc_member: false, has_traffic_control_ticket: false, has_vehicle: false, image: nil, admin: nil, current_sign_in_at: "2017-04-15 18:08:13", last_sign_in_at: "2017-04-15 18:08:13", current_sign_in_ip: "10.0.2.2", last_sign_in_ip: "10.0.2.2", sign_in_count: 1, roles_ids: [], provider: nil, uid: nil, is_iatse_member: false, imdb: nil, youtube: nil, vimeo: nil, linkedin: nil, facebook: nil, notify_when_job_posted: "selected_roles"},
+  {email: "bashley@gmail.com", encrypted_password: "$2a$10$Fme4aezGN.DDu/HSONbk1.OdrmuTiBtBoC7opHWfex.7PC8c9tzmi", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, name: "bashley", photo: nil, phone: nil, is_dgc_member: false, has_traffic_control_ticket: false, has_vehicle: false, image: nil, admin: nil, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, sign_in_count: 0, roles_ids: [], provider: nil, uid: nil, is_iatse_member: false, imdb: nil, youtube: nil, vimeo: nil, linkedin: nil, facebook: nil, notify_when_job_posted: "selected_roles"},
+  {email: "panacheley@gmail.com", encrypted_password: "$2a$10$u/avOqsV7m/kZEd8Sqn11ekztf6k28sxPKmMrSKZ5DpMKmdLx3wg.", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, name: "panacheley", photo: nil, phone: nil, is_dgc_member: false, has_traffic_control_ticket: false, has_vehicle: false, image: nil, admin: nil, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, sign_in_count: 0, roles_ids: [], provider: nil, uid: nil, is_iatse_member: false, imdb: nil, youtube: nil, vimeo: nil, linkedin: nil, facebook: nil, notify_when_job_posted: "selected_roles"}
+])
+Appointment.create!([
+  {user_id: 1, day: "4", week: "9 - 15", date: "2017-04-13"},
+  {user_id: 1, day: "5", week: "23 - 29", date: "2017-04-28"},
+  {user_id: 5, day: "2", week: "23 - 29", date: "2017-04-25"},
+  {user_id: 5, day: "2", week: "16 - 22", date: "2017-04-18"},
+  {user_id: 5, day: "4", week: "23 - 29", date: "2017-04-27"},
+  {user_id: 5, day: "5", week: "16 - 22", date: "2017-04-21"}
+])
+Certificate.create!([
+  {name: "WHMIS"},
+  {name: "TCP"},
+  {name: "TDG"},
+  {name: "FORKLIFT TICKET"},
+  {name: "AERIAL LIFT"},
+  {name: "SCISSOR LIFT"},
+  {name: "PAL GUN LICENSE"},
+  {name: "ACT SAFE"},
+  {name: "ELECTRICIAN TICKET"},
+  {name: "LIFT TICKET"},
+  {name: "SE DE EXAM"},
+  {name: "BOOM LIFT TICKET"},
+  {name: "FOODSAFE"},
+  {name: "DRIVERS LICENSE CLASS 1"},
+  {name: "DRIVERS LICENSE CLASS 2"},
+  {name: "DRIVERS LICENSE CLASS 3"}
+])
+Eligibility.create!([
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 1},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 1},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 2},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 2},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 3},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 3},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 4},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 4},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 5},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 5},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 6},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 6},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 7},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 7},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 8},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 8},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 9},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 9},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 10},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 10},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 11},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 11},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 12},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 12},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 13},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 13},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 14},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 14},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 15},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 15},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 1, role_id: 16},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 16},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 16},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 16},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 17},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 18},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 19},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 20},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 21},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 22},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 23},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 24},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 25},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 26},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 27},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 28},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 29},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 30},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 31},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 32},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 33},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 34},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 35},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 36},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 37},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 38},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 39},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 40},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 41},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 42},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 43},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 44},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 45},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 46},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 47},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 48},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 49},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 50},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 51},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 52},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 53},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 54},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 55},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 56},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 57},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 58},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 59},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 60},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 61},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 62},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 63},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 64},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 65},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 66},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 67},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 68},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 69},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 70},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 71},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 72},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 73},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 74},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 75},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 76},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 77},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 78},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 79},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 80},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 81},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 82},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 83},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 84},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 85},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 86},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 87},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 88},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 89},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 90},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 91},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 92},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 93},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 94},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 95},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 96},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 97},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 98},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 99},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 100},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 101},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 102},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 103},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 104},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 105},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 106},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 107},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 108},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 109},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 110},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 111},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 112},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 113},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 114},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 114},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 115},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 115},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 116},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 116},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 117},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 117},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 118},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 118},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 119},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 119},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 66},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 120},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 120},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 121},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 121},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 122},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 122},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 123},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 123},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 124},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 124},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 125},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 125},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 126},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 126},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 127},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 127},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 128},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 128},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 129},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 129},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 2, role_id: 130},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 130},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 131},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 132},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 133},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 134},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 135},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 136},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 3, role_id: 137},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 137},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 138},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 139},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 140},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 4, role_id: 141},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 5, role_id: 142},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 142},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 5, role_id: 143},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 143},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 5, role_id: 144},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 144},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 145},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 146},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 147},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 148},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 149},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 150},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 151},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 152},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 153},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 154},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 155},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 156},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 157},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 158},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 159},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 160},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 161},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 162},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 163},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 164},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 165},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 166},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 167},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 168},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 169},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 64},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 66},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 69},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 71},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 45},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 48},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 124},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 126},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 119},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 113},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 107},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 140},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 116},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 122},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 121},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 123},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 54},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 58},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 60},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 117},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 112},
+  {member: nil, permit_days: nil, user_id: nil, union_id: 6, role_id: 115},
+  {member: nil, permit_days: nil, user_id: 1, union_id: 2, role_id: 111},
+  {member: nil, permit_days: nil, user_id: 1, union_id: 2, role_id: 36},
+  {member: nil, permit_days: nil, user_id: 1, union_id: 1, role_id: 10},
+  {member: nil, permit_days: nil, user_id: 1, union_id: 3, role_id: 123},
+  {member: nil, permit_days: nil, user_id: 1, union_id: 3, role_id: 119},
+  {member: nil, permit_days: nil, user_id: 5, union_id: 3, role_id: 133},
+  {member: nil, permit_days: nil, user_id: 5, union_id: 3, role_id: 132}
+])
+Job.create!([
+  {name: "buttonjob", description: "", starts_on: "2018-09-09", ends_on: nil, location: "Vancouver", contact_name: "smashley", contact_phone: "444-444-4444", contact_email: "smashley@gmail.com", company_name: "mgm", secret: "Cp_L0sGZ_ZXZC-XFSXii-w", published: true, role_id: 13, user_id: 3, job_filled: false}
+])
+Label.create!([
+  {user_id: 1, job_id: nil, role_id: 111, job_board: nil, hiring_board: nil},
+  {user_id: 1, job_id: nil, role_id: 36, job_board: nil, hiring_board: nil},
+  {user_id: 1, job_id: nil, role_id: 10, job_board: nil, hiring_board: nil},
+  {user_id: 1, job_id: nil, role_id: 123, job_board: nil, hiring_board: nil},
+  {user_id: 1, job_id: nil, role_id: 119, job_board: nil, hiring_board: nil},
+  {user_id: 3, job_id: "0c83f011-745b-4b5b-acc7-64a3a676bddc", role_id: 13, job_board: nil, hiring_board: nil},
+  {user_id: 5, job_id: nil, role_id: 133, job_board: nil, hiring_board: nil},
+  {user_id: 5, job_id: nil, role_id: 132, job_board: nil, hiring_board: nil}
+])
+Role.create!([
+  {name: "Production Manager (PM)"},
+  {name: "Key PA"},
+  {name: "Office Production Assistant (OPA)"},
+  {name: "Location Manager (LM)"},
+  {name: "Assistant Location Manager (ALM)"},
+  {name: "Trainee Assistant Location Manager (TAL)"},
+  {name: "1st Assistant Director (1st AD)"},
+  {name: "2nd Assistant Director (2nd AD)"},
+  {name: "3rd Assistant Director (3rd AD)"},
+  {name: "Trainee Assistant Director (TAD)"},
+  {name: "BG Wrangler"},
+  {name: "Producer’s Assistant"},
+  {name: "Location Scout"},
+  {name: "On Set Key"},
+  {name: "On Set PA"},
+  {name: "Transport"},
+  {name: "Assistant Accountant"},
+  {name: "Accounting Clerk 1"},
+  {name: "Accounting Clerk 2"},
+  {name: "Accounting Trainee"},
+  {name: "Production Designer"},
+  {name: "Art Director"},
+  {name: "Assistant Art Director"},
+  {name: "Draftsperson"},
+  {name: "Graphics"},
+  {name: "Illustrator"},
+  {name: "Storyboard Artist"},
+  {name: "Set Designer"},
+  {name: "Art Department Assistant"},
+  {name: "Construction Coordinator"},
+  {name: "Construction Foreman"},
+  {name: "Lead Carpenter"},
+  {name: "Scenic Carpenter"},
+  {name: "Metal Fabricator"},
+  {name: "Scenic Metal Fabricator"},
+  {name: "Construction Buyer"},
+  {name: "Sculptor"},
+  {name: "Model Maker"},
+  {name: "Labourer (Construction)"},
+  {name: "Costume Designer"},
+  {name: "Asst. Costume Designer/Coordinator"},
+  {name: "Set Supervisor"},
+  {name: "Performer's Costumer"},
+  {name: "Set Costumer"},
+  {name: "Props Master"},
+  {name: "Assistant Props Master"},
+  {name: "Props"},
+  {name: "Props Buyer"},
+  {name: "Production Office Coordinator"},
+  {name: "Assistant Production Office Coordinator"},
+  {name: "2nd Assistant Office Coordinator"},
+  {name: "Supervising Editor"},
+  {name: "Supervising Sound Editor"},
+  {name: "Editor"},
+  {name: "Sound Effects Editor"},
+  {name: "Music Editor"},
+  {name: "Assistant Editor"},
+  {name: "Sound Mixer"},
+  {name: "Sound Boom"},
+  {name: "Sound Assist"},
+  {name: "Set Dec Buyer"},
+  {name: "Set Dec Lead Dresser"},
+  {name: "Set Dec On Set"},
+  {name: "Key Grip"},
+  {name: "Truck Grip"},
+  {name: "Grip"},
+  {name: "Dolly Grip"},
+  {name: "Rigging Grip"},
+  {name: "Gaffer"},
+  {name: "Truck LX"},
+  {name: "Lamp Op"},
+  {name: "Rigging LX"},
+  {name: "Hair Department Head"},
+  {name: "Assistant Hairstylist"},
+  {name: "Second Assistant Hairstylist"},
+  {name: "Special Makeup Effects"},
+  {name: "Makeup Department Head"},
+  {name: "First Assistant Makeup Artist"},
+  {name: "Second Assistant Makeup Artist"},
+  {name: "Third Assistant Makeup Artist"},
+  {name: "First Aid"},
+  {name: "Craft Service"},
+  {name: "Paint Coordinator"},
+  {name: "Lead Painter"},
+  {name: "Scenic Artist"},
+  {name: "Sign Painter/Fabricator"},
+  {name: "Scenic Painter"},
+  {name: "Plasterer"},
+  {name: "Set Painter"},
+  {name: "Paint Labourer"},
+  {name: "Script Supevisor/Continuity"},
+  {name: "Assistant to Script Supervisor/Continuity"},
+  {name: "Special Effects Coordinator"},
+  {name: "First Assistant Special Effects"},
+  {name: "Special Effects Assistant"},
+  {name: "Special Effects Labourer"},
+  {name: "VFX Artist ‐ Level 1"},
+  {name: "VFX Artist ‐ Level 2"},
+  {name: "VFX Artist ‐ Level 3"},
+  {name: "VFX Technician ‐ Level 1"},
+  {name: "VFX Technician ‐ Level 2"},
+  {name: "Director of Photography"},
+  {name: "Operator"},
+  {name: "1st Assistant Operator"},
+  {name: "2nd Assistant Operator"},
+  {name: "Film Loader"},
+  {name: "Trainee"},
+  {name: "Motion Picture Video Coordinator"},
+  {name: "Motion Picture Video Assistant 1"},
+  {name: "Motion Picture Video Assistant 2"},
+  {name: "Digital Imaging Technician"},
+  {name: "Visual Effects"},
+  {name: "Paint"},
+  {name: "Art / Production Design"},
+  {name: "Construction"},
+  {name: "Costumes"},
+  {name: "First Aid / Craft Services (FACS)"},
+  {name: "Head Greensperson"},
+  {name: "Greensperson"},
+  {name: "Lighting / Electrics (LX)"},
+  {name: "Hair"},
+  {name: "Make Up"},
+  {name: "Accountant"},
+  {name: "Properties (Props)"},
+  {name: "Script Supervisors"},
+  {name: "Set Decorator"},
+  {name: "Sound"},
+  {name: "Special Effects (SPFX)"},
+  {name: "Office"},
+  {name: "Production"},
+  {name: "Catering"},
+  {name: "Animals"},
+  {name: "Wrangler"},
+  {name: "Scenic Art"},
+  {name: "Publicity"},
+  {name: "Prop Building"},
+  {name: "Security"},
+  {name: "Captain"},
+  {name: "Co-Captain"},
+  {name: "Driver"},
+  {name: "Picture Car"},
+  {name: "Actor"},
+  {name: "Stand In"},
+  {name: "Extra"},
+  {name: "Unit Production Manager (UPM)"},
+  {name: "Background Coordinator (AADBKC)"},
+  {name: "Director"},
+  {name: "Producer"},
+  {name: "Director’s Assistant"},
+  {name: "Stills Photographer"},
+  {name: "Casting Director"},
+  {name: "Background Casting"},
+  {name: "Properties Master"},
+  {name: "Visual FX Animator"},
+  {name: "Visual FX Compositor"},
+  {name: "Visual FX Artist"},
+  {name: "Production Coordinator"},
+  {name: "Gennie Op"},
+  {name: "Designer"},
+  {name: "Camera Operator"},
+  {name: "1st Camera Assist"},
+  {name: "2nd Camera Assist"},
+  {name: "DIT"},
+  {name: "Scripty"},
+  {name: "Transport Captain"},
+  {name: "Special Effects Make Up"},
+  {name: "Assistant Production Coordinator"},
+  {name: "Sound Editor"},
+  {name: "Boom Op"}
+])
+Union.create!([
+  {name: "DGC", has_member_status: false, has_permit_status: false},
+  {name: "IATSE", has_member_status: false, has_permit_status: false},
+  {name: "ACFC", has_member_status: false, has_permit_status: false},
+  {name: "TEAMSTERS", has_member_status: false, has_permit_status: false},
+  {name: "UBCP/ACTRA", has_member_status: false, has_permit_status: false},
+  {name: "None", has_member_status: false, has_permit_status: false}
+])

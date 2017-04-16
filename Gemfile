@@ -20,6 +20,7 @@ gem "simple_calendar", "~> 2.0"
 gem 'omniauth-facebook'
 gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
+gem 'seed_dump'
 
 # for or recommended by heroku
 gem 'sprockets_better_errors'
