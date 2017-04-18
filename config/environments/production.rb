@@ -108,15 +108,15 @@ Bcpax::Application.configure do
   # config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :port             => ENV['MAILGUN_SMTP_PORT'],
-    :address          => ENV['MAILGUN_SMTP_SERVER'],
-    :user_name        => ENV['MAILGUN_SMTP_LOGIN'],
-    :password         => ENV['MAILGUN_SMTP_PASSWORD'],
-    # :domain           => 'mg.rhubarb-tart-84937.herokuapp.com',
-    :domain           => 'sandbox8ad0770a2d2b47e0bc9fc44961916556.mailgun.org',
-    :authentication   => :plain
+  ActionMailer::Base.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'rhubarb-tart-84937.herokuapp.com',
+    :authentication => :plain,
   }
+  ActionMailer::Base.delivery_method = :smtp
 
   # for twilio
   config.middleware.use Rack::TwilioWebhookAuthentication, Rails.application.secrets.twilio_auth_token, '/voice'

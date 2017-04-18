@@ -1,6 +1,6 @@
 $(function(){
-//=============When the users page is loaded, Using Ajax to pre load 3 users========================================================================
-  // When the Page is load, preload first 30 users
+//=============When the users page is loaded, Using Ajax to pre load X users========================================================================
+  // When the Page is load, preload first X users, depending on new formula
 
   if (window.location.pathname == "/users"){
     var data = [];
@@ -249,7 +249,13 @@ $(function(){
 
 
 //=====================================Send a text to Crew============================================================
+
+  // if ($(".phone-div").find('a').text() == "") {
+  //   $(this).parent.find('.send_text').addClass('.send_text_disable').removeClass('.send_text');
+  // }
+
   $(document).on('click', ".send_text", function (event) {
+
 
     var modal = $(this).parent().next();
 
@@ -274,7 +280,7 @@ $(function(){
       var recipient_phone = modal.find("#recipient").text();
       var recipient_id = modal.find("#recipient_id").text();
 
-      if(text_message == undefined){
+      if(text_message == undefined || text_message == ""){
         modal.find(".message_status")
              .text("Text message can not be blank.")
              .removeClass("alert-info")
