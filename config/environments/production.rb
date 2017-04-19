@@ -108,7 +108,7 @@ Bcpax::Application.configure do
   # config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { :host => "rhubarb-tart-84937.herokuapp.com/" }
+  config.action_mailer.default_url_options = { :host => "rhubarb-tart-84937.herokuapp.com/" } #change to bcpax.com
   ActionMailer::Base.smtp_settings = {
     :port           => ENV['MAILGUN_SMTP_PORT'],
     :address        => ENV['MAILGUN_SMTP_SERVER'],
