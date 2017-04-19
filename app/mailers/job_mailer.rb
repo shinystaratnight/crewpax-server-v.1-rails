@@ -11,7 +11,8 @@ class JobMailer < ActionMailer::Base
   # notify users of the job posting based on their notification settings
   def notification(job, email)
     @job = job
-    @bodystring = "#{@job.name}\n\nLocation: #{@job.location}\n\nDescription: #{@job.description}\n\nStarts on: #{@job.starts_on}\n\nLink: #{request.host}/jobs/#{@job.id}"
+    @hostname = root_url
+    @bodystring = "#{@job.name}\n\nLocation: #{@job.location}\n\nDescription: #{@job.description}\n\nStarts on: #{@job.starts_on}\n\nLink: #{@hostname}:3000/jobs/#{@job.id}"
     mail to: email, subject: "New #{@job.role.name} Job Posted To Crewcall", body: @bodystring
   end
 
