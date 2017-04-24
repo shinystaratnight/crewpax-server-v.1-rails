@@ -4,7 +4,19 @@ $(function(){
 // Registration Form Personal Information Section
 //********************************************************************************************************
 //When a mouse leaves the entry div, it will trigger ajax
-  $("#name").on("blur", function(){
+  $("#name").keypress(function(event){
+    // prevent return key
+    if (event.keyCode === 10 || event.keyCode === 13) {
+      event.preventDefault();
+      $('#email').focus();
+    }
+  });
+
+  $("#name").on("blur", function(event) {
+    // if (event.keyCode === 10 || event.keyCode === 13) {
+    //   event.preventDefault();
+    // }
+
     //Retrieve the info from user's entries and turn data into a nicely structured object (nesting included!)
     //Check to see if a user is already created and decide which url the ajax should send to(create/update)
     var user_id = $("#info").data("user-id");
@@ -73,6 +85,14 @@ $(function(){
 
 
 //============================================================================================
+  $("#email").keypress(function(event){
+    // prevent return key
+    if (event.keyCode === 10 || event.keyCode === 13) {
+      event.preventDefault();
+      $('#password').focus();
+    }
+  });
+
   $("#email").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var email = $("#email").text().trim();
@@ -254,6 +274,14 @@ $(function(){
 
 
 //===================================================================================
+  $("#password").keypress(function(event){
+    // prevent return key
+    if (event.keyCode === 10 || event.keyCode === 13) {
+      event.preventDefault();
+      $('#pw_confirmation').focus();
+    }
+  });
+
   $("#password").on("blur", function(){
     var password = $(this).text().trim();
     if(password == ""){
@@ -283,6 +311,40 @@ $(function(){
 
 
 //===================================================================================
+  $("#pw_confirmation").keypress(function(event){
+    // prevent return key
+    if (event.keyCode === 10 || event.keyCode === 13) {
+      event.preventDefault();
+      var password_confirmation = $(this).text().trim();
+      var password = $("#password").text().trim();
+      var user_id = $("#info").data("user-id");
+
+      if (password_confirmation == "") {
+        $(this).addClass("invalid");
+        $("#pw-confirmation-error").show();
+        return false;
+      } else if(password == password_confirmation) {
+        $("#pw-confirmation-error").hide();
+
+          $.ajax({
+            url:"/users/" + user_id,
+            method:"put",
+            dataType:"json",
+            data:{user:{password: password_confirmation}},
+            success: function(response){
+            $("#pw_confirmation").addClass("valid");
+            userCreated();
+            }
+          });
+        $('#phone').focus();
+      } else {
+        $("#pw-confirmation-error").show();
+        return false;
+
+      }
+    }
+  });
+
   $("#pw_confirmation").on("blur", function(){
     var password_confirmation = $(this).text().trim();
     var password = $("#password").text().trim();
@@ -305,7 +367,7 @@ $(function(){
           userCreated();
           }
         });
-
+      $('#phone').focus();
     } else {
       $("#pw-confirmation-error").show();
       return false;
