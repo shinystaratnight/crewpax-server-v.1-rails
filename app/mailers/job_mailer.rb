@@ -1,6 +1,6 @@
 class JobMailer < ActionMailer::Base
   #layout 'email'
-  default from: 'crewcall@bcpax.com' # "bcpax.developer@gmail.com"
+  default from: 'Crewcall@bcpax.com' # "bcpax.developer@gmail.com"
   layout 'mailer'
 
   def confirmation(job)
