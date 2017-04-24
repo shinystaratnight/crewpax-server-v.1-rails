@@ -1,5 +1,5 @@
 class AttachmentMailer < ActionMailer::Base
-  default from: 'robot@bcpax.com' #"bcpax.developer@gmail.com"
+  default from: 'crewcall@bcpax.com' #"bcpax.developer@gmail.com"
   layout 'mailer'
   def email_attachment(attachment)
     @attachment=attachment
