@@ -1,9 +1,35 @@
 <div class="linkset">
-<%= link_to image_tag('IMDb.png'), @user.imdb, :class => 'link', :remote => true %>
-<%= link_to image_tag('youtube.png'), @user.youtube, :class => 'link', :remote => true %>
-<%= link_to image_tag('vimeo.png'), @user.vimeo, :class => 'link', :remote => true %>
-<%= link_to image_tag('linkedIn.png'), @user.linkedin, :class => 'link', :remote => true %>
-<%= link_to image_tag('facebook.png'), @user.facebook, :class => 'link', :remote => true %>
+
+<% if @user.imdb.present? %>
+  <%= link_to image_tag('IMDb.png'), @user.imdb, :class => 'link', target: :_blank %>
+<% else %>
+  <%= image_tag 'IMDb.png', :class => 'link_img' %>
+<% end %>
+
+<% if @user.youtube.present? %>
+  <%= link_to image_tag('youtube.png'), @user.youtube, :class => 'link', target: :_blank %>
+<% else %>
+  <%= image_tag 'youtube.png', :class => 'link_img' %>
+<% end %>
+
+<% if @user.vimeo.present? %>
+  <%= link_to image_tag('vimeo.png'), @user.vimeo, :class => 'link', target: :_blank %>
+<% else %>
+  <%= image_tag 'vimeo.png', :class => 'link_img' %>
+<% end %>
+
+<% if @user.linkedin.present? %>
+<%= link_to image_tag('linkedIn.png'), @user.linkedin, :class => 'link', target: :_blank %>
+<% else %>
+  <%= image_tag 'linkedIn.png', :class => 'link_img' %>
+<% end %>
+
+<% if @user.facebook.present? %>
+<%= link_to image_tag('facebook.png'), @user.facebook, :class => 'link', target: :_blank %>
+<% else %>
+  <%= image_tag 'facebook.png', :class => 'link_img' %>
+<% end %>
+
 </div>
 
 

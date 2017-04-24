@@ -352,13 +352,18 @@ function userCreated() {
 $("#imdb").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var imdb = $("#imdb").text().trim();
-    alert(imdb);
-      if (imdb == "") {
-        $(this).addClass("invalid");
-        $(this).next().show();
-        return false;
-      } else {
+      // if (imdb == "") {
+      //   $(this).addClass("invalid");
+      //   $(this).next().show();
+      //   return false;
+      // } else {
         $("#imdb-error").hide();
+
+        // prepend with http:// if necessary to offest Rails'
+        // relative link assumption habits
+        if (imdb != "" && imdb.substring(0,7) != "http://") {
+          imdb = "http://" + imdb;
+        }
 
         $.ajax({
           url:"/users/" + user_id,
@@ -375,18 +380,24 @@ $("#imdb").on("blur", function(){
             $("#imdb-error").text("*"+ errors).show();
           }
         });
-      };
+      // };
   });
 
 $("#youtube").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var youtube = $("#youtube").text().trim();
-      if (youtube == "") {
-        $(this).addClass("invalid");
-        $(this).next().show();
-        return false;
-      } else {
+      // if (youtube == "") {
+      //   $(this).addClass("invalid");
+      //   $(this).next().show();
+      //   return false;
+      // } else {
         $("#youtube-error").hide();
+
+        // prepend with http:// if necessary to offest Rails'
+        // relative link assumption habits
+        if (youtube != "" && youtube.substring(0,7) != "http://") {
+          youtube = "http://" + youtube;
+        }
 
         $.ajax({
           url:"/users/" + user_id,
@@ -403,18 +414,24 @@ $("#youtube").on("blur", function(){
             $("#youtube-error").text("*"+ errors).show();
           }
         });
-      };
+      // };
   });
 
 $("#vimeo").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var vimeo = $("#vimeo").text().trim().val();
-      if (vimeo == "") {
-        $(this).addClass("invalid");
-        $(this).next().show();
-        return false;
-      } else {
+      // if (vimeo == "") {
+      //   $(this).addClass("invalid");
+      //   $(this).next().show();
+      //   return false;
+      // } else {
         $("#vimeo-error").hide();
+
+        // prepend with http:// if necessary to offest Rails'
+        // relative link assumption habits
+        if (vimeo != "" && vimeo.substring(0,7) != "http://") {
+          vimeo = "http://" + vimeo;
+        }
 
         $.ajax({
           url:"/users/" + user_id,
@@ -431,18 +448,24 @@ $("#vimeo").on("blur", function(){
             $("#vimeo-error").text("*"+ errors).show();
           }
         });
-      };
+      // };
   });
 
 $("#linkedin").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var linkedin = $("#linkedin").text().trim();
-      if (linkedin == "") {
-        $(this).addClass("invalid");
-        $(this).next().show();
-        return false;
-      } else {
+      // if (linkedin == "") {
+      //   $(this).addClass("invalid");
+      //   $(this).next().show();
+      //   return false;
+      // } else {
         $("#linkedin-error").hide();
+
+        // prepend with http:// if necessary to offest Rails'
+        // relative link assumption habits
+        if (linkedin != "" && linkedin.substring(0,7) != "http://") {
+          linkedin = "http://" + linkedin;
+        }
 
         $.ajax({
           url:"/users/" + user_id,
@@ -459,18 +482,24 @@ $("#linkedin").on("blur", function(){
             $("#linkedin-error").text("*"+ errors).show();
           }
         });
-      };
+      // };
   });
 
 $("#facebook").on("blur", function(){
     var user_id = $("#info").data("user-id");
     var facebook = $("#facebook").text().trim();
-      if (facebook == "") {
-        $(this).addClass("invalid");
-        $(this).next().show();
-        return false;
-      } else {
+      // if (facebook == "") {
+      //   $(this).addClass("invalid");
+      //   $(this).next().show();
+      //   return false;
+      // } else {
         $("#facebook-error").hide();
+
+        // prepend with http:// if necessary to offest Rails'
+        // relative link assumption habits
+        if (facebook != "" && facebook.substring(0,7) != "http://") {
+          facebook = "http://" + facebook;
+        }
 
         $.ajax({
           url:"/users/" + user_id,
@@ -487,7 +516,7 @@ $("#facebook").on("blur", function(){
             $("#facebook-error").text("*"+ errors).show();
           }
         });
-      };
+      // };
   });
 
 
