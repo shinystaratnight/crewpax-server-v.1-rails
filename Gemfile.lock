@@ -422,6 +422,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  dropbox-sdk
   fog
   font-awesome-sass
   haml-rails

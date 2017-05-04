@@ -160,7 +160,8 @@ $(function(){
     }
   })
 
-  Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
+
+   Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
     if (union_member.length > 0 && union_permit.length > 0){
       return "Union:" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",")
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
@@ -173,6 +174,20 @@ $(function(){
       return "Non Union"
     }
   })
+
+  // Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
+  //   if (union_member.length > 0 && union_permit.length > 0){
+  //     return "Union:" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",")
+  //     + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
+  //   }else if (union_member.length > 0 && union_permit.length == 0){
+  //     return "Union:" + "member: " + union_member
+  //   }else if (union_member.length == 0 && union_permit.length > 0){
+  //     return "Union:" + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
+  //     + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
+  //   }else{
+  //     return "Non Union"
+  //   }
+  // })
 
   Handlebars.registerHelper("isAvailableToday", function(availability){
     function pad2(number) {
@@ -336,6 +351,12 @@ $(function(){
   // helper to pre-emptively add browsing class to calendar about to be re-rendered
   $(document).on('click', '.small-cal-browse', function (event) {
     $(this).parent().parent().addClass('browsing');
+  });
+
+
+
+  $(document).on('mouseover', '.union-status', function (event) {
+    $(this).attr('title', 'This is the hover-over text');
   });
 
 //==========================================================================================================

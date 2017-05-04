@@ -22,6 +22,9 @@ gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
 gem 'seed_dump'
 
+# in case needed for dropbox (https://www.linkedin.com/pulse/using-dropbox-ruby-rails-heroku-serjik-isagholian)
+gem 'dropbox-sdk'
+
 # for or recommended by heroku
 gem 'sprockets_better_errors'
 gem 'rails_12factor', group: :production

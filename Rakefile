@@ -5,3 +5,4 @@ require File.expand_path('../config/application', __FILE__)
 
 Bcpax::Application.load_tasks
 
+load "carrierwave/dropbox/authorize.rake"
