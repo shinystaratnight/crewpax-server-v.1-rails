@@ -19,14 +19,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   # the original - may return to it on deployment
-  # def default_url
-  #   "/images/fallback/" + [version_name, "default_user_avatar.png"].compact.join('_')
-  # end
+  def default_url
+    "/images/fallback/" + [version_name, "default_user_avatar.png"].compact.join('_')
+  end
 
   # current, more hard-coded version with preset 90x90 image
-  def default_url
-    "thumb_default_user_avatar.png"
-  end
+  # def default_url
+  #   "thumb_default_user_avatar.png"
+  # end
 
   def filename
     "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
