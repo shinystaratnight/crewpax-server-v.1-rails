@@ -1,3 +1,5 @@
+
+
 $(".small-calendar.browsing").html('<%= j render("calendartwoweeknext.html.erb") %>');
 var availability = $(".small-calendar.browsing").parent().find('.availability-holder').text();
 $(".small-calendar.browsing").find('tbody').children('tr').each(function(e0) {
@@ -8,6 +10,7 @@ $(".small-calendar.browsing").find('tbody').children('tr').each(function(e0) {
   });
 });
 $(".small-calendar.browsing").removeClass('browsing');
+
 
 
 function tdClass(day, start_date, availability) {
@@ -57,29 +60,3 @@ function tdClass(day, start_date, availability) {
 
   return td_class;
 }
-
-
-
-// function loadPosts(posts, opts,user_source){
-//     opts.postsDiv.empty(); // Clear the previous posts
-//     $.each(posts, function(){
-
-//         var user_card_template = Handlebars.compile($("#user_card_template").html());
-
-//         var context = {
-//             id: this.user_info.id,
-//             name: this.user_info.name,
-//             vehicle : this.user_info.has_vehicle,
-//             image: this.user_info.image.url,
-//             phone: this.user_info.phone,
-//             union_member: this.union_member,
-//             union_permit: this.union_permit,
-//             availability: this.availabilities,
-//             path: "users/" + this.user_info.id,
-//         };
-
-//         var html = user_card_template(context);
-//         opts.postsDiv.append(html);
-
-//     });
-//   }

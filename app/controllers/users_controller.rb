@@ -105,7 +105,8 @@ class UsersController < ApplicationController
 
       if user_params[:image].present?
         if Rails.env.production? #store images in dropbox
-          @user.image = "https://www.dropbox.com/s/10yvzboid476cy5/profile_picture_user_id_1.png?dl=0"
+          @file = "https://www.dropbox.com/s/10yvzboid476cy5/profile_picture_user_id_1.png?dl=0"
+          @user.image = @file
           @user.save
           #@user.update(image: user_params[:image])
           client = dropbox_client

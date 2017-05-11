@@ -1,7 +1,13 @@
 $(function(){
+
+  // well this works:
+//  $('#hiring_board_title').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
+
+
+
+
 //=============When the users page is loaded, Using Ajax to pre load X users========================================================================
   // When the Page is load, preload first X users, depending on new formula
-
   if (window.location.pathname == "/users"){
     var data = [];
     var current_page_number = $(location).attr("search").match(/\d+/)
@@ -163,31 +169,18 @@ $(function(){
 
    Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
     if (union_member.length > 0 && union_permit.length > 0){
-      return "Union:" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",")
-      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
+      return "Union: " + "member: " + union_member + "; " + '</br><span class="permit-line-2">' + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
+      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days" + '</span>'
     }else if (union_member.length > 0 && union_permit.length == 0){
-      return "Union:" + "member: " + union_member
+      return "Union: " + "member: " + union_member
     }else if (union_member.length == 0 && union_permit.length > 0){
-      return "Union:" + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
+      return "Union: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
       + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
     }else{
       return "Non Union"
     }
   })
 
-  // Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
-  //   if (union_member.length > 0 && union_permit.length > 0){
-  //     return "Union:" + "member: " + union_member + "; " + '</br>' + " permit:" + $.map(union_permit, function(val){ return val.union_name }).join(",")
-  //     + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
-  //   }else if (union_member.length > 0 && union_permit.length == 0){
-  //     return "Union:" + "member: " + union_member
-  //   }else if (union_member.length == 0 && union_permit.length > 0){
-  //     return "Union:" + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
-  //     + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
-  //   }else{
-  //     return "Non Union"
-  //   }
-  // })
 
   Handlebars.registerHelper("isAvailableToday", function(availability){
     function pad2(number) {
@@ -263,11 +256,9 @@ $(function(){
   });
 
 
+
 //=====================================Send a text to Crew============================================================
 
-  // if ($(".phone-div").find('a').text() == "") {
-  //   $(this).parent.find('.send_text').addClass('.send_text_disable').removeClass('.send_text');
-  // }
 
   $(document).on('click', ".send_text", function (event) {
 
@@ -366,7 +357,7 @@ $(function(){
 //========================================================================================================
 
 
-//======================================Common function====================================================
+//======================================Common functions====================================================
 
   function ajaxPreLoadUser(opts, filter_data, role_id, current_page, hiring_board_status, url, ajax_request_data){
     $.ajax({
@@ -381,7 +372,6 @@ $(function(){
           var dataCount = response.number_users;
           // new control flow to keep page count under 16 unless there are more than 270 users.
           // pages can have maxes of at least 12 and up to 18.
-          console.log(dataCount);
           opts.pageMax = Math.min(Math.max(opts.pageMaxLo, 3 * Math.ceil(dataCount/45)), opts.pageMaxHi);
           pageCount = Math.ceil(dataCount/opts.pageMax);
           // var pageCount = Math.ceil(dataCount/opts.pageMax);  <- old version
@@ -789,6 +779,13 @@ $(function(){
         var html = user_card_template(context);
         opts.postsDiv.append(html);
 
+        // Alter CSS if both member and permit exist
+        $('.permit-line-2').closest('.photo-box').find('.btn-success').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
+
+        $('.permit-line-2').closest('.photo-box').find('.btn-danger').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
+        $('.permit-line-2').closest('.photo-box').find('.send_text').css({'font-size': '11px', 'margin-top': '-9px'});
+
+
     });
   }
 
@@ -798,6 +795,4 @@ $(function(){
     $(".user-card, .pagination").hide();
     $("#label_not_found").text("Users not found.").show().delay(3000).fadeOut(1000);
   }
-
-
 
