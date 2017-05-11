@@ -168,15 +168,29 @@ $(function(){
 
 
    Handlebars.registerHelper("unionStatus", function(union_member, union_permit){
+    var memberText = union_member;
+    if (union_permit.length == 1) {
+      var permitText = $.map(union_permit, function(val){ return val.permit_days + " days"}).join(", ");
+    } else {
+      var permitText = $.map(union_permit, function(val){ return val.union_name + ": " + val.permit_days + " days"}).join(", ");
+    }
+    if (permitText.length > 32) {
+      if (union_permit.length == 1) {
+        permitText = 'View profile for permit length';
+      } else {
+        permitText = 'View profile for permit lengths';
+      }
+    }
+    if (union_member.length > 15) {
+      memberText = 'Various - view profile';
+      permitText = 'Various - view profile';
+    }
     if (union_member.length > 0 && union_permit.length > 0){
-      return "Union: " + "member: " + union_member + "; " + '</br><span class="permit-line-2">' + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
-      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days" + '</span>'
-    }else if (union_member.length > 0 && union_permit.length == 0){
-      return "Union: " + "member: " + union_member
+      return "Union: " + "member: " + memberText + "; " + '</br><span class="permit-line-2">' + "permit: " + permitText + '</span>';
+    }else if (union_member.length > 0 && memberText.length == 0){
+      return "Union: " + "member: " + memberText;
     }else if (union_member.length == 0 && union_permit.length > 0){
-      return "Union: " + "permit: " + $.map(union_permit, function(val){ return val.union_name }).join(",")
-      + " " + $.map(union_permit, function(union){return union.permit_days }).join(",") + " days"
-    }else{
+      return "Union: " + "permit: " + permitText;
       return "Non Union"
     }
   })
