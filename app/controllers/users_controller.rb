@@ -109,13 +109,14 @@ class UsersController < ApplicationController
           #@user.image = @file
           #@user.save
           @user.update(image: user_params[:image])
+          @user.save
           client = dropbox_client
           format.json{render json: @user}
         else
           @file = user_params[:image] #in development environment, store images locally
           @user.image = @file
           @user.save
-          client = dropbox_client
+          #client = dropbox_client
           format.json{render json: @user}
         end
       # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
