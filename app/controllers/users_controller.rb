@@ -105,16 +105,17 @@ class UsersController < ApplicationController
 
       if user_params[:image].present?
         if Rails.env.production? #store images in dropbox
-          @file = "https://www.dropbox.com/s/10yvzboid476cy5/profile_picture_user_id_1.png?dl=0"
-          @user.image = @file
-          @user.save
-          #@user.update(image: user_params[:image])
+          #@file = "https://www.dropbox.com/s/10yvzboid476cy5/profile_picture_user_id_1.png?dl=0"
+          #@user.image = @file
+          #@user.save
+          @user.update(image: user_params[:image])
           client = dropbox_client
           format.json{render json: @user}
         else
           @file = user_params[:image] #in development environment, store images locally
           @user.image = @file
           @user.save
+          client = dropbox_client
           format.json{render json: @user}
         end
       # this is to create label rows in labels table(joint table of user_id, role_id and job_id)
