@@ -105,8 +105,13 @@ class UsersController < ApplicationController
 
       if user_params[:image].present?
         if Rails.env.production? #store images in dropbox
-          client = dropbox_client
           @user.update(image: user_params[:image])
+          client = dropbox_client
+
+          #in production environment, store image info (for url)
+          @file = user_params[:image]
+          @user.image = @file
+          @user.save
           format.json{render json: @user}
         else
           @file = user_params[:image] #in development environment, store images locally
