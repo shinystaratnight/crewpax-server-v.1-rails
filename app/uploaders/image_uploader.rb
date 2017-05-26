@@ -27,11 +27,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def filename
     if Rails.env.production?
-      "profile_picture_" + "user_id_" + "#{model.id}" + SecureRandom.uuid + "#{File.extname(original_filename).downcase}" if original_filename
+      "profile_picture_" + "user_id_" + "#{model.id}" + "_#{secure_token}" + "#{File.extname(original_filename).downcase}" if original_filename
     else
       "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
     end
   end
+
 
 
   process :resize_to_fit => [400, 400]
@@ -39,6 +40,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :thumb do
     process :resize_to_fit => [90, 90]
+  end
+
+  protected
+  def secure_token
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid[0..6])
   end
 
 
