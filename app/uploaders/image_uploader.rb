@@ -28,9 +28,9 @@ class ImageUploader < CarrierWave::Uploader::Base
   #   "thumb_default_user_avatar.png"
   # end
 
-  def filename
+  def full_filename
     if Rails.env.production?
-      "profile_picture_" + "user_id_" + "#{model.id}" + "#{File.extname(original_filename).downcase}" # if original_filename
+      "profile_picture_" + "user_id_" + "#{model.id}" + "#{File.extname(original_filename).downcase}" if original_filename
     else
       "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
     end
