@@ -27,7 +27,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def filename
     if Rails.env.production?
-      "profile_picture_" + "user_id_" + "#{model.id}" + "YOYOYO" + "#{File.extname(original_filename).downcase}" if original_filename
+      "profile_picture_" + "user_id_" + "#{model.id}" + SecureRandom.uuid + "#{File.extname(original_filename).downcase}" if original_filename
     else
       "profile_picture_" + "user_id_" + "#{model.id}" + ".#{model.image.file.extension}" if original_filename
     end
