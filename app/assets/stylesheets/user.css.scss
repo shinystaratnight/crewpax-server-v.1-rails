@@ -223,8 +223,8 @@ body{
 
   #display_image img {
     margin-left: 250px;
-    width: 250px;
-    height: 250px;
+    max-width: 250px;
+    max-height: 250px;
   }
 
   #availability_header {
@@ -471,8 +471,8 @@ body{
     }
 
     #display_image img{
-      width: 250px;
-      height: 250px;
+      max-width: 250px;
+      max-height: 250px;
     }
 
 //================================User index selection=============================================
@@ -689,8 +689,8 @@ body{
     }
 
     #display_image img{
-      width: 250px;
-      height: 250px;
+      max-width: 250px;
+      max-height: 250px;
     }
 
 
@@ -1033,8 +1033,8 @@ body{
     }
 
     #display_image img {
-      width: 250px;
-      height: 250px;
+      max-width: 250px;
+      max-height: 250px;
     }
 
   .username {
