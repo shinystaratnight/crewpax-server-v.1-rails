@@ -1,12 +1,10 @@
+class CarrierWave::Uploader::Base
+  add_config :delete_original_file
+end
+
 CarrierWave.configure do |config|
 
-  add_config :delete_original_file
-  end
-
-  CarrierWave.configure do |config|
-    config.delete_original_file = true
-  end
-
+  config.delete_original_file = true
 
   config.root = Rails.root.join('tmp')
   config.cache_dir = 'uploads'
