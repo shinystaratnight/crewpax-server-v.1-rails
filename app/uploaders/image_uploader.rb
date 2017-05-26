@@ -18,15 +18,12 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  # the original - may return to it on deployment
+
   def default_url
     "/images/fallback/" + [version_name, "default_user_avatar.png"].compact.join('_')
   end
 
-  # current, more hard-coded version with preset 90x90 image
-  # def default_url
-  #   "thumb_default_user_avatar.png"
-  # end
+
 
   def filename
     if Rails.env.production?
