@@ -264,7 +264,7 @@ $(function(){
       processData: false,
       method: 'put',
       success: function(response){
-        $("#profile_pic").text("Profile picture saved").show();
+        $("#profile_pic").text("Profile picture saved (refresh page to view)").show();
 
       }
     });
