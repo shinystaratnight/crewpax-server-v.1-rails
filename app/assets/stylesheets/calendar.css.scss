@@ -47,6 +47,11 @@ td.past.unavailable .dot {
   background-color:#bb9191
 }
 
+.small-calendar td .dot {
+  width: 8px;
+  height: 8px;
+}
+
 
 
 //========== Medium devices (desktops, 992px and up)

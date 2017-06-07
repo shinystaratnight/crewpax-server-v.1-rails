@@ -31,7 +31,7 @@
           <% week.each do |day| %>
             <%= content_tag :td, class: "{{{classNameByAvailability availability " + day.strftime("%Y%m%d").to_s + " " + @tw_start_date.strftime("%Y%m%d").to_s + "}}}" do %>
               <span class="two-week-day"><%= Date.parse(day.to_s).mday %></span>
-              <div class="dot"></div>
+              <div class="dot"><div class="line"></div></div>
             <% end %>
           <% end %>
         </tr>
