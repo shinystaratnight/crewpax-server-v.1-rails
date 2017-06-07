@@ -56,42 +56,41 @@ td.past.unavailable .dot {
   .simple-calendar {
     margin-left: 250px;
     width: 280px;
-      .day {
-        margin: 2px;
-        width: 36px;
-        height: 30px;
-        padding-left: 10px;
+    .day {
+      margin: 2px;
+      width: 36px;
+      height: 30px;
+      padding-left: 10px;
 
-      }
+    }
 
-      .wday-0 {}
-      .wday-1 {}
-      .wday-2 {}
-      .wday-3 {}
-      .wday-4 {}
-      .wday-5 {}
-      .wday-6 {}
+    .wday-0 {}
+    .wday-1 {}
+    .wday-2 {}
+    .wday-3 {}
+    .wday-4 {}
+    .wday-5 {}
+    .wday-6 {}
 
 
-      .past {}
-      .future {}
+    .past {}
+    .future {}
 
-      .start-date {}
+    .start-date {}
 
-      .prev-month {}
-      .next-month { }
-      .current-month {}
+    .prev-month {}
+    .next-month { }
+    .current-month {}
 
-      .has-events {}
-      .th{
-        padding-left:10px;
-        padding-right:10px;
-      }
+    .has-events {}
+    .th{
+      padding: 6px 0 0 4px;
+    }
 
-      table{
-        width: 400px;
-        height: 200px;
-      }
+    table{
+      width: 400px;
+      height: 200px;
+    }
 
   }
 
@@ -176,14 +175,43 @@ td.past.unavailable .dot {
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
-      table {
-        width: 280px;
-        height: 190px;
+      width: 280px;
+      .day {
+        margin: 2px;
+        width: 36px;
+        height: 30px;
+        padding-left: 10px;
+
       }
 
-      td{
-        padding-left: 10px;
+      .wday-0 {}
+      .wday-1 {}
+      .wday-2 {}
+      .wday-3 {}
+      .wday-4 {}
+      .wday-5 {}
+      .wday-6 {}
+
+
+      .past {}
+      .future {}
+
+      .start-date {}
+
+      .prev-month {}
+      .next-month { }
+      .current-month {}
+
+      .has-events {}
+      .th{
+        padding: 6px 0 0 6px;
       }
+
+      table{
+        width: 290px;
+        height: 200px;
+      }
+
     }
 
   #links_to_other_month{
@@ -260,14 +288,43 @@ td.past.unavailable .dot {
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
-      table {
-        width: 320px;
-        height: 190px;
+      width: 280px;
+      .day {
+        margin: 2px;
+        width: 36px;
+        height: 30px;
+        padding-left: 10px;
+
       }
 
-      td{
-        padding-left: 6px;
+      .wday-0 {}
+      .wday-1 {}
+      .wday-2 {}
+      .wday-3 {}
+      .wday-4 {}
+      .wday-5 {}
+      .wday-6 {}
+
+
+      .past {}
+      .future {}
+
+      .start-date {}
+
+      .prev-month {}
+      .next-month { }
+      .current-month {}
+
+      .has-events {}
+      .th{
+        padding: 6px 0 0 6px;
       }
+
+      table{
+        width: 350px;
+        height: 200px;
+      }
+
     }
 
   .small-calendar {
@@ -336,14 +393,43 @@ td.past.unavailable .dot {
   and (max-device-width: 736px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .simple-calendar {
-      table {
-        width: 375px;
+      width: 280px;
+      .day {
+        margin: 2px;
+        width: 36px;
+        height: 30px;
+        padding-left: 10px;
+
+      }
+
+      .wday-0 {}
+      .wday-1 {}
+      .wday-2 {}
+      .wday-3 {}
+      .wday-4 {}
+      .wday-5 {}
+      .wday-6 {}
+
+
+      .past {}
+      .future {}
+
+      .start-date {}
+
+      .prev-month {}
+      .next-month { }
+      .current-month {}
+
+      .has-events {}
+      .th{
+        padding: 6px 0 0 8px;
+      }
+
+      table{
+        width: 395px;
         height: 200px;
       }
 
-      td{
-        padding-left: 10px;
-      }
     }
 
     #links_to_other_month{
