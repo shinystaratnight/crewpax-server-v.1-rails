@@ -191,8 +191,8 @@ $(function(){
       return "Union: " + "member: " + memberText;
     }else if (union_member.length == 0 && union_permit.length > 0){
       return "Union: " + "permit: " + permitText;
-      return "Non Union"
     }
+    return "Non Union";
   })
 
 
@@ -360,9 +360,9 @@ $(function(){
 
 
 
-  $(document).on('mouseover', '.union-status', function (event) {
-    $(this).attr('title', 'This is the hover-over text');
-  });
+  // $(document).on('mouseover', '.union-status', function (event) {
+  //   $(this).attr('title', 'This is the hover-over text');
+  // });
 
 //==========================================================================================================
 
