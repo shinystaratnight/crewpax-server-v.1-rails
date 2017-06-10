@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function(){
+$(function(){
 
 
 
@@ -446,11 +446,12 @@ $(document).on('turbolinks:load', function(){
               if (gotoPageNumber % 3 == 2){
                 // Check if this page is clicked before, if yes, show already render info
                 if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
+                  changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked);
+                  event.preventDefault();
                 } else{
                   // send another ajax request to load more data if this page is never clicked before, and show its loaded data
                   changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
-
+                  event.preventDefault();
                   // Need to preload filter user data
                   var need_to_load_times = Math.ceil(dataCount / 30)
 
@@ -461,6 +462,7 @@ $(document).on('turbolinks:load', function(){
                 }
               }else{
                 changePage(pageCount, gotoPageNumber, filter_data, opts, user_source, ellipsisClicked)
+                event.preventDefault();
               }
             } else {
               // prevent refresh when clicking disabled
@@ -592,7 +594,8 @@ $(document).on('turbolinks:load', function(){
     $("#user-pagination").append(html);
 
     $('.pagination>li.pagination-page').on("click", function(){
-      changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'))
+      changePage(pageCount, $(this).data("page"), data, opts, user_source, $(this).hasClass('ellipsis'));
+      event.preventDefault();
     }).filter('[data-page="1"]').addClass('active');
 
   }
@@ -748,16 +751,18 @@ $(document).on('turbolinks:load', function(){
           if (gotoPageNumber % 3 == 2){
             // Check if this page is clicked before, if yes, show already render info
             if ($(".pagination-page[data-page="+ gotoPageNumber +"]").data("load")== true){
-              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked);
+              event.preventDefault();
             } else{
               // send another ajax request to load more data if this page is never clicked before, and show its loaded data
-              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
-
+              changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked);
+              event.preventDefault();
               // Need to preload filter user data
               var need_to_load_times = Math.ceil(dataCount / 30)
             }
           } else {
-            changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked)
+            changePage(pageCount, gotoPageNumber, data, opts, user_source, nextEllipsisClicked);
+            event.preventDefault();
           }
         } else {
           // prevent refresh when clicking disabled

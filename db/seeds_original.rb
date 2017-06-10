@@ -407,7 +407,7 @@ User.create(name: "bashley", email: "bashley@gmail.com", password: "1234")
 User.create(name: "smashley", email: "smashley@gmail.com", password: "1234")
 User.create(name: "panacheley", email: "panacheley@gmail.com", password: "1234")
 
-# 200.times do |i|
+# 20.times do |i|
 #   User.create(email: "new##{i+100}@sample.net", name: "##{i+35}shley", admin: false)
 # end
 

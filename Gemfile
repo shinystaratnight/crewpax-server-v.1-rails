@@ -37,7 +37,7 @@ ruby '2.3.0'
 # end
 
 gem 'turbolinks'#, '~> 5.0.0'
-# gem 'jquery-turbolinks'
+gem 'jquery-turbolinks'
 
 group :development, :test do
   gem 'rspec-rails'

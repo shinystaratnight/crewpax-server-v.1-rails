@@ -1,5 +1,5 @@
 //= require jquery
-// require jquery.turbolinks
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.bxslider.min
 //= require bootstrap
@@ -8,4 +8,5 @@
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap.min
 //= require turbolinks
+//= require turbolinks-compatibility
 //= require_tree .
