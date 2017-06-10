@@ -336,6 +336,18 @@ body{
     width: 94px;
   }
 
+  .btn-slightly-smaller {
+    font-size: 11px;
+    height: 42px;
+    margin-top: -7px;
+  }
+
+  // .btn-success .btn-slightly-smaller {
+  //   font-size: 11px;
+  //   height: 42px;
+  //   margin-top: -7px;
+  // }
+
   .send_text{
     margin-left: 60px;
     margin-top: -15px;
@@ -343,12 +355,23 @@ body{
     width: 94px;
   }
 
+
   .send_text_disabled{
     margin-left: 60px;
     margin-top: -15px;
     font-size: 13px;
     width: 94px;
     background-color: #7777cc;
+  }
+
+  .send_text-slightly-smaller {
+    font-size: 11px;
+    margin-top: -9px;
+  }
+
+  .send_text_disabled .send_text-slightly-smaller {
+    font-size: 11px;
+    margin-top: -9px;
   }
 
   #sms-form{
@@ -523,6 +546,10 @@ body{
     .reset_pw_info{
       width: 270px;
 
+    }
+
+    .phone-div {
+      padding: 4px 0 8px 0;
     }
 //*------------------------User Log In Page--------------------------------------------
   .string.email.optional{
@@ -704,6 +731,10 @@ body{
 
     #sort_by{
       margin-left: 10px;
+    }
+
+    .phone-div {
+      padding: 4px 0 8px 0;
     }
 
 //=================================================================================================
@@ -898,6 +929,10 @@ body{
     display: inherit;
   }
 
+  .phone-div {
+     padding: 4px 0 8px 0;
+   }
+
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 230px;
@@ -1005,6 +1040,10 @@ body{
     display: inline-block;
     margin-left: 0px;
     margin-bottom: 10px;
+  }
+
+  .phone-div {
+    padding: 4px 0 8px 0;
   }
 
 //================================User index selection=============================================

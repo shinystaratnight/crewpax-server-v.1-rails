@@ -794,10 +794,10 @@ $(function(){
         opts.postsDiv.append(html);
 
         // Alter CSS if both member and permit exist
-        $('.permit-line-2').closest('.photo-box').find('.btn-success').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
-
-        $('.permit-line-2').closest('.photo-box').find('.btn-danger').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
-        $('.permit-line-2').closest('.photo-box').find('.send_text').css({'font-size': '11px', 'margin-top': '-9px'});
+        $('.permit-line-2').closest('.photo-box').find('.btn-success').addClass('btn-slightly-smaller');
+        $('.permit-line-2').closest('.photo-box').find('.btn-danger').addClass('btn-slightly-smaller');
+        $('.permit-line-2').closest('.photo-box').find('.send_text').addClass('send_text-slightly-smaller');
+        $('.permit-line-2').closest('.photo-box').find('.send_text_disabled').addClass('send_text-slightly-smaller');
 
 
     });
