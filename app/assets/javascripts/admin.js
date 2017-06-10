@@ -1,4 +1,4 @@
-$(function(){
+$(document).on('turbolinks:load', function(){
 
 //*********************************************************************************************************
 // Add, Update or Delete Union Section

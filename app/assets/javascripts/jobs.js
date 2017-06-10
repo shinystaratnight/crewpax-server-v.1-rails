@@ -1,4 +1,4 @@
-$(function(){
+$(document).on('turbolinks:load', function(){
 
 
 //===========================================Job Post Table Using DataTables Gem========================================================

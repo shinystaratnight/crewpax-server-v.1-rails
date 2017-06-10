@@ -36,7 +36,7 @@ ruby '2.3.0'
 #   gem 'asset_sync'
 # end
 
-# gem 'turbolinks', '~> 5.0.0'
+gem 'turbolinks'#, '~> 5.0.0'
 # gem 'jquery-turbolinks'
 
 group :development, :test do

@@ -1,8 +1,4 @@
-$(function(){
-
-  // well this works:
-//  $('#hiring_board_title').css({'font-size': '11px', 'height': '42px', 'margin-top': '-7px'});
-
+$(document).on('turbolinks:load', function(){
 
 
 
