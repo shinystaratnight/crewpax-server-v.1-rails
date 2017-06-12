@@ -499,6 +499,8 @@ body{
     }
 
 //================================User index selection=============================================
+
+
     #user_role{
       width: 70%;
       margin-bottom: 10px;
@@ -524,6 +526,10 @@ body{
     #filter_bar{
       margin-left: 0px;
       margin-bottom: 15px;
+    }
+
+    #sort_by{
+      margin: 0 0 0 6px;
     }
 
     #reset_button{
@@ -699,7 +705,7 @@ body{
 /* Portrait and Landscape */
 @media only screen
   and (min-device-width: 375px)
-  and (max-device-width: 667px)
+  and (max-device-width: 700px)
   and (-webkit-min-device-pixel-ratio: 2) {
 //============================User Show Page=======================================================
 
@@ -725,16 +731,32 @@ body{
 
 
 //===================================User Index===========================================
+
+    #user_role{
+      width: 70%;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
     #filter_by{
       display:block;
     }
 
     #sort_by{
-      margin-left: 10px;
+      margin: 0px 6px 0 10px;
+    }
+
+    #reset_button{
+      margin: 0 4px 0 0;
     }
 
     .phone-div {
       padding: 4px 0 8px 0;
+    }
+
+    #filter_bar{
+      margin-left: 0px;
+      margin-bottom: 15px;
     }
 
 //=================================================================================================
@@ -863,16 +885,41 @@ body{
 
 }
 
+
 //-------***** iPhone 6 plus *****----------------------------------------------------------------
   @media only screen
   and (min-device-width: 414px)
   and (max-device-width: 736px) {
   //==========================User Card Index Page================================================
 
+  #user_role{
+    width: 70%;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  #filter_by{
+    display: block;
+    // margin: 0 -5px 0 0;
+  }
+
+  #filter_bar{
+    margin-left: 0px;
+    margin-bottom: 15px;
+  }
+
+  #sort_by{
+    margin: 0px 6px 0 10px;
+  }
+
+  #reset_button{
+    margin: 0 4px 0 0;
+  }
+
   .photo-box{
     box-shadow: -1px 1px 30px lightgray;
     width: 300px;
-    margin-left: 30px;
+    margin-left: 11px;
   }
 
   .photos-wrap{
@@ -936,7 +983,6 @@ body{
 //=================================User Sign Up ==================================================
   #login_page{
     margin-left: 230px;
-
   }
 
 //=============================User Edit Profile==================================================
@@ -995,7 +1041,7 @@ body{
   Nokia N900
   Samsung Galaxy Grand*/
 //====================================User card================================================
-@media only screen and (max-width: 480px) and (orientation : portrait) {
+@media only screen and (min-width: 360px) and (max-width: 480px) and (orientation : portrait) {
 
   .image-wrap img{
     padding-top: 15px;
@@ -1009,6 +1055,7 @@ body{
   .photo-box{
     box-shadow: -1px 1px 30px lightgray;
     width: 290px;
+    margin-left: 16px;
 
   }
 
@@ -1047,6 +1094,7 @@ body{
   }
 
 //================================User index selection=============================================
+
     #user_role{
       width: 70%;
       margin-bottom: 10px;
@@ -1072,6 +1120,10 @@ body{
     #filter_bar{
       margin-left: 0px;
       margin-bottom: 15px;
+    }
+
+    #reset_button{
+      margin: 0 0 0 7px;
     }
 
     #display_image img {
