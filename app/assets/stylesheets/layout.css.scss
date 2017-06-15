@@ -17,6 +17,13 @@
     width: 300px;
   }
 
+  .footer {
+    margin-top: 5px;
+    margin-left: 45px;
+    color: gray;
+    font-size: 14px;
+  }
+
 
 
 //========== Medium devices (desktops, 992px and up)==========================================
@@ -30,7 +37,7 @@
     // font-size: 16px;
     margin: 10px 50px;
     color: gray;
-    font-size: 16px;
+    font-size: 14px;
     float: right;
   }
 
@@ -52,6 +59,9 @@
       color: gray;
     }
 }
+
+// iphone 5 landscape user crewpage footer won't work in layout.css.scss for some reason.
+// hack written up in user.css.scss.
 
 
 /* ----------- iPhone 6 ---------------------------------------------------------------------------- */
@@ -79,6 +89,7 @@
       margin-top: 5px;
       margin-left: 45px;
       color: gray;
+      font-size: 14px;
     }
 }
 
@@ -127,17 +138,17 @@
 }
 
 
-/* ----------- HTC One ----------- */
+// /* ----------- HTC One ----------- */
 
-/* Portrait and Landscape */
-@media screen
-  and (device-width: 360px)
-  and (device-height: 640px)
-  and (-webkit-device-pixel-ratio: 3) {
-    .footer {
-      margin-left: 25px;
-      color: gray;
-    }
-}
+// /* Portrait and Landscape */
+// @media screen
+//   and (device-width: 360px)
+//   and (device-height: 640px)
+//   and (-webkit-device-pixel-ratio: 3) {
+//     .footer {
+//       margin-left: 25px;
+//       color: gray;
+//     }
+// }
 
 

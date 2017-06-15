@@ -369,10 +369,10 @@ body{
     margin-top: -9px;
   }
 
-  .send_text_disabled .send_text-slightly-smaller {
-    font-size: 11px;
-    margin-top: -9px;
-  }
+  // .send_text_disabled .send_text-slightly-smaller {
+  //   font-size: 11px;
+  //   margin-top: -9px;
+  // }
 
   #sms-form{
     padding: 6px 12px 27px 6px;
@@ -614,12 +614,25 @@ body{
     margin-bottom: 10px;
   }
 
-  .send_text{
-    margin-left:35px;
+  // .send_text{
+  //   margin-left:35px;
+  // }
+
+  // .send_text_disabled{
+  //   margin-left: 35px;
+  //   background-color: #7777cc;
+  // }
+
+  .send_text {
+    margin-left: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
-  .send_text_disabled{
-    margin-left: 35px;
+  .send_text_disabled {
+    margin-left: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     background-color: #7777cc;
   }
 
@@ -690,11 +703,22 @@ body{
     font-size: 100%;
   }
 
+}
 
+//==================iphone 5 landscape user crewpage footer - won't work in layout.css for some reason.==============================//
 
-//==========================================================================================
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: Landscape) {
 
-
+  .footer {
+    font-size: 14px;
+    margin-left: 15px;
+    margin-top: 5px;
+    color: gray;
+  }
 
 }
 
