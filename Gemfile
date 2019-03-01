@@ -23,6 +23,8 @@ gem 'twilio-ruby'
 gem 'jquery-datatables-rails', '~> 3.4'
 gem 'seed_dump'
 
+gem "rack", ">= 1.6.11"
+
 # in case needed for dropbox (https://www.linkedin.com/pulse/using-dropbox-ruby-rails-heroku-serjik-isagholian)
 gem 'dropbox-sdk'
 
