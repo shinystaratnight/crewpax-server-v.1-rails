@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.6'
 gem 'pg'
 gem 'sass-rails'
-gem 'bootstrap-sass'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'haml-rails'
 gem 'uglifier'
 gem 'coffee-rails'
