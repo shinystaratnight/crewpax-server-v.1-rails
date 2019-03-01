@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.6'
 gem 'pg'
 gem 'sass-rails'
+gem "activejob", ">= 4.2.11"
 gem "bootstrap-sass", ">= 3.4.1"
 gem 'haml-rails'
 gem 'uglifier'
